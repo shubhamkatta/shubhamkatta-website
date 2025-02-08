@@ -1,6 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
+// GitHub Pages SPA redirect: recover path from 404.html redirect
+const params = new URLSearchParams(window.location.search);
+const redirectPath = params.get('p');
+if (redirectPath) {
+  window.history.replaceState(null, '', redirectPath);
+}
 import './styles.css';
 import { HomePage } from './pages/HomePage';
 import { AboutPage } from './pages/AboutPage';
