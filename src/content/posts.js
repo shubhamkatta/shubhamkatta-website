@@ -1,7 +1,7 @@
 export const posts = [
   {
     slug: 'favoritism-the-art-of-causing-harm-in-harmless-ways',
-    cover: '/cover-favoritism.jpg',
+    cover: '/blog/cover-favoritism.jpg',
     title: 'Favoritism – the art of causing harm in harmless ways',
     type: 'observation',
     date: 'March 30, 2022',
@@ -26,7 +26,7 @@ export const posts = [
   },
   {
     slug: 'own-it-forever-or-leave-it-forever-but-try',
-    cover: '/cover-try.jpg',
+    cover: '/blog/cover-try.jpg',
     title: 'Own it forever or Leave it forever – But TRY',
     type: 'essay',
     date: 'July 10, 2020',
@@ -51,7 +51,7 @@ export const posts = [
   },
   {
     slug: 'you-are-important-so-are-your-needs',
-    cover: '/cover-needs.jpg',
+    cover: '/blog/cover-needs.jpg',
     title: 'You are important, so are your needs!',
     type: 'personal',
     date: 'October 1, 2019',
@@ -76,7 +76,7 @@ export const posts = [
   },
   {
     slug: 'its-okay-to-fail-once-twice-thrice-or-even-1000-times',
-    cover: '/cover-fail.jpg',
+    cover: '/blog/cover-fail.jpg',
     title: 'Its okay to fail – once, twice, thrice or even 1000 times',
     type: 'essay',
     date: 'May 15, 2019',
@@ -105,7 +105,7 @@ export const posts = [
   },
   {
     slug: 'minimalism-is-the-new-sexy',
-    cover: '/cover-minimalism.jpg',
+    cover: '/blog/cover-minimalism.jpg',
     title: 'Minimalism is the new sexy',
     type: 'personal finding',
     date: 'April 15, 2019',

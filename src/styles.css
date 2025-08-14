@@ -130,6 +130,22 @@ h2.work-heading { font-size: clamp(1rem, 2.5vw, 1.7rem); }
 .article-attribution { margin: -0.5rem 0 1.5rem; font-size: 0.85rem; font-weight: 700; color: rgba(29,24,21,0.5); padding-left: 1.5rem; }
 .case-card h3 { margin-bottom: .75rem; }
 .simple-list { padding-left: 1.2rem; line-height: 1.8; color: rgba(29,24,21,0.76); }
+.article-h3 { font-size: clamp(1.15rem, 2.5vw, 1.4rem); font-weight: 900; margin: 1.5rem 0 .6rem; letter-spacing: -0.02em; }
+.article-list { padding-left: 1.4rem; margin: .4rem 0 1.2rem; line-height: 1.85; color: rgba(29,24,21,0.82); }
+.article-list li { margin-bottom: .5rem; }
+.article-list li::marker { color: var(--red); font-weight: 900; }
+.article-code { margin: 1.2rem 0; padding: 1.1rem 1.2rem; background: #1d1815; color: #f6efe6; border-radius: 18px; overflow-x: auto; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 0.86rem; line-height: 1.65; box-shadow: 0 18px 40px rgba(29,24,21,0.18); position: relative; }
+.article-code::before { content: attr(data-lang); position: absolute; top: 0.55rem; right: 0.9rem; font-size: 0.66rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
+.article-code code { color: inherit; background: none; padding: 0; font-size: inherit; }
+.inline-code { background: #fff6db; border: 1px solid rgba(29,24,21,0.12); border-radius: 6px; padding: 0.08rem 0.4rem; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 0.85em; color: #b3422f; }
+.inline-link { color: var(--red); font-weight: 700; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; text-decoration-color: rgba(255,107,107,0.32); }
+.inline-link:hover { text-decoration-color: var(--red); }
+.article-callout { margin: 1.4rem 0; padding: 1rem 1.2rem; background: #eaf7ff; border: 2px dashed rgba(29,24,21,0.18); border-radius: 18px; line-height: 1.75; color: rgba(29,24,21,0.85); position: relative; }
+.article-callout::before { content: 'note'; position: absolute; top: -0.6rem; left: 1rem; padding: 0.18rem 0.55rem; background: #ff6b6b; color: #fff; font-size: 0.62rem; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; border-radius: 999px; }
+.article-inline-img { display: block; width: 100%; max-width: 720px; margin: 1.5rem auto; border-radius: 18px; border: 1px solid var(--border); background: #fff; box-shadow: var(--soft-shadow); }
+.article-tags { display: flex; flex-wrap: wrap; gap: .45rem; margin-bottom: 1.4rem; }
+.article-tags .tag-pill { font-size: 0.72rem; padding: .35rem .7rem; }
+.meta-dot { margin: 0 .5rem; opacity: 0.5; }
 .site-footer { border-top: 1px solid var(--border); background: rgba(255,255,255,0.45); }
 .footer-row { font-size: .92rem; color: rgba(29,24,21,0.58); }
 .footer-links { display: flex; gap: 1rem; flex-wrap: wrap; }
