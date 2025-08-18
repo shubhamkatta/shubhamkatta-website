@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="Token optimization cover">
+  <rect width="1200" height="600" fill="#fff6db"/>
+  <g opacity="0.5">
+    <circle cx="120" cy="120" r="6" fill="#ff6b6b"/>
+    <circle cx="160" cy="160" r="3" fill="#1d1815"/>
+    <circle cx="1080" cy="500" r="5" fill="#1d1815"/>
+    <circle cx="1130" cy="80" r="4" fill="#ff6b6b"/>
+  </g>
+  <rect x="540" y="30" width="160" height="22" rx="4" fill="#ffe9e4" opacity="0.85" transform="rotate(-2 620 41)"/>
+  <g transform="translate(80,140) rotate(-2)">
+    <rect width="520" height="320" rx="22" fill="#1d1815"/>
+    <circle cx="22" cy="22" r="6" fill="#ff6b6b"/>
+    <circle cx="42" cy="22" r="6" fill="#ffd166"/>
+    <circle cx="62" cy="22" r="6" fill="#a3e4a3"/>
+    <text x="22" y="80" fill="#9eb7ff" font-family="ui-monospace, monospace" font-size="18" font-weight="700">$ claude run</text>
+    <text x="22" y="120" fill="#f6efe6" font-family="ui-monospace, monospace" font-size="16">tokens   12,432  →  4,108</text>
+    <text x="22" y="150" fill="#f6efe6" font-family="ui-monospace, monospace" font-size="16">cache    87% hit</text>
+    <text x="22" y="180" fill="#a3e4a3" font-family="ui-monospace, monospace" font-size="16">latency  −41%</text>
+    <text x="22" y="220" fill="#9eb7ff" font-family="ui-monospace, monospace" font-size="14">→ same answer, smaller bill</text>
+    <rect x="22" y="250" width="120" height="6" rx="3" fill="#ff6b6b"/>
+    <rect x="22" y="262" width="380" height="6" rx="3" fill="rgba(255,255,255,0.18)"/>
+    <rect x="22" y="274" width="220" height="6" rx="3" fill="rgba(255,255,255,0.12)"/>
+  </g>
+  <g transform="translate(660,150)">
+    <text x="0" y="40" font-family="Inter, sans-serif" font-weight="900" font-size="58" fill="#1d1815" letter-spacing="-2">Token</text>
+    <text x="0" y="110" font-family="Inter, sans-serif" font-weight="900" font-size="58" fill="#1d1815" letter-spacing="-2">Optimization</text>
+    <text x="0" y="170" font-family="Inter, sans-serif" font-weight="700" font-size="28" fill="#ff6b6b">12 hacks I use every day.</text>
+    <path d="M 0 200 Q 120 188 240 204" stroke="#1d1815" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <text x="0" y="260" font-family="Inter, sans-serif" font-size="18" fill="rgba(29,24,21,0.7)">Tokens are the only resource that quietly compounds.</text>
+  </g>
+</svg>

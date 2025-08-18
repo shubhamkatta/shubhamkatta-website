@@ -1,5 +1,82 @@
 export const posts = [
   {
+    slug: 'token-optimization-in-claude-12-hacks',
+    cover: '/blog/cover-token-optimization.svg',
+    title: 'Token optimization in Claude: 12 hacks I use every day',
+    type: 'guide',
+    date: 'August 18, 2025',
+    readingTime: '12 min',
+    color: 'paper-yellow',
+    tags: ['tokens', 'optimization', 'claude'],
+    excerpt:
+      'Tokens are the only resource that quietly compounds. Twelve practical hacks that move the meter on real workloads.',
+    seoDescription:
+      'Twelve practical token optimization techniques for Claude — caching, schemas over prose, trimming tool results, model routing, early stopping, and the small habits that cut bills meaningfully.',
+    keywords: 'Claude token optimization, prompt caching, tool results, model routing, token budget, Anthropic API costs',
+    intro:
+      `Tokens are the only resource that quietly compounds. Pricing pages talk about per-million costs, but the real cost shows up later: latency, context bleed, evals that drift.\n\nAfter eight months of running Claude in a production threat-intel pipeline, I have a small, boring list of things that consistently move the meter. They are small individually. Stacked, they cut the bill on one of our agent loops by about 60% and dropped p95 latency by a third — without changing the model or what the agent does.`,
+    sections: [
+      {
+        heading: 'The mental model',
+        body:
+`Where the tokens actually go on a typical agent turn:\n\n![Where the tokens go: tool defs and system prompt at the top, files and docs in the middle, tool results doing the bloating, user and model output at the bottom.](/blog/diagram-token-flow.svg)\n\nThe interesting thing is that **user input and model output** — the things people instinctively try to optimise — are the smallest slice. The biggest slice is **tool results** and the second biggest is **static context that never changes**.\n\nWhich means: optimise the static stuff first (with caching) and the tool results second (by trimming). Optimising user/model length is the smallest lever.`,
+      },
+      {
+        heading: '1. Cache like you are paying rent (you are)',
+        body: `Anthropic prompt caching is the cheapest performance win in the API. ~90% off the cached tokens, dramatic latency drop.\n\nMinimum viable caching: put a \`cache_control: {"type": "ephemeral"}\` on the last block of your system prompt and on the last tool definition. That alone covers most of the gain on most workloads.\n\nMore detail in [Caching like you mean it](/writing/caching-like-you-mean-it-anthropic-prompt-caching). If you skip everything else here, do this.`,
+      },
+      {
+        heading: '2. System prompts: short, specific, top',
+        body: `A short system prompt is not just cheaper — it is more obeyed. Constraints near the top of a 200-token system prompt are foreground attention. Constraints in the middle of a 5,000-token system prompt are not.\n\nMy default shape: a 100-300 token system prompt, with hard rules above style preferences. Per-turn state belongs in the user message, not the system prompt. Anything that changes per call is poisoning your cache and diluting your attention.`,
+      },
+      {
+        heading: '3. Don’t paste, point',
+        body: `Pasting a 14,000-token file into the prompt for a question about three lines is 14,000 tokens of waste.\n\nGive the agent a tool to read paths. Let it pull what it needs. Most of the time it asks for one or two files; sometimes none, because the answer is in the conversation already.\n\nThis single change has saved more tokens on more workloads than anything else I have done.`,
+      },
+      {
+        heading: '4. Schemas over prose',
+        body: `A 600-word natural-language description of "what an Indicator looks like" is more expensive and less reliable than a 60-line JSON schema.\n\nWhen I want the model to produce or validate structured data, I include the schema, not the prose. The model handles the schema better. The prompt is shorter. The output is more consistent. Three wins for one change.`,
+      },
+      {
+        heading: '5. Trim tool results before they hit context',
+        body: `The single most effective server-side fix. Tool results are the biggest single contributor to context bloat in agent loops.\n\nFour habits:\n\n- cap rows at 20 (paginate if needed)\n- truncate strings longer than ~2,000 characters with a marker ("…<truncated, 3,400 chars>")\n- drop fields the agent does not use; do not return everything because you can\n- summarise large blobs to "shape + first three rows" instead of returning the whole thing\n\nA tool that returns 8,000 tokens on a "give me the campaign" call is a tool that just wasted 8,000 tokens worth of attention.`,
+      },
+      {
+        heading: '6. The subagent split',
+        body: `If verifying the answer to a subtask would take >8k tokens of context, that subtask belongs in a subagent. The main thread sees a one-paragraph summary and stays clean. Subagent details in [Subagents and parallelism](/writing/subagents-and-parallelism-stop-cramming-context).`,
+      },
+      {
+        heading: '7. JSON beats markdown when the model writes for code',
+        body: `If the next consumer of the model's output is code, ask for JSON. Markdown is more expensive (more punctuation tokens), more variable (the model styles it), and harder to parse.\n\nMarkdown for humans. JSON for everything else.`,
+      },
+      {
+        heading: '8. Use Haiku where Haiku belongs',
+        body: `Not every step in your pipeline needs Sonnet/Opus. Cheap models are remarkably good at:\n\n- "is this text a question or a statement"\n- "extract the entity ids mentioned"\n- "summarise this 200-word note in one sentence"\n- LLM-as-judge in eval pipelines\n\nRouting these steps to Haiku saves real money and barely moves quality. The Sonnet/Opus budget gets concentrated on the steps that need it.`,
+      },
+      {
+        heading: '9. Let it stop early',
+        body: `\`max_tokens\` is the budget, not the goal. Most replies are far shorter than the cap.\n\nWhen the format is structured, you can give the model an explicit stop signal: "Reply with one JSON object and stop." For longer replies, "Stop after the third bullet" is shockingly effective.\n\nThe alternative — the model wandering for another 400 tokens because it can — is a small, daily tax that adds up.`,
+      },
+      {
+        heading: '10. Cache the tool definitions, never reorder them',
+        body: `Tool definitions are static between turns and large in aggregate. Cache them. But: cache invalidates on byte change, and several SDKs sort tools differently between calls.\n\nSort once, deterministically. Commit the order. Cache the block. Verify with \`cache_read_input_tokens\` in the response — if it is zero on a workload that should be hitting, your tool order is drifting.`,
+      },
+      {
+        heading: '11. Measure with a token budget, not a ceiling',
+        body: `A 200k context window is permission, not target. Set a soft budget per turn ("I want this loop to run under 25k tokens of input on average") and treat overruns as bugs. The budget makes the team's optimisations legible and forces a conversation when something balloons.\n\nBudgets work because they are stable. "Token usage feels high" is a vibe. "We are 38% over budget on the auth-review loop" is a ticket.`,
+      },
+      {
+        heading: '12. Log usage, alert on it',
+        body: `Every Anthropic API call returns a \`usage\` block. Log it. Aggregate it. Alert on regressions.\n\nThe alerts that have caught the most for me:\n\n- average input tokens per call up >25% week over week — usually a prompt change, occasionally a runaway tool result\n- \`cache_read_input_tokens\` collapses to zero — usually someone added a timestamp to the system prompt\n- model output up >50% — usually a prompt instruction got softer ("be thorough" creep)\n\nNone of these are exotic. All of them have caught a real regression at least once.`,
+      },
+      {
+        heading: 'The boring closer',
+        body: `None of these are clever. They are the boring layer of professional craft that turns "the model is expensive" into "the model is fine, actually."\n\nIf you only do three: **cache the static stuff, trim tool results, point to files instead of pasting them.** That is most of the gain on most workloads. The other nine are just refinements.`,
+      },
+    ],
+  },
+
+  {
     slug: 'favoritism-the-art-of-causing-harm-in-harmless-ways',
     cover: '/blog/cover-favoritism.jpg',
     title: 'Favoritism – the art of causing harm in harmless ways',

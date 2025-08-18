@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 360" role="img" aria-label="Token budget split">
+  <rect width="1000" height="360" fill="#fff8ef"/>
+  <text x="40" y="50" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">Where the tokens go (typical agent run)</text>
+  <text x="40" y="74" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">numbers vary, the proportions don't, much</text>
+  <g transform="translate(40,110)">
+    <rect width="240" height="44" rx="10" fill="#ff6b6b"/>
+    <text x="14" y="28" font-family="Inter, sans-serif" font-weight="900" font-size="14" fill="#fff">system prompt + tool defs</text>
+    <text x="250" y="28" font-family="ui-monospace, monospace" font-size="14" fill="#1d1815">~28%</text>
+  </g>
+  <g transform="translate(40,168)">
+    <rect width="180" height="44" rx="10" fill="#ffd166"/>
+    <text x="14" y="28" font-family="Inter, sans-serif" font-weight="900" font-size="14" fill="#1d1815">files / docs context</text>
+    <text x="250" y="28" font-family="ui-monospace, monospace" font-size="14" fill="#1d1815">~22%</text>
+  </g>
+  <g transform="translate(40,226)">
+    <rect width="320" height="44" rx="10" fill="#1d1815"/>
+    <text x="14" y="28" font-family="Inter, sans-serif" font-weight="900" font-size="14" fill="#f6efe6">tool results (the real bloat)</text>
+    <text x="370" y="28" font-family="ui-monospace, monospace" font-size="14" fill="#1d1815">~38%</text>
+  </g>
+  <g transform="translate(40,284)">
+    <rect width="100" height="44" rx="10" fill="#9ec5ff"/>
+    <text x="14" y="28" font-family="Inter, sans-serif" font-weight="900" font-size="14" fill="#1d1815">user · model</text>
+    <text x="250" y="28" font-family="ui-monospace, monospace" font-size="14" fill="#1d1815">~12%</text>
+  </g>
+  <g transform="translate(560,110)">
+    <text x="0" y="20" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="rgba(29,24,21,0.5)" letter-spacing="2">SO: WHERE TO CUT</text>
+    <text x="0" y="56" font-family="Inter, sans-serif" font-size="14" fill="#1d1815">1. trim tool results before they hit ctx</text>
+    <text x="0" y="82" font-family="Inter, sans-serif" font-size="14" fill="#1d1815">2. cache the system prompt + tools</text>
+    <text x="0" y="108" font-family="Inter, sans-serif" font-size="14" fill="#1d1815">3. point to files instead of pasting</text>
+    <text x="0" y="134" font-family="Inter, sans-serif" font-size="14" fill="#1d1815">4. drop docs you'll never reference</text>
+    <text x="0" y="180" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.55)">user + model output is rarely the bottleneck.</text>
+    <text x="0" y="200" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.55)">stop optimizing the smallest slice first.</text>
+  </g>
+</svg>
