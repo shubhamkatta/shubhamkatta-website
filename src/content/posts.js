@@ -1,5 +1,78 @@
 export const posts = [
   {
+    slug: 'prompt-engineering-beyond-hello-world',
+    cover: '/blog/cover-prompt-engineering.svg',
+    title: 'Prompt engineering beyond hello world: patterns that actually move evals',
+    type: 'deep dive',
+    date: 'September 9, 2025',
+    readingTime: '11 min',
+    color: 'paper-blue',
+    tags: ['prompt engineering', 'patterns', 'evals'],
+    excerpt:
+      'Six patterns that consistently moved the needle on real evals — and three that sounded clever and did nothing.',
+    seoDescription:
+      'Prompt engineering patterns that work in practice: structure, system vs user roles, few-shot examples, chain-of-thought, format hardening, and the things that turned out to be cargo-cult.',
+    keywords: 'prompt engineering, Claude prompting, system prompt, few-shot, chain-of-thought, format hardening, eval results',
+    intro:
+      `Prompt engineering has accumulated a lot of folklore. Some of it is right. Some of it was right for a 2023 model and is just noise now. Some of it sounded right and never was.\n\nThe only honest filter is evals. So this post is the patterns I have actually seen move evals on Claude Sonnet/Opus class models — and a few I have stopped using because they did not.`,
+    sections: [
+      {
+        heading: 'The patterns that survive evals',
+        body: `In rough order of impact, on the kind of work I do (agentic, tool-using, structured output):\n\n- **Structure the system prompt.** Headings, sections, role at top.\n- **Move enforced rules to the top of the system prompt.**\n- **Show one good example, not five mediocre ones.**\n- **Ask for the format you want, in the format you want it.**\n- **Tell the model when to stop.**\n- **Name the failure modes you have seen.**\n\nNone of these are surprising. They are also the patterns that consistently produce 5-15 point lifts on the eval slices I track. The rest of this post is about what each one looks like in practice.`,
+      },
+      {
+        heading: 'System vs user vs assistant',
+        body: `Three roles, three different jobs:\n\n- **System.** Durable instructions that should hold across all turns. Identity, constraints, output format expectations, tool guidance.\n- **User.** What the user actually asked, plus state that changes per turn (current file, current selection, current question).\n- **Assistant.** Past model turns. You usually do not handcraft these.\n\nA recurring mistake: stuffing per-turn state into the system prompt. The model treats system prompt content as "always true." If you put "the current file is foo.py" in the system, the model will quietly assume foo.py is always the current file. Put per-turn state in the user message.`,
+      },
+      {
+        heading: 'Structure the system prompt',
+        body: `Models attend to structure. A flat wall of paragraphs is harder to reference than a structured doc. Use headings.\n\nThe shape that has held up:\n\n\`\`\`md
+# Role
+You are a code review assistant for the auth subsystem.
+
+# Hard rules
+- never propose code changes that touch \`legacy_session_id\`
+- always check tenant_id is present in queries
+- if the diff includes a migration, refuse and tell the user to use \`/migrate-db\`
+
+# Style
+- terse; one paragraph per finding
+- include file:line references
+- no preamble
+\`\`\`\n\nThe rules section is the part the model treats as enforced. Put the load-bearing constraints there. Style preferences go below them — important, but if a rule conflicts, the rule wins.`,
+      },
+      {
+        heading: 'Few-shot is mostly grammar',
+        body: `Examples in your prompt are doing two things at once. They show the model what good answers look like, and they teach the model the **shape** of the answer.\n\nThe shape often matters more than the content. One well-formed example with the right tags, indentation, and tone teaches the model the format. Five mediocre examples teach the model nothing except "the format is variable."\n\nMy rule: one or two examples, picked deliberately. Both correct. If they cannot be both correct, you are not yet sure what good looks like.`,
+      },
+      {
+        heading: 'Chain-of-thought in 2026',
+        body: `On older models, "think step by step" was magic. On Claude Sonnet 4-class models, it is mostly noise unless you are doing the kind of math/logic puzzle the original CoT papers were about.\n\nWhat works better in production:\n\n- **Scratchpad with a structure.** "Before you answer, list the constraints, then the candidate plan, then objections, then the chosen plan."\n- **Ask for a plan first, then the answer.** Two-pass: ask for the approach, look at it, then ask for the implementation. Cheaper than re-running, more reliable than one-shot.\n- **Tool-augmented reasoning.** If the model can check itself with a tool ("does this file actually exist," "does this function take that arg"), let it.\n\nGeneric "think step by step" sometimes still helps; it almost never hurts; it is far from the biggest lever you have.`,
+      },
+      {
+        heading: 'Format hardening',
+        body: `If you want JSON, ask for JSON. Specifically.\n\nWeak:\n\n> "Reply with structured output."\n\nBetter:\n\n> "Reply with JSON only. Use this schema: \`{ \\"verdict\\": \\"pass|fail\\", \\"reason\\": string }\`. No prose before or after the JSON."\n\nEven better, when the model supports it: tool use. A tool with a JSON schema is a structured-output guarantee that does not depend on the model "remembering" to format.\n\nA few hardening tricks I use:\n\n- "Reply with valid JSON. Do not include markdown fences."\n- "If you are unsure, set verdict to \`fail\` and explain in \`reason\`."\n- "Output ONLY the JSON. No commentary."\n\nIf you keep getting prose-wrapped JSON, the issue is almost always the prompt, not the model.`,
+      },
+      {
+        heading: 'Tell the model when to stop',
+        body: `Models, left to themselves, like to keep going. They explain. They restate. They wrap up. Small stop instructions go a long way:\n\n- "Stop after the third bullet."\n- "Do not summarise at the end."\n- "If you have nothing to add beyond what was asked, end your reply."\n\nThese sound like manners advice. They consistently move the eval slice on output length and verbosity-related rubrics.`,
+      },
+      {
+        heading: 'Name the failure modes you have seen',
+        body: `If your model has a quirky failure — say, it likes to add a "Disclaimer:" section nobody asked for — name it in the prompt:\n\n> "Do not add disclaimers. Trust the user to know they are reading model output."\n\nIt feels weird, like you are talking to the model about its own habits. It works. The mention pushes the failure mode to the foreground of attention, which is the only place it can be suppressed.`,
+      },
+      {
+        heading: 'Things I stopped doing',
+        body: `- "You are an expert in X." Marginal at best on capable models. Add the rules instead.\n- Long persona descriptions ("you are a helpful, kind assistant who…"). Tokens for nothing.\n- "Take a deep breath." Genuinely magic for older models. On 2026 models, noise.\n- Exclaiming the importance of the task ("This is very important!"). The model is unmoved.\n- Ten variations of "be precise" instead of one specific instruction.\n\nNone of these are harmful; all of them are wasted tokens. Spend the budget on structure and rules.`,
+      },
+      {
+        heading: 'The order I tune in',
+        body: `When a prompt is not performing, I look at things in this order:\n\n1. Are the hard rules at the top of the system prompt?\n2. Is per-turn state in the user message, not the system?\n3. Is the output format described in the same shape as the desired output?\n4. Are there one or two examples, both correct?\n5. Does the prompt name the failure modes I have seen?\n6. Only then: model, temperature, anything fancier.\n\nNine times out of ten, the fix is in the first three.`,
+      },
+    ],
+  },
+
+  {
     slug: 'token-optimization-in-claude-12-hacks',
     cover: '/blog/cover-token-optimization.svg',
     title: 'Token optimization in Claude: 12 hacks I use every day',

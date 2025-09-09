@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="Prompt engineering cover">
+  <rect width="1200" height="600" fill="#eaf7ff"/>
+  <g opacity="0.6">
+    <circle cx="100" cy="500" r="4" fill="#ff6b6b"/>
+    <circle cx="1100" cy="120" r="6" fill="#1d1815"/>
+    <path d="M 1050 480 q 40 -20 80 0" stroke="#1d1815" stroke-width="2" fill="none"/>
+  </g>
+  <g transform="translate(80,120) rotate(-3)">
+    <rect width="380" height="120" rx="22" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <text x="22" y="40" font-family="Inter, sans-serif" font-weight="900" font-size="14" fill="rgba(29,24,21,0.5)" letter-spacing="2">USER</text>
+    <text x="22" y="70" font-family="Inter, sans-serif" font-size="18" fill="#1d1815">Summarize this in three bullets,</text>
+    <text x="22" y="94" font-family="Inter, sans-serif" font-size="18" fill="#1d1815">prefer specifics over adjectives.</text>
+  </g>
+  <g transform="translate(120,300) rotate(2)">
+    <rect width="420" height="140" rx="22" fill="#1d1815"/>
+    <text x="22" y="40" font-family="Inter, sans-serif" font-weight="900" font-size="14" fill="rgba(255,255,255,0.45)" letter-spacing="2">CLAUDE</text>
+    <text x="22" y="72" font-family="Inter, sans-serif" font-size="17" fill="#f6efe6">• &lt;specific 1&gt;</text>
+    <text x="22" y="98" font-family="Inter, sans-serif" font-size="17" fill="#f6efe6">• &lt;specific 2&gt;</text>
+    <text x="22" y="124" font-family="Inter, sans-serif" font-size="17" fill="#f6efe6">• &lt;specific 3&gt;</text>
+  </g>
+  <path d="M 460 200 C 540 240 540 290 480 320" stroke="#ff6b6b" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="0,8"/>
+  <g transform="translate(620,150)">
+    <text x="0" y="50" font-family="Inter, sans-serif" font-weight="900" font-size="56" fill="#1d1815" letter-spacing="-2">Prompt</text>
+    <text x="0" y="118" font-family="Inter, sans-serif" font-weight="900" font-size="56" fill="#1d1815" letter-spacing="-2">Engineering</text>
+    <text x="0" y="168" font-family="Inter, sans-serif" font-weight="700" font-size="22" fill="#ff6b6b">beyond hello world.</text>
+    <rect x="0" y="200" width="200" height="6" rx="3" fill="#1d1815"/>
+    <text x="0" y="250" font-family="Inter, sans-serif" font-size="17" fill="rgba(29,24,21,0.7)">Patterns that actually move evals — not vibes.</text>
+  </g>
+</svg>

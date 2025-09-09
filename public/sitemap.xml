@@ -32,6 +32,12 @@
   </url>
 
   <url>
+    <loc>https://shubhamkatta.com/writing/prompt-engineering-beyond-hello-world</loc>
+    <lastmod>2025-09-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://shubhamkatta.com/writing/token-optimization-in-claude-12-hacks</loc>
     <lastmod>2025-08-18</lastmod>
     <changefreq>monthly</changefreq>
