@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 380" role="img" aria-label="MCP request lifecycle">
+  <rect width="1000" height="380" fill="#fff8ef"/>
+  <text x="40" y="48" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">A single MCP request, end to end</text>
+  <g transform="translate(40,90)">
+    <rect width="180" height="80" rx="14" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <text x="14" y="32" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="rgba(29,24,21,0.5)" letter-spacing="2">CLIENT</text>
+    <text x="14" y="56" font-family="Inter, sans-serif" font-weight="900" font-size="15" fill="#1d1815">Claude Code</text>
+    <text x="14" y="72" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.6)">user asked a question</text>
+  </g>
+  <g transform="translate(280,90)">
+    <rect width="180" height="80" rx="14" fill="#fff6db" stroke="#1d1815" stroke-width="2"/>
+    <text x="14" y="32" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="rgba(29,24,21,0.5)" letter-spacing="2">PROTOCOL</text>
+    <text x="14" y="56" font-family="Inter, sans-serif" font-weight="900" font-size="15" fill="#1d1815">JSON-RPC</text>
+    <text x="14" y="72" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.6)">stdio · sse · http</text>
+  </g>
+  <g transform="translate(520,90)">
+    <rect width="180" height="80" rx="14" fill="#1d1815"/>
+    <text x="14" y="32" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="rgba(255,255,255,0.5)" letter-spacing="2">SERVER</text>
+    <text x="14" y="56" font-family="Inter, sans-serif" font-weight="900" font-size="15" fill="#f6efe6">your code</text>
+    <text x="14" y="72" font-family="ui-monospace, monospace" font-size="12" fill="#a3e4a3">tools.list · tools.call</text>
+  </g>
+  <g transform="translate(760,90)">
+    <rect width="180" height="80" rx="14" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <text x="14" y="32" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="rgba(29,24,21,0.5)" letter-spacing="2">UPSTREAM</text>
+    <text x="14" y="56" font-family="Inter, sans-serif" font-weight="900" font-size="15" fill="#1d1815">DB · API · file</text>
+    <text x="14" y="72" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.6)">whatever you wrap</text>
+  </g>
+  <path d="M 220 130 L 280 130" stroke="#1d1815" stroke-width="2"/>
+  <polygon points="278,126 290,130 278,134" fill="#1d1815"/>
+  <path d="M 460 130 L 520 130" stroke="#1d1815" stroke-width="2"/>
+  <polygon points="518,126 530,130 518,134" fill="#1d1815"/>
+  <path d="M 700 130 L 760 130" stroke="#1d1815" stroke-width="2"/>
+  <polygon points="758,126 770,130 758,134" fill="#1d1815"/>
+  <text x="40" y="220" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="rgba(29,24,21,0.5)" letter-spacing="2">WHAT THE SERVER EXPOSES</text>
+  <g transform="translate(40,240)">
+    <rect width="280" height="42" rx="10" fill="#ffe9e4"/>
+    <text x="14" y="28" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">tools — model can call them</text>
+  </g>
+  <g transform="translate(340,240)">
+    <rect width="280" height="42" rx="10" fill="#eaf7ff"/>
+    <text x="14" y="28" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">resources — model can read them</text>
+  </g>
+  <g transform="translate(640,240)">
+    <rect width="280" height="42" rx="10" fill="#fff6db"/>
+    <text x="14" y="28" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">prompts — saved templates</text>
+  </g>
+  <text x="40" y="320" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.55)">The protocol is dull on purpose. The interesting work is in choosing what to expose</text>
+  <text x="40" y="340" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.55)">— and writing tool descriptions a model can act on without supervision.</text>
+</svg>

@@ -1,5 +1,98 @@
 export const posts = [
   {
+    slug: 'mcp-explained-for-people-with-real-work-to-do',
+    cover: '/blog/cover-mcp-explained.svg',
+    title: 'MCP, explained for people with real work to do',
+    type: 'guide',
+    date: 'September 28, 2025',
+    readingTime: '11 min',
+    color: 'paper-coral',
+    tags: ['mcp', 'protocol', 'agents'],
+    excerpt:
+      'A short, plain-English explanation of MCP — what it is, what it is not, and when it is the right tool versus when you are reaching for it because it is fashionable.',
+    seoDescription:
+      'A clear, opinionated overview of the Model Context Protocol — the architecture, the three primitives (tools, resources, prompts), transport options, and when to actually build a server.',
+    keywords: 'Model Context Protocol, MCP, Anthropic, agent, tools, resources, prompts, JSON-RPC, stdio',
+    intro:
+      `MCP is one of those acronyms that has accumulated more enthusiasm than explanation. Since I have spent enough time both reading the spec and shipping servers, I will try to give you the version I wish I had on day one.\n\nMCP is the Model Context Protocol. It is a small JSON-RPC protocol for letting LLM clients talk to servers that expose tools, data, and prompt templates. The protocol is dull on purpose. Almost all of the interesting work is in what you choose to expose.`,
+    sections: [
+      {
+        heading: 'What MCP actually is (not the marketing version)',
+        body: `An MCP server is a process you run. It exposes some combination of:\n\n- **tools** — functions a model can call (with a name, input schema, and description)\n- **resources** — read-only blobs the model can fetch (files, URLs, database query results)\n- **prompts** — saved prompt templates the user (or client) can pick up\n\nAn MCP client is a program that knows how to talk to MCP servers. Claude Desktop is one. Claude Code is one. There are others, growing.\n\nThe protocol between them is JSON-RPC over one of three transports: stdio, SSE, or HTTP. Pick the simplest one that works.\n\nThat is it. Everything else is decoration.`,
+      },
+      {
+        heading: 'Three things a server can expose',
+        body:
+`![Tools, resources, prompts. Each does a different job.](/blog/diagram-mcp-architecture.svg)\n\n- **Tools** are for **doing**. The model decides to call them. They have side effects sometimes. \`create_ticket\`, \`run_query\`, \`send_email\`.\n- **Resources** are for **reading**. The client (or user) decides to load them. They are read-only. A specific file, a specific row, a specific document.\n- **Prompts** are for **prescribing**. They are saved templates that show users how to use the server. Often forgotten; often the most useful.\n\nMost servers I have seen ship only tools. They could ship more. The combination of "tools + a prompt template that shows the right way to use them" is dramatically better than tools alone.`,
+      },
+      {
+        heading: 'The protocol is dull on purpose',
+        body: `MCP is JSON-RPC. Standard request/response, with a small set of methods: \`initialize\`, \`tools/list\`, \`tools/call\`, \`resources/list\`, \`resources/read\`, \`prompts/list\`, \`prompts/get\`. There is a standard initialization handshake. There are notifications.\n\nNobody chose JSON-RPC because it was exciting. They chose it because it is boring, and a boring foundation is the right foundation for an ecosystem that needs to interoperate. If you find yourself frustrated that the protocol is "too simple," you are looking at the wrong layer for excitement.`,
+      },
+      {
+        heading: 'When to build your own',
+        body: `Build an MCP server when:\n\n- you have a system the model would benefit from talking to (database, API, file store, internal tool)\n- you want the same integration to work in multiple clients (Claude Desktop, Claude Code, future clients)\n- you want a single place to enforce auth and rate limits between models and that system\n- "the agent should be able to do X" comes up more than twice\n\nDo not build one when:\n\n- a single tool call from a single client is enough; just write the tool and skip the server\n- the upstream system is unstable enough that a thin proxy will hide more than it solves\n- you are building it because it is fashionable; the time is not free`,
+      },
+      {
+        heading: 'Choosing a transport',
+        body: `Three options, three honest pictures:\n\n- **stdio.** The default for local servers. The client launches your server as a subprocess and talks to it over stdin/stdout. Easy to debug. Fast. Cannot be shared between machines.\n- **SSE.** The default for "I want a server my whole team can use." Server runs once, multiple clients connect over HTTP+SSE. Slight overhead vs stdio, fine for almost everything.\n- **HTTP.** Newer transport. Same shape as SSE for many cases; check current spec docs for nuance. Useful when SSE is overkill or your hosting environment hates long-lived connections.\n\nMy default: stdio for personal/dev, SSE for team-shared, HTTP if your hosting forces it. The protocol is the same; only the wire layer changes.`,
+      },
+      {
+        heading: 'Security tripwires',
+        body: `MCP servers are remote code execution surfaces if you let them be. A few rules I keep:\n\n- **Auth is your problem, not the protocol's.** MCP does not enforce auth. If your server is networked, it needs a token, and the token belongs in env, not in the URL.\n- **Treat tool inputs as adversarial.** The model does not type-check the way humans do. Validate inputs even when the schema "should" handle it. Especially for shell-out, SQL, or file paths.\n- **Tool capabilities should be the minimum needed.** Read-only first; promote to write only when needed; never expose admin or destructive tools without a separate, narrower auth boundary.\n- **Log everything.** Per-call logs (request id, tool name, latency, status). When something goes wrong, you do not want to be asking the model what it did.`,
+      },
+      {
+        heading: 'A 60-line MCP server',
+        body:
+`Pseudocode-y but accurate. A read-only Postgres MCP server in roughly this shape:\n\n\`\`\`python
+from mcp.server import Server
+from mcp.server.stdio import stdio_server
+import psycopg2, os, json
+
+server = Server("readonly-pg")
+conn = psycopg2.connect(os.environ["DB_URL"])
+
+@server.list_tools()
+async def list_tools():
+    return [{
+        "name": "run_select",
+        "description": "Run a read-only SELECT and return up to 100 rows. Use only for SELECT statements.",
+        "inputSchema": {
+            "type": "object",
+            "required": ["sql"],
+            "properties": {
+                "sql": { "type": "string", "description": "must start with SELECT" }
+            }
+        }
+    }]
+
+@server.call_tool()
+async def call_tool(name, args):
+    if name != "run_select":
+        return {"content": [{"type": "text", "text": "unknown tool"}], "isError": True}
+    sql = args["sql"].strip()
+    if not sql.lower().startswith("select"):
+        return {"content": [{"type": "text", "text": "only SELECT is allowed"}], "isError": True}
+    cur = conn.cursor()
+    cur.execute(sql)
+    rows = cur.fetchmany(100)
+    cols = [d[0] for d in cur.description]
+    out = [dict(zip(cols, r)) for r in rows]
+    return {"content": [{"type": "text", "text": json.dumps(out, default=str)}]}
+
+if __name__ == "__main__":
+    import asyncio
+    asyncio.run(stdio_server(server))
+\`\`\`\n\nAdd auth, query timeouts, and per-tool RBAC, and this is the spine of a real server. Most of the work after this point is in the tool surface, not the protocol.`,
+      },
+      {
+        heading: 'The closing rule of thumb',
+        body: `MCP is plumbing. Boring plumbing that lets your model talk to the world.\n\nThe interesting part is what you let the model talk to, in what shape, with what guardrails. Once you internalise that, you stop arguing about the protocol and start arguing about your tools — which is the right argument to be having.`,
+      },
+    ],
+  },
+
+  {
     slug: 'prompt-engineering-beyond-hello-world',
     cover: '/blog/cover-prompt-engineering.svg',
     title: 'Prompt engineering beyond hello world: patterns that actually move evals',
