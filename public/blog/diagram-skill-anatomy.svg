@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 360" role="img" aria-label="Anatomy of a skill">
+  <rect width="1000" height="360" fill="#fff8ef"/>
+  <text x="40" y="48" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">Anatomy of a skill that gets reached for</text>
+  <g transform="translate(40,90)">
+    <rect width="420" height="240" rx="20" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <rect width="420" height="40" rx="20" fill="#1d1815"/>
+    <text x="16" y="26" font-family="ui-monospace, monospace" font-size="13" fill="#f6efe6">.claude/skills/ship-pr/SKILL.md</text>
+    <text x="20" y="74" font-family="ui-monospace, monospace" font-size="13" fill="rgba(29,24,21,0.55)">---</text>
+    <text x="20" y="96" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">name: ship-pr</text>
+    <text x="20" y="118" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">description: open a PR with a generated</text>
+    <text x="20" y="138" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">  title and body. Trigger when the user</text>
+    <text x="20" y="158" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">  asks to ship, raise, open, or push a PR.</text>
+    <text x="20" y="180" font-family="ui-monospace, monospace" font-size="13" fill="rgba(29,24,21,0.55)">---</text>
+    <text x="20" y="210" font-family="ui-monospace, monospace" font-size="13" fill="#b3422f"># Steps</text>
+    <text x="20" y="230" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">1. inspect the diff vs main</text>
+  </g>
+  <g transform="translate(500,90)">
+    <text x="0" y="20" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="rgba(29,24,21,0.5)" letter-spacing="2">THE THREE THINGS THAT MATTER</text>
+    <text x="0" y="58" font-family="Inter, sans-serif" font-weight="900" font-size="15" fill="#1d1815">name</text>
+    <text x="0" y="78" font-family="Inter, sans-serif" font-size="14" fill="rgba(29,24,21,0.7)">a verb · short · matches the slash command</text>
+    <text x="0" y="118" font-family="Inter, sans-serif" font-weight="900" font-size="15" fill="#1d1815">description</text>
+    <text x="0" y="138" font-family="Inter, sans-serif" font-size="14" fill="rgba(29,24,21,0.7)">when to use it, in plain English. this is the</text>
+    <text x="0" y="158" font-family="Inter, sans-serif" font-size="14" fill="rgba(29,24,21,0.7)">field that decides if the model picks it up.</text>
+    <text x="0" y="198" font-family="Inter, sans-serif" font-weight="900" font-size="15" fill="#1d1815">body</text>
+    <text x="0" y="218" font-family="Inter, sans-serif" font-size="14" fill="rgba(29,24,21,0.7)">numbered steps the model can run. avoid</text>
+    <text x="0" y="238" font-family="Inter, sans-serif" font-size="14" fill="rgba(29,24,21,0.7)">"clever," prefer dull and reliable.</text>
+  </g>
+</svg>

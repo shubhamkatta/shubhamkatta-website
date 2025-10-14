@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="Writing a Claude Code skill cover">
+  <rect width="1200" height="600" fill="#fff8ef"/>
+  <rect x="540" y="20" width="180" height="22" rx="4" fill="#eaf7ff" opacity="0.85" transform="rotate(-3 630 31)"/>
+  <g transform="translate(90,140) rotate(-2)">
+    <rect width="440" height="340" rx="22" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <rect width="440" height="46" rx="22" fill="#1d1815"/>
+    <text x="22" y="30" font-family="ui-monospace, monospace" font-size="14" fill="#f6efe6">SKILL.md</text>
+    <text x="22" y="80" font-family="ui-monospace, monospace" font-size="14" fill="rgba(29,24,21,0.55)">---</text>
+    <text x="22" y="104" font-family="ui-monospace, monospace" font-size="14" fill="#1d1815">name: ship-pr</text>
+    <text x="22" y="128" font-family="ui-monospace, monospace" font-size="14" fill="#1d1815">description: open a PR with</text>
+    <text x="22" y="148" font-family="ui-monospace, monospace" font-size="14" fill="#1d1815">  generated title and body</text>
+    <text x="22" y="172" font-family="ui-monospace, monospace" font-size="14" fill="rgba(29,24,21,0.55)">---</text>
+    <text x="22" y="208" font-family="ui-monospace, monospace" font-size="14" fill="#b3422f"># When to use</text>
+    <text x="22" y="232" font-family="ui-monospace, monospace" font-size="14" fill="#1d1815">user types /ship-pr after</text>
+    <text x="22" y="252" font-family="ui-monospace, monospace" font-size="14" fill="#1d1815">a clean diff exists.</text>
+    <text x="22" y="288" font-family="ui-monospace, monospace" font-size="14" fill="#b3422f"># Steps</text>
+    <text x="22" y="312" font-family="ui-monospace, monospace" font-size="14" fill="#1d1815">1. read git diff</text>
+    <text x="22" y="332" font-family="ui-monospace, monospace" font-size="14" fill="#1d1815">2. draft title under 70 ch</text>
+  </g>
+  <g transform="translate(610,160)">
+    <text x="0" y="50" font-family="Inter, sans-serif" font-weight="900" font-size="48" fill="#1d1815" letter-spacing="-2">How to write</text>
+    <text x="0" y="108" font-family="Inter, sans-serif" font-weight="900" font-size="48" fill="#1d1815" letter-spacing="-2">a Claude Code skill</text>
+    <text x="0" y="160" font-family="Inter, sans-serif" font-weight="700" font-size="22" fill="#ff6b6b">that people will actually use.</text>
+    <path d="M 0 190 Q 100 175 200 192" stroke="#1d1815" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <text x="0" y="240" font-family="Inter, sans-serif" font-size="17" fill="rgba(29,24,21,0.7)">A skill is a recipe Claude reaches for</text>
+    <text x="0" y="266" font-family="Inter, sans-serif" font-size="17" fill="rgba(29,24,21,0.7)">when the situation matches. The hard</text>
+    <text x="0" y="292" font-family="Inter, sans-serif" font-size="17" fill="rgba(29,24,21,0.7)">part is the situation.</text>
+  </g>
+</svg>

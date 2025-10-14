@@ -1,5 +1,97 @@
 export const posts = [
   {
+    slug: 'how-to-write-a-claude-code-skill',
+    cover: '/blog/cover-claude-code-skill.svg',
+    title: 'How to write a Claude Code skill that people will actually use',
+    type: 'tutorial',
+    date: 'October 14, 2025',
+    readingTime: '10 min',
+    color: 'paper-yellow',
+    tags: ['claude code', 'skills', 'tutorial'],
+    excerpt:
+      'A skill is a recipe Claude reaches for when the situation matches. The hard part is the situation, not the recipe.',
+    seoDescription:
+      'Step-by-step guide to writing a Claude Code skill — SKILL.md format, trigger description, real /ship-pr example, testing, and the mistakes to avoid.',
+    keywords: 'Claude Code skill, SKILL.md, slash command, .claude/skills, agent workflow, Anthropic',
+    intro:
+      `Skills are the most under-used feature in Claude Code. People write one or two, find them useful, and then never write another one. Which is a shame, because skills are the place where "the agent works the way I want" turns into "the agent works the way I want, every time, without me typing the prompt again."\n\nThis is the short tutorial: anatomy of a skill, the part that actually matters, and a worked example you can adapt.`,
+    sections: [
+      {
+        heading: 'A skill is a recipe, not a function',
+        body: `A skill is a markdown file. Front matter on top, instructions below. Claude reads the front matter to decide whether the skill is relevant to what is happening, and reads the body when it picks the skill up.\n\nThat is it. There is no DSL, no YAML schema you have to learn, no programming. The whole format is "tell Claude when this applies and what to do."\n\nWhich is also why most skills are bad. The format is so loose that you can write a skill that does nothing. The format is also why a small amount of craft goes a long way.`,
+      },
+      {
+        heading: 'The three things that matter',
+        body:
+`![A skill is three things — a name, a description (when to use it), and steps the model can run.](/blog/diagram-skill-anatomy.svg)\n\nIn order of importance:\n\n1. **Description.** When to use this skill, in plain English. The model uses this to decide if the skill matches the current situation. This is the one that decides whether your skill ever gets used.\n2. **Name.** Short, imperative, matches the slash command. \`ship-pr\`, not \`pr-shipping-helper\`.\n3. **Body.** The steps the model should run when the skill applies.\n\nIf any of these is wrong, the skill fails for a predictable reason. A weak description means the skill is never picked. A weak body means the skill is picked and bumbled.`,
+      },
+      {
+        heading: 'The trigger description does most of the work',
+        body: `If you only edit one part of your skill, edit the description.\n\nA bad description:\n\n> "Helps with PRs."\n\nA better description:\n\n> "Use when the user asks to ship, raise, open, or push a PR. Generates a title and body from the diff and runs \`gh pr create\`. Do not use for amending an existing PR."\n\nThe better one tells the model:\n\n- the trigger phrases (ship/raise/open/push)\n- what the skill does (generates title + body, runs \`gh pr create\`)\n- when **not** to use it (amending an existing PR)\n\nThe "when not to use" line is the underrated part. It prevents the skill from being misapplied to adjacent tasks.`,
+      },
+      {
+        heading: 'Steps the model can run, not concepts to admire',
+        body: `Skill bodies fail in predictable ways:\n\n- **Too abstract.** "Make sure the PR is high quality." OK. How? The model will improvise, badly.\n- **Too prescriptive.** "Run \`git status\` exactly. If the output starts with the string 'On branch', proceed." Brittle. Things change.\n- **Just right.** Numbered steps that are concrete enough to follow and loose enough to survive a small change in environment.\n\nThe sweet spot reads like instructions for a smart, fast colleague who has not seen this project before. They know how to use git. They do not know your conventions. The body fills the gap.`,
+      },
+      {
+        heading: 'A worked example: /ship-pr',
+        body:
+`The full skill, end to end:\n\n\`\`\`md
+---
+name: ship-pr
+description: |
+  Use when the user asks to ship, raise, open, or push a PR for
+  the current branch. Generates a title and body from the diff and
+  opens the PR via \`gh pr create\`. Do not use for amending an
+  existing PR.
+---
+
+# Steps
+
+1. Run these in parallel, each via the Bash tool:
+   - \`git status\` (no -uall)
+   - \`git diff\` and \`git diff main...HEAD\`
+   - \`git log main..HEAD\` to see the commits on this branch
+   - \`git rev-parse --abbrev-ref @{u}\` to check the upstream
+
+2. If the branch is not pushed yet, push with \`-u\`. Otherwise just open the PR.
+
+3. Draft a PR title:
+   - imperative mood ("Add … " not "Added …")
+   - <70 characters
+   - no trailing punctuation
+
+4. Draft a PR body with two sections:
+   - **Summary** — 2-3 bullets, focused on the *why* not the *what*
+   - **Test plan** — checklist of TODOs for verifying the change
+
+5. Open the PR with \`gh pr create --title "…" --body "…"\`. Use a HEREDOC for the body to preserve formatting.
+
+6. Print the PR URL.
+
+# What not to do
+
+- Do not commit or amend before opening the PR.
+- Do not push to \`main\` or \`master\`.
+- Do not use \`--force\` on push.
+\`\`\`\n\nThis is short. It runs reliably. It survives most edge cases. The "What not to do" section is doing real work — it is the line between "skill that ships PRs" and "skill that occasionally force-pushes to main."`,
+      },
+      {
+        heading: 'How I test a skill before shipping it',
+        body: `Three rounds of testing, in order:\n\n1. **The right situation.** Ask Claude in a way that should trigger the skill. Did it pick the skill up? If not, the description is wrong.\n2. **The wrong situation.** Ask Claude in a way that should NOT trigger the skill. Did it stay away? If not, the description is too greedy.\n3. **The edge cases.** Run the skill in the situation it works for, but with one thing weird (no upstream branch, dirty working tree, etc.). Did it handle the weird thing or did it bumble?\n\nIf the skill survives all three, ship it. If it fails round 1 or 2, edit the description. If it fails round 3, edit the body.`,
+      },
+      {
+        heading: 'When NOT to write a skill',
+        body: `- the workflow is one tool call away from done\n- the workflow is different every time\n- you cannot describe when the skill applies in one paragraph\n- you would not run the workflow yourself the same way twice in a row\n\nA skill is an investment. You only get a return if the workflow is repetitive enough to be worth encoding. Write skills for the things you do every week, not for the things you might do someday.`,
+      },
+      {
+        heading: 'A short checklist before you ship a skill',
+        body: `- name is a verb\n- description starts with "Use when …"\n- description includes "Do not use when …"\n- body is numbered steps a careful colleague can follow\n- body has a "What not to do" section if the skill could go sideways\n- you have actually run the skill on three real situations\n- the skill is in the right place: project for team-shared, global for personal\n\nIf all seven pass, you have a skill that will get reached for. That is the whole goal.`,
+      },
+    ],
+  },
+
+  {
     slug: 'mcp-explained-for-people-with-real-work-to-do',
     cover: '/blog/cover-mcp-explained.svg',
     title: 'MCP, explained for people with real work to do',
