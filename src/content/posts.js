@@ -1,5 +1,68 @@
 export const posts = [
   {
+    slug: 'building-evals-that-dont-lie-to-you',
+    cover: '/blog/cover-evals-dont-lie.svg',
+    title: 'Building evals that don’t lie to you',
+    type: 'deep dive',
+    date: 'October 30, 2025',
+    readingTime: '11 min',
+    color: 'paper-blue',
+    tags: ['evals', 'quality', 'testing'],
+    excerpt:
+      'Aggregate scores are the comfort food of AI engineering. They will mislead you. The fix is small, slow, and worth it.',
+    seoDescription:
+      'How to design evals for LLM systems that catch real regressions — golden datasets, rule-first grading, LLM-as-judge, disagreement signal, and versioning evals.',
+    keywords: 'LLM evals, golden dataset, regression testing, LLM as judge, rule-based grading, eval design, AI quality',
+    intro:
+      `If you ever shipped a prompt change because "the eval went up," and then someone reported a bug a week later that you would have caught with a slightly different eval — welcome. We have all done it.\n\nGood evals do not promise the model is correct. They promise that **specific failure modes** are not coming back. The cheaper you can make a regression visible, the faster you can ship without breaking the parts you care about.\n\nThis post is about the small craft choices that make evals reliable. None of it is exciting; all of it has held up.`,
+    sections: [
+      {
+        heading: 'The score that lies to you',
+        body: `Most teams start with a single eval score: 78%, 82%, 85%. Numbers go up. Confidence rises.\n\nThe problem is that aggregate scores hide the cases you care about. If your eval set is 60% "easy" and 40% "real," and a prompt change improves easy cases by 4 points and breaks real ones by 2, the aggregate goes up. The product gets worse.\n\nThe fix is not to abandon the score. It is to refuse to let the score be the whole story. Slice the score by case category. Track each slice over time. Pay attention to disagreements between slices.`,
+      },
+      {
+        heading: 'A golden dataset is mostly hand-picked failure',
+        body: `Most golden datasets are too easy. The model gets them right because they are the cases you remember the model getting right.\n\nThe useful golden dataset is a list of cases you would be embarrassed to ship a regression on. Every time the model fails in the wild, that case becomes a fixture. Every time you find a footgun, that case becomes a fixture. Every time someone shows you a "weird" input, that case becomes a fixture.\n\nThe dataset grows by adding **failure**, not by adding **coverage**. You can have great coverage and still ship regressions on the cases that matter. You cannot have great failure-driven cases and ship regressions on the cases that mattered last quarter — because they are in the eval.`,
+      },
+      {
+        heading: 'Rule checks first',
+        body: `Cheap, deterministic checks before anything else:\n\n- did the output contain valid JSON when JSON was expected?\n- did the model call the right tool?\n- did the answer contain a banned phrase?\n- is the answer length within bounds?\n\nThese catch the embarrassing failures fast and free. They also remove a lot of work from your fancier graders. If a case fails the rules, you do not need to ask an LLM judge whether the case "feels right" — you already know.`,
+      },
+      {
+        heading: 'LLM-as-judge: useful but slippery',
+        body: `LLM judges are right often enough to be useful and wrong often enough to be dangerous. Three habits keep the danger small:\n\n- **Use a small, fast model.** Haiku-class for the judge. The judge is not where you spend.\n- **Show the rubric.** Do not say "is this good?" Say "is this good according to these three criteria; reply with a JSON verdict and a one-line reason."\n- **Sample-grade your grader.** Once a quarter, hand-grade 30 cases the judge graded, and look at where you disagree. The judge drifts. Your eval should know.\n\nThe biggest practical mistake is using the same model as judge as you are evaluating. The judge tends to flatter the system that thinks like it. If you can use a different model family for the judge, do.`,
+      },
+      {
+        heading: 'Disagreement is a feature, not a bug',
+        body: `Two graders that always agree are one grader. The interesting cases are where the rule check says ✓ and the judge says ✗ (or vice versa).\n\nThese disagreements are where you find:\n\n- valid JSON that answered the wrong question\n- the right answer in a forbidden format\n- a tool called correctly but on the wrong entity\n\nDo not paper over disagreement with averaging. Surface it. Read it. Often the case itself is wrong (the rule was too strict, or the rubric was vague), and fixing the case fixes a slow leak in your eval.`,
+      },
+      {
+        heading: 'Version evals, not models',
+        body: `Eval results are only meaningful if the eval did not change. So the eval set itself becomes a versioned artifact.\n\nWhat I version:\n\n- the dataset (jsonl in the repo)\n- the rubrics for any LLM-as-judge cases\n- the rule definitions\n- the model used as judge\n\nWhat I do **not** version:\n\n- the model under test (you want to compare runs across model versions)\n- the prompt under test (same reason)\n\nWhen the eval set changes meaningfully, mark a new version. Reports across versions get a "v0.4 → v0.5" annotation. This sounds like overhead until your eval set has been around for six months and someone asks "did this score go up because the prompt got better, or because we removed the ten cases that kept failing."`,
+      },
+      {
+        heading: 'A regression I caught last week',
+        body: `A small prompt change. Aggregate went from 81% to 84%. I was about to ship.\n\nThe diff report — only cases that flipped vs the last run — showed:\n\n\`\`\`
++ ticket-014: now passes (was format violation)
++ ticket-019: now passes (better tool selection)
++ ticket-022: now passes (tone)
++ ticket-024: now passes (tone)
+- ticket-031: now fails (called update_ticket instead of create_ticket)
+- ticket-033: now fails (missing tenant_id arg)
+\`\`\`\n\nThe two failures were exactly the kind of mistake that is invisible in aggregate and obvious in diff. The new prompt was more conversational, and the model was leaning on the conversational frame instead of the tool-use frame.\n\nI did not ship. The diff caught what the score hid.\n\n![A made-up but realistic eval slice — aggregate looks fine; the dimensions tell the real story.](/blog/cover-evals-dont-lie.svg)`,
+      },
+      {
+        heading: 'A short list of habits that have held up',
+        body: `- save every run; diff against the previous one; the diff is what you read first\n- slice scores by case category; the global number is the last thing you check\n- treat every production failure as a future fixture\n- keep the dataset in the repo; in PRs, eval changes are reviewed like code changes\n- run evals on every prompt change, no exceptions\n- never grade with the same model the prompt is targeting`,
+      },
+      {
+        heading: 'The honest closer',
+        body: `Evals are slow, unsexy, and the one thing that lets you ship faster without breaking what works. The teams that "move fast" without them eventually stop moving, because every change becomes a debate about whether it broke something.\n\nThe teams that move fast **with** them argue about evidence instead of feelings. Pick the second kind.`,
+      },
+    ],
+  },
+
+  {
     slug: 'how-to-write-a-claude-code-skill',
     cover: '/blog/cover-claude-code-skill.svg',
     title: 'How to write a Claude Code skill that people will actually use',

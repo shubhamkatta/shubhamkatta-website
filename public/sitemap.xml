@@ -32,6 +32,12 @@
   </url>
 
   <url>
+    <loc>https://shubhamkatta.com/writing/building-evals-that-dont-lie-to-you</loc>
+    <lastmod>2025-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://shubhamkatta.com/writing/how-to-write-a-claude-code-skill</loc>
     <lastmod>2025-10-14</lastmod>
     <changefreq>monthly</changefreq>
