@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="The psychology of work nobody adds to sprint planning">
+  <rect width="1200" height="600" fill="#eaf7ff"/>
+  <rect x="540" y="30" width="180" height="22" rx="4" fill="#ffe9e4" opacity="0.85" transform="rotate(-2 630 41)"/>
+  <g transform="translate(120,160)">
+    <line x1="180" y1="120" x2="180" y2="125" stroke="rgba(29,24,21,0.3)" stroke-width="2" stroke-dasharray="4,4"/>
+    <line x1="0" y1="125" x2="380" y2="125" stroke="rgba(29,24,21,0.4)" stroke-width="2"/>
+    <text x="0" y="118" font-family="Inter, sans-serif" font-size="12" font-weight="900" fill="rgba(29,24,21,0.55)" letter-spacing="2">SPRINT BOARD ↑</text>
+    <text x="0" y="145" font-family="Inter, sans-serif" font-size="12" font-weight="900" fill="rgba(29,24,21,0.55)" letter-spacing="2">↓ ACTUAL EMOTIONAL WEATHER</text>
+    <g transform="translate(0,30)">
+      <rect width="80" height="60" rx="8" fill="#fff6db" stroke="#1d1815" stroke-width="2"/>
+      <text x="40" y="24" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.55)">TODO</text>
+      <text x="40" y="40" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">TKT-101</text>
+    </g>
+    <g transform="translate(100,30)">
+      <rect width="80" height="60" rx="8" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/>
+      <text x="40" y="24" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.55)">DOING</text>
+      <text x="40" y="40" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">TKT-094</text>
+    </g>
+    <g transform="translate(200,30)">
+      <rect width="80" height="60" rx="8" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+      <text x="40" y="24" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.55)">REVIEW</text>
+      <text x="40" y="40" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">TKT-088</text>
+    </g>
+    <g transform="translate(300,30)">
+      <rect width="80" height="60" rx="8" fill="rgba(163,228,163,0.4)" stroke="#1d1815" stroke-width="2"/>
+      <text x="40" y="24" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.55)">DONE</text>
+      <text x="40" y="40" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">TKT-072</text>
+    </g>
+    <g transform="translate(0,160)" font-family="Inter, sans-serif" font-size="13">
+      <text x="0" y="0" fill="rgba(29,24,21,0.7)">— a quiet resentment from last sprint</text>
+      <text x="0" y="22" fill="rgba(29,24,21,0.7)">— two people avoiding each other in standup</text>
+      <text x="0" y="44" fill="rgba(29,24,21,0.7)">— ego defending an architectural decision</text>
+      <text x="0" y="66" fill="rgba(29,24,21,0.7)">— fear of being exposed by a "simple" question</text>
+      <text x="0" y="88" fill="#ff6b6b" font-weight="700">— hesitation, dressed as 'technical complexity'</text>
+    </g>
+  </g>
+  <g transform="translate(620,200)">
+    <text x="0" y="50" font-family="Inter, sans-serif" font-weight="900" font-size="44" fill="#1d1815" letter-spacing="-2">The psychology of work</text>
+    <text x="0" y="110" font-family="Inter, sans-serif" font-weight="900" font-size="44" fill="#1d1815" letter-spacing="-2">nobody adds to sprint</text>
+    <text x="0" y="170" font-family="Inter, sans-serif" font-weight="900" font-size="44" fill="#1d1815" letter-spacing="-2">planning.</text>
+    <text x="0" y="220" font-family="Inter, sans-serif" font-weight="700" font-size="20" fill="#ff6b6b">velocity charts can't see weather.</text>
+  </g>
+</svg>

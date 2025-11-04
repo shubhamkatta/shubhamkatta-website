@@ -1,5 +1,50 @@
 export const posts = [
   {
+    slug: 'the-psychology-of-work-nobody-adds-to-sprint-planning',
+    cover: '/blog/cover-psychology-of-work.svg',
+    title: 'The psychology of work nobody adds to sprint planning',
+    type: 'observation',
+    date: 'November 4, 2025',
+    readingTime: '6 min',
+    color: 'paper-blue',
+    tags: ['work', 'teams', 'psychology'],
+    excerpt:
+      'Every sprint has visible tasks and invisible tensions. The tickets show what the team is building. They rarely show what people are avoiding.',
+    seoDescription:
+      'On the emotional weather behind project plans — what velocity charts can\'t see, the invisible loads inside every sprint, and how to make some of it visible without making it weird.',
+    keywords: 'sprint planning, team psychology, software teams, emotional labour, project management',
+    intro:
+      `Every sprint has visible tasks and invisible tensions. The tickets show what the team is building. They rarely show what people are avoiding, defending, exaggerating, or silently resenting.\n\nA lot of work is emotional weather pretending to be project management. The velocity chart does not capture hesitation, ego, fear of being exposed, or the small desire to sound right in front of the wrong people.`,
+    sections: [
+      {
+        heading: 'the ticket vs. the tension',
+        body: `A ticket says "implement X." The tension is "I disagreed with this design and I'm doing it anyway." A ticket says "fix bug Y." The tension is "this bug is in code I wrote two years ago and reading it now feels personal." A ticket says "review PR Z." The tension is "the author is more senior than me and I'm not sure how candid I'm allowed to be."\n\nNone of these tensions show up in the sprint board. All of them shape how the work actually goes. They are the part the team is paid to navigate but rarely paid to discuss.`,
+      },
+      {
+        heading: 'emotional weather pretending to be project management',
+        body:
+`If you sit in enough planning meetings, you start to notice that a lot of what gets discussed isn't really about scope or estimation. It is about who feels safe enough to commit to which story, who is privately worried about the quarter, who is using "complexity" to defer something they don't want to admit they don't want to do.\n\n![What the sprint board shows vs what the sprint actually contains.](/blog/diagram-iceberg-work.svg)\n\nNone of this is bad. It is just human. Pretending it isn't there is what makes it dangerous.`,
+      },
+      {
+        heading: 'what velocity charts can\'t see',
+        body: `A short list of things the chart misses:\n\n- the day someone decides quietly they are leaving\n- the slow build-up of resentment between two engineers who used to be friends\n- the manager who is privately panicking about a metric and hiding it from the team\n- the staff engineer who is bored and starting to pick fights as a substitute for stimulation\n- the new hire who is technically up to speed and emotionally still drifting\n\nAny one of these affects throughput more than any individual ticket. None of them are estimable in story points.`,
+      },
+      {
+        heading: 'a short list of invisible loads',
+        body: `Things people carry into sprints without naming:\n\n- the cost of pretending to like a workflow they think is dumb\n- the cost of being the person who keeps track of things nobody assigned them to\n- the cost of being on a team where the loudest person is also the wrongest, and the team is too tired to push back\n- the cost of small daily dishonesty — "fine," "no concerns," "all good" — accumulating across months\n- the cost of representing the team to leadership in a way that does not match how the team is actually doing\n\nThe tickets do not weigh these. The people are weighing them anyway.`,
+      },
+      {
+        heading: 'making some of it visible without making it weird',
+        body: `You cannot turn sprint planning into therapy. You can, however, make small spaces where the invisible stuff is welcome.\n\nThings I have seen work:\n\n- a 5-minute "what is making this sprint heavier than it should be" round, optional, no-judgement\n- the explicit norm that anyone can flag a ticket as "I'm not sure I'm the right person for this," with no follow-up shame\n- 1:1s that are actually 1:1s, not status meetings in disguise\n- naming team-wide patterns out loud, in a meeting, calmly: "we keep doing X. Has anyone else noticed? Is it bothering anyone else?"\n\nThe goal is not to surface every feeling. The goal is to lower the cost of surfacing the few that matter.`,
+      },
+      {
+        heading: 'the fact this exists is not a problem',
+        body: `Teams that pretend they have no emotional weather are not more efficient. They are just spending the same energy underground, where it can't be redirected.\n\nMaking some of it visible is not soft. It is operationally cheap and saves entire quarters from being privately wasted. The people who treat this as a distraction from the "real work" tend to be the same people whose teams keep mysteriously losing momentum and never quite figuring out why.\n\nThe weather is the work. It always was.`,
+      },
+    ],
+  },
+
+  {
     slug: 'building-evals-that-dont-lie-to-you',
     cover: '/blog/cover-evals-dont-lie.svg',
     title: 'Building evals that don’t lie to you',

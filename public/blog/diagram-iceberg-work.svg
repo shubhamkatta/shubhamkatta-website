@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 360" role="img" aria-label="The work above the line vs the work below the line">
+  <rect width="1000" height="360" fill="#fff8ef"/>
+  <text x="40" y="44" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">What the sprint board shows vs what the sprint actually contains</text>
+  <line x1="40" y1="120" x2="960" y2="120" stroke="#1d1815" stroke-width="2"/>
+  <g transform="translate(40,80)">
+    <text x="0" y="0" font-family="Inter, sans-serif" font-size="12" font-weight="900" fill="rgba(29,24,21,0.55)" letter-spacing="2">ABOVE THE LINE · TRACKED</text>
+  </g>
+  <g transform="translate(40,90)" font-family="Inter, sans-serif" font-size="14">
+    <text x="0" y="20" fill="#1d1815">tickets · estimates · velocity · standups · burndown</text>
+  </g>
+  <g transform="translate(40,140)">
+    <text x="0" y="0" font-family="Inter, sans-serif" font-size="12" font-weight="900" fill="rgba(29,24,21,0.55)" letter-spacing="2">BELOW THE LINE · WHAT THE WORK ACTUALLY COSTS</text>
+    <g transform="translate(0,20)" font-family="Inter, sans-serif" font-size="14" fill="rgba(29,24,21,0.78)">
+      <text x="0" y="0">— a quiet resentment from last sprint</text>
+      <text x="0" y="22">— two people avoiding each other in standup</text>
+      <text x="0" y="44">— ego defending an architectural decision</text>
+      <text x="0" y="66">— fear of being exposed by a "simple" question</text>
+      <text x="0" y="88">— hesitation, dressed as 'technical complexity'</text>
+      <text x="0" y="110">— the small desire to sound right in front of the wrong people</text>
+      <text x="0" y="132">— exhaustion, especially the polite kind</text>
+      <text x="0" y="154" fill="#ff6b6b" font-weight="700">— a story someone is privately telling themselves about who they are</text>
+    </g>
+  </g>
+</svg>
