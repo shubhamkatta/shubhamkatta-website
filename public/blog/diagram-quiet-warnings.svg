@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 320" role="img" aria-label="The quiet warnings most systems give before they break">
+  <rect width="1000" height="320" fill="#fff8ef"/>
+  <text x="40" y="46" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">The quiet warnings most systems give before they break</text>
+  <text x="40" y="72" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">none of these look like crises. all of them are.</text>
+  <g transform="translate(40,100)">
+    <rect width="220" height="80" rx="14" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <text x="14" y="28" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#ff6b6b" letter-spacing="2">SIGN 01</text>
+    <text x="14" y="52" font-family="Inter, sans-serif" font-size="13" fill="#1d1815">people stop asking</text>
+    <text x="14" y="68" font-family="Inter, sans-serif" font-size="13" fill="#1d1815">basic questions</text>
+  </g>
+  <g transform="translate(280,100)">
+    <rect width="220" height="80" rx="14" fill="#fff6db" stroke="#1d1815" stroke-width="2"/>
+    <text x="14" y="28" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#ff6b6b" letter-spacing="2">SIGN 02</text>
+    <text x="14" y="52" font-family="Inter, sans-serif" font-size="13" fill="#1d1815">dashboards comfort</text>
+    <text x="14" y="68" font-family="Inter, sans-serif" font-size="13" fill="#1d1815">more than they inform</text>
+  </g>
+  <g transform="translate(520,100)">
+    <rect width="220" height="80" rx="14" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/>
+    <text x="14" y="28" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#ff6b6b" letter-spacing="2">SIGN 03</text>
+    <text x="14" y="52" font-family="Inter, sans-serif" font-size="13" fill="#1d1815">two people are the</text>
+    <text x="14" y="68" font-family="Inter, sans-serif" font-size="13" fill="#1d1815">unofficial memory</text>
+  </g>
+  <g transform="translate(760,100)">
+    <rect width="220" height="80" rx="14" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/>
+    <text x="14" y="28" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#ff6b6b" letter-spacing="2">SIGN 04</text>
+    <text x="14" y="52" font-family="Inter, sans-serif" font-size="13" fill="#1d1815">workarounds become</text>
+    <text x="14" y="68" font-family="Inter, sans-serif" font-size="13" fill="#1d1815">"how we do things"</text>
+  </g>
+  <g transform="translate(40,210)">
+    <rect width="500" height="80" rx="14" fill="#1d1815"/>
+    <text x="14" y="32" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="rgba(255,255,255,0.55)" letter-spacing="2">WHAT IT FEELS LIKE FROM INSIDE</text>
+    <text x="14" y="56" font-family="Inter, sans-serif" font-size="14" fill="#f6efe6">"things are fine, just busy"</text>
+    <text x="14" y="74" font-family="Inter, sans-serif" font-size="14" fill="#a3e4a3">— for about three quarters too long.</text>
+  </g>
+  <g transform="translate(560,210)">
+    <text x="0" y="20" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="rgba(29,24,21,0.5)" letter-spacing="2">THE TEST</text>
+    <text x="0" y="46" font-family="Inter, sans-serif" font-size="14" fill="#1d1815">if a new joiner can't get</text>
+    <text x="0" y="64" font-family="Inter, sans-serif" font-size="14" fill="#1d1815">unstuck without dm-ing</text>
+    <text x="0" y="82" font-family="Inter, sans-serif" font-size="14" fill="#1d1815">a specific person, the system</text>
+    <text x="0" y="100" font-family="Inter, sans-serif" font-size="14" fill="#ff6b6b">is already failing.</text>
+  </g>
+</svg>

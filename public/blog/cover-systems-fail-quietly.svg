@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="Why systems fail quietly">
+  <rect width="1200" height="600" fill="#ffe9e4"/>
+  <rect x="540" y="30" width="160" height="22" rx="4" fill="#eaf7ff" opacity="0.85" transform="rotate(-2 620 41)"/>
+  <g transform="translate(120,170)">
+    <rect width="440" height="280" rx="18" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <text x="20" y="34" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="rgba(29,24,21,0.55)" letter-spacing="2">DASHBOARD · ALL GREEN</text>
+    <line x1="20" y1="48" x2="420" y2="48" stroke="rgba(29,24,21,0.18)"/>
+    <g transform="translate(20,72)">
+      <rect width="120" height="48" rx="10" fill="rgba(163,228,163,0.35)"/>
+      <text x="14" y="20" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.5)">uptime</text>
+      <text x="14" y="38" font-family="ui-monospace, monospace" font-size="14" font-weight="900" fill="#1d1815">99.99%</text>
+    </g>
+    <g transform="translate(150,72)">
+      <rect width="120" height="48" rx="10" fill="rgba(163,228,163,0.35)"/>
+      <text x="14" y="20" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.5)">throughput</text>
+      <text x="14" y="38" font-family="ui-monospace, monospace" font-size="14" font-weight="900" fill="#1d1815">on track</text>
+    </g>
+    <g transform="translate(280,72)">
+      <rect width="120" height="48" rx="10" fill="rgba(163,228,163,0.35)"/>
+      <text x="14" y="20" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.5)">SLAs</text>
+      <text x="14" y="38" font-family="ui-monospace, monospace" font-size="14" font-weight="900" fill="#1d1815">all met</text>
+    </g>
+    <g transform="translate(20,140)">
+      <rect width="380" height="60" rx="10" fill="rgba(255,107,107,0.08)" stroke="#ff6b6b" stroke-width="2" stroke-dasharray="6,6"/>
+      <text x="14" y="24" font-family="ui-monospace, monospace" font-size="12" font-weight="900" fill="#ff6b6b">NOT ON THE DASHBOARD</text>
+      <text x="14" y="44" font-family="ui-monospace, monospace" font-size="12" fill="rgba(29,24,21,0.7)">two people are the unofficial memory of the system</text>
+    </g>
+    <text x="20" y="232" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.55)">looks fine. has been asking for help for months.</text>
+  </g>
+  <g transform="translate(640,200)">
+    <text x="0" y="50" font-family="Inter, sans-serif" font-weight="900" font-size="48" fill="#1d1815" letter-spacing="-2">Why systems</text>
+    <text x="0" y="115" font-family="Inter, sans-serif" font-weight="900" font-size="48" fill="#1d1815" letter-spacing="-2">fail quietly.</text>
+    <text x="0" y="165" font-family="Inter, sans-serif" font-weight="700" font-size="22" fill="#ff6b6b">they lose clarity first.</text>
+  </g>
+</svg>

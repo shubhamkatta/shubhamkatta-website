@@ -1,5 +1,51 @@
 export const posts = [
   {
+    slug: 'why-systems-fail-quietly',
+    cover: '/blog/cover-systems-fail-quietly.svg',
+    title: 'Why systems fail quietly',
+    type: 'observation',
+    date: 'November 6, 2025',
+    readingTime: '7 min',
+    color: 'paper-coral',
+    tags: ['systems', 'organizations', 'leadership'],
+    excerpt:
+      'Failure usually arrives politely. By the time the real break happens, the system has been asking for help for months.',
+    seoDescription:
+      'Most systems do not collapse dramatically. They lose clarity first. A close look at the quiet warnings and the patterns we are taught to ignore.',
+    keywords: 'systems thinking, organisational failure, leadership, dysfunction, dashboards, technical debt',
+    intro:
+      `Most systems do not collapse dramatically. They lose clarity first. A team stops asking basic questions. A dashboard begins to look more reassuring than useful. The same two people become the unofficial memory of the project.\n\nFailure usually arrives politely. It comes dressed as minor delays, workarounds, and the growing normalcy of confusion. By the time the real break happens, the system has been asking for help for months.`,
+    sections: [
+      {
+        heading: 'the first warning is loss of clarity',
+        body: `Healthy systems generate clarity as a side effect. People know what they are responsible for. New joiners can find their way without an oracle. Decisions made last quarter are still findable.\n\nThe first sign of decay is that this stops being true. Not all at once. The questions get a little vaguer. The answers depend on who you ask. The doc that used to explain how the thing worked is still there, but everyone knows it is out of date and nobody has rewritten it.\n\nThis is the warning. People rarely treat it like one because nothing is on fire.`,
+      },
+      {
+        heading: 'reassuring dashboards',
+        body:
+`The most dangerous dashboard is the one that is mostly green. It looks fine. It tells you what you wanted to hear. It is, at the same time, ignoring the thing that is actually breaking.\n\nReassuring dashboards happen because the metrics were chosen by the people who would be embarrassed by the bad ones. Over time, the dashboard becomes a curated comfort instead of an instrument. It tells you the things going well, and quietly stops measuring the things that could expose someone.\n\nA good test: when the dashboard is most green, are people internally most calm? If the answer is "no, actually we are tense," your dashboard is lying to you.`,
+      },
+      {
+        heading: 'the unofficial memory',
+        body: `In every quietly-failing system, there are usually two people who are the unofficial memory. They know the history. They know who actually owns the gnarly thing. They know where the bodies are.\n\nThis sounds useful. It is, on day one. It is catastrophic by year three.\n\nWhen institutional knowledge lives in two heads, the system has effectively single-pointed itself. If those two people leave, the system loses its history overnight. The cost is not just turnover. It is the long, slow rebuild of context that nobody had documented because the two people were always there.`,
+      },
+      {
+        heading: 'the four signs we were taught to ignore',
+        body:
+`Most teams have been trained to overlook the early warnings.\n\n![Four quiet warnings, each easy to miss in isolation, dangerous in aggregate.](/blog/diagram-quiet-warnings.svg)\n\nIn isolation, none of these would alarm anyone. In combination, they are the early stages of system rot. The reason they go unaddressed is that fixing any one of them is unrewarding political work, while ignoring all of them looks like normal busyness.\n\nThe shorthand version, in case it helps:\n\n- people stop asking basic questions in meetings, because asking them now feels embarrassing\n- workarounds get repeated often enough to become "how we do things"\n- new joiners need a specific person to get unstuck on tasks that should be self-serve\n- everyone is busy, and nobody can clearly say what they shipped last quarter`,
+      },
+      {
+        heading: 'what to do when you notice the pattern',
+        body: `Three useful moves, in order of cost:\n\n- **make the invisible visible.** Document one critical workflow that currently lives in someone's head. The act of writing it down forces a conversation about what is actually true.\n- **introduce a "dumb question" norm.** Make it explicitly safe to ask the basic question. The person who asks it is doing the team a service. Reward it.\n- **invite a stranger.** Get someone outside the system to walk through a flow with you. Their confusion will surface gaps your team has been quietly stepping over for months.\n\nNone of these are heroic. All of them work. The trick is to do them while the system is still mostly fine, because once it is on fire, you no longer have the slack to do them at all.`,
+      },
+      {
+        heading: 'the quiet ones are the dangerous ones',
+        body: `Loud failures are rare. They get attention, resources, and post-mortems. The system that fails loudly often recovers.\n\nThe dangerous failures are the ones that look like normal life until they don't. They take longer to surface, they accumulate larger blast radius, and by the time anyone names them, the muscle memory of looking the other way is so strong that the naming itself feels rude.\n\nThe most useful thing you can do for a system you care about is to be the person who points at the quiet decay before it becomes loud. You will not always be thanked for it. The system will be, eventually, even if it can't say so.`,
+      },
+    ],
+  },
+
+  {
     slug: 'the-psychology-of-work-nobody-adds-to-sprint-planning',
     cover: '/blog/cover-psychology-of-work.svg',
     title: 'The psychology of work nobody adds to sprint planning',
