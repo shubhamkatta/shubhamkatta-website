@@ -1,5 +1,57 @@
 export const posts = [
   {
+    slug: 'claude-code-in-production-a-field-guide',
+    cover: '/blog/cover-claude-code-production.svg',
+    title: 'Claude Code, in production: a field guide',
+    type: 'field notes',
+    date: 'November 11, 2025',
+    readingTime: '12 min',
+    color: 'paper-yellow',
+    tags: ['claude code', 'production', 'workflow'],
+    excerpt:
+      'Eight months of Claude Code on a real codebase. The boring habits that keep things from breaking on a Friday afternoon.',
+    seoDescription:
+      'Practical patterns for using Claude Code in production codebases — CLAUDE.md, permissions, hooks, slash commands, MCP, and the small habits that prevent regressions.',
+    keywords: 'Claude Code production, CLAUDE.md, permissions, hooks, slash commands, MCP, real codebase',
+    intro:
+      `I have been using Claude Code on a real, busy codebase for the better part of a year. The honest summary: it is a force multiplier when configured well, an unpredictable intern when not. The difference is mostly in the configuration files and the small habits, not the model.\n\nThis is the field guide. Not a hype piece. Things that have actually held up.`,
+    sections: [
+      {
+        heading: 'CLAUDE.md is your contract',
+        body: `The most-read document Claude has on your project is \`CLAUDE.md\`. It is loaded on every turn. Treat it like a contract between you and the agent.\n\nThings worth putting in:\n\n- the dev/test/lint commands\n- code conventions that are not visible from the code (e.g. "we never use \`any\` in TypeScript; if you reach for it, you have missed a type")\n- the deploy story, in two sentences\n- anything that would surprise a new contributor\n- "do not" rules that have bitten people before\n\nThings to leave out:\n\n- code that is in the codebase\n- detailed architecture you can derive from the code itself\n- "philosophy" that does not change behaviour\n\nThe rule of thumb: if removing a line from CLAUDE.md would not change Claude's actions, the line is not earning its place.`,
+      },
+      {
+        heading: 'Permissions: deny first, then earn',
+        body: `Default Claude Code permissions are fine for a quick task. They are too permissive for a shared production project.\n\nThe shape that has held up for me:\n\n- **deny** anything destructive without confirmation: \`rm -rf:*\`, \`git push --force:*\`, \`git reset --hard:*\`\n- **allow** read-only investigation: \`git status\`, \`git diff:*\`, \`ls:*\`, \`rg:*\`, \`cat:*\` (limited paths)\n- **allow** the project's test and lint commands\n- prompt for everything else\n\nSetting this in the team's \`.claude/settings.json\` and committing it means everyone on the project gets the same speedbumps in the same places. New teammate onboarding becomes "git pull" rather than "ask Slack what to allow."`,
+      },
+      {
+        heading: 'Hooks I run on every project',
+        body: `Three hooks, each small:\n\n- \`PostToolUse\` on \`Edit|Write\` runs the formatter. The formatter handles its own complaints.\n- \`PreToolUse\` on \`Bash\` greps for force-push to protected branches and exits non-zero. The hook is the only way to make this rule structurally true.\n- \`Stop\` fires a desktop notification. Long tasks plus tab-switching equal "wait, when did this finish?" The Stop hook fixes that.\n\nThis is also covered in [the hooks post](/writing/claude-code-hooks-slash-commands-and-settings) if you want the JSON.`,
+      },
+      {
+        heading: 'Skills I actually use',
+        body: `\`/review\`, \`/security-review\`, \`/ship-pr\`, \`/loop\`, \`/init\`. Plus two project-specific ones:\n\n- \`/audit-tenant\` — checks every changed query for tenant-scope filters; this codebase has been bitten by missing tenant filters in the past, so the skill is a literal contract\n- \`/migrate-config\` — handles a recurring config migration we do every few weeks; less interesting than \`/audit-tenant\`, more frequently used\n\nThe pattern: generic skills are starting points. The skills that pay back are the ones tied to your project's history.`,
+      },
+      {
+        heading: 'MCP servers that earn their keep',
+        body: `Claude Code can connect to MCP servers. The servers that have held up on this project:\n\n- a thin Postgres server with **read-only** access for ad-hoc questions\n- our internal threat-intel server (covered in [Three MCP servers I built](/writing/mcp-servers-i-built-and-what-they-taught-me))\n- the GitHub server for issue/PR context\n\nWhat did not last:\n\n- a server that wrapped our deploy tool — too risky, easy to misuse, demoted to a documented runbook\n- a server with too-wide tools — replaced with narrower tools that the agent picked correctly more often\n\nThe rule of thumb: if your MCP server lets the agent do things you would not let an intern do unsupervised, you have not built a server, you have built a hole.`,
+      },
+      {
+        heading: 'The Friday afternoon test',
+        body: `My informal test for whether a tool, skill, or hook is "production ready":\n\n> If this fires unexpectedly at 4pm on a Friday, while I am two beers in at a friend's place, will I be glad it exists?\n\nIt is a stupid little heuristic. It catches a lot. Anything that auto-commits, auto-pushes, auto-merges, or auto-DMs the team fails the test. Anything read-only, anything reversible, anything that surfaces information instead of taking action, passes.\n\nProduction is mostly Friday afternoon, statistically. Build for it.`,
+      },
+      {
+        heading: 'Things people learn the hard way',
+        body: `- **Do not skip hooks with --no-verify.** If a pre-commit hook fails, the right answer is to fix the underlying issue. The wrong answer is to bypass it. Treat hook bypass like silencing a smoke alarm.\n- **Do not amend pushed commits.** Creating new commits is reversible; rewriting shared history is not.\n- **Verify before deleting.** Unfamiliar files might be the user's in-progress work. "I'll just clean this up" is the most dangerous sentence in version control.\n- **Watch for context bloat.** When the agent feels slower or more vague, the prompt has probably grown without you noticing. Trim.\n\nNone of these are surprising. All of them have caught me at least once.`,
+      },
+      {
+        heading: 'A short list of things I would not skip on a new project',
+        body: `1. Write a starter CLAUDE.md. \`/init\` does most of the work.\n2. Commit a tight \`.claude/settings.json\` with permissions and the format-on-edit hook.\n3. Add \`/review\`, \`/ship-pr\`, and \`/security-review\` to the project's slash commands.\n4. Hook up the read-only MCPs you actually use.\n5. Don't add anything else until something breaks.\n\nThe minimal setup beats the maximalist setup, every time. You can always add. Removing is harder once a teammate is depending on it.`,
+      },
+    ],
+  },
+
+  {
     slug: 'why-systems-fail-quietly',
     cover: '/blog/cover-systems-fail-quietly.svg',
     title: 'Why systems fail quietly',

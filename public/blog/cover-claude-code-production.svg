@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="Claude Code in production cover">
+  <rect width="1200" height="600" fill="#fff6db"/>
+  <g transform="translate(80,140) rotate(-2)">
+    <rect width="480" height="320" rx="22" fill="#1d1815"/>
+    <circle cx="22" cy="22" r="6" fill="#ff6b6b"/>
+    <circle cx="42" cy="22" r="6" fill="#ffd166"/>
+    <circle cx="62" cy="22" r="6" fill="#a3e4a3"/>
+    <text x="22" y="80" fill="#9eb7ff" font-family="ui-monospace, monospace" font-size="16">~/repo $ claude</text>
+    <text x="22" y="110" fill="#a3e4a3" font-family="ui-monospace, monospace" font-size="14">✓ CLAUDE.md loaded · 4 sections</text>
+    <text x="22" y="134" fill="#a3e4a3" font-family="ui-monospace, monospace" font-size="14">✓ permissions: skim · run · edit</text>
+    <text x="22" y="158" fill="#a3e4a3" font-family="ui-monospace, monospace" font-size="14">✓ hooks: pre-commit-format · stop-tts</text>
+    <text x="22" y="182" fill="#a3e4a3" font-family="ui-monospace, monospace" font-size="14">✓ skills: /review · /ship-pr · /security-review</text>
+    <text x="22" y="206" fill="#a3e4a3" font-family="ui-monospace, monospace" font-size="14">✓ mcp: github · postgres · linear</text>
+    <text x="22" y="248" fill="#f6efe6" font-family="ui-monospace, monospace" font-size="15">&gt; ship the auth fix</text>
+    <rect x="22" y="262" width="380" height="6" rx="3" fill="rgba(255,255,255,0.18)"/>
+    <rect x="22" y="274" width="220" height="6" rx="3" fill="rgba(255,255,255,0.12)"/>
+  </g>
+  <g transform="translate(630,160)">
+    <text x="0" y="50" font-family="Inter, sans-serif" font-weight="900" font-size="48" fill="#1d1815" letter-spacing="-2">Claude Code,</text>
+    <text x="0" y="118" font-family="Inter, sans-serif" font-weight="900" font-size="48" fill="#1d1815" letter-spacing="-2">in production.</text>
+    <text x="0" y="170" font-family="Inter, sans-serif" font-weight="700" font-size="22" fill="#ff6b6b">a field guide.</text>
+    <text x="0" y="220" font-family="Inter, sans-serif" font-size="17" fill="rgba(29,24,21,0.7)">CLAUDE.md, permissions, hooks, skills,</text>
+    <text x="0" y="246" font-family="Inter, sans-serif" font-size="17" fill="rgba(29,24,21,0.7)">and the boring habits that keep things</text>
+    <text x="0" y="272" font-family="Inter, sans-serif" font-size="17" fill="rgba(29,24,21,0.7)">from breaking at 4pm on a Friday.</text>
+  </g>
+</svg>
