@@ -1,5 +1,49 @@
 export const posts = [
   {
+    slug: 'some-truths-arrive-wearing-jokes',
+    cover: '/blog/cover-truths-jokes.svg',
+    title: 'Some truths arrive wearing jokes',
+    type: 'observation',
+    date: 'November 19, 2025',
+    readingTime: '5 min',
+    color: 'paper-yellow',
+    tags: ['humour', 'honesty', 'culture'],
+    excerpt:
+      'Humour gets away with things seriousness cannot. That is why jokes survive where honest sentences get rejected.',
+    seoDescription:
+      'Why a well-timed joke can expose a culture, a relationship, or a meeting faster than polished language ever will — and where the line is.',
+    keywords: 'humour, honesty, communication, culture, comedy, candor',
+    intro:
+      `Humour gets away with things seriousness cannot. It can enter a room without being announced. It can tell the truth before people have prepared their defenses.\n\nThat is why jokes often survive where honest sentences get rejected. A well-timed joke can expose a culture, a relationship, or a meeting faster than polished language ever will.`,
+    sections: [
+      {
+        heading: 'the joke as a side door',
+        body: `Honest sentences usually have to go through the front door. They get inspected, doubted, and softened on the way in. By the time they reach the room, half the truth has been confiscated.\n\nA joke comes in through the side door. Nobody is checking. The audience laughs, then realises a second later what they were laughing at. By then it is too late to disagree. The truth has already arrived.\n\nThis is why so much actual feedback in organisations travels through humour. The line "anyway, the planning is a vibe at this point" carries an entire critique that nobody could have said in plain language without a meeting about it.`,
+      },
+      {
+        heading: 'why polished sentences get rejected',
+        body: `A polished sentence asks for an answer. A joke does not. The audience can laugh and not be on record agreeing.\n\nThis ambiguity is what makes humour socially survivable. It also limits its reach. A joke can illuminate something. It rarely fixes anything by itself. The room laughs, the truth is named, and then nothing happens — until someone, eventually, says it without the joke.\n\nThe joke buys a few weeks of grace. After that, the room's permission to ignore the truth slowly returns.`,
+      },
+      {
+        heading: 'the kind of humour that isn\'t honesty',
+        body: `Not all humour does this work. There is humour that is just cruelty in costume. There is humour that flatters the audience. There is humour that adds noise without naming anything.\n\nThe useful kind has a specific shape: it points at something that everyone already privately thinks, but nobody had said out loud. The laugh is the recognition. If a joke is funny mostly because someone is being made smaller, it is doing something else.`,
+      },
+      {
+        heading: 'things I\'ve learned to say with a joke first',
+        body: `In rooms where the temperature is high, I have stopped trying to lead with the careful sentence. I lead with the joke that names the thing, then — only if the room invites it — follow with the sentence. The joke makes the sentence possible.\n\nThis is not deception. It is just respecting the way attention moves. The joke creates a small permission. The sentence steps through it.`,
+      },
+      {
+        heading: 'when the joke isn\'t enough',
+        body: `Some truths cannot be said as a joke. Anything involving harm, anything involving someone's safety or dignity, anything that requires an actual decision to be made — those need plain sentences, in private, on the record. Jokes about them are usually a way of declining to do the harder thing.\n\nThe rule of thumb: humour is a great instrument for **naming** truth. It is a poor instrument for **enforcing** it. If the situation requires enforcement, do not hide behind a laugh.`,
+      },
+      {
+        heading: 'the line worth keeping',
+        body: `Funny is not honest. Funny that lands is.\n\nA joke that names something true gets remembered. A joke that just performs being clever evaporates by the end of the call. The difference is mostly whether the audience felt seen by the joke, or merely entertained.\n\nWhen in doubt, ask: would the version of me without the audience still find this true? If yes, the joke is doing real work. If not, it is just decoration.`,
+      },
+    ],
+  },
+
+  {
     slug: 'claude-code-in-production-a-field-guide',
     cover: '/blog/cover-claude-code-production.svg',
     title: 'Claude Code, in production: a field guide',
