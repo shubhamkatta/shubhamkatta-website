@@ -1,5 +1,98 @@
 export const posts = [
   {
+    slug: '12-best-claude-code-plugins-and-skills',
+    cover: '/blog/cover-12-best-plugins.svg',
+    title: '12 Claude Code plugins and skills worth installing today',
+    type: 'roundup',
+    date: 'November 25, 2025',
+    readingTime: '13 min',
+    color: 'paper-coral',
+    tags: ['plugins', 'skills', 'claude code', 'roundup'],
+    excerpt:
+      'Twelve plugins and skills I have actually used past the demo stage. Each one earns its keep on a real codebase.',
+    seoDescription:
+      'A practical roundup of 12 Claude Code plugins and skills — code review, security review, ship-pr, init, loop, simplify, security checks, eval helpers, and more. Honest take on what each does.',
+    keywords: 'Claude Code plugins, Claude Code skills, github plugins, slash commands, /review, /security-review, /loop, /init',
+    intro:
+      `Most "best plugins" lists are made of cool demos that nobody uses past Tuesday. This is the opposite. These twelve plugins and skills I have run on at least one real project for at least a week. A few I run daily.\n\nNot every entry is a public plugin you can install with one command. Some are skills you write into \`.claude/skills/\`. Some are scripts that earn their keep enough to be aliased into your workflow. The point is the function, not the package manager.\n\nIf you are new to Claude Code skills, the previous post on [how to write a Claude Code skill](/writing/how-to-write-a-claude-code-skill) is a good entry point.`,
+    sections: [
+      {
+        heading: 'How I picked these',
+        body: `Three filters:\n\n- I have used it on a project that someone else was also working on\n- It made a measurable difference (saved time, caught a bug, removed a habit)\n- I would notice if it disappeared\n\nThings I excluded: anything that sounded clever in a demo and never came up again, anything that requires more setup than it is worth, and anything that overlaps with the editor I already use.`,
+      },
+      {
+        heading: '1. /review — read your own diff like a stranger',
+        body: `The single highest-value slash command. Before you commit, \`/review\` asks Claude to read the diff with no context other than the diff itself. It catches:\n\n- functions you "renamed" but only changed the call sites\n- console.logs you forgot\n- comments referring to the old behaviour\n- subtle off-by-one in tests you wrote three minutes ago\n\nThe value is not that Claude is smarter than you. The value is that the diff is unfamiliar to it, which is the state you want a reviewer in.`,
+      },
+      {
+        heading: '2. /security-review — adversarial reading of the diff',
+        body: `Same diff, different lens. \`/security-review\` reads the changes specifically for security risk: missing input validation, secrets in logs, broken auth assumptions, SQL string concatenation, unbounded recursion that could be a DoS, etc.\n\nIt is not a replacement for a real audit. It is the fast pre-PR pass that catches the easy wins so the human reviewer can focus on the subtle ones.`,
+      },
+      {
+        heading: '3. /ship-pr — open the PR with a real title and a real test plan',
+        body: `Generates a PR title, summary, and test plan from the actual diff. The output is consistent across the team because the slash command is consistent. Saves the "I will write the PR description tomorrow" cycle.\n\nThe trick is the prompt: it asks Claude to look at \`git log\`, \`git diff main...HEAD\`, and the touched files, then draft a description that focuses on the **why**, not the what. Anyone reading the PR can see the what in the diff.`,
+      },
+      {
+        heading: '4. /init — generate a starter CLAUDE.md',
+        body: `Claude Code reads CLAUDE.md from the project root and uses it as durable instructions. \`/init\` walks the codebase, identifies the stack, conventions, scripts, and "things that would surprise a new contributor," and writes a starter CLAUDE.md.\n\nYou will edit it. That is fine. The first draft existing is the win.`,
+      },
+      {
+        heading: '5. /loop — run a task on an interval (or self-paced)',
+        body: `Two modes:\n\n- \`/loop 5m /babysit-prs\` — run \`/babysit-prs\` every five minutes\n- \`/loop /watch-build\` — let the agent decide when to check back\n\nThe self-paced version is the interesting one. It picks reasonable wake-up intervals based on what it is watching, and stays out of the way otherwise.\n\nGood for: deploys you are nervously watching, long builds, batch jobs that report status only at the end.`,
+      },
+      {
+        heading: '6. /simplify — challenge the diff to be smaller',
+        body: `Reads your changes and asks "is any of this unnecessary?" The honest answer is usually yes. Three small wins it consistently surfaces:\n\n- error handling for cases that cannot happen\n- helper functions used in exactly one place\n- comments that restate the next line of code\n\nThe vibe is "second pair of eyes that does not have your ego attached to the implementation."`,
+      },
+      {
+        heading: '7. /graphify — turn loose notes into a knowledge graph',
+        body: `Less about code, more about thinking. Feed it a doc, a chat dump, a paper, or even a folder, and it returns a graph (HTML + JSON + an audit report) of the concepts and how they connect.\n\nUseful for: making sense of a sprawling design discussion before a meeting, finding the ideas in a paper that other ideas keep referring to, deciding which threads to pick up first.`,
+      },
+      {
+        heading: '8. /security-review (project-specific variant) — your own threats',
+        body: `The generic version is good. A project-specific version is better. Write a skill in \`.claude/skills/\` that loads your specific threat model — auth flow, data classification rules, the three things your team has been bitten by — and runs through them on every diff.\n\nThe shape:\n\n\`\`\`md
+---
+name: security-review-app
+description: Security review specifically tuned for this app — checks
+  the auth boundary, PII handling, and the three patterns we have
+  been burned by (sql concat, unbounded loops in webhook handlers,
+  missing tenant scoping).
+---
+
+# Steps
+1. read the diff vs main
+2. for each touched file, check ...
+3. flag any of the three patterns ...
+\`\`\`\n\nGeneric tools are a starting point. Project-specific skills are where reliability lives.`,
+      },
+      {
+        heading: '9. /test-fix — the test failed, ask Claude to investigate',
+        body: `Pipe the failing test output to a skill that:\n\n1. reads the failing test\n2. reads the file under test\n3. proposes a hypothesis (test wrong vs code wrong)\n4. produces either a code fix or a test fix\n\nThe key is step 3. A naïve "make the test pass" agent will edit the test until it does, which is the opposite of useful. The hypothesis step forces a real read.`,
+      },
+      {
+        heading: '10. /migrate — do the boring change everywhere',
+        body: `For mechanical migrations: rename a function, swap a library, change an import. The agent reads the change you want, finds the call sites, edits each one, and runs the tests after each batch.\n\nThe trick: never let it commit until you have read the diff. The agent is faster than you, not more careful.`,
+      },
+      {
+        heading: '11. /eval — run the local eval suite and diff vs last',
+        body: `Pairs with [the small eval harness](/writing/from-prompt-to-pipeline-eval-harness-in-200-lines) idea. \`/eval\` runs the local eval suite, saves the run, and prints a diff of which cases flipped vs last run.\n\nMakes evals something you can run before a commit, not a "we will set them up next quarter" project.`,
+      },
+      {
+        heading: '12. /ultrareview — multi-agent cloud review of the whole branch',
+        body: `When the change is bigger than a single review can cover, \`/ultrareview\` spins up a multi-agent cloud review of the current branch (or a PR number). Several reviewers, separate contexts, comparing notes.\n\nHigh-value, costs real tokens, not a daily driver. Save it for the changes you would normally pull a senior teammate into.`,
+      },
+      {
+        heading: 'Honourable mentions',
+        body: `Things I install but use less:\n\n- \`/perf-check\` — looks for obvious O(n²) regressions in the diff\n- \`/spelling\` — catches dumb typos in user-facing strings\n- \`/changelog\` — drafts a changelog entry from the diff\n- \`/explain\` — narrates a file for someone joining the project\n\nNothing wrong with these; just lower frequency than the twelve above.`,
+      },
+      {
+        heading: 'One I removed',
+        body: `Anything that auto-commits without asking. Tried it. The first week, brilliant. The second week, a bad commit. The third week, removed.\n\nThe rule I keep: a tool that takes a destructive action without confirmation has to be right about 999 times for every one mistake. Most are not.`,
+      },
+    ],
+  },
+
+  {
     slug: 'some-truths-arrive-wearing-jokes',
     cover: '/blog/cover-truths-jokes.svg',
     title: 'Some truths arrive wearing jokes',

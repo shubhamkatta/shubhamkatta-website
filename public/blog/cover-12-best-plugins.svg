@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="12 best Claude Code plugins cover">
+  <rect width="1200" height="600" fill="#ffe9e4"/>
+  <g transform="translate(60,110)">
+    <g>
+      <rect x="0" y="0" width="180" height="100" rx="18" fill="#fff" stroke="#1d1815" stroke-width="2" transform="rotate(-2 90 50)"/>
+      <text x="14" y="34" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#ff6b6b" letter-spacing="2">PLUGIN 01</text>
+      <text x="14" y="60" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">/ultra-review</text>
+    </g>
+    <g transform="translate(200,10)">
+      <rect width="180" height="100" rx="18" fill="#fff6db" stroke="#1d1815" stroke-width="2" transform="rotate(2 90 50)"/>
+      <text x="14" y="34" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#ff6b6b" letter-spacing="2">PLUGIN 02</text>
+      <text x="14" y="60" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">/security-review</text>
+    </g>
+    <g transform="translate(400,0)">
+      <rect width="180" height="100" rx="18" fill="#eaf7ff" stroke="#1d1815" stroke-width="2" transform="rotate(-1 90 50)"/>
+      <text x="14" y="34" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#ff6b6b" letter-spacing="2">PLUGIN 03</text>
+      <text x="14" y="60" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">/test-fixer</text>
+    </g>
+    <g transform="translate(0,140)">
+      <rect width="180" height="100" rx="18" fill="#fff6db" stroke="#1d1815" stroke-width="2" transform="rotate(2 90 50)"/>
+      <text x="14" y="34" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#ff6b6b" letter-spacing="2">PLUGIN 04</text>
+      <text x="14" y="60" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">/migrate-db</text>
+    </g>
+    <g transform="translate(200,150)">
+      <rect width="180" height="100" rx="18" fill="#fff" stroke="#1d1815" stroke-width="2" transform="rotate(-2 90 50)"/>
+      <text x="14" y="34" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#ff6b6b" letter-spacing="2">PLUGIN 05</text>
+      <text x="14" y="60" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">/loop</text>
+    </g>
+    <g transform="translate(400,140)">
+      <rect width="180" height="100" rx="18" fill="#fff" stroke="#1d1815" stroke-width="2" transform="rotate(1 90 50)"/>
+      <text x="14" y="34" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#ff6b6b" letter-spacing="2">PLUGIN 06</text>
+      <text x="14" y="60" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">/init</text>
+    </g>
+    <g transform="translate(0,280)">
+      <rect width="180" height="100" rx="18" fill="#eaf7ff" stroke="#1d1815" stroke-width="2" transform="rotate(-1 90 50)"/>
+      <text x="14" y="34" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#ff6b6b" letter-spacing="2">PLUGIN 07</text>
+      <text x="14" y="60" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">/graphify</text>
+    </g>
+    <g transform="translate(200,290)">
+      <rect width="180" height="100" rx="18" fill="#fff" stroke="#1d1815" stroke-width="2" transform="rotate(2 90 50)"/>
+      <text x="14" y="34" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#ff6b6b" letter-spacing="2">PLUGIN 08</text>
+      <text x="14" y="60" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">/simplify</text>
+    </g>
+    <g transform="translate(400,280)">
+      <rect width="180" height="100" rx="18" fill="#fff6db" stroke="#1d1815" stroke-width="2" transform="rotate(-2 90 50)"/>
+      <text x="14" y="34" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#ff6b6b" letter-spacing="2">+4 MORE</text>
+      <text x="14" y="60" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">read on →</text>
+    </g>
+  </g>
+  <g transform="translate(720,170)">
+    <text x="0" y="50" font-family="Inter, sans-serif" font-weight="900" font-size="58" fill="#1d1815" letter-spacing="-2">12 plugins</text>
+    <text x="0" y="118" font-family="Inter, sans-serif" font-weight="900" font-size="58" fill="#1d1815" letter-spacing="-2">&amp; skills</text>
+    <text x="0" y="170" font-family="Inter, sans-serif" font-weight="700" font-size="22" fill="#ff6b6b">worth installing today.</text>
+    <text x="0" y="230" font-family="Inter, sans-serif" font-size="17" fill="rgba(29,24,21,0.7)">opinionated, tested in real repos,</text>
+    <text x="0" y="256" font-family="Inter, sans-serif" font-size="17" fill="rgba(29,24,21,0.7)">no &quot;cool demo, never used again&quot; entries.</text>
+  </g>
+</svg>
