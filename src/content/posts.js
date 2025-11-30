@@ -1,5 +1,49 @@
 export const posts = [
   {
+    slug: 'ambition-looks-better-from-the-outside',
+    cover: '/blog/cover-ambition-outside.svg',
+    title: 'Ambition looks better from the outside',
+    type: 'observation',
+    date: 'November 30, 2025',
+    readingTime: '6 min',
+    color: 'paper-blue',
+    tags: ['ambition', 'self-awareness', 'work'],
+    excerpt:
+      'Pretending ambition is pure makes people worse at handling it. The cleaner we describe it, the less honestly we live it.',
+    seoDescription:
+      'An honest look at the ingredients of ambition — drive, comparison, ego, hunger, and the fear of disappearing — and what the lived version looks like up close.',
+    keywords: 'ambition, drive, ego, self-awareness, motivation, success',
+    intro:
+      `From a distance, ambition looks clean. It looks like drive, discipline, and purpose. Up close, it is often mixed with insecurity, comparison, ego, hunger, and the fear of disappearing.\n\nI do not say this to diminish ambition. I say it because pretending it is pure makes people worse at handling it. The cleaner we describe it, the less honestly we live it.`,
+    sections: [
+      {
+        heading: 'the clean version vs. the lived version',
+        body: `The clean version of ambition is what you read in interviews. "I just love the work." "I want to build something meaningful." "I'm driven by curiosity." All of these are true, in part. None of them are the whole picture.\n\nThe lived version is closer to: I want to do good work AND I want to be respected AND I want to outpace specific people I have decided I am racing AND I want to not be the version of myself I was at twenty AND I am genuinely afraid of becoming small.\n\nThe two versions are not in conflict. They are the same thing said at different distances.`,
+      },
+      {
+        heading: 'the ingredients we don\'t admit',
+        body: `A short, accurate list of what often lives inside ambition:\n\n- a comparison set, usually three or four specific people you measure yourself against without naming\n- a fear of being forgotten, especially by the people who knew you before\n- a hunger that has been there since long before you had words for it\n- an ego that wants to be impressive in rooms it has not been invited into yet\n- a private theory of who you would be if the work were taken away\n\nYou are allowed to have these. They are not character flaws. They are most of human motivation, lightly disguised.`,
+      },
+      {
+        heading: 'why purity narratives hurt',
+        body: `When ambition gets described as pure drive and pure purpose, two things happen. People who have the messier version feel ashamed of what they actually feel — and so they hide it, even from themselves. And the role models they're trying to emulate become impossible to imitate, because the role models are also lying about what's underneath.\n\nThe whole game ends up performing cleanliness instead of doing the work. Which is the cleanest possible way to spend a life and never produce anything.`,
+      },
+      {
+        heading: 'what honest ambition looks like',
+        body: `Honest ambition is allowed to admit:\n\n- yes, I want this, and part of why I want it is the wrong reason\n- yes, I'm comparing, and the comparison is mostly with one specific person, and I should probably say so out loud at some point\n- yes, I'm afraid, and the fear is doing some of the work; I'd rather know that than pretend I'm just calmly executing a plan\n- yes, I might still want this in five years, or I might be embarrassed by how badly I wanted it\n\nThe tone is calmer because nothing is being defended.`,
+      },
+      {
+        heading: 'a note for younger versions of me',
+        body: `Three things I wish someone had said earlier:\n\n- you don't have to be ashamed of the parts of your ambition that aren't beautiful; you have to know they're there so they don't drive without you noticing\n- the comparison set you're racing will keep moving; the race will not, in fact, end at any specific finish line\n- the version of you that gets there will be a slightly different person; plan for that, not just for the arriving\n\nNobody told me. I am telling you.`,
+      },
+      {
+        heading: 'the kind that ages well',
+        body: `Some forms of ambition age into something I admire. The common thread: the person eventually stopped pretending the drive was pure, and got curious about its sources. They stopped performing it, and started using it.\n\nAmbition you have made peace with is the one that lasts. The one you are still narrating to yourself at forty in someone else's vocabulary tends to flatten.`,
+      },
+    ],
+  },
+
+  {
     slug: '12-best-claude-code-plugins-and-skills',
     cover: '/blog/cover-12-best-plugins.svg',
     title: '12 Claude Code plugins and skills worth installing today',

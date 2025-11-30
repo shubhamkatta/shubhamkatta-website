@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="Ambition looks better from the outside">
+  <rect width="1200" height="600" fill="#eaf7ff"/>
+  <rect x="540" y="30" width="180" height="22" rx="4" fill="#fff6db" opacity="0.85" transform="rotate(-2 630 41)"/>
+  <g transform="translate(140,170)">
+    <rect x="0" y="20" width="200" height="220" rx="22" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <text x="100" y="50" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(29,24,21,0.55)" letter-spacing="2">FROM A DISTANCE</text>
+    <text x="100" y="100" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="22" fill="#1d1815">drive</text>
+    <text x="100" y="135" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="22" fill="#1d1815">discipline</text>
+    <text x="100" y="170" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="22" fill="#1d1815">purpose</text>
+    <rect x="240" y="20" width="200" height="220" rx="22" fill="#1d1815"/>
+    <text x="340" y="50" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(255,255,255,0.5)" letter-spacing="2">UP CLOSE</text>
+    <text x="340" y="86" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" fill="#f6efe6">drive</text>
+    <text x="340" y="108" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" fill="#f6efe6">+ comparison</text>
+    <text x="340" y="130" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" fill="#f6efe6">+ insecurity</text>
+    <text x="340" y="152" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" fill="#f6efe6">+ ego</text>
+    <text x="340" y="174" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" fill="#f6efe6">+ hunger</text>
+    <text x="340" y="196" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" fill="#ff6b6b">+ fear of disappearing</text>
+  </g>
+  <g transform="translate(640,200)">
+    <text x="0" y="50" font-family="Inter, sans-serif" font-weight="900" font-size="46" fill="#1d1815" letter-spacing="-2">Ambition looks</text>
+    <text x="0" y="115" font-family="Inter, sans-serif" font-weight="900" font-size="46" fill="#1d1815" letter-spacing="-2">better from outside.</text>
+    <text x="0" y="165" font-family="Inter, sans-serif" font-weight="700" font-size="22" fill="#ff6b6b">honesty about it makes it easier to live with.</text>
+  </g>
+</svg>
