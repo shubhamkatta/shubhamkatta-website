@@ -1,5 +1,49 @@
 export const posts = [
   {
+    slug: 'you-can-be-good-at-something-and-still-be-tired-of-it',
+    cover: '/blog/cover-good-but-tired.svg',
+    title: 'You can be good at something and still be tired of it',
+    type: 'reflection',
+    date: 'December 4, 2025',
+    readingTime: '6 min',
+    color: 'paper-coral',
+    tags: ['career', 'identity', 'change'],
+    excerpt:
+      'Competence creates a strange trap. The better you get at something, the more people send it your way.',
+    seoDescription:
+      'On the competence trap — when usefulness outgrows affection, when "the one who" becomes a cage, and the third path most people miss.',
+    keywords: 'competence, career change, identity, ingratitude, growth',
+    intro:
+      `Competence creates a strange trap. The better you get at something, the more people send it your way. Eventually your usefulness begins to outgrow your affection.\n\nThere is a quiet sadness in being known for a skill you no longer want to keep performing. It is one of the reasons successful people sometimes look ungrateful from the outside.`,
+    sections: [
+      {
+        heading: 'usefulness outgrows affection',
+        body: `Most people pick up a skill because something about it interested them. The interest does the early work. It compensates for the friction of being bad at the thing while you learn it.\n\nThen you get good. The friction drops. The work gets easier. And, paradoxically, the interest can drop too — because part of what interested you was the difficulty, the puzzle, the proof that you could climb the hill at all.\n\nMeanwhile, the world has noticed your skill. Everyone keeps sending you more of it. The thing you once chose now keeps choosing you back.`,
+      },
+      {
+        heading: 'the inbox of one\'s own making',
+        body: `If you are good at one specific thing, your inbox slowly fills with that thing. Other people, mostly with good intentions, route the work toward whoever makes it look easy. They are not wrong to do so — you are the cheapest answer to their question.\n\nBut "you are the cheapest answer" is also a sentence about a small cage. The shape of your week is now mostly other people's discoveries about your competence. The interest that started the whole thing has long since left the room.`,
+      },
+      {
+        heading: 'why this looks like ingratitude from outside',
+        body: `From the outside, the math is simple. You are good at the thing. You are paid for the thing. Many people would love to be in your position. What is your problem?\n\nThe problem is not the position. The problem is that the person inside the position is not the person who originally wanted the position. They have grown around the role like a tree growing around a fence. The fence has become invisible to everyone but them.\n\nWhen they say "I want to do something else," it sounds like ingratitude because the people listening can't see the fence.`,
+      },
+      {
+        heading: 'the two paths people usually take',
+        body: `- **the leap.** Quit. Switch industries. Pick a new thing that is not yet a cage. The leap works for some people. It tends to work better when there's a specific next thing pulling you, not just the current thing pushing you.\n- **the doubling down.** Tell yourself the tiredness is temporary. Take a sabbatical. Return to the same role. This sometimes works. More often it produces a brief renewal followed by the same fatigue, slightly thicker.\n\nNeither is wrong. Both are common. Both miss a third option that I keep recommending.`,
+      },
+      {
+        heading: 'the third path',
+        body: `Stay in the field. Change the angle.\n\nIf you are tired of being the senior IC, become the person who builds the team. If you are tired of being the team builder, become the person who teaches the field. If you are tired of teaching, write about it. If you are tired of writing, do consultancy in adjacent industries that have never seen what you know.\n\nThe specific skill is rarely the cage. The role around the skill is the cage. Change the role and the skill becomes interesting again. This works because you are not abandoning the years you spent; you are putting them to a different use, in a slightly different room.\n\nThe leap and the doubling down both treat the skill as the variable. The third path treats the role as the variable. Most people don't try the third path because it requires admitting that the role they spent so long winning is not the same as the work they actually love.`,
+      },
+      {
+        heading: 'a short note on identity',
+        body: `Some part of the trap is that we accidentally collapse "what I am good at" into "who I am." Once you separate them again, the room gets bigger. You can stop doing a thing without ceasing to be the person who could do it.\n\nThe skill is yours. The cage isn't.`,
+      },
+    ],
+  },
+
+  {
     slug: 'ambition-looks-better-from-the-outside',
     cover: '/blog/cover-ambition-outside.svg',
     title: 'Ambition looks better from the outside',
