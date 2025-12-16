@@ -1,5 +1,72 @@
 export const posts = [
   {
+    slug: 'subagents-and-parallelism-stop-cramming-context',
+    cover: '/blog/cover-subagents.svg',
+    title: 'Subagents and parallelism: stop cramming everything into one context',
+    type: 'deep dive',
+    date: 'December 16, 2025',
+    readingTime: '11 min',
+    color: 'paper-yellow',
+    tags: ['subagents', 'parallelism', 'agents'],
+    excerpt:
+      'A subagent is a coworker, not a thread. Treat it like one and your main context stops drowning in tool output it never needed to see.',
+    seoDescription:
+      'When to fan out work to subagents in Claude Code, how to brief them, how parallel tool calls differ, and the heuristics that keep the main thread useful.',
+    keywords: 'Claude Code subagents, parallel tool use, agent orchestration, context isolation, multi-agent, Anthropic',
+    intro:
+      `The first time I used a subagent properly, I felt slightly silly. I had been building a complicated, single-context agent loop that spent half its tokens digesting tool output it would not need again. A subagent did the same job in a separate context, returned a one-paragraph summary, and the main thread stayed clean.\n\nA subagent is a coworker. The mental model "main agent gives a brief, subagent comes back with a result" is the entire trick.`,
+    sections: [
+      {
+        heading: 'The mental model',
+        body:
+`A regular agent is one context window doing everything. As the work grows, the context fills with tool calls, intermediate results, and your main goal slowly drifts to the back of attention. Then it forgets a constraint or contradicts itself.\n\nA subagent is a separate context window with its own brief and its own tools. It runs to completion, returns a summary, and disappears. The main agent only sees the summary.\n\n![Main agent up top, three subagents below — explore, plan, review. Each one runs in its own context.](/blog/diagram-subagent-tree.svg)\n\nThe useful bit: anything that would consume a lot of context to verify on its own — a search across many files, a long migration plan, a security review of a diff — is exactly the kind of work that benefits from being walled off.`,
+      },
+      {
+        heading: 'When to fan out',
+        body: `My short list of "consider a subagent":\n\n- the task involves reading >5 files just to answer the question\n- the task is bounded and self-contained ("find all callers of X")\n- the task requires a fresh perspective ("review this diff without my plan in context")\n- the work has independent parallel parts ("audit each of these three services")\n\nIf the work satisfies any of these, the cost of spinning up a subagent (a few hundred tokens for the brief, a separate model call, a return summary) is much less than the cost of polluting your main context with the intermediate output.`,
+      },
+      {
+        heading: 'When NOT to fan out',
+        body: `Subagents are expensive when used wrong. Skip them when:\n\n- the work is one tool call away from done\n- the main agent already has the relevant context loaded\n- the answer is a single fact you can read directly\n- you would have to write the brief twice — once for yourself, once for the subagent — to get any value\n\nIf you find yourself writing a 600-word brief to ask a subagent to do something the main agent already had everything for, you have found the wrong abstraction.`,
+      },
+      {
+        heading: 'Parallel tool calls vs subagents',
+        body: `Two often-confused mechanics:\n\n- **Parallel tool calls.** The model emits multiple tool calls in one response, and the harness executes them in parallel. Same context, same model, same turn. Cheap and fast.\n- **Subagents.** A separate context window with its own brief and tools. Different context, possibly different model, definitely a different conversation.\n\nUse parallel tool calls when the question is "look up these three things." Use subagents when the question is "investigate this thing thoroughly and tell me what you found."\n\nThe wrong move is using a subagent for what should be a parallel tool call. The other wrong move is hand-holding parallelism with sequential calls when one round of parallel calls would do.`,
+      },
+      {
+        heading: 'How I split work in practice',
+        body: `Three patterns I keep:\n\n- **Explore + Decide.** The main agent decides. A subagent explores ("find every place we use \`legacy_session_id\`"). The subagent returns a list. The main agent decides what to do with it.\n- **Plan + Review.** The main agent plans. A subagent (with a clean context, possibly a different model) reviews the plan independently. Catches confirmation bias.\n- **Fan out, fold in.** Three subagents do the same kind of work on three independent inputs (three services, three files, three migrations). The main agent collates.\n\nEach pattern keeps the main context thin and the subagent contexts focused.`,
+      },
+      {
+        heading: 'A subagent prompt, written like an actual brief',
+        body:
+`The single biggest improvement to my subagent results was treating the brief like an actual brief, not a one-line instruction.\n\nBad:\n\n\`\`\`
+review the diff in the auth module
+\`\`\`\n\nBetter:\n\n\`\`\`
+You are reviewing a diff for safety. The diff adds a new \`verify_session()\`
+helper to src/auth/session.py. The author claims it replaces the legacy
+\`legacy_verify\` function across the codebase.
+
+What I want from you, in 200 words or less:
+1. is \`verify_session\` actually equivalent to \`legacy_verify\` for all callers?
+2. are there callers still using the legacy function?
+3. one concrete risk worth flagging before merge.
+
+If you cannot answer (1) confidently, say so and stop. Do not guess.
+\`\`\`\n\nThe bad prompt makes the subagent re-derive the goal. The better prompt tells it what done looks like, lets it stop early, and constrains the output. Same model, dramatically better results.`,
+      },
+      {
+        heading: 'A heuristic I use to decide',
+        body: `If verifying the answer myself would take more than 8k tokens of context, the work probably belongs in a subagent.\n\nBelow that, the cost of fanning out exceeds the savings. Above that, you are paying for context bloat in your main thread that you do not need to.\n\nYou can also ask: if this work fails, can the main agent recover from a one-paragraph summary? If yes, fan out. If the main agent needs the intermediate detail, keep it inline.`,
+      },
+      {
+        heading: 'The boring habit that pays',
+        body: `Always read the subagent's output before acting on it.\n\nA subagent's summary tells you what it intended to do, not what it actually did. The agent that ran in a different context cannot fully relay the texture of its findings. Treat the summary as a starting point. Verify with a quick read before committing.\n\nThe whole point of subagents is to keep your context useful. A subagent's summary you trust without reading is a cheap source of confident wrongness.`,
+      },
+    ],
+  },
+
+  {
     slug: 'you-can-be-good-at-something-and-still-be-tired-of-it',
     cover: '/blog/cover-good-but-tired.svg',
     title: 'You can be good at something and still be tired of it',

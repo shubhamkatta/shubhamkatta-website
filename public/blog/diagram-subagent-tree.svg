@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 380" role="img" aria-label="Subagent fan-out">
+  <rect width="1000" height="380" fill="#fff8ef"/>
+  <text x="40" y="48" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">When the main agent should hand off</text>
+  <g transform="translate(420,80)">
+    <rect width="160" height="58" rx="12" fill="#1d1815"/>
+    <text x="16" y="36" font-family="ui-monospace, monospace" font-size="14" fill="#f6efe6">main agent</text>
+  </g>
+  <path d="M 500 138 L 200 200" stroke="#1d1815" stroke-width="2"/>
+  <path d="M 500 138 L 500 200" stroke="#1d1815" stroke-width="2"/>
+  <path d="M 500 138 L 800 200" stroke="#1d1815" stroke-width="2"/>
+  <g transform="translate(80,200)">
+    <rect width="240" height="60" rx="12" fill="#fff6db" stroke="#1d1815" stroke-width="2"/>
+    <text x="16" y="26" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(29,24,21,0.5)" letter-spacing="2">EXPLORE</text>
+    <text x="16" y="48" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">find code matching X</text>
+  </g>
+  <g transform="translate(380,200)">
+    <rect width="240" height="60" rx="12" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/>
+    <text x="16" y="26" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(29,24,21,0.5)" letter-spacing="2">PLAN</text>
+    <text x="16" y="48" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">design the migration</text>
+  </g>
+  <g transform="translate(680,200)">
+    <rect width="240" height="60" rx="12" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/>
+    <text x="16" y="26" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(29,24,21,0.5)" letter-spacing="2">REVIEW</text>
+    <text x="16" y="48" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">independent second look</text>
+  </g>
+  <text x="40" y="300" font-family="Inter, sans-serif" font-size="14" fill="#1d1815">Each subagent gets its own context window. The main agent only sees their summaries.</text>
+  <text x="40" y="324" font-family="Inter, sans-serif" font-size="14" fill="#1d1815">That's the whole point — your main thread doesn't drown in tool output it didn't need.</text>
+  <text x="40" y="354" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">Heuristic: hand off if the subtask would consume &gt; 8k tokens of context to verify on its own.</text>
+</svg>

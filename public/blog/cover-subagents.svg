@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="Subagents and parallelism cover">
+  <rect width="1200" height="600" fill="#fff8ef"/>
+  <g transform="translate(120,140)">
+    <g>
+      <rect x="180" y="0" width="160" height="60" rx="14" fill="#1d1815"/>
+      <text x="200" y="38" font-family="ui-monospace, monospace" font-size="14" fill="#f6efe6">main agent</text>
+    </g>
+    <path d="M 260 60 L 100 140" stroke="#1d1815" stroke-width="3" fill="none"/>
+    <path d="M 260 60 L 260 140" stroke="#1d1815" stroke-width="3" fill="none"/>
+    <path d="M 260 60 L 420 140" stroke="#1d1815" stroke-width="3" fill="none"/>
+    <g>
+      <rect x="20" y="140" width="160" height="56" rx="14" fill="#fff6db" stroke="#1d1815" stroke-width="2" transform="rotate(-2 100 168)"/>
+      <text x="40" y="172" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">explore (search)</text>
+    </g>
+    <g>
+      <rect x="180" y="140" width="160" height="56" rx="14" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/>
+      <text x="200" y="172" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">tests (subagent)</text>
+    </g>
+    <g>
+      <rect x="340" y="140" width="160" height="56" rx="14" fill="#ffe9e4" stroke="#1d1815" stroke-width="2" transform="rotate(2 420 168)"/>
+      <text x="358" y="172" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">migrate (subagent)</text>
+    </g>
+    <text x="520" y="50" font-family="Inter, sans-serif" font-size="15" fill="rgba(29,24,21,0.6)">main keeps planning.</text>
+    <text x="520" y="170" font-family="Inter, sans-serif" font-size="15" fill="rgba(29,24,21,0.6)">subs work in parallel.</text>
+    <text x="520" y="195" font-family="Inter, sans-serif" font-size="15" fill="rgba(29,24,21,0.6)">contexts stay clean.</text>
+  </g>
+  <g transform="translate(120,420)">
+    <text x="0" y="40" font-family="Inter, sans-serif" font-weight="900" font-size="46" fill="#1d1815" letter-spacing="-2">Subagents &amp; parallelism.</text>
+    <text x="0" y="78" font-family="Inter, sans-serif" font-weight="700" font-size="20" fill="#ff6b6b">Stop cramming everything into one context.</text>
+  </g>
+</svg>
