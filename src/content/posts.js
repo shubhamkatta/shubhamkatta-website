@@ -1,5 +1,49 @@
 export const posts = [
   {
+    slug: 'the-quiet-cost-of-being-the-reliable-one',
+    cover: '/blog/cover-reliable-cost.svg',
+    title: 'The quiet cost of being the reliable one',
+    type: 'observation',
+    date: 'December 28, 2025',
+    readingTime: '6 min',
+    color: 'paper-yellow',
+    tags: ['work', 'reliability', 'identity'],
+    excerpt:
+      'Reliability becomes a personality trait others admire, and a private tax you keep paying.',
+    seoDescription:
+      'On the hidden exchange behind being known as the reliable one — what it earns you, what it costs you, and how to redistribute some of it.',
+    keywords: 'reliability, work, burnout, expectations, identity, dependability',
+    intro:
+      `Being reliable sounds flattering until you notice the hidden exchange. People stop checking whether you are okay because they trust you to keep functioning.\n\nReliability becomes a personality trait others admire and a private tax you keep paying.`,
+    sections: [
+      {
+        heading: 'the compliment that becomes a ceiling',
+        body: `"You're so reliable" is meant kindly. It is also a status that, once granted, is hard to put down.\n\nReliability is the trait that compounds through repetition. Each time you deliver, the assumption that you will deliver next time gets a little stronger. Eventually, the assumption stops being conscious. Then it stops being verified at all. Then you are reliable not because you choose to be on a given day, but because the system has wired itself around the assumption.\n\nAt that point, the compliment is no longer a description. It is a contract.`,
+      },
+      {
+        heading: 'the private tax',
+        body: `Reliability has costs that no one else can see, because the whole point of reliability is that the costs don't show.\n\nA short list:\n\n- the small bookkeeping of every commitment you have not forgotten\n- the energy spent compensating for less reliable colleagues, often invisibly\n- the slow attrition of saying yes to things you would have preferred to decline\n- the weird loneliness of being the person nobody worries about\n\nNone of these are dramatic. All of them are real. They tend to surface around the time the reliable person has the breakdown nobody saw coming, which everyone then describes as "out of nowhere."`,
+      },
+      {
+        heading: 'why people stop asking if you\'re okay',
+        body: `Reliability creates a confidence in your stability that becomes a reason not to check on it. The person who is always fine is also the person who is least often asked.\n\nThis is not malice. It is just attention finding the squeaky wheel. The squeaky wheel gets reassurance. The well-oiled wheel gets more work.`,
+      },
+      {
+        heading: 'redistribution most reliable people never do',
+        body: `The fix is rarely "stop being reliable." It is closer to redistributing the load you have accidentally accumulated.\n\nA few moves I have watched work:\n\n- name the load out loud, in specific terms, to the people who benefit from it\n- decline new commitments by default, even small ones, for one full quarter\n- delegate the task that you alone know how to do — yes, even though it would be faster to do it yourself, that is exactly the trap\n- let one small thing fail, on purpose, in a low-stakes setting, to see whether the world adjusts\n\nThe last one is the test. Reliable people often discover that the world adjusts faster than they had imagined. The catastrophe was, mostly, in their head.`,
+      },
+      {
+        heading: 'a small habit that helps',
+        body: `Once a quarter, write a short list of every recurring thing you are responsible for that nobody assigned you. The list will be longer than you expect. Pick one item. Stop doing it.\n\nNotice that the world keeps spinning. Notice that nobody panics. Notice that you are still considered reliable.\n\nThis is the small piece of evidence the reliable brain needs.`,
+      },
+      {
+        heading: 'the reliable person is allowed to fail too',
+        body: `One last thing. The unspoken rule of being the reliable one is that you are allowed to fail occasionally without losing the status, but you have to risk it to find that out. The status is more elastic than it feels from inside it.\n\nThe people who actually love you, professionally or otherwise, are not in love with the trait. They are in love with the person carrying the trait. The trait is allowed to rest.`,
+      },
+    ],
+  },
+
+  {
     slug: 'subagents-and-parallelism-stop-cramming-context',
     cover: '/blog/cover-subagents.svg',
     title: 'Subagents and parallelism: stop cramming everything into one context',

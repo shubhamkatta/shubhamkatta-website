@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="The quiet cost of being the reliable one">
+  <rect width="1200" height="600" fill="#fff6db"/>
+  <rect x="540" y="30" width="160" height="22" rx="4" fill="#ffe9e4" opacity="0.85" transform="rotate(-2 620 41)"/>
+  <g transform="translate(140,150) rotate(-3)">
+    <rect width="320" height="320" rx="0" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <path d="M 0 0 L 16 -10 L 32 0 L 48 -10 L 64 0 L 80 -10 L 96 0 L 112 -10 L 128 0 L 144 -10 L 160 0 L 176 -10 L 192 0 L 208 -10 L 224 0 L 240 -10 L 256 0 L 272 -10 L 288 0 L 304 -10 L 320 0" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <text x="20" y="44" font-family="ui-monospace, monospace" font-size="14" font-weight="900" fill="#1d1815">PRIVATE TAX · INVOICE</text>
+    <line x1="20" y1="54" x2="300" y2="54" stroke="rgba(29,24,21,0.3)"/>
+    <text x="20" y="86" font-family="ui-monospace, monospace" font-size="13" fill="rgba(29,24,21,0.7)">people stop asking</text>
+    <text x="280" y="86" text-anchor="end" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">×1</text>
+    <text x="20" y="110" font-family="ui-monospace, monospace" font-size="13" fill="rgba(29,24,21,0.7)">your name on every</text>
+    <text x="280" y="110" text-anchor="end" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">×1</text>
+    <text x="20" y="134" font-family="ui-monospace, monospace" font-size="13" fill="rgba(29,24,21,0.7)">untold favours</text>
+    <text x="280" y="134" text-anchor="end" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">×1</text>
+    <text x="20" y="158" font-family="ui-monospace, monospace" font-size="13" fill="rgba(29,24,21,0.7)">unspoken expectations</text>
+    <text x="280" y="158" text-anchor="end" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">×1</text>
+    <line x1="20" y1="174" x2="300" y2="174" stroke="rgba(29,24,21,0.3)" stroke-dasharray="3,3"/>
+    <text x="20" y="200" font-family="ui-monospace, monospace" font-size="14" font-weight="900" fill="#1d1815">DUE</text>
+    <text x="280" y="200" text-anchor="end" font-family="ui-monospace, monospace" font-size="14" font-weight="900" fill="#ff6b6b">QUIETLY</text>
+    <rect x="220" y="230" width="80" height="40" rx="6" fill="none" stroke="#ff6b6b" stroke-width="2" transform="rotate(-8 260 250)"/>
+    <text x="260" y="256" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#ff6b6b" transform="rotate(-8 260 250)">PAID</text>
+  </g>
+  <g transform="translate(540,210)">
+    <text x="0" y="50" font-family="Inter, sans-serif" font-weight="900" font-size="48" fill="#1d1815" letter-spacing="-2">The quiet cost of</text>
+    <text x="0" y="115" font-family="Inter, sans-serif" font-weight="900" font-size="48" fill="#1d1815" letter-spacing="-2">being reliable.</text>
+    <text x="0" y="165" font-family="Inter, sans-serif" font-weight="700" font-size="22" fill="#ff6b6b">a tax everyone admires you for paying.</text>
+  </g>
+</svg>
