@@ -1,5 +1,54 @@
 export const posts = [
   {
+    slug: 'the-hidden-cost-of-long-context',
+    cover: '/blog/cover-long-context-cost.svg',
+    title: 'The hidden cost of long context, and what to do about it',
+    type: 'deep dive',
+    date: 'January 6, 2026',
+    readingTime: '10 min',
+    color: 'paper-blue',
+    tags: ['context', 'performance', 'agents'],
+    excerpt:
+      'A million tokens is a permission, not a recommendation. The latency, attention, and bug surface get worse the more you fill up.',
+    seoDescription:
+      'Long context windows are tempting but expensive in latency and attention quality. A practical look at when to use 1M context, when to compress, and patterns that work better than "stuff everything in."',
+    keywords: 'long context, 1M context, attention, latency, prompt design, retrieval, Claude context window',
+    intro:
+      `The 1M-token Claude context is a remarkable engineering feat and an operational footgun. Every time someone shows me a slow, flaky agent, the prompt is north of 200k tokens, and the answer to "what fixed it" is rarely "more context." It is "less."\n\nThis is not a "context is bad" piece. It is a piece about when context earns its weight and when it just slows you down.`,
+    sections: [
+      {
+        heading: 'The big number is a permission, not a recommendation',
+        body: `The window says how much you can fit. It does not say how much you should. Three things scale with context length, and not in your favour:\n\n- **Latency.** Time-to-first-token grows with input length. With caching it grows much less, but it grows.\n- **Attention dilution.** Long contexts spread the model's attention thin. The middle of a long context is where things get forgotten — sometimes called the "lost in the middle" effect.\n- **Bug surface.** More text = more chances to contradict yourself, repeat instructions, or include something stale.\n\nIf your prompt is 400k tokens long and your task is "summarize this issue tracker," fine. If your prompt is 400k tokens long and your task is "write a function," look at what you are sending.`,
+      },
+      {
+        heading: 'Latency is the obvious cost',
+        body: `On Sonnet-class models in 2026, time-to-first-token at 100k input is roughly 4-7x the latency at 5k input. With prompt caching, the multiplier shrinks but does not vanish.\n\nIf your agent makes 6 tool calls per turn and each one carries a 500ms latency penalty from "long but not actually used" context, you have spent 3 seconds doing nothing for the user. People notice three seconds. People do not notice the prompt size.`,
+      },
+      {
+        heading: 'Attention dilution is real, even quietly',
+        body: `Long contexts do not silently keep all information equally available. Models tend to over-weight what is at the start (the "system prompt sweet spot") and the end (the most recent turns). The middle gets less.\n\nThis is why "I told the model the constraint, why didn't it follow it" stories are so often paired with "the constraint was on line 380 of the system prompt." On a short prompt, the constraint sits in the model's foreground. On a long prompt, it competes with everything else.\n\nThe practical workaround:\n\n- put structural constraints at the **top** of the system prompt\n- put recent state at the **bottom** of the messages list\n- assume anything in the middle of a long prompt is consultable, not enforced`,
+      },
+      {
+        heading: 'Cheaper alternatives, in rough order of preference',
+        body: `1. **Point to files, do not paste them.** Give the agent a tool to read paths. Let it pull what it needs. Done well, this turns a 200k-token prompt into a 5k-token prompt plus three on-demand reads.\n2. **Summarise, then load on demand.** A two-paragraph summary up top + "ask for the full doc when you need it" beats stuffing the doc.\n3. **Use a vector index.** If the corpus is large and unstructured (transcripts, tickets), a small retrieval step beats the whole-document approach.\n4. **Section the prompt.** If you must include a long doc, give it explicit headings so the model can navigate. "## Auth flow" is better than 12 paragraphs of running prose.\n5. **Compress aggressively after each turn.** If you are running a long session, condense old turns into a "decisions so far" block instead of carrying every message.\n\nThe order matters because it is sorted by ROI. A "read this file when needed" tool is the change that costs the least and saves the most.`,
+      },
+      {
+        heading: 'A small example: a 240k-token agent that did not need to be',
+        body:
+`I inherited an internal agent whose default prompt was 240k tokens. The reasons sounded good in isolation:\n\n- "we need our security policy in context"\n- "we need the schema for context"\n- "we need the most recent five tickets so it has working memory"\n- "we need our coding style guide"\n\nWhen I traced what the agent actually used, the answer was: 4-8% of the prompt, on most calls. The rest was insurance.\n\nThe fix:\n\n- security policy → tool: \`get_policy(area)\`\n- schema → tool: \`describe_schema(table)\`\n- recent tickets → tool: \`recent_tickets(n=5)\`\n- style guide → file the agent could grep\n\nNew default prompt: 6,800 tokens. Latency dropped, accuracy rose (because the agent was retrieving fresh data instead of stale context), and the bill collapsed.`,
+      },
+      {
+        heading: 'When 1M context is correct',
+        body: `Long context is the right answer when the **task** requires holding a large blob in working memory at once. Examples I have seen work well:\n\n- summarising a long meeting transcript or court filing\n- reviewing a sprawling diff that crosses many files\n- migrating a config across many configurations\n- "find all places where X is true" across a known set of files\n\nThe shared property: the model has to **see** all the inputs to do the job. Not "could potentially benefit from seeing." Has to. If a tool can pull the relevant subset, the tool is cheaper, faster, and more accurate.`,
+      },
+      {
+        heading: 'A short rule of thumb',
+        body: `Default to small context, with tools to expand on demand. Earn each token in the prompt the way you earn each line of code in a function — by being load-bearing.\n\nIf you cannot say which sentence in the system prompt is doing work on this call, the sentence is probably not earning its keep.`,
+      },
+    ],
+  },
+
+  {
     slug: 'the-quiet-cost-of-being-the-reliable-one',
     cover: '/blog/cover-reliable-cost.svg',
     title: 'The quiet cost of being the reliable one',
