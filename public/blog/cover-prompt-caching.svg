@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="Prompt caching cover">
+  <rect width="1200" height="600" fill="#fff6db"/>
+  <g transform="translate(90,140)">
+    <g transform="translate(0,0) rotate(-2)">
+      <rect width="440" height="60" rx="14" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+      <text x="20" y="38" font-family="ui-monospace, monospace" font-size="14" fill="#1d1815">system prompt · 8,200 tokens</text>
+      <rect x="320" y="20" width="100" height="22" rx="8" fill="#a3e4a3"/>
+      <text x="328" y="36" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="#1d1815">CACHED</text>
+    </g>
+    <g transform="translate(20,80) rotate(1)">
+      <rect width="440" height="60" rx="14" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+      <text x="20" y="38" font-family="ui-monospace, monospace" font-size="14" fill="#1d1815">tools · 2,400 tokens</text>
+      <rect x="320" y="20" width="100" height="22" rx="8" fill="#a3e4a3"/>
+      <text x="328" y="36" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="#1d1815">CACHED</text>
+    </g>
+    <g transform="translate(0,160) rotate(-1)">
+      <rect width="440" height="60" rx="14" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+      <text x="20" y="38" font-family="ui-monospace, monospace" font-size="14" fill="#1d1815">docs context · 18,000 tokens</text>
+      <rect x="320" y="20" width="100" height="22" rx="8" fill="#a3e4a3"/>
+      <text x="328" y="36" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="#1d1815">CACHED</text>
+    </g>
+    <g transform="translate(20,240) rotate(1)">
+      <rect width="440" height="60" rx="14" fill="#1d1815"/>
+      <text x="20" y="38" font-family="ui-monospace, monospace" font-size="14" fill="#f6efe6">user message · 240 tokens</text>
+      <rect x="320" y="20" width="100" height="22" rx="8" fill="#ff6b6b"/>
+      <text x="332" y="36" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="#fff">FRESH</text>
+    </g>
+  </g>
+  <g transform="translate(620,150)">
+    <text x="0" y="50" font-family="Inter, sans-serif" font-weight="900" font-size="48" fill="#1d1815" letter-spacing="-2">Caching like</text>
+    <text x="0" y="118" font-family="Inter, sans-serif" font-weight="900" font-size="48" fill="#1d1815" letter-spacing="-2">you mean it.</text>
+    <text x="0" y="170" font-family="Inter, sans-serif" font-weight="700" font-size="22" fill="#ff6b6b">Anthropic prompt caching patterns.</text>
+    <text x="0" y="225" font-family="Inter, sans-serif" font-size="17" fill="rgba(29,24,21,0.7)">90% off the cached part. The trick is</text>
+    <text x="0" y="252" font-family="Inter, sans-serif" font-size="17" fill="rgba(29,24,21,0.7)">deciding what counts as cached.</text>
+  </g>
+</svg>

@@ -1,5 +1,95 @@
 export const posts = [
   {
+    slug: 'caching-like-you-mean-it-anthropic-prompt-caching',
+    cover: '/blog/cover-prompt-caching.svg',
+    title: 'Caching like you mean it: Anthropic prompt caching patterns',
+    type: 'deep dive',
+    date: 'January 22, 2026',
+    readingTime: '10 min',
+    color: 'paper-yellow',
+    tags: ['prompt caching', 'anthropic', 'performance'],
+    excerpt:
+      '90% off the cached part. The trick is deciding what counts as cached, and not invalidating it by accident.',
+    seoDescription:
+      'Practical patterns for Anthropic prompt caching: where to put breakpoints, the 5-minute TTL, common anti-patterns, and real numbers from a production workload.',
+    keywords: 'Anthropic prompt caching, cache_control, ephemeral cache, prompt caching, cache breakpoints, TTL',
+    intro:
+      `Prompt caching is the cheapest performance win in the Claude API and the one most people skip on the way to fancier ideas. The mechanic is simple: mark a prefix of your prompt as cacheable, and subsequent requests reusing the same prefix get a steep discount and a latency drop.\n\nThe cost discount is real (around 90% on cached read, with a small write premium on the first hit). The latency improvement is the bigger win for agent loops. The catch is everything in front of "subsequent requests reusing the same prefix" — most of which is your fault, not the API's.`,
+    sections: [
+      {
+        heading: 'What caching actually buys you',
+        body: `On a cache hit, the model reads the cached blocks instead of re-tokenising and re-attending to them. You pay a write fee on the first request (slightly more than a normal token) and a read fee on subsequent ones (much less than a normal token, roughly 10%).\n\nThe practical numbers from one of my agent loops:\n\n- system prompt + tool defs + docs: 28,400 tokens\n- without caching: ~1.2s of "first byte" on every turn\n- with caching: ~0.35s on every turn after the first\n- monthly cost: down ~62% on a workload that re-runs the same prefix many times an hour\n\nWhich is to say: if you are not caching, you are paying for the same tokens to be rebuilt every turn.`,
+      },
+      {
+        heading: 'Where to put the four breakpoints',
+        body:
+`The API allows up to four cache breakpoints (\`cache_control: {"type": "ephemeral"}\`) per request. The order of layers matters because a layer's cache hit depends on everything **before** it being identical.\n\n![The four breakpoints, from most stable on top to most volatile at the bottom.](/blog/diagram-cache-breakpoints.svg)\n\nMy default placement, top to bottom:\n\n- **Breakpoint 1.** End of the system prompt (and any global rules that never change between turns).\n- **Breakpoint 2.** End of the tool definitions block.\n- **Breakpoint 3.** End of the long static context — runbooks, docs, schemas.\n- **Breakpoint 4.** End of the conversation up to (but not including) the latest user turn.\n\nThe latest user turn is fresh; everything else can usually be cached. The trick is making sure those upper layers really are byte-for-byte identical between turns.`,
+      },
+      {
+        heading: 'The five-minute TTL is the real boss',
+        body: `Cache entries expire after about five minutes of inactivity. Inside that window, you pay read prices. Outside, the next request rebuilds the cache (write price) and the cycle starts again.\n\nWhich means:\n\n- For interactive sessions, caching almost always wins.\n- For batch workloads, caching wins only if you keep the prefix warm — either by spacing requests within five minutes or by using a longer TTL where available.\n- For one-shot calls, do not bother. The write fee is wasted.\n\nThe other failure mode: long agent thinks. If the model spends ten minutes on a tool loop that returns no new request to the API, the cache cools off. A heartbeat request keeps it warm; a smarter agent loop avoids the silence.`,
+      },
+      {
+        heading: 'Anti-patterns I keep seeing',
+        body: `- **Putting the user message above the cache breakpoint.** The cache key includes everything before the breakpoint. If the user message is up there, every turn invalidates the cache. Move it down.\n- **A timestamp at the top of the system prompt.** "It is currently 14:32 UTC on March 17." Looks helpful. Invalidates the cache every minute. If you need the time, put it in the latest user turn or a tool result.\n- **Reordering tool definitions per call.** Some SDKs sort tools alphabetically by default; some do not. If your tools are in a different order each call, your cache is dead. Sort once and freeze.\n- **A nonce in the system prompt.** Sometimes added "for safety." Same problem as the timestamp.\n- **Caching a prompt smaller than the breakpoint cost.** Caching a 200-token system prompt is a rounding error at best. Reach for caching when prefixes are 1k+ tokens.`,
+      },
+      {
+        heading: 'A minimal SDK example',
+        body:
+`Python SDK, three breakpoints (system, tools, context):\n\n\`\`\`python
+from anthropic import Anthropic
+client = Anthropic()
+
+system = [
+    {
+        "type": "text",
+        "text": SYSTEM_PROMPT,
+        "cache_control": {"type": "ephemeral"},
+    }
+]
+
+tools = [
+    *TOOL_DEFS,  # last tool def in the list will get the cache_control
+]
+tools[-1]["cache_control"] = {"type": "ephemeral"}
+
+context_message = {
+    "role": "user",
+    "content": [
+        {
+            "type": "text",
+            "text": LARGE_DOCS_BLOB,
+            "cache_control": {"type": "ephemeral"},
+        },
+        {
+            "type": "text",
+            "text": current_user_question,  # not cached; this is the fresh part
+        },
+    ],
+}
+
+resp = client.messages.create(
+    model="claude-sonnet-4-6",
+    max_tokens=1500,
+    system=system,
+    tools=tools,
+    messages=[context_message],
+)
+print(resp.usage)  # check cache_creation_input_tokens vs cache_read_input_tokens
+\`\`\`\n\nThe \`usage\` block tells you the truth. \`cache_read_input_tokens\` should dominate after the second call. If it does not, your prefix is changing somewhere you did not expect.`,
+      },
+      {
+        heading: 'Numbers from a real workload',
+        body: `One of our internal agents makes ~140 requests an hour during business hours. Same system prompt, same tools, same large schema. Different user turn each time.\n\nBefore caching: 28k input tokens × 140 ≈ 3.9M tokens/hr at full price.\n\nAfter caching: 28k cached × 139 ≈ 3.9M tokens/hr **at read price** (≈ 10% of full), plus one cache write of 28k tokens.\n\nThe before/after on the bill matched what the math predicted. Latency dropped by about 70% on cache hits — model "first byte" fell to under half a second on average.\n\nNothing else changed. Same model, same prompt, same answer quality.`,
+      },
+      {
+        heading: 'A few habits that keep the cache hot',
+        body: `- treat the system prompt as a build artifact: generate it once per session, not per call\n- sort tool definitions deterministically; commit the sort to the repo\n- never embed wall-clock time, request id, or trace id above the breakpoint\n- if you must include "current state" near the top, hash it and only invalidate when the hash changes\n- log \`cache_creation_input_tokens\` and \`cache_read_input_tokens\` at warn-level when reads are zero on a workload that should be hitting; an alert here is gold\n\nCaching is one of those features where the first 80% is mechanical and the last 20% is a habit. The habit is the part that pays.`,
+      },
+    ],
+  },
+
+  {
     slug: 'why-clarity-feels-aggressive-to-confused-systems',
     cover: '/blog/cover-clarity-aggressive.svg',
     title: 'Why clarity feels aggressive to confused systems',
