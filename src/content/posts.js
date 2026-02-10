@@ -1,5 +1,185 @@
 export const posts = [
   {
+    slug: 'from-prompt-to-pipeline-eval-harness-in-200-lines',
+    cover: '/blog/cover-eval-harness-200.svg',
+    title: 'From prompt to pipeline: a real eval harness in 200 lines',
+    type: 'tutorial',
+    date: 'February 10, 2026',
+    readingTime: '14 min',
+    color: 'paper-coral',
+    tags: ['evals', 'python', 'tooling'],
+    excerpt:
+      'You do not need a vendor. A dataset, a runner, a grader, a store, and a diff report — all in under 200 lines of Python — covers most of what you actually need.',
+    seoDescription:
+      'A complete walk-through of building a small eval harness in Python: dataset format, runner, hybrid rule + LLM grader, DuckDB storage, and a regression-style diff report.',
+    keywords: 'eval harness, LLM evals, Anthropic evals, golden dataset, LLM as judge, regression testing, DuckDB',
+    intro:
+      `Half the conference talks about evals end with "use our hosted product." The product is fine. The talk is also true if you build it yourself in an afternoon, and you will understand your own evals better when you do.\n\nThis is a small, opinionated harness. Five pieces, ~200 lines, and a real pattern for catching regressions before they ship. The code is readable Python; you can port it to anything in a few hours.`,
+    sections: [
+      {
+        heading: 'The five honest pieces',
+        body:
+`![Five pieces: dataset, runner, grader, store, diff report. Each one is small.](/blog/diagram-eval-harness.svg)\n\n- **Dataset.** Cases the model is graded on.\n- **Runner.** Calls the model on each case.\n- **Grader.** Decides if the output is good. Rules first, judge second.\n- **Store.** Saves runs so you can compare them.\n- **Diff report.** Tells you what changed since the last run.\n\nNothing fancy. Each piece can be one file. Each piece is small enough to throw away and rewrite.`,
+      },
+      {
+        heading: 'The dataset format',
+        body:
+`A line-delimited JSON file. One case per line.\n\n\`\`\`json
+{"id": "ticket-001", "input": "open a P2 ticket on the eng team for flaky logout", "expect": {"tool": "create_ticket", "args": {"team": "eng", "priority": 2}}}
+{"id": "ticket-002", "input": "what is our churn rate", "expect": {"tool": "get_metric", "args": {"name": "churn"}}}
+{"id": "ticket-003", "input": "thanks!", "expect": {"no_tool": true}}
+\`\`\`\n\nWhy line-delimited:\n\n- you can grow it without breaking diffs\n- you can grep it\n- you can shuffle it\n- you can shard it\n- it does not need a parser more sophisticated than \`for line in f\`\n\n\`expect\` is permissive. It can be "must call this tool with these args," "must NOT call any tool," "answer must contain this substring," or "rubric goes here." The grader handles each shape.`,
+      },
+      {
+        heading: 'The runner',
+        body:
+`The runner is the smallest piece. It calls the model on each case. That is it.\n\n\`\`\`python
+import anthropic, json
+from pathlib import Path
+
+client = anthropic.Anthropic()
+
+def run_case(case: dict, model: str, tools: list) -> dict:
+    resp = client.messages.create(
+        model=model,
+        max_tokens=2000,
+        tools=tools,
+        messages=[{"role": "user", "content": case["input"]}],
+    )
+    return {
+        "id": case["id"],
+        "input": case["input"],
+        "expect": case["expect"],
+        "output": [block.model_dump() for block in resp.content],
+        "stop_reason": resp.stop_reason,
+        "usage": resp.usage.model_dump(),
+    }
+
+def run_all(dataset: Path, model: str, tools: list) -> list[dict]:
+    cases = [json.loads(line) for line in dataset.read_text().splitlines() if line.strip()]
+    return [run_case(c, model, tools) for c in cases]
+\`\`\`\n\nNotes:\n\n- enable prompt caching on \`tools\` and any large system prompt before you run more than ~50 cases\n- if you are budget-conscious, parallelize with a small \`asyncio\` wrapper; \`anthropic.AsyncAnthropic\` is the import\n- save \`usage\` so you can chart cost per case`,
+      },
+      {
+        heading: 'The grader: rules first, judge second',
+        body:
+`The grader is two layers. Cheap deterministic rules first; expensive LLM-as-judge only when rules cannot decide.\n\n\`\`\`python
+def grade(case: dict, run: dict) -> dict:
+    expect = case["expect"]
+    output = run["output"]
+    tool_uses = [b for b in output if b["type"] == "tool_use"]
+
+    if "no_tool" in expect:
+        ok = len(tool_uses) == 0
+        return {"id": case["id"], "ok": ok, "reason": "tool used when none expected" if not ok else "ok"}
+
+    if "tool" in expect:
+        if not tool_uses:
+            return {"id": case["id"], "ok": False, "reason": "no tool called"}
+        first = tool_uses[0]
+        if first["name"] != expect["tool"]:
+            return {"id": case["id"], "ok": False, "reason": f"called {first['name']} instead of {expect['tool']}"}
+        for k, v in expect.get("args", {}).items():
+            if first["input"].get(k) != v:
+                return {"id": case["id"], "ok": False, "reason": f"arg {k}={first['input'].get(k)!r} != {v!r}"}
+        return {"id": case["id"], "ok": True, "reason": "tool + args match"}
+
+    if "rubric" in expect:
+        text = "".join(b["text"] for b in output if b["type"] == "text")
+        verdict = judge(case["input"], text, expect["rubric"])
+        return {"id": case["id"], "ok": verdict["ok"], "reason": verdict["why"]}
+
+    return {"id": case["id"], "ok": False, "reason": "no recognised expect shape"}
+\`\`\`\n\nThe \`judge\` function is a small Claude call with a short rubric and the original case visible. Keep it boring:\n\n\`\`\`python
+def judge(input_text: str, output_text: str, rubric: str) -> dict:
+    resp = client.messages.create(
+        model="claude-haiku-4-5-20251001",
+        max_tokens=300,
+        messages=[{
+            "role": "user",
+            "content": (
+                f"Rubric:\\n{rubric}\\n\\n"
+                f"User asked:\\n{input_text}\\n\\n"
+                f"Assistant said:\\n{output_text}\\n\\n"
+                "Reply ONLY with JSON: {\\"ok\\": bool, \\"why\\": short string}."
+            ),
+        }],
+    )
+    text = "".join(b.text for b in resp.content if b.type == "text").strip()
+    return json.loads(text)
+\`\`\`\n\nUse a small, fast model for the judge. The judge is not where you spend top-tier inference.`,
+      },
+      {
+        heading: 'Storage and the diff report',
+        body:
+`A run is a list of \`{id, ok, reason, output, usage}\`. Persist it with the model name and a timestamp. DuckDB is overkill and also delightful for this:\n\n\`\`\`python
+import duckdb, time, json
+con = duckdb.connect("evals.duckdb")
+con.execute("create table if not exists runs (ts double, model text, id text, ok bool, reason text, output text, usage text)")
+
+def save_run(model: str, results: list[dict]):
+    now = time.time()
+    con.executemany("insert into runs values (?,?,?,?,?,?,?)", [
+        (now, model, r["id"], r["ok"], r["reason"], json.dumps(r["output"]), json.dumps(r["usage"]))
+        for r in results
+    ])
+\`\`\`\n\nThe diff report is a single SQL query. Compare the latest two runs of a model:\n\n\`\`\`python
+def diff_report(model: str):
+    rows = con.execute(\"\"\"
+        with last_two as (
+          select ts, id, ok, reason from runs
+          where model = ?
+          and ts in (select distinct ts from runs where model = ? order by ts desc limit 2)
+        )
+        select id,
+               max(case when ts = (select max(ts) from last_two) then ok end) as new_ok,
+               max(case when ts = (select min(ts) from last_two) then ok end) as old_ok,
+               max(case when ts = (select max(ts) from last_two) then reason end) as new_reason
+        from last_two
+        group by id
+        having new_ok != old_ok
+    \"\"\", [model, model]).fetchall()
+    for id, new_ok, old_ok, reason in rows:
+        flag = "+" if new_ok and not old_ok else "-"
+        print(f"{flag} {id}: {reason}")
+\`\`\`\n\nThe report shows only what flipped. That is the part you read on a Tuesday morning. Everything else is fine.`,
+      },
+      {
+        heading: 'The thing that surprised me',
+        body: `The first time I ran this harness on a real prompt change, the aggregate score went **up** by 4 points.\n\nThe diff report showed the change had broken three cases I cared about — the arg-matching ones — and fixed seven cases I did not care about as much. The aggregate looked good. The actual answer was "this prompt change makes the agent worse where it matters."\n\nThat is the entire reason this post exists. Aggregates lie. Diffs do not.`,
+      },
+      {
+        heading: 'Putting it all together',
+        body:
+`The script:\n\n\`\`\`python
+import json
+from pathlib import Path
+
+def main():
+    tools = json.loads(Path("tools.json").read_text())
+    cases = Path("evals.jsonl")
+    model = "claude-sonnet-4-6"
+    runs = run_all(cases, model, tools)
+    results = [grade(c, r) for c, r in zip([json.loads(l) for l in cases.read_text().splitlines() if l.strip()], runs)]
+    for r, run in zip(results, runs):
+        run["ok"] = r["ok"]; run["reason"] = r["reason"]
+    save_run(model, runs)
+    passed = sum(1 for r in results if r["ok"])
+    print(f"{passed}/{len(results)} passed")
+    diff_report(model)
+
+if __name__ == "__main__":
+    main()
+\`\`\`\n\nThat is the whole pipeline. Add tracing, parallelism, and richer rubrics later. Or do not. The harness only has to be useful, not impressive.`,
+      },
+      {
+        heading: 'What I would not bolt on',
+        body: `- a UI; the JSONL output and a one-screen SQL diff is enough until you have collaborators\n- a "leaderboard"; you are not benchmarking models, you are testing your prompt\n- exotic stat tests; if a 5% swing is in the noise, your dataset is too small\n- "auto-grow the dataset" loops; cases earn their place by hand\n\nKeep the harness small enough that you trust it. The minute you stop trusting your eval, you stop running it.`,
+      },
+    ],
+  },
+
+  {
     slug: 'caching-like-you-mean-it-anthropic-prompt-caching',
     cover: '/blog/cover-prompt-caching.svg',
     title: 'Caching like you mean it: Anthropic prompt caching patterns',

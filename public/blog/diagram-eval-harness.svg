@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 360" role="img" aria-label="Eval harness pipeline">
+  <rect width="1000" height="360" fill="#fff8ef"/>
+  <text x="40" y="48" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">An eval harness in five honest pieces</text>
+  <g transform="translate(40,100)">
+    <rect width="160" height="70" rx="14" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <text x="14" y="30" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="rgba(29,24,21,0.5)" letter-spacing="2">1. DATASET</text>
+    <text x="14" y="54" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">cases.jsonl</text>
+  </g>
+  <g transform="translate(220,100)">
+    <rect width="160" height="70" rx="14" fill="#fff6db" stroke="#1d1815" stroke-width="2"/>
+    <text x="14" y="30" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="rgba(29,24,21,0.5)" letter-spacing="2">2. RUNNER</text>
+    <text x="14" y="54" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">model(prompt)</text>
+  </g>
+  <g transform="translate(400,100)">
+    <rect width="160" height="70" rx="14" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/>
+    <text x="14" y="30" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="rgba(29,24,21,0.5)" letter-spacing="2">3. GRADER</text>
+    <text x="14" y="54" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">rules + judge</text>
+  </g>
+  <g transform="translate(580,100)">
+    <rect width="160" height="70" rx="14" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/>
+    <text x="14" y="30" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="rgba(29,24,21,0.5)" letter-spacing="2">4. STORE</text>
+    <text x="14" y="54" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">runs.duckdb</text>
+  </g>
+  <g transform="translate(760,100)">
+    <rect width="200" height="70" rx="14" fill="#1d1815"/>
+    <text x="14" y="30" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="rgba(255,255,255,0.5)" letter-spacing="2">5. DIFF REPORT</text>
+    <text x="14" y="54" font-family="ui-monospace, monospace" font-size="13" fill="#a3e4a3">vs. last run</text>
+  </g>
+  <path d="M 200 135 L 220 135" stroke="#1d1815" stroke-width="2"/>
+  <path d="M 380 135 L 400 135" stroke="#1d1815" stroke-width="2"/>
+  <path d="M 560 135 L 580 135" stroke="#1d1815" stroke-width="2"/>
+  <path d="M 740 135 L 760 135" stroke="#1d1815" stroke-width="2"/>
+  <text x="40" y="220" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="rgba(29,24,21,0.5)" letter-spacing="2">WHAT THE GRADER ACTUALLY DOES</text>
+  <text x="40" y="248" font-family="Inter, sans-serif" font-size="14" fill="#1d1815">• rule checks first (regex, JSON shape, tool calls) — cheap and deterministic</text>
+  <text x="40" y="270" font-family="Inter, sans-serif" font-size="14" fill="#1d1815">• LLM-as-judge after, on a small rubric, with the original case visible</text>
+  <text x="40" y="292" font-family="Inter, sans-serif" font-size="14" fill="#1d1815">• disagreement is a feature: rule says ✓, judge says ✗ → look at the case</text>
+  <text x="40" y="320" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">If you only remember one thing: a flat aggregate score is a comfort, not a signal.</text>
+</svg>

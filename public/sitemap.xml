@@ -32,6 +32,12 @@
   </url>
 
   <url>
+    <loc>https://shubhamkatta.com/writing/from-prompt-to-pipeline-eval-harness-in-200-lines</loc>
+    <lastmod>2026-02-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://shubhamkatta.com/writing/caching-like-you-mean-it-anthropic-prompt-caching</loc>
     <lastmod>2026-01-22</lastmod>
     <changefreq>monthly</changefreq>

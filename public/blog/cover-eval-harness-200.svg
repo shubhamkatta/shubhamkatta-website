@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="Eval harness in 200 lines cover">
+  <rect width="1200" height="600" fill="#ffe9e4"/>
+  <g transform="translate(80,130) rotate(-1)">
+    <rect width="520" height="340" rx="22" fill="#1d1815"/>
+    <circle cx="22" cy="22" r="6" fill="#ff6b6b"/>
+    <circle cx="42" cy="22" r="6" fill="#ffd166"/>
+    <circle cx="62" cy="22" r="6" fill="#a3e4a3"/>
+    <text x="22" y="76" font-family="ui-monospace, monospace" font-size="14" fill="#9eb7ff">def run_eval(cases, model):</text>
+    <text x="22" y="102" font-family="ui-monospace, monospace" font-size="14" fill="#f6efe6">    results = []</text>
+    <text x="22" y="128" font-family="ui-monospace, monospace" font-size="14" fill="#f6efe6">    for c in cases:</text>
+    <text x="22" y="154" font-family="ui-monospace, monospace" font-size="14" fill="#f6efe6">        out = model(c.prompt)</text>
+    <text x="22" y="180" font-family="ui-monospace, monospace" font-size="14" fill="#f6efe6">        score = grade(c, out)</text>
+    <text x="22" y="206" font-family="ui-monospace, monospace" font-size="14" fill="#f6efe6">        results.append(score)</text>
+    <text x="22" y="244" font-family="ui-monospace, monospace" font-size="14" fill="#a3e4a3">    return aggregate(results)</text>
+    <text x="22" y="290" font-family="ui-monospace, monospace" font-size="13" fill="rgba(255,255,255,0.4)"># 198 lines, including grading.</text>
+  </g>
+  <g transform="translate(660,170)">
+    <text x="0" y="50" font-family="Inter, sans-serif" font-weight="900" font-size="48" fill="#1d1815" letter-spacing="-2">From prompt</text>
+    <text x="0" y="118" font-family="Inter, sans-serif" font-weight="900" font-size="48" fill="#1d1815" letter-spacing="-2">to pipeline.</text>
+    <text x="0" y="170" font-family="Inter, sans-serif" font-weight="700" font-size="22" fill="#ff6b6b">A real eval harness in 200 lines.</text>
+    <text x="0" y="225" font-family="Inter, sans-serif" font-size="17" fill="rgba(29,24,21,0.7)">Datasets, runners, graders, reports.</text>
+    <text x="0" y="252" font-family="Inter, sans-serif" font-size="17" fill="rgba(29,24,21,0.7)">No vendor required.</text>
+  </g>
+</svg>
