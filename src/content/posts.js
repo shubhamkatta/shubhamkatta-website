@@ -1,5 +1,49 @@
 export const posts = [
   {
+    slug: 'the-strange-relief-of-admitting-you-care',
+    cover: '/blog/cover-admitting-you-care.svg',
+    title: 'The strange relief of admitting you care',
+    type: 'personal',
+    date: 'February 18, 2026',
+    readingTime: '6 min',
+    color: 'paper-coral',
+    tags: ['vulnerability', 'honesty', 'feelings'],
+    excerpt:
+      'People perform indifference to protect themselves from embarrassment. There is a different kind of peace on the other side.',
+    seoDescription:
+      'On the cost of pretending not to care, the relief that lives on the other side, and the small change in language that makes admitting it easier.',
+    keywords: 'vulnerability, honesty, caring, indifference, emotional honesty',
+    intro:
+      `People often perform indifference to protect themselves from embarrassment. It is easier to look detached than visibly invested.\n\nBut there is a different kind of peace in simply admitting that something matters to you. It costs ego. It returns honesty.`,
+    sections: [
+      {
+        heading: 'the cost of pretending not to care',
+        body: `Performed indifference looks like protection. It is supposed to make rejection cheaper. If I never said I cared, then losing it can't bruise me, the logic goes.\n\nThis has never actually worked for anyone I have watched try it, including myself. The bruise still arrives. It just shows up later, and dressed in a different language — irritation, distance, a sudden need to declare the thing was never important anyway.\n\nThe pretence is expensive. You pay it twice: once in the daily energy of maintaining the mask, once in the strange grief of pretending not to feel something you were quietly feeling the whole time.`,
+      },
+      {
+        heading: 'the relief on the other side',
+        body: `Admitting you care is mostly a sentence. "Yeah, this matters to me." The room may not change much. Your interior changes a lot.\n\nThe relief is not about being heard, which is sometimes a bonus and sometimes not on offer. The relief is about not having to keep guarding the secret. Caring takes less energy when you stop disguising it.`,
+      },
+      {
+        heading: 'why caring out loud feels risky',
+        body: `Three things that get in the way:\n\n- the worry that the other person will use it against you\n- the worry of appearing uncool or too earnest\n- the worry that admitting you care will make a no harder\n\nThe first is sometimes real and worth measuring. The second is usually about whose approval you are still chasing. The third is upside-down: admitting you care does not make a no harder; it makes the relationship to the no honest.`,
+      },
+      {
+        heading: 'how to say it without making it heavy',
+        body: `Caring out loud does not require a speech. It usually only requires removing the hedges from a sentence you were about to say anyway.\n\n"Whatever, sounds fine" → "I'd actually like to do this. Are you in?"\n\n"Either way, no pressure" → "I'd really like a yes here."\n\n"Up to you" → "I have a preference. Can I tell you?"\n\nThe weight people fear is mostly in the hedges, not the caring. Drop the hedges and the sentence becomes shorter, not heavier.`,
+      },
+      {
+        heading: 'a few things this changed',
+        body: `- friends got closer, faster\n- I made worse decisions less often, because I was no longer optimising for "looking unbothered"\n- some relationships ended sooner than they would have, which on reflection was the correct outcome\n- my work got more honest in shape, because I stopped pretending I didn't care which projects I was on\n\nNone of this was a personality transplant. It was just the cost of one specific lie going down.`,
+      },
+      {
+        heading: 'the opposite trap: caring loudly about things you don\'t',
+        body: `There is a parallel failure: declaring intense feelings about things you mostly don't have feelings about, because it is socially expected. Performative caring is just performed indifference with the polarity flipped.\n\nThe quiet test is simple: would you still feel this way alone in a room with no audience? If yes, the caring is real. If no, you are negotiating, not feeling.`,
+      },
+    ],
+  },
+
+  {
     slug: 'from-prompt-to-pipeline-eval-harness-in-200-lines',
     cover: '/blog/cover-eval-harness-200.svg',
     title: 'From prompt to pipeline: a real eval harness in 200 lines',
