@@ -1,5 +1,177 @@
 export const posts = [
   {
+    slug: 'claude-code-hooks-slash-commands-and-settings',
+    cover: '/blog/cover-hooks-slash-commands.svg',
+    title: 'Hooks, slash commands, and settings: the Claude Code configuration you’re probably missing',
+    type: 'guide',
+    date: 'February 26, 2026',
+    readingTime: '11 min',
+    color: 'paper-blue',
+    tags: ['claude code', 'configuration', 'hooks'],
+    excerpt:
+      'The configuration surface most Claude Code users never look at. Permissions, hooks, slash commands, env, and the settings.json that quietly removes half your interruptions.',
+    seoDescription:
+      'A practical tour of Claude Code configuration: settings.json, permissions, hooks (PreToolUse, PostToolUse, Stop, UserPromptSubmit, Notification), slash commands, env vars. With real examples.',
+    keywords: 'Claude Code settings.json, hooks, slash commands, permissions, PreToolUse, PostToolUse, automation',
+    intro:
+      `Claude Code looks like a chat with a coding agent. It is also a small framework with a configuration surface most people never open. Once you do, half the interruptions disappear, hooks run quietly in the background, and your slash commands do exactly what they are supposed to do.\n\nThis is a tour of the parts of \`.claude/settings.json\` (and its global cousin) that pay back the time it takes to learn them.`,
+    sections: [
+      {
+        heading: 'The three configuration surfaces',
+        body: `There are three places config lives:\n\n- \`~/.claude/settings.json\` — global, applies to every project\n- \`<repo>/.claude/settings.json\` — project, checked into git\n- \`<repo>/.claude/settings.local.json\` — project but personal, gitignored\n\nThe rule of thumb: anything universal goes global, anything teamwide goes in the repo settings, anything that is "this is how I personally like Claude to behave on this project" goes in \`settings.local.json\`. The local file overrides project, project overrides global.\n\nGetting this layering right means you can share \`settings.json\` with a team without forcing them to inherit your personal hooks.`,
+      },
+      {
+        heading: 'Permissions: deny first, then earn',
+        body:
+`Permissions decide which Bash commands and tools run without prompting. The default is good. The team-shared default should usually be tighter than the individual default.\n\nA stripped-down example:\n\n\`\`\`json
+{
+  "permissions": {
+    "allow": [
+      "Bash(git status)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(npm test)",
+      "Bash(npm run lint)",
+      "WebFetch(domain:github.com)"
+    ],
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Bash(git push --force:*)",
+      "Bash(git reset --hard:*)"
+    ]
+  }
+}
+\`\`\`\n\nA few things I have learned:\n\n- **Allow read-only commands aggressively.** The cost of a permission prompt is human attention. \`git status\`, \`ls\`, \`git diff\` should never prompt.\n- **Deny destructive commands explicitly.** Even if the user could approve them at runtime, a deny entry forces them to type the full command in another terminal — a useful speedbump.\n- **Allow tool prefixes for read-heavy MCP servers.** If your team uses a Linear MCP, allowing \`mcp__linear__list_*\` removes a steady drizzle of prompts.`,
+      },
+      {
+        heading: 'Hooks: the part most people skip',
+        body: `Hooks are shell commands the harness runs at lifecycle events. The harness, not the model, executes them. Which means: hooks are how you enforce things the model cannot be trusted to remember.\n\nThe hook events I use (Claude Code supports more — check current docs):\n\n- \`PreToolUse\` — before a tool runs. Can deny.\n- \`PostToolUse\` — after a tool runs. Cannot deny, but can format, log, or notify.\n- \`UserPromptSubmit\` — when the user submits. Useful for adding context (today's date, current branch).\n- \`Stop\` — when the agent finishes a turn. Useful for "ping me when it's done."\n- \`Notification\` — when the harness wants to surface something to you.\n\nHere are three hooks that earn their keep on every project:`,
+      },
+      {
+        heading: 'Hook 1: format on save (PostToolUse)',
+        body: `The single best hook. After Claude edits a file, run your formatter. Saves you the "you forgot to run prettier" message that nobody reads.\n\n\`\`\`json
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "prettier --write $CLAUDE_FILE_PATH 2>/dev/null || true"
+          }
+        ]
+      }
+    ]
+  }
+}
+\`\`\`\n\nThe \`|| true\` matters — prettier failing on a file that does not match its config should not block the edit. The hook is best-effort.`,
+      },
+      {
+        heading: 'Hook 2: deny dangerous git operations (PreToolUse)',
+        body: `\`\`\`json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "scripts/guard-git.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
+\`\`\`\n\nWhere \`scripts/guard-git.sh\` greps the command for \`push --force\` to a protected branch and exits non-zero if found. Hooks that exit non-zero on \`PreToolUse\` block the call.\n\nA hook is the only place to enforce this reliably. The model can be told "do not force-push." A hook makes "do not force-push" structurally true.`,
+      },
+      {
+        heading: 'Hook 3: ping me when it stops',
+        body: `\`\`\`json
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "osascript -e 'display notification \\"Claude is done\\" with title \\"Claude Code\\"'" }
+        ]
+      }
+    ]
+  }
+}
+\`\`\`\n\nLong-running tasks plus a different tab plus me getting coffee equals "wait, when did this finish?" The Stop hook fixes that.\n\nLinux equivalents: \`notify-send\`. Cross-platform: a tiny TTS wrapper.`,
+      },
+      {
+        heading: 'Slash commands as muscle memory',
+        body: `Slash commands live in \`.claude/commands/\` (project) or \`~/.claude/commands/\` (global). Each is a markdown file. The filename becomes the command.\n\n\`\`\`
+.claude/commands/ship-pr.md
+\`\`\`\n\nInside, a prompt that the harness expands when you type \`/ship-pr\`:\n\n\`\`\`md
+You are about to open a PR for the current branch.
+
+1. Run \`git status\` and \`git diff main...HEAD\`.
+2. Draft a PR title under 70 characters, in imperative mood.
+3. Draft a body with: Summary (2-3 bullets) and Test plan (checklist).
+4. Open the PR with \`gh pr create\`.
+\`\`\`\n\nWhat earns its keep is not having a slash command — anyone can write that prompt by hand. It is having the same workflow run the same way every time so you stop reinventing it.\n\nMy short list of slash commands that I would not run a project without:\n\n- \`/review\` — review the diff before commit\n- \`/ship-pr\` — open a PR with a generated title and body\n- \`/loop\` — keep running a task on an interval\n- \`/init\` — generate a starting CLAUDE.md\n- \`/security-review\` — read the diff for security risk\n- \`/simplify\` — review changed code for needless complexity`,
+      },
+      {
+        heading: 'Env vars I actually set',
+        body: `\`\`\`json
+{
+  "env": {
+    "EDITOR": "code -w",
+    "PAGER": "cat",
+    "GIT_PAGER": "cat",
+    "BUN_INSTALL_VERBOSE": "0"
+  }
+}
+\`\`\`\n\nNothing exciting. \`PAGER=cat\` alone removes a class of "command hung" issues where \`git log\` opens \`less\` and waits forever. The Bash tool does not feed input back into a paged process. Set \`PAGER=cat\` and move on.`,
+      },
+      {
+        heading: 'A real settings.json I use',
+        body:
+`The whole thing fits on one screen. That is the point.\n\n\`\`\`json
+{
+  "permissions": {
+    "allow": [
+      "Bash(git status)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(ls:*)",
+      "Bash(rg:*)",
+      "Bash(npm test)",
+      "Bash(npm run lint)"
+    ],
+    "deny": [
+      "Bash(git push --force:*)",
+      "Bash(rm -rf:*)"
+    ]
+  },
+  "env": {
+    "PAGER": "cat",
+    "GIT_PAGER": "cat"
+  },
+  "hooks": {
+    "PostToolUse": [
+      { "matcher": "Edit|Write", "hooks": [ { "type": "command", "command": "prettier --write $CLAUDE_FILE_PATH 2>/dev/null || true" } ] }
+    ],
+    "Stop": [
+      { "hooks": [ { "type": "command", "command": "osascript -e 'display notification \\"Claude is done\\" with title \\"Claude Code\\"'" } ] }
+    ]
+  }
+}
+\`\`\``,
+      },
+      {
+        heading: 'What never to put in hooks',
+        body: `- network calls that can hang the harness\n- anything that runs longer than ~5 seconds\n- \`git\` operations that mutate state outside the obvious one\n- secrets or auth that should be elsewhere\n- "fun" features\n\nA hook is a sharp tool. Treat it like a pre-commit hook on a real codebase: small, fast, predictable, easy to disable.`,
+      },
+    ],
+  },
+
+  {
     slug: 'the-strange-relief-of-admitting-you-care',
     cover: '/blog/cover-admitting-you-care.svg',
     title: 'The strange relief of admitting you care',
