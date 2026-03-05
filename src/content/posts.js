@@ -1,5 +1,49 @@
 export const posts = [
   {
+    slug: 'the-emotional-side-of-good-engineering',
+    cover: '/blog/cover-emotional-engineering.svg',
+    title: 'The emotional side of good engineering',
+    type: 'reflection',
+    date: 'March 5, 2026',
+    readingTime: '7 min',
+    color: 'paper-blue',
+    tags: ['engineering', 'craft', 'work'],
+    excerpt:
+      'Engineering gets described as logic-heavy work, which is true and incomplete. Building systems is always human.',
+    seoDescription:
+      'A reflection on the emotional craft of engineering — frustration tolerance, ego management, communication, and thinking clearly while the ground keeps shifting.',
+    keywords: 'engineering, software craft, frustration tolerance, communication, ego, engineering culture',
+    intro:
+      `Engineering gets described as logic-heavy work, which is true and incomplete. Good engineering also requires frustration tolerance, ego management, communication, and the ability to think clearly while the ground keeps shifting.\n\nSystems may be technical. Building them is always human.`,
+    sections: [
+      {
+        heading: 'thinking clearly while the ground keeps shifting',
+        body: `Most production engineering happens in conditions that would not pass a textbook test. Requirements change mid-build. Constraints arrive through Slack. Half the documentation is wrong. The deadline is an artifact of someone else's anxiety, not the work.\n\nGood engineers do not need ideal conditions. They notice the conditions, adjust, and keep going. Unsteady ground is not the exception; it is the default. Treat it as normal weather, not a crisis. The ones who panic at every shift never get anything beyond the simplest projects done.`,
+      },
+      {
+        heading: 'frustration tolerance is a skill, not a personality',
+        body: `Hard problems are mostly long, not hard. They are forty small annoyances stacked on top of each other. Each one is solvable. The pile, taken at once, is what makes people give up.\n\nFrustration tolerance is the practice of staying with the pile without flinching. It is teachable. The two habits that helped me most:\n\n- name the frustration out loud, briefly, then return to the work\n- when stuck, write the smallest possible next sentence in your head, do that, and re-evaluate\n\nBoth sound simple. Both work. Most engineers I admire are not unusually smart. They are unusually patient with the pile.`,
+      },
+      {
+        heading: 'ego management — your own first',
+        body: `Engineering culture talks about ego mostly when other people have it. The more useful version is being aware of your own.\n\nA few places where my ego has cost me time I will never get back:\n\n- defending an architectural decision past its expiry date because I made it\n- arguing about a small style preference as if it were a load-bearing principle\n- not asking for help on something I "should" already know\n- writing more code instead of admitting the design was wrong\n\nNone of these were technical mistakes. All of them looked like ones from the outside.`,
+      },
+      {
+        heading: 'communication is technical work',
+        body: `An idea you cannot transmit cleanly is functionally a bad idea, no matter how good it is in your head. The transmission cost matters because every other engineer who interacts with it pays that cost too.\n\nThe one habit that has paid back: write things down in the smallest unit that can be argued with. A short doc, a tight PR description, a one-paragraph rationale. The act of writing forces clarity. The artifact survives the conversation. The argument that follows is about the right thing instead of about misunderstandings.`,
+      },
+      {
+        heading: 'what I look for in engineers I want to work with',
+        body: `Not in priority order:\n\n- a high tolerance for being wrong\n- the willingness to ask "is this actually true?" out loud\n- a sense of when something is fast enough vs. when it needs the extra week\n- comfort with ambiguity, without using it as cover for laziness\n- enough taste to recognise good work when they encounter it\n- a sense of humour that does not punch down\n\nNotice how few of these are about specific tools or languages. Tools change every five years. The list above doesn't.`,
+      },
+      {
+        heading: 'a note about resilience, not the corporate kind',
+        body: `Resilience as a corporate buzzword usually means "absorb more without complaining." That is not the kind I am talking about.\n\nThe useful kind of resilience is closer to a capacity to keep your judgement intact under pressure. It is closer to clarity than to endurance. The engineers who keep working in chaos by abandoning their standards are not resilient. They are just tired.`,
+      },
+    ],
+  },
+
+  {
     slug: 'claude-code-hooks-slash-commands-and-settings',
     cover: '/blog/cover-hooks-slash-commands.svg',
     title: 'Hooks, slash commands, and settings: the Claude Code configuration you’re probably missing',

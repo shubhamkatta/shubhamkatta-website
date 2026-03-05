@@ -32,6 +32,12 @@
   </url>
 
   <url>
+    <loc>https://shubhamkatta.com/writing/the-emotional-side-of-good-engineering</loc>
+    <lastmod>2026-03-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://shubhamkatta.com/writing/claude-code-hooks-slash-commands-and-settings</loc>
     <lastmod>2026-02-26</lastmod>
     <changefreq>monthly</changefreq>
