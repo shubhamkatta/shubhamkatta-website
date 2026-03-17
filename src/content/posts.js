@@ -1,5 +1,86 @@
 export const posts = [
   {
+    slug: 'memory-systems-for-ai-agents-that-dont-forget',
+    cover: '/blog/cover-memory-systems.svg',
+    title: 'Memory systems for AI agents that don’t forget what matters',
+    type: 'deep dive',
+    date: 'March 17, 2026',
+    readingTime: '12 min',
+    color: 'paper-coral',
+    tags: ['memory', 'agents', 'context'],
+    excerpt:
+      'Files beat vector DBs more often than the conference talks suggest. A practical look at agent memory: what to store, what to forget, and what to never touch.',
+    seoDescription:
+      'How to design memory for AI agents — file-based vs vector vs context-only, naming conventions, staleness, and the boring habits that keep an agent useful across sessions.',
+    keywords: 'AI agent memory, persistent memory, vector database, file-based memory, Claude Code memory, MEMORY.md',
+    intro:
+      `Most of what gets called "agent memory" in 2026 is one of three things: a vector database with too many opinions, a system prompt with too many facts, or a folder of markdown files that quietly outperforms both.\n\nI have used all three. The folder of markdown files keeps winning. Not because vector DBs are bad — they are excellent at what they do — but because the question "what should the agent remember" is almost never a retrieval problem. It is an editorial problem.`,
+    sections: [
+      {
+        heading: 'What people mean when they say "memory"',
+        body: `When someone says their agent has memory, they usually mean one of:\n\n- **session memory** — the conversation so far, in context\n- **profile memory** — durable facts about the user (role, preferences)\n- **project memory** — facts about ongoing work (deadlines, scope, decisions)\n- **episodic memory** — past sessions and their outcomes\n- **semantic memory** — knowledge the agent has accumulated, not tied to a specific user\n\nThese have very different access patterns and very different staleness properties. Lumping them into "memory" and reaching for the same tool — usually a vector store — is how you end up with an agent that "remembers" the user's job title from six months ago and proposes a roadmap based on it.`,
+      },
+      {
+        heading: 'Files vs. vector DB vs. context-only',
+        body: `Three options, three honest pictures:\n\n- **Context-only.** Cheapest. Forgets at session end. Fine for single-shot tools, useless for anything that wants to "know" the user.\n- **Vector DB.** Powerful for "find me the relevant chunk from a 10k-doc corpus." Bad at "what is the user's role" because that is one fact, not a search problem.\n- **File-based.** A directory of small, named markdown files plus an index. The model reads the index, decides what to load, and operates on the loaded files like a normal human reading notes.\n\nThe pattern that has held up: file-based memory for facts about the user and project, context-only for the current session, and a vector index only when the corpus is large and unstructured (think docs, transcripts, ticket history).`,
+      },
+      {
+        heading: 'Anatomy of a file-based memory',
+        body:
+`The shape I keep coming back to:\n\n\`\`\`
+memory/
+  MEMORY.md            ← always loaded; index of everything else
+  user_role.md         ← role, prefs, working style
+  feedback_testing.md  ← "do not mock the database in tests"
+  project_q2_freeze.md ← "merge freeze begins 2026-03-05"
+  reference_grafana.md ← "oncall latency dashboard at ..."
+\`\`\`\n\n\`MEMORY.md\` is one line per file:\n\n\`\`\`md
+- [User role](user_role.md) — staff engineer, deep Go background, new to React
+- [Testing rule](feedback_testing.md) — integration tests must hit a real DB
+- [Q2 freeze](project_q2_freeze.md) — merge freeze 2026-03-05
+- [Grafana dashboard](reference_grafana.md) — oncall latency, paged on red
+\`\`\`\n\n![File-based memory has four kinds: user, feedback, project, reference. The index points to all of them.](/blog/cover-memory-systems.svg)\n\nThe agent reads the index every turn. It loads only what looks relevant. The contents are markdown the agent can edit when something changes.\n\nThe whole thing fits in 5kb of context on a normal turn, less on a quiet one. Compare that to a vector DB that loads 12 chunks per query because nothing is structured enough to be specific.`,
+      },
+      {
+        heading: 'Naming things matters more than retrieving them',
+        body: `If your memories are named well, retrieval is trivial. If they are named badly, the most expensive embedding in the world will not save you.\n\nNaming rules I follow:\n\n- one fact per file\n- filename is the **topic**, not the **type** (\`user_role.md\` beats \`memory_001.md\`)\n- if you cannot pick a name in five seconds, the memory is too vague to be useful — write the memory to be more specific instead\n- prefix with type so groups stay together: \`feedback_*\`, \`project_*\`, \`reference_*\`, \`user_*\`\n\nThis is a librarian's job, not an engineer's. The librarian wins.`,
+      },
+      {
+        heading: 'Stale memory is worse than no memory',
+        body: `An agent that "remembers" something incorrectly is more dangerous than an agent that asks. The memory feels authoritative, so the agent uses it as a fact, and the user is left wondering why their assistant is confidently wrong.\n\nThree habits that help:\n\n- **Date every memory.** Not just \`mtime\`. Inside the file. "Last verified: 2026-03-10."\n- **Verify before acting.** If a memory says "the deploy script is at \`./deploy.sh\`," check the file exists before recommending it.\n- **Decay aggressively.** Project memories about deadlines and scope rot fast. Re-read them at the start of any non-trivial task and update or delete.\n\nThe rule I keep: if a memory is older than the work it describes, treat it as a question, not an answer.`,
+      },
+      {
+        heading: 'What never to put in memory',
+        body: `- secrets — even if the memory store is private\n- code patterns — they are in the code, which is the ground truth\n- one-off task details — they belong to the session, not the archive\n- summaries of recent activity — \`git log\` does this better\n- predictions and assumptions — write the fact, not your guess\n\nThe rule of thumb: if a memory could be derived by reading the project right now, do not memoize it.`,
+      },
+      {
+        heading: 'A small worked example',
+        body:
+`Pretend you are building a coding assistant. The user mentions they prefer terse responses. You save:\n\n\`\`\`md
+---
+type: feedback
+topic: response style
+last_verified: 2026-03-15
+---
+
+User prefers terse responses with no trailing summaries.
+
+**Why:** said so explicitly mid-session — "I can read the diff."
+**How to apply:** stop summarising at the end of every turn.
+\`\`\`\n\nThe **why** and **how to apply** lines do the work. They turn a flat preference into a rule the agent can apply confidently to edge cases. "User wants terse responses" alone breaks the moment the user asks for a detailed walkthrough — which is also a thing they sometimes want.`,
+      },
+      {
+        heading: 'What I would skip',
+        body: `- **Embedding-of-everything stores.** They are tempting, expensive, and rarely targeted. Use them when you have a corpus, not when you have a profile.\n- **"Auto-summarise the conversation" pipelines.** They lose the parts the agent actually needs.\n- **Long-running graph memories.** Beautiful in talks, brutal to maintain. The cost shows up in week three, not week one.\n\nIf you are evaluating a memory framework, ask: "what does this prevent me from forgetting?" If the answer is "everything," it is the same as nothing.`,
+      },
+      {
+        heading: 'The one habit',
+        body: `Memory is editorial. The hard part is not storing or retrieving — it is deciding what is worth keeping. Files force you to make that decision out loud. That is why they keep winning.`,
+      },
+    ],
+  },
+
+  {
     slug: 'the-emotional-side-of-good-engineering',
     cover: '/blog/cover-emotional-engineering.svg',
     title: 'The emotional side of good engineering',

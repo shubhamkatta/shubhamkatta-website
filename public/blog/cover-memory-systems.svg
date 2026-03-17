@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="Memory systems for AI agents cover">
+  <rect width="1200" height="600" fill="#fff8ef"/>
+  <g transform="translate(100,130)">
+    <g transform="rotate(-2)">
+      <rect width="200" height="100" rx="16" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+      <text x="16" y="34" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="rgba(29,24,21,0.5)" letter-spacing="2">USER</text>
+      <text x="16" y="58" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">role · prefs · style</text>
+      <text x="16" y="80" font-family="ui-monospace, monospace" font-size="13" fill="rgba(29,24,21,0.5)">user_role.md</text>
+    </g>
+    <g transform="translate(220,12) rotate(2)">
+      <rect width="200" height="100" rx="16" fill="#fff6db" stroke="#1d1815" stroke-width="2"/>
+      <text x="16" y="34" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="rgba(29,24,21,0.5)" letter-spacing="2">FEEDBACK</text>
+      <text x="16" y="58" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">corrections · rules</text>
+      <text x="16" y="80" font-family="ui-monospace, monospace" font-size="13" fill="rgba(29,24,21,0.5)">feedback_*.md</text>
+    </g>
+    <g transform="translate(0,140) rotate(1)">
+      <rect width="200" height="100" rx="16" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/>
+      <text x="16" y="34" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="rgba(29,24,21,0.5)" letter-spacing="2">PROJECT</text>
+      <text x="16" y="58" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">deadlines · scope</text>
+      <text x="16" y="80" font-family="ui-monospace, monospace" font-size="13" fill="rgba(29,24,21,0.5)">project_*.md</text>
+    </g>
+    <g transform="translate(220,160) rotate(-1)">
+      <rect width="200" height="100" rx="16" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/>
+      <text x="16" y="34" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="rgba(29,24,21,0.5)" letter-spacing="2">REFERENCE</text>
+      <text x="16" y="58" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">links · dashboards</text>
+      <text x="16" y="80" font-family="ui-monospace, monospace" font-size="13" fill="rgba(29,24,21,0.5)">reference_*.md</text>
+    </g>
+    <g transform="translate(110,290)">
+      <rect width="220" height="50" rx="14" fill="#1d1815"/>
+      <text x="20" y="32" font-family="ui-monospace, monospace" font-size="14" fill="#a3e4a3">MEMORY.md (the index)</text>
+    </g>
+  </g>
+  <g transform="translate(620,170)">
+    <text x="0" y="50" font-family="Inter, sans-serif" font-weight="900" font-size="48" fill="#1d1815" letter-spacing="-2">Memory systems</text>
+    <text x="0" y="118" font-family="Inter, sans-serif" font-weight="900" font-size="48" fill="#1d1815" letter-spacing="-2">for AI agents.</text>
+    <text x="0" y="170" font-family="Inter, sans-serif" font-weight="700" font-size="22" fill="#ff6b6b">that don't forget what matters.</text>
+    <text x="0" y="225" font-family="Inter, sans-serif" font-size="17" fill="rgba(29,24,21,0.7)">Files beat vector DBs more often</text>
+    <text x="0" y="252" font-family="Inter, sans-serif" font-size="17" fill="rgba(29,24,21,0.7)">than the conference talks suggest.</text>
+  </g>
+</svg>
