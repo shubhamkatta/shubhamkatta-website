@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="Why praise can be its own trap">
+  <rect width="1200" height="600" fill="#fff6db"/>
+  <rect x="540" y="30" width="160" height="22" rx="4" fill="#eaf7ff" opacity="0.85" transform="rotate(-2 620 41)"/>
+  <g transform="translate(160,160)">
+    <rect x="0" y="60" width="280" height="200" rx="14" fill="none" stroke="#1d1815" stroke-width="3"/>
+    <line x1="40" y1="60" x2="40" y2="260" stroke="#1d1815" stroke-width="3"/>
+    <line x1="80" y1="60" x2="80" y2="260" stroke="#1d1815" stroke-width="3"/>
+    <line x1="120" y1="60" x2="120" y2="260" stroke="#1d1815" stroke-width="3"/>
+    <line x1="160" y1="60" x2="160" y2="260" stroke="#1d1815" stroke-width="3"/>
+    <line x1="200" y1="60" x2="200" y2="260" stroke="#1d1815" stroke-width="3"/>
+    <line x1="240" y1="60" x2="240" y2="260" stroke="#1d1815" stroke-width="3"/>
+    <path d="M 0 60 Q 140 0 280 60" stroke="#1d1815" stroke-width="3" fill="none"/>
+    <text x="140" y="160" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="22" fill="#ff6b6b">★</text>
+    <text x="140" y="190" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.55)">"so good"</text>
+    <text x="140" y="210" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.55)">"never change"</text>
+  </g>
+  <g transform="translate(560,210)">
+    <text x="0" y="50" font-family="Inter, sans-serif" font-weight="900" font-size="50" fill="#1d1815" letter-spacing="-2">Why praise</text>
+    <text x="0" y="120" font-family="Inter, sans-serif" font-weight="900" font-size="50" fill="#1d1815" letter-spacing="-2">can be its own trap.</text>
+    <text x="0" y="170" font-family="Inter, sans-serif" font-weight="700" font-size="22" fill="#ff6b6b">a soft prison, fully approved of.</text>
+  </g>
+</svg>

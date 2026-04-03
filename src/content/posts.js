@@ -1,5 +1,45 @@
 export const posts = [
   {
+    slug: 'why-praise-can-be-its-own-trap',
+    cover: '/blog/cover-praise-trap.svg',
+    title: 'Why praise can be its own trap',
+    type: 'observation',
+    date: 'April 3, 2026',
+    readingTime: '6 min',
+    color: 'paper-yellow',
+    tags: ['identity', 'approval', 'change'],
+    excerpt:
+      'Praise is not always freedom. Sometimes it fixes you in place.',
+    seoDescription:
+      'On how admiration can become a soft prison — and how to step out of being known for a version of yourself you have outgrown.',
+    keywords: 'praise, approval, identity, change, growth, validation',
+    intro:
+      `Praise is not always freedom. Sometimes it fixes you in place. Once people start admiring a particular version of you, it becomes harder to change without disappointing them.\n\nApproval can become a soft prison. It feels good while it is being built, which is why it goes unnoticed for so long.`,
+    sections: [
+      {
+        heading: 'the version of you that gets admired',
+        body: `Praise tends to settle on a specific facet of who you are. The reliable one. The funny one. The hardest worker. The person who never makes a fuss. The technical wizard. The strategist. The empath.\n\nThe facet is real. It just isn't the whole picture. Over time, the praise gets attached to that one shape, and the shape starts to feel like the contract. People expect it. You start delivering it. The other parts of you grow quieter, less rehearsed, less load-bearing.\n\nNobody held a meeting about this. Nobody had to.`,
+      },
+      {
+        heading: 'the costs nobody warns you about',
+        body: `A few that show up later:\n\n- you become afraid to be visibly bad at something new in front of the people who admire you for being good\n- you say no to opportunities that would require disappointing the people who pay you in approval\n- you keep performing the trait long after it stopped being interesting to you\n- you mistake other people's expectations for your own preferences\n\nNone of these are catastrophic on day one. All of them compound.`,
+      },
+      {
+        heading: 'the part where people miss the old you',
+        body: `When you do change, some of the people who admired the old version will not come along. This is not betrayal. They were attached to the version that was useful or comforting to them, and the new version is neither.\n\nThis loss is real. It is also part of the price of being a person and not a fixed exhibit.`,
+      },
+      {
+        heading: 'two ways to step out',
+        body: `Two patterns I have watched:\n\n- **gradually.** Add new shapes to your work and life over a year or two. Tolerate the discomfort of being mid-transition. The advantage: lower social cost. The risk: you can stretch the gradual phase indefinitely and never actually leave.\n- **abruptly.** Do the new thing in a way that nobody can ignore. Quit, switch, move, restart. Higher cost, fewer half-lives. The risk: collateral damage you didn't plan for.\n\nBoth work. Neither is moral. The choice depends on how much patience you and the people around you actually have.`,
+      },
+      {
+        heading: 'the kind of praise that doesn\'t trap',
+        body: `Some praise is freeing. It tends to be specific, occasional, and aimed at a behaviour rather than a fixed identity. "You were thoughtful in that meeting" is freer than "you are the thoughtful one." The first describes an action. The second issues a contract.\n\nWhen you praise others, prefer behaviours. When you receive praise, hear the behaviour and quietly decline the contract.`,
+      },
+    ],
+  },
+
+  {
     slug: 'memory-systems-for-ai-agents-that-dont-forget',
     cover: '/blog/cover-memory-systems.svg',
     title: 'Memory systems for AI agents that don’t forget what matters',
