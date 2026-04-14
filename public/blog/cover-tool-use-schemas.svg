@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="Tool use and schemas cover">
+  <rect width="1200" height="600" fill="#eaf7ff"/>
+  <g transform="translate(80,130) rotate(-1)">
+    <rect width="520" height="340" rx="22" fill="#1d1815"/>
+    <circle cx="22" cy="22" r="6" fill="#ff6b6b"/>
+    <circle cx="42" cy="22" r="6" fill="#ffd166"/>
+    <circle cx="62" cy="22" r="6" fill="#a3e4a3"/>
+    <text x="22" y="76" font-family="ui-monospace, monospace" font-size="14" fill="#9eb7ff">{</text>
+    <text x="22" y="100" font-family="ui-monospace, monospace" font-size="14" fill="#f6efe6">  "name": "create_ticket",</text>
+    <text x="22" y="124" font-family="ui-monospace, monospace" font-size="14" fill="#f6efe6">  "description": "open a Linear</text>
+    <text x="22" y="144" font-family="ui-monospace, monospace" font-size="14" fill="#f6efe6">    ticket. Use only when</text>
+    <text x="22" y="164" font-family="ui-monospace, monospace" font-size="14" fill="#f6efe6">    the user asks to file work.",</text>
+    <text x="22" y="200" font-family="ui-monospace, monospace" font-size="14" fill="#f6efe6">  "input_schema": {</text>
+    <text x="22" y="222" font-family="ui-monospace, monospace" font-size="14" fill="#a3e4a3">    "title": "string · 80 chars",</text>
+    <text x="22" y="244" font-family="ui-monospace, monospace" font-size="14" fill="#a3e4a3">    "team": "enum · ['eng','ops']",</text>
+    <text x="22" y="266" font-family="ui-monospace, monospace" font-size="14" fill="#a3e4a3">    "priority": "1..4"</text>
+    <text x="22" y="288" font-family="ui-monospace, monospace" font-size="14" fill="#f6efe6">  }</text>
+    <text x="22" y="310" font-family="ui-monospace, monospace" font-size="14" fill="#9eb7ff">}</text>
+  </g>
+  <g transform="translate(660,170)">
+    <text x="0" y="50" font-family="Inter, sans-serif" font-weight="900" font-size="48" fill="#1d1815" letter-spacing="-2">Tool use,</text>
+    <text x="0" y="118" font-family="Inter, sans-serif" font-weight="900" font-size="48" fill="#1d1815" letter-spacing="-2">schemas, &amp; quiet</text>
+    <text x="0" y="180" font-family="Inter, sans-serif" font-weight="900" font-size="48" fill="#1d1815" letter-spacing="-2">reliability.</text>
+    <text x="0" y="225" font-family="Inter, sans-serif" font-weight="700" font-size="20" fill="#ff6b6b">the boring craft of agents.</text>
+  </g>
+</svg>

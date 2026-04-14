@@ -1,5 +1,97 @@
 export const posts = [
   {
+    slug: 'tool-use-schemas-and-the-quiet-art-of-reliable-agents',
+    cover: '/blog/cover-tool-use-schemas.svg',
+    title: 'Tool use, schemas, and the quiet art of making agents reliable',
+    type: 'deep dive',
+    date: 'April 14, 2026',
+    readingTime: '13 min',
+    color: 'paper-blue',
+    tags: ['tool use', 'schemas', 'agents', 'reliability'],
+    excerpt:
+      'Most agent failures are not "the model is dumb." They are unclear tool descriptions, sloppy schemas, and error messages a model cannot act on.',
+    seoDescription:
+      'A practical guide to tool use with Claude — JSON schemas, descriptions, errors, idempotency, and the small craft choices that separate a reliable agent from a flaky one.',
+    keywords: 'Claude tool use, JSON schema, function calling, Anthropic API, agent reliability, tool design',
+    intro:
+      `When an agent fails in production, the temptation is to blame the model. Sometimes that is fair. Most of the time it is not.\n\nThe agents I have shipped that worked, worked because of small, unsexy decisions about how tools were described, how schemas were shaped, how errors were phrased, and what was left out. The agents that failed, failed in the same place — usually the schema, occasionally the description, almost never the model.\n\nThis post is the boring craft. If you write tools for Claude (or any tool-using model), this is the layer that decides whether your agent feels like a colleague or like a bag of confidence.`,
+    sections: [
+      {
+        heading: 'The lie of "the model just figures it out"',
+        body: `Sometimes, on a small enough problem, the model does just figure it out. Three tools, clean inputs, no edge cases, and the agent looks magic.\n\nThen you scale to twelve tools, partially overlapping, with optional fields, and "just figures it out" turns into "calls the wrong tool 18% of the time, recovers 60% of those, and silently fails the rest." That 18% is your weekend.\n\nThe model is not the variable. Your tool surface is. The good news is the variable is yours to control.`,
+      },
+      {
+        heading: 'A schema is a UX brief',
+        body: `Treat your tool's input schema as if you were writing it for a junior engineer who reads it once, fast.\n\nBad:\n\n\`\`\`json
+{
+  "name": "create_ticket",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "title": { "type": "string" },
+      "team": { "type": "string" },
+      "priority": { "type": "integer" },
+      "data": { "type": "object" }
+    }
+  }
+}
+\`\`\`\n\nThis schema is technically valid and operationally useless. \`team\` could be anything. \`priority\` is unbounded. \`data\` is a black hole.\n\nBetter:\n\n\`\`\`json
+{
+  "name": "create_ticket",
+  "description": "Open a ticket in Linear. Use only when the user explicitly asks to file work — not for general questions.",
+  "input_schema": {
+    "type": "object",
+    "required": ["title", "team", "priority"],
+    "properties": {
+      "title": { "type": "string", "maxLength": 80, "description": "imperative, ≤80 chars, no trailing punctuation" },
+      "team": { "type": "string", "enum": ["eng", "ops", "design", "growth"] },
+      "priority": { "type": "integer", "minimum": 1, "maximum": 4, "description": "1=urgent, 4=someday" },
+      "labels": { "type": "array", "items": { "type": "string" }, "maxItems": 5 }
+    }
+  }
+}
+\`\`\`\n\nNotice what changed. Constraints, enums, max lengths, and a description on each field that tells the model how the field is supposed to look. This is what closes the gap between "the model called it" and "the model called it correctly."`,
+      },
+      {
+        heading: 'Description fields do most of the work',
+        body: `If you read tool-use eval failures, the cause is usually a missing or weak description.\n\nThree habits that fixed more bugs than I expected:\n\n1. **Open with a verb.** "Open a ticket." "Search the indicator graph." "Send a message to a Slack channel." The first three words of a description are doing real work.\n2. **Say when NOT to use it.** "Use only when the user explicitly asks to file work." That single sentence prevents the most common over-eager call.\n3. **Mention the side effects.** If a tool sends an email, name it. If it costs money, name it. The model is more conservative with tools whose descriptions mention consequences.\n\nA description like "Filing utility" is the same as no description. The model will guess, and your support inbox will pay for that guess.`,
+      },
+      {
+        heading: 'Error messages your model will actually use',
+        body: `The default error message in most code is "an error occurred." That is the same as silence as far as the model is concerned. It does not know what to do next.\n\nThe error format I have settled on:\n\n\`\`\`json
+{
+  "error": {
+    "code": "actor_not_found",
+    "message": "no actor with id=ACT-1234",
+    "hint": "use list_actors to find valid ids; ids look like ACT-####"
+  }
+}
+\`\`\`\n\n- \`code\` is stable for branching\n- \`message\` is what humans read in logs\n- \`hint\` is what the model reads to recover\n\nThe \`hint\` field is the one that changes behaviour. With it, the model retries with a sensible next call. Without it, the model apologises and stops.`,
+      },
+      {
+        heading: 'When to refuse, when to ask, when to act',
+        body: `A reliable agent does three different things on bad input:\n\n- **Refuse** if the action is destructive and ambiguous. "Delete all sessions for user X" with two matching users → refuse, ask for the id.\n- **Ask** if the action is reversible and a small clarification helps. "What priority?" is fine.\n- **Act** if the action is reversible, low-blast-radius, and you have enough info.\n\nYou can encode some of this in the schema (required fields, enums) and some of it in the description ("if multiple users match, return error \`ambiguous_user\`"). The schema is the cheaper place. Use it first.`,
+      },
+      {
+        heading: 'Idempotency is a feature, advertise it',
+        body: `Models retry. Sometimes because of a network error, sometimes because they think the previous call failed when it just took a while.\n\nIf your tool is idempotent — calling it twice has the same effect as calling it once — say so in the description. The model will retry confidently and not double-book your calendar.\n\nIf your tool is **not** idempotent — \`send_email\`, \`charge_card\`, \`open_pr\` — the description should say "this has side effects; do not retry on timeout." Better, accept an \`idempotency_key\` parameter and document it. Stripe figured this out a decade ago. The pattern still works.`,
+      },
+      {
+        heading: 'A worked example: the difference one description makes',
+        body: `I had a \`run_query\` tool that wrapped a read-only Postgres connection. Clean schema. The model would still call it on questions like "what is our churn last month" without first checking if a pre-computed metric existed in another tool.\n\nThe fix was one sentence in the description:\n\n> "Use \`get_metric\` first if the question is about a known metric (churn, MRR, DAU). Only fall back to \`run_query\` for arbitrary questions."\n\nTool-call accuracy on the relevant eval set went from 64% to 89%. Same model, same schema, same data. One sentence.\n\nThat is the layer this post is about.`,
+      },
+      {
+        heading: 'A short checklist before you ship a tool',
+        body: `- the description starts with a verb\n- the description says when **not** to use it\n- side effects are named\n- every string field has either an enum or a max length, or a clear description if neither\n- every numeric field has a min and max\n- error responses include a \`hint\`\n- idempotency is documented (yes or no)\n- the tool name is a verb (\`create_ticket\`, not \`tickets\`)\n- a real call in the test suite passes the JSON schema validator\n\nIf all nine pass, you have already prevented most of the agent failures you would otherwise debug.`,
+      },
+      {
+        heading: 'The quiet part',
+        body: `The reliability of an agent is mostly the reliability of its interface.\n\nThe model is the loud part. The schemas, descriptions, and error shapes are the quiet part. The quiet part is where the work is.`,
+      },
+    ],
+  },
+
+  {
     slug: 'why-praise-can-be-its-own-trap',
     cover: '/blog/cover-praise-trap.svg',
     title: 'Why praise can be its own trap',
