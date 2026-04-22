@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 420" role="img" aria-label="Why erasure stays tractable: identifiable data never enters prompts or training, so there is little to chase down">
+  <rect width="1000" height="420" fill="#fff8ef"/>
+  <text x="40" y="46" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">Erasure is easy when there is almost nothing to erase</text>
+  <text x="40" y="70" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">The cheapest deletion is the data you never copied into a hard-to-reach place.</text>
+  <!-- left: the rule -->
+  <g transform="translate(40,98)">
+    <rect width="300" height="270" rx="16" fill="#eaf7ff" stroke="#1d1815" stroke-width="2.5"/>
+    <text x="20" y="36" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#1d1815" letter-spacing="1">THE TWO RULES</text>
+    <g font-family="Inter, sans-serif" font-size="13" fill="#1d1815">
+      <text x="20" y="78" font-weight="800">never put identifiable</text>
+      <text x="20" y="98" font-weight="800">data in a prompt</text>
+      <text x="20" y="120" font-size="11" fill="rgba(29,24,21,0.65)">pass tokens / references, not</text>
+      <text x="20" y="136" font-size="11" fill="rgba(29,24,21,0.65)">names, emails, raw records</text>
+      <text x="20" y="184" font-weight="800">never fine-tune on</text>
+      <text x="20" y="204" font-weight="800">customer data</text>
+      <text x="20" y="226" font-size="11" fill="rgba(29,24,21,0.65)">weights are not erasable;</text>
+      <text x="20" y="242" font-size="11" fill="rgba(29,24,21,0.65)">keep data out of them</text>
+    </g>
+  </g>
+  <path d="M 350 233 L 396 233" stroke="#1d1815" stroke-width="2.5" fill="none" marker-end="url(#der)"/>
+  <!-- right: what erasure touches -->
+  <g transform="translate(410,98)">
+    <rect width="300" height="270" rx="16" fill="#fff" stroke="#1d1815" stroke-width="2.5"/>
+    <text x="20" y="36" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#1d1815" letter-spacing="1">SO ERASURE TOUCHES</text>
+    <g font-family="Inter, sans-serif" font-size="12.5" fill="#1d1815">
+      <g transform="translate(20,56)"><rect width="12" height="12" rx="3" fill="#a3e4a3" stroke="#1d1815" stroke-width="1.5"/><path d="M 3 6 l 3 3 l 5 -6" fill="none" stroke="#1d1815" stroke-width="1.6"/></g>
+      <text x="42" y="66">the system of record</text>
+      <g transform="translate(20,86)"><rect width="12" height="12" rx="3" fill="#a3e4a3" stroke="#1d1815" stroke-width="1.5"/><path d="M 3 6 l 3 3 l 5 -6" fill="none" stroke="#1d1815" stroke-width="1.6"/></g>
+      <text x="42" y="96">backups (on their cycle)</text>
+      <g transform="translate(20,116)"><rect width="12" height="12" rx="3" fill="#a3e4a3" stroke="#1d1815" stroke-width="1.5"/><path d="M 3 6 l 3 3 l 5 -6" fill="none" stroke="#1d1815" stroke-width="1.6"/></g>
+      <text x="42" y="126">derived caches</text>
+      <text x="20" y="172" font-weight="800" fill="#ff6b6b">and NOT:</text>
+      <text x="20" y="198" fill="rgba(29,24,21,0.6)">prompt logs · model weights ·</text>
+      <text x="20" y="216" fill="rgba(29,24,21,0.6)">a third party's training set</text>
+    </g>
+  </g>
+  <!-- residency note -->
+  <g transform="translate(740,98)">
+    <rect width="220" height="270" rx="16" fill="#fff6db" stroke="#1d1815" stroke-width="2.5"/>
+    <text x="18" y="36" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#1d1815" letter-spacing="1">RESIDENCY</text>
+    <text x="18" y="66" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.75)">EU data lives in EU</text>
+    <text x="18" y="84" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.75)">regions — enforced by</text>
+    <text x="18" y="102" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.75)">putting region in the</text>
+    <text x="18" y="120" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.75)">shard key, not a policy doc.</text>
+    <text x="18" y="166" font-family="Inter, sans-serif" font-weight="800" font-size="12" fill="#1d1815">DSAR clock: 30 days</text>
+    <text x="18" y="190" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.75)">a query you can run,</text>
+    <text x="18" y="208" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.75)">not an archaeology dig.</text>
+  </g>
+  <text x="40" y="400" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">Compliance you design for at the data layer costs you a schema decision. Bolted on later, it costs you a rewrite.</text>
+  <defs>
+    <marker id="der" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1d1815"/></marker>
+  </defs>
+</svg>

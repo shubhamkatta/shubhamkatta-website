@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="Three tools holding up an LLM pipeline: LangChain, LiteLLM, RAGAS">
+  <rect width="1200" height="600" fill="#eaf7ff"/>
+  <rect x="510" y="34" width="240" height="22" rx="4" fill="#fff6db" opacity="0.9" transform="rotate(-2 630 45)"/>
+  <g transform="translate(90,150) rotate(-1.5)">
+    <rect width="500" height="320" rx="22" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <text x="24" y="40" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="rgba(29,24,21,0.55)" letter-spacing="2">ONE PIPELINE, THREE JOBS</text>
+    <g font-family="Inter, sans-serif" font-weight="800" font-size="13" fill="#1d1815">
+      <g transform="translate(28,72)"><rect width="444" height="58" rx="12" fill="#fff6db" stroke="#1d1815" stroke-width="2"/><text x="18" y="26">LangChain</text><text x="18" y="46" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">composes the steps · drop to API on hot paths</text></g>
+      <g transform="translate(28,142)"><rect width="444" height="58" rx="12" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/><text x="18" y="26">LiteLLM</text><text x="18" y="46" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">the gateway · limits · cost · failover</text></g>
+      <g transform="translate(28,212)"><rect width="444" height="58" rx="12" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/><text x="18" y="26">RAGAS</text><text x="18" y="46" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">scores the output · catches the silent drift</text></g>
+    </g>
+  </g>
+  <g transform="translate(640,196)">
+    <text x="0" y="48" font-family="Inter, sans-serif" font-weight="900" font-size="50" fill="#1d1815" letter-spacing="-2">Three tools</text>
+    <text x="0" y="106" font-family="Inter, sans-serif" font-weight="900" font-size="50" fill="#1d1815" letter-spacing="-2">hold it up.</text>
+    <text x="0" y="156" font-family="Inter, sans-serif" font-weight="700" font-size="23" fill="#ff6b6b">compose, route, measure.</text>
+    <text x="0" y="206" font-family="Inter, sans-serif" font-size="18" fill="rgba(29,24,21,0.75)">field notes on what each one</text>
+    <text x="0" y="232" font-family="Inter, sans-serif" font-size="18" fill="rgba(29,24,21,0.75)">earns its place doing.</text>
+  </g>
+</svg>

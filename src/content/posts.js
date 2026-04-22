@@ -1192,6 +1192,126 @@ for line in sys.stdin:
   },
 
   {
+    slug: 'what-could-go-wrong-the-five-questions',
+    cover: '/blog/cover-what-could-go-wrong.png',
+    title: 'What could go wrong',
+    type: 'reflection',
+    date: 'April 22, 2026',
+    readingTime: '6 min',
+    color: 'paper-coral',
+    tags: ['staff engineer', 'reliability', 'systems', 'mindset'],
+    excerpt:
+      'The most useful thing I picked up on the way to staff-level work was not a technology. It was five questions I now run in my head before anything ships.',
+    seoDescription:
+      'The five-question mindset that separates senior from staff engineering: what could go wrong, how would we detect it, recover, prove it happened, and prevent it next time.',
+    keywords: 'staff engineer mindset, reliability, observability, incident response, audit, blameless postmortem, systems thinking, what could go wrong',
+    intro:
+      `The most useful thing I picked up on the way to staff-level work was not a framework or a language. It was a sentence — five questions, in order — that I now run in my head before anything consequential ships.\n\nIt is boring. That is the point. The boring questions are the ones nobody asks until the incident review, when it is too late to ask them cheaply.`,
+    sections: [
+      {
+        heading: 'the sentence',
+        body: `Before anything ships, I ask:\n\n> What could go wrong, how would we detect it, how would we recover, how would we prove it happened, and how would we prevent it next time?\n\nFive clauses. Each one is a different muscle, and most engineers are strong in the first one and weak in the rest. The gap between senior and staff is mostly the last four.`,
+      },
+      {
+        heading: 'why each clause earns its place',
+        body: `**What could go wrong** is the design imagination. It is the part most people can do — name the failure modes, the edge cases, the bad inputs. Necessary, but it is table stakes.\n\n**How would we detect it** is the honest one. It forces you to admit that a failure you cannot see is a failure you will find out about from a customer. If the answer is "we'd notice eventually," you do not have detection — you have luck.\n\n**How would we recover** is the question that turns a panic into a runbook. A rollback path, a kill switch, a way to drain and replay. If recovery is "we'd figure it out live," you are betting the worst moment to think clearly is the moment you will have to.\n\n**How would we prove it happened** is the one juniors skip and auditors never do. When someone asks "did this affect customer X, and when, and what exactly did we send them," the answer lives in an audit log you either built beforehand or did not. You cannot retrofit evidence.\n\n**How would we prevent it next time** is what makes the loop a loop. The answer to this question becomes a new entry in question one for the next thing you build.`,
+      },
+      {
+        heading: 'the questions are a loop',
+        body: `Drawn out, the five questions are not a checklist you run once. The fifth answer feeds back into the first, which is why teams that take it seriously get quietly more reliable over time — every incident makes the next design imagination sharper.\n\n![The five questions as a loop: what could go wrong, detect, recover, prove it happened, and prevent it next time — where the fifth answer feeds back into the first.](/blog/diagram-five-questions.svg)`,
+      },
+      {
+        heading: 'the tell',
+        body: `Here is the tell I look for in design reviews. A senior engineer presents a design and answers "what could go wrong" thoroughly — they have thought hard about correctness.\n\nA staff engineer refuses to call the design done until all five questions have answers. Not perfect answers. Just answers that exist on purpose, written down, instead of being improvised at 3am during the incident.\n\nThe difference is not intelligence. It is the refusal to treat detection, recovery, evidence, and prevention as someone else's problem or future-you's problem.`,
+      },
+      {
+        heading: 'it is a posture, not a process',
+        body: `You can turn this into a template, and templates help. But the real value is when the five questions stop being a document and become a reflex — when you cannot look at a deploy, a migration, or a new dependency without your head quietly running the list.\n\nThat reflex is most of what people mean when they say someone "thinks like a staff engineer." It is not seniority. It is the habit of assuming things break, and refusing to be surprised by it.`,
+      },
+    ],
+  },
+
+  {
+    slug: 'designing-for-the-right-to-be-forgotten',
+    cover: '/blog/cover-right-to-be-forgotten.png',
+    title: 'Designing for the right to be forgotten',
+    type: 'deep dive',
+    date: 'April 20, 2026',
+    readingTime: '8 min',
+    color: 'paper-blue',
+    tags: ['gdpr', 'privacy', 'data residency', 'architecture', 'backend'],
+    excerpt:
+      'GDPR reads like a legal problem. In practice the hard parts are engineering decisions you make at the data layer — and they are only hard if you make them late.',
+    seoDescription:
+      'Treating GDPR as an engineering problem: data residency via the shard key, right-to-erasure made tractable by keeping identifiable data out of prompts and training, and DSARs as a query you can run.',
+    keywords: 'GDPR, right to be forgotten, right to erasure, data residency, DSAR, data subject access request, LLM privacy, data minimization, shard key, compliance engineering',
+    intro:
+      `GDPR reads like a legal document, and the temptation is to treat it like one — hand it to a policy team, collect a checklist, move on. But the clauses that actually bite are engineering decisions, and they are only expensive if you make them after the data is already everywhere.\n\nThis is what "the right to be forgotten" looks like from the data layer, and especially what changes once you have an LLM in the loop.`,
+    sections: [
+      {
+        heading: 'residency is a schema decision, not a policy',
+        body: `"EU customer data stays in EU regions" is a sentence a policy doc can write and a database cannot enforce on its own. The way you make it real is to put region into the data model itself.\n\nConcretely: region becomes part of the shard key, so a record physically cannot land in the wrong place. The routing is not a runtime check that someone might forget to add — it is a property of where the row lives. Get this right at design time and residency is free forever. Get it wrong and it is a migration of your entire dataset.\n\nThis is the recurring shape of compliance engineering: the constraint is cheap when it is structural and ruinous when it is a guardrail bolted on after.`,
+      },
+      {
+        heading: 'erasure is easy when there is almost nothing to erase',
+        body: `The right to erasure sounds terrifying — find every copy of a person's data, everywhere, and delete it. It becomes tractable the moment you stop scattering identifiable data into places you cannot reach.\n\nTwo rules do most of the work, and both matter more once an LLM is involved:\n\n- **Never put identifiable data in a prompt.** Pass tokens, IDs, and references — not names, emails, or raw records. Prompts get logged, cached, and sometimes retained by third-party providers. Anything you send out is a copy you may not control and cannot reliably delete.\n- **Never fine-tune on customer data.** Model weights are not erasable. There is no DELETE statement for "the thing the model learned." If identifiable data went into training, you cannot honor erasure without retraining — so keep it out of the weights entirely.\n\nFollow both and erasure stops being an archaeology dig.`,
+      },
+      {
+        heading: 'so what does deletion actually touch?',
+        body: `When you have minimized correctly, an erasure request touches a small, known set of places: the system of record, the backups (on their own rotation cycle), and a few derived caches you can enumerate.\n\nWhat it does **not** have to touch is the long tail that usually makes this impossible — prompt logs full of personal data, a model you fine-tuned, or a third party's training set you have no control over.\n\n![Why erasure stays tractable: identifiable data never enters prompts or training, so deletion touches only the system of record, backups, and known caches — not weights or third-party logs.](/blog/diagram-erasure.svg)`,
+      },
+      {
+        heading: 'the DSAR clock is 30 days — make it a query',
+        body: `A data subject access request gives you roughly 30 days to tell a person everything you hold about them. Thirty days is generous if answering is a query, and impossible if answering is a project.\n\nThe design goal is that "what do we hold on this person" is a question your system can answer by running something, not by convening a meeting. That is, again, a consequence of decisions made early: consistent identifiers, data tied to a subject by design, and minimization that keeps the surface small enough to actually enumerate.`,
+      },
+      {
+        heading: 'the principle underneath all of it',
+        body: `Every one of these — residency, erasure, DSARs — gets cheap or expensive based on one choice: whether you designed for it at the data layer or tried to add it later.\n\nThe legal framing makes GDPR feel like someone else's domain. The engineering framing is simpler and more demanding: know where every piece of personal data lives, keep it out of places you cannot reach, and make "find it" and "delete it" things your system can do on command.\n\nDo that, and compliance is a property of the architecture. Skip it, and compliance is a permanent tax paid in migrations and incident reviews.`,
+      },
+    ],
+  },
+
+  {
+    slug: 'three-tools-holding-up-our-llm-pipeline',
+    cover: '/blog/cover-three-tools-pipeline.png',
+    title: 'The three tools holding up our LLM pipeline',
+    type: 'field notes',
+    date: 'April 18, 2026',
+    readingTime: '8 min',
+    color: 'paper-yellow',
+    tags: ['llm', 'langchain', 'litellm', 'ragas', 'pipeline', 'backend'],
+    excerpt:
+      'LangChain composes the steps, LiteLLM routes every call, RAGAS scores a sample of what comes out. Field notes on what each one actually earns its place doing.',
+    seoDescription:
+      'Field notes on three tools running a production LLM pipeline: LangChain for composition (and when to drop to a direct API call), LiteLLM as the gateway, and RAGAS for continuous evaluation.',
+    keywords: 'LangChain, LiteLLM, RAGAS, LLM pipeline, threat enrichment, orchestration, LLM gateway, evaluation, faithfulness, answer relevancy, production LLM',
+    intro:
+      `Most of the LLM work I do is not a chatbot. It is a pipeline — raw input goes in one end, structured, enriched, analyst-ready output comes out the other. Three tools hold that pipeline up, and each earns its place by doing one job well.\n\nThese are the field notes: what LangChain, LiteLLM, and RAGAS actually do for us, and where each one gets out of the way.`,
+    sections: [
+      {
+        heading: 'LangChain composes the steps',
+        body: `The pipeline is a sequence — pull the indicators out of a raw report, classify the threat against a taxonomy, enrich with geo and actor context, then summarize it for a human. LangChain is what composes those steps into one thing instead of four scripts taped together.\n\nThe value is the composition: typed steps, retries, and a clean place for each prompt to live. The trap is treating it as mandatory everywhere. On latency-critical paths the orchestration overhead is real, and the right call is to drop to a direct API call. You keep LangChain where the structure pays for itself and you bypass it where speed matters more than tidiness.\n\nThe rule I land on: orchestrate the parts that change often, hand-roll the parts that have to be fast.`,
+      },
+      {
+        heading: 'LiteLLM is the gateway every call goes through',
+        body: `Every model call in the pipeline goes through LiteLLM rather than hitting a provider directly. That one indirection buys a lot:\n\n- **Per-tenant rate limiting** so one heavy tenant cannot starve the rest (a Redis sorted set per tenant, scored by timestamp).\n- **Cost attribution** so the bill is explainable per team and per tenant instead of being one terrifying number.\n- **Provider failover** so an outage on the primary degrades to an alternate instead of taking the pipeline down.\n- **One audit surface** — a single place that knows everything sent to a third-party model, which matters enormously the day someone asks.\n\nNone of these can be enforced from inside each calling service. They are centralized concerns, and a gateway is what gives you a center.`,
+      },
+      {
+        heading: 'the shape of the whole thing',
+        body: `Put together, the three tools sit at three different layers: LangChain composes the steps, LiteLLM routes every model call those steps make, and RAGAS watches a sample of what comes out.\n\n![One pipeline, three tools: LangChain composes the enrichment steps, LiteLLM routes every model call with rate limiting and failover, and RAGAS scores a 2% sample of output for faithfulness and answer-relevancy.](/blog/diagram-enrichment-pipeline.svg)`,
+      },
+      {
+        heading: 'RAGAS scores a sample of the output',
+        body: `A pipeline that produces text can fail silently — the output still looks plausible while quietly drifting wrong. RAGAS is how we catch that before a customer does.\n\nWe sample roughly 2% of production output and score it asynchronously for **faithfulness** (is the answer grounded in the retrieved context, or is it confabulating?) and **answer-relevancy** (does it actually address the input?). The scores land in a dashboard, and a regression over a 24-hour window pages someone.\n\nThis caught a silent prompt regression once — a change that looked fine in review and in spot checks, but quietly dropped faithfulness across the board. The dashboard saw it before anyone reported it. One caveat worth naming: LLM-as-judge scoring has variance, so a human reviews flagged regressions rather than trusting the number blindly.`,
+      },
+      {
+        heading: 'what they have in common',
+        body: `The three tools look unrelated — composition, routing, evaluation — but they share a posture. Each one assumes the pipeline will misbehave and gives you a place to deal with it: a structured step you can swap, a gateway you can govern, a score that tells you when output goes bad.\n\nNone of them are exotic. The discipline is in wiring them so that composition, control, and measurement are properties of the system rather than things you bolt on the week before an audit. Boring infrastructure, quietly doing its job, is the whole goal.`,
+      },
+    ],
+  },
+
+  {
     slug: 'tool-use-schemas-and-the-quiet-art-of-reliable-agents',
     cover: '/blog/cover-tool-use-schemas.png',
     title: 'Tool use, schemas, and the quiet art of making agents reliable',

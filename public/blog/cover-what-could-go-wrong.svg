@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="What could go wrong: the five questions of a staff engineer mindset">
+  <rect width="1200" height="600" fill="#ffe9e4"/>
+  <rect x="510" y="34" width="240" height="22" rx="4" fill="#a3e4a3" opacity="0.9" transform="rotate(-2 630 45)"/>
+  <g transform="translate(96,150) rotate(-1.5)">
+    <rect width="486" height="324" rx="22" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <text x="24" y="40" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="rgba(29,24,21,0.55)" letter-spacing="2">FIVE QUESTIONS, EVERY TIME</text>
+    <g font-family="Inter, sans-serif" font-weight="800" font-size="14" fill="#1d1815">
+      <g transform="translate(28,66)"><rect width="430" height="40" rx="10" fill="#fff6db" stroke="#1d1815" stroke-width="2"/><text x="16" y="26">1 · what could go wrong?</text></g>
+      <g transform="translate(28,116)"><rect width="430" height="40" rx="10" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/><text x="16" y="26">2 · how would we detect it?</text></g>
+      <g transform="translate(28,166)"><rect width="430" height="40" rx="10" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/><text x="16" y="26">3 · how would we recover?</text></g>
+      <g transform="translate(28,216)"><rect width="430" height="40" rx="10" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/><text x="16" y="26">4 · how would we prove it happened?</text></g>
+      <g transform="translate(28,266)"><rect width="430" height="40" rx="10" fill="#fff6db" stroke="#1d1815" stroke-width="2"/><text x="16" y="26">5 · how would we prevent it next time?</text></g>
+    </g>
+  </g>
+  <g transform="translate(630,210)">
+    <text x="0" y="48" font-family="Inter, sans-serif" font-weight="900" font-size="50" fill="#1d1815" letter-spacing="-2">What could</text>
+    <text x="0" y="106" font-family="Inter, sans-serif" font-weight="900" font-size="50" fill="#1d1815" letter-spacing="-2">go wrong?</text>
+    <text x="0" y="156" font-family="Inter, sans-serif" font-weight="700" font-size="23" fill="#ff6b6b">the only mantra I kept.</text>
+    <text x="0" y="204" font-family="Inter, sans-serif" font-size="18" fill="rgba(29,24,21,0.75)">five questions that quietly</text>
+    <text x="0" y="230" font-family="Inter, sans-serif" font-size="18" fill="rgba(29,24,21,0.75)">separate senior from staff.</text>
+  </g>
+</svg>

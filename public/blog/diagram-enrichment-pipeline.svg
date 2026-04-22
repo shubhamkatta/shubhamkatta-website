@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 440" role="img" aria-label="The threat-enrichment pipeline: LangChain composes the steps, LiteLLM routes the calls, RAGAS scores a sample of the output">
+  <rect width="1000" height="440" fill="#fff8ef"/>
+  <text x="40" y="46" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">One pipeline, three tools doing three different jobs</text>
+  <text x="40" y="70" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">LangChain composes · LiteLLM routes every call · RAGAS scores a sample of what comes out.</text>
+  <!-- LangChain composed steps -->
+  <text x="40" y="108" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="rgba(29,24,21,0.55)" letter-spacing="2">LANGCHAIN COMPOSES THE STEPS</text>
+  <g font-family="Inter, sans-serif" font-weight="700" font-size="12" fill="#1d1815">
+    <g transform="translate(40,122)"><rect width="150" height="46" rx="11" fill="#fff6db" stroke="#1d1815" stroke-width="2"/><text x="75" y="22" text-anchor="middle">IOC extraction</text><text x="75" y="38" text-anchor="middle" font-weight="400" font-size="10" fill="rgba(29,24,21,0.55)">pull the indicators</text></g>
+    <g transform="translate(210,122)"><rect width="150" height="46" rx="11" fill="#fff6db" stroke="#1d1815" stroke-width="2"/><text x="75" y="22" text-anchor="middle">taxonomy</text><text x="75" y="38" text-anchor="middle" font-weight="400" font-size="10" fill="rgba(29,24,21,0.55)">classify the threat</text></g>
+    <g transform="translate(380,122)"><rect width="150" height="46" rx="11" fill="#fff6db" stroke="#1d1815" stroke-width="2"/><text x="75" y="22" text-anchor="middle">geo-enrichment</text><text x="75" y="38" text-anchor="middle" font-weight="400" font-size="10" fill="rgba(29,24,21,0.55)">where + who</text></g>
+    <g transform="translate(550,122)"><rect width="150" height="46" rx="11" fill="#fff6db" stroke="#1d1815" stroke-width="2"/><text x="75" y="22" text-anchor="middle">summarize</text><text x="75" y="38" text-anchor="middle" font-weight="400" font-size="10" fill="rgba(29,24,21,0.55)">analyst-ready</text></g>
+  </g>
+  <g stroke="#1d1815" stroke-width="2" fill="none">
+    <path d="M 190 145 L 210 145" marker-end="url(#dep)"/>
+    <path d="M 360 145 L 380 145" marker-end="url(#dep)"/>
+    <path d="M 530 145 L 550 145" marker-end="url(#dep)"/>
+  </g>
+  <!-- LiteLLM gateway -->
+  <g transform="translate(40,210)">
+    <rect width="660" height="70" rx="14" fill="#1d1815"/>
+    <text x="20" y="30" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#f6efe6" letter-spacing="1">LITELLM · the gateway every model call passes through</text>
+    <text x="20" y="52" font-family="ui-monospace, monospace" font-size="11" fill="#a3e4a3">per-tenant rate limit  ·  cost attribution  ·  provider failover  ·  one audit surface</text>
+  </g>
+  <g stroke="#1d1815" stroke-width="2" fill="none" stroke-dasharray="4,5">
+    <path d="M 115 168 L 115 210"/>
+    <path d="M 285 168 L 285 210"/>
+    <path d="M 455 168 L 455 210"/>
+    <path d="M 625 168 L 625 210"/>
+  </g>
+  <!-- RAGAS sample -->
+  <g transform="translate(740,122)">
+    <rect width="220" height="158" rx="14" fill="#a3e4a3" stroke="#1d1815" stroke-width="2.5"/>
+    <text x="18" y="30" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#1d1815">RAGAS</text>
+    <text x="18" y="50" font-family="Inter, sans-serif" font-size="11" fill="rgba(29,24,21,0.7)">samples ~2% of output</text>
+    <text x="18" y="74" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">faithfulness</text>
+    <text x="18" y="94" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">answer-relevancy</text>
+    <text x="18" y="122" font-family="Inter, sans-serif" font-size="11" fill="rgba(29,24,21,0.7)">scores → dashboard</text>
+    <text x="18" y="142" font-family="Inter, sans-serif" font-size="11" fill="rgba(29,24,21,0.7)">regression → page someone</text>
+  </g>
+  <path d="M 700 145 L 740 158" stroke="#1d1815" stroke-width="2" fill="none" marker-end="url(#dep)"/>
+  <text x="40" y="330" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">On latency-critical paths the orchestration gets out of the way — you drop to a direct API call.</text>
+  <text x="40" y="352" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">The gateway and the evaluation stay; the composition layer is the part you trade away for speed.</text>
+  <defs>
+    <marker id="dep" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1d1815"/></marker>
+  </defs>
+</svg>

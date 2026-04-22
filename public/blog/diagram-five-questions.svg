@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 440" role="img" aria-label="The five questions: what could go wrong, how would we detect it, recover, prove it happened, and prevent it next time">
+  <rect width="1000" height="440" fill="#fff8ef"/>
+  <text x="40" y="46" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">The five questions, in order, every time</text>
+  <text x="40" y="70" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">Run them over any change before it ships. The gaps you find are the work.</text>
+  <g font-family="Inter, sans-serif" fill="#1d1815">
+    <g transform="translate(40,100)">
+      <rect width="180" height="120" rx="16" fill="#fff6db" stroke="#1d1815" stroke-width="2.5"/>
+      <text x="16" y="34" font-weight="900" font-size="30" fill="rgba(29,24,21,0.18)">1</text>
+      <text x="16" y="64" font-weight="800" font-size="14">what could</text>
+      <text x="16" y="84" font-weight="800" font-size="14">go wrong?</text>
+      <text x="16" y="106" font-size="11" fill="rgba(29,24,21,0.6)">name the failure</text>
+    </g>
+    <g transform="translate(240,100)">
+      <rect width="180" height="120" rx="16" fill="#eaf7ff" stroke="#1d1815" stroke-width="2.5"/>
+      <text x="16" y="34" font-weight="900" font-size="30" fill="rgba(29,24,21,0.18)">2</text>
+      <text x="16" y="64" font-weight="800" font-size="14">how would we</text>
+      <text x="16" y="84" font-weight="800" font-size="14">detect it?</text>
+      <text x="16" y="106" font-size="11" fill="rgba(29,24,21,0.6)">alarms, not luck</text>
+    </g>
+    <g transform="translate(440,100)">
+      <rect width="180" height="120" rx="16" fill="#a3e4a3" stroke="#1d1815" stroke-width="2.5"/>
+      <text x="16" y="34" font-weight="900" font-size="30" fill="rgba(29,24,21,0.18)">3</text>
+      <text x="16" y="64" font-weight="800" font-size="14">how would we</text>
+      <text x="16" y="84" font-weight="800" font-size="14">recover?</text>
+      <text x="16" y="106" font-size="11" fill="rgba(29,24,21,0.6)">a path back</text>
+    </g>
+    <g transform="translate(640,100)">
+      <rect width="180" height="120" rx="16" fill="#ffe9e4" stroke="#1d1815" stroke-width="2.5"/>
+      <text x="16" y="34" font-weight="900" font-size="30" fill="rgba(29,24,21,0.18)">4</text>
+      <text x="16" y="64" font-weight="800" font-size="14">how would we</text>
+      <text x="16" y="84" font-weight="800" font-size="14">prove it?</text>
+      <text x="16" y="106" font-size="11" fill="rgba(29,24,21,0.6)">the audit trail</text>
+    </g>
+  </g>
+  <g stroke="#1d1815" stroke-width="2" fill="none">
+    <path d="M 220 160 L 240 160" marker-end="url(#dfq)"/>
+    <path d="M 420 160 L 440 160" marker-end="url(#dfq)"/>
+    <path d="M 620 160 L 640 160" marker-end="url(#dfq)"/>
+  </g>
+  <!-- question 5, the loop back -->
+  <g transform="translate(340,280)">
+    <rect width="320" height="92" rx="16" fill="#1d1815"/>
+    <text x="24" y="38" font-family="Inter, sans-serif" font-weight="900" font-size="30" fill="rgba(255,255,255,0.18)">5</text>
+    <text x="64" y="42" font-family="Inter, sans-serif" font-weight="800" font-size="15" fill="#f6efe6">how would we prevent it</text>
+    <text x="64" y="64" font-family="Inter, sans-serif" font-weight="800" font-size="15" fill="#f6efe6">next time?</text>
+    <text x="64" y="82" font-family="Inter, sans-serif" font-size="11" fill="#a3e4a3">the answer feeds back into question 1</text>
+  </g>
+  <path d="M 730 220 Q 800 300 660 320" stroke="#1d1815" stroke-width="2" fill="none" stroke-dasharray="5,6" marker-end="url(#dfq)"/>
+  <path d="M 340 326 Q 180 320 130 226" stroke="#1d1815" stroke-width="2" fill="none" stroke-dasharray="5,6" marker-end="url(#dfq)"/>
+  <text x="40" y="412" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">Senior engineers answer question 1. Staff engineers refuse to ship until they have answered all five.</text>
+  <defs>
+    <marker id="dfq" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1d1815"/></marker>
+  </defs>
+</svg>
