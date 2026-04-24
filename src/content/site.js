@@ -28,7 +28,7 @@ export const roles = [
     title: 'Principal Software Engineer',
     note:
       'Joined early, built from zero, shipped under pressure, led people, and learned that architecture diagrams are usually much calmer than the week that produced them.',
-    tags: ['TIP in 25 days', 'Hawk MVP in 10 days', 'led 9 engineers', '75% fewer manual ops hours'],
+    tags: ['automated threat intelligence pipelines', 'built correlation engine for knowledge graph', 'SPOC for integrations & TI space', '75% fewer manual ops hours'],
     color: 'paper-white',
   },
   {
