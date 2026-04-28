@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="Not every breakdown is a crisis">
+  <rect width="1200" height="600" fill="#fff6db"/>
+  <rect x="540" y="30" width="160" height="22" rx="4" fill="#ffe9e4" opacity="0.85" transform="rotate(-2 620 41)"/>
+  <g transform="translate(120,200)">
+    <path d="M 0 100 L 80 80 L 120 110 L 160 70" stroke="#1d1815" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M 200 60 L 220 130" stroke="#ff6b6b" stroke-width="4" fill="none" stroke-linecap="round" stroke-dasharray="6,8"/>
+    <circle cx="270" cy="70" r="6" fill="#1d1815"/>
+    <circle cx="320" cy="100" r="6" fill="#1d1815"/>
+    <circle cx="370" cy="50" r="6" fill="#1d1815"/>
+    <circle cx="420" cy="90" r="6" fill="#1d1815"/>
+    <text x="200" y="180" font-family="Inter, sans-serif" font-size="13" font-weight="900" fill="rgba(29,24,21,0.55)" letter-spacing="2">→ DATA</text>
+  </g>
+  <g transform="translate(110,360)">
+    <text x="0" y="50" font-family="Inter, sans-serif" font-weight="900" font-size="50" fill="#1d1815" letter-spacing="-2">Not every breakdown</text>
+    <text x="0" y="115" font-family="Inter, sans-serif" font-weight="900" font-size="50" fill="#1d1815" letter-spacing="-2">is a crisis.</text>
+    <text x="0" y="160" font-family="Inter, sans-serif" font-weight="700" font-size="20" fill="#ff6b6b">sometimes it is information.</text>
+  </g>
+</svg>

@@ -1,5 +1,45 @@
 export const posts = [
   {
+    slug: 'not-every-breakdown-is-a-crisis',
+    cover: '/blog/cover-not-every-breakdown.svg',
+    title: 'Not every breakdown is a crisis',
+    type: 'reflection',
+    date: 'April 28, 2026',
+    readingTime: '5 min',
+    color: 'paper-yellow',
+    tags: ['change', 'systems', 'grief'],
+    excerpt:
+      'Sometimes a breakdown is information. The form was never strong enough for reality.',
+    seoDescription:
+      'On distinguishing breakdowns that are crises from breakdowns that are data — and why fighting the pain often means missing the message.',
+    keywords: 'change, breakdown, crisis, systems thinking, grief, transitions',
+    intro:
+      `Sometimes a breakdown is information. A relationship, a workflow, a product idea, or a plan stops functioning not because the universe is cruel, but because the form was never strong enough for reality.\n\nThere is pain in that. There is also data. The pain is loud. The data is quieter, and harder to hear over the pain. Most people fight the pain and miss the data.`,
+    sections: [
+      {
+        heading: 'the form was never strong enough for the reality',
+        body: `Most things break the way they were always going to break. A team structure that worked for six people does not work for sixty. A relationship built on one shared phase of life does not survive the next phase. A startup built on the assumption of cheap money does not survive expensive money.\n\nThese are not crises. They are what change looks like when it actually arrives. The form held until it could not. That is most forms.`,
+      },
+      {
+        heading: 'pain and data live in the same place',
+        body: `When something breaks, the pain shows up first. Pain is older than language. It does not wait its turn.\n\nThe data shows up later, often by minutes, sometimes by years. It sits next to the pain and waits to be noticed. If you only listen to the pain, you fix the pain — which is sometimes useful and sometimes catastrophic, because fixing the pain often means rebuilding the same form that broke.\n\nThe practice is not to ignore the pain. The practice is to also hear the data.`,
+      },
+      {
+        heading: 'questions worth asking before fixing',
+        body: `- what was this form actually doing for me?\n- what changed in the reality it was holding up against?\n- am I trying to rebuild the form, or build the next thing it was supposed to become?\n- if the form had communicated this earlier, what would it have said?\n\nNone of these are quick. All of them are cheaper than rebuilding the wrong shape.`,
+      },
+      {
+        heading: 'the temptation to rebuild the same shape',
+        body: `Most rebounds — in jobs, in relationships, in product strategies — are unconscious replicas. The same dynamic, with new names. The brain reaches for what it knows.\n\nThe useful pause is the one between the breakdown and the rebuild. In that pause is the only chance to choose differently. After the rebuild starts, the path is already set. The pause is short. Treat it like a window.`,
+      },
+      {
+        heading: 'a short note on grief',
+        body: `Even when a breakdown is information, it is also a loss. Treating it only as data is a different kind of avoidance — a clean, intellectual avoidance that lets you skip the part where you actually felt something.\n\nYou can hold both. The form ended. It taught you something. You miss it anyway. None of these cancel each other out.`,
+      },
+    ],
+  },
+
+  {
     slug: 'tool-use-schemas-and-the-quiet-art-of-reliable-agents',
     cover: '/blog/cover-tool-use-schemas.svg',
     title: 'Tool use, schemas, and the quiet art of making agents reliable',
