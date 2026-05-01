@@ -1,5 +1,49 @@
 export const posts = [
   {
+    slug: 'honesty-with-cushions',
+    cover: '/blog/cover-honesty-cushions.svg',
+    title: 'Some people want honesty with cushions',
+    type: 'observation',
+    date: 'May 1, 2026',
+    readingTime: '6 min',
+    color: 'paper-coral',
+    tags: ['honesty', 'communication', 'feedback'],
+    excerpt:
+      'When people say "be honest," they often mean "be honest in a way that lets me keep my current self-image intact."',
+    seoDescription:
+      'On the difference between real honesty and its softer substitutes — and why most workplaces accidentally reward the wrong one.',
+    keywords: 'honesty, candor, feedback, communication, self-image',
+    intro:
+      `When people say "be honest," they often mean "be honest in a way that lets me keep my current self-image intact." That is honesty with cushions. It is not exactly honesty.\n\nReal honesty changes the temperature in the room. You can feel it land. That is why so many people claim to value it while quietly rewarding its softer substitutes — the gentle phrasing, the disclaimers, the reassurance bundled with every observation, the "but obviously you're great at..." inserted before any difficult truth.`,
+    sections: [
+      {
+        heading: 'the polite version vs. the actual version',
+        body: `The polite version sounds like:\n\n> "Maybe consider, if you have time, possibly looking at how the team responded — there might be something there worth thinking about, only if you want to."\n\nThe actual version sounds like:\n\n> "The team is checking out. They are not going to tell you, because you punish bad news. So I am telling you."\n\nBoth are technically honest. Only one of them changes anything.`,
+      },
+      {
+        heading: 'real honesty changes the temperature',
+        body: `You can almost always feel the difference. Polite-honesty leaves a room comfortable, then dissolves the moment everyone leaves. Actual-honesty leaves a brief silence, sometimes a long one. The silence is the part that does work.\n\nThis is why honesty is rare. The silence is unpleasant. People who deliver honest sentences without the silence are usually not delivering honest sentences.`,
+      },
+      {
+        heading: 'the substitutes that look like honesty',
+        body: `A short list of things that sound like honesty and are not:\n\n- "constructive feedback" with no specific construction in it\n- "I'm just saying" attached to anything\n- praise sandwiches where the meat is two atoms thick\n- "with respect" used to deliver disrespect with deniability\n- "this might just be me" as a way to disclaim a real pattern\n- venting disguised as transparency\n\nEach of these has a place. None of them are honesty.`,
+      },
+      {
+        heading: 'cushions are sometimes correct',
+        body: `Not every setting is an honesty setting. There are conversations where the goal is comfort, or grief, or simple kindness, and no honest reading of the room would call for unvarnished truth. Cushions in those moments are not cowardice. They are care.\n\nThe trouble starts when cushions become the default everywhere. Then the difficult conversations the work needs never happen, because the system has accidentally trained everyone to soften past usefulness.`,
+      },
+      {
+        heading: 'a rule that has held up',
+        body: `The smaller the audience, the larger the honesty budget. In a one-on-one with someone who can change something, honesty earns its keep. In a 60-person all-hands, it usually doesn't survive contact with the room.\n\nMatch your honesty to the smallest audience that needs it. A direct sentence to one person, on time, will move more than a careful paragraph to a crowd, ever.`,
+      },
+      {
+        heading: 'a quieter version',
+        body: `Sometimes the most honest thing in a meeting is a question. "What is everyone not saying right now?" lands harder than any answer. It also costs less, because the room provides the truth and you only have to ask.\n\nUse it sparingly. It works because it is rare.`,
+      },
+    ],
+  },
+
+  {
     slug: 'not-every-breakdown-is-a-crisis',
     cover: '/blog/cover-not-every-breakdown.svg',
     title: 'Not every breakdown is a crisis',
