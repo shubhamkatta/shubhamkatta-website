@@ -1,4 +1,82 @@
 export const posts = [
+  /*
+   * NOTE: this post is intentionally unpublished. Kept here so it can be
+   * restored later by removing the comment wrapper. Cover and diagrams
+   * for it still live in /public/blog/.
+   *
+  {
+    slug: 'mcp-servers-i-built-and-what-they-taught-me',
+    cover: '/blog/cover-mcp-servers-built.svg',
+    title: 'Three MCP servers I built, and what they taught me',
+    type: 'field notes',
+    date: 'May 4, 2026',
+    readingTime: '11 min',
+    color: 'paper-yellow',
+    tags: ['mcp', 'agents', 'tooling'],
+    excerpt:
+      'Three production MCP servers, three different mistakes, and a small list of things I would not let a future me forget.',
+    seoDescription:
+      'Field notes from building three production MCP servers — for threat intelligence, graph search, and runbooks. Schema design, transport choices, error handling, and the small habits that make a server worth keeping.',
+    keywords: 'MCP, Model Context Protocol, Anthropic, server, tools, Claude Code, agent design, schema, JSON-RPC',
+    intro:
+      `MCP looks deceptively simple from the outside. You expose tools, you expose resources, you expose prompts, and a model talks to them. Easy.\n\nThe hard part — the part nobody tells you in the readme — is choosing what to expose. The protocol is dull on purpose. The interesting work is at your edges: schemas, descriptions, error shapes, and the dozen small decisions that turn a tool from "the model can call it" into "the model can call it and end up somewhere useful."\n\nI have shipped three MCP servers in the last year. Each one was supposed to be the obvious thing to do, and each one taught me something I should have already known. Field notes follow.`,
+    sections: [
+      {
+        heading: 'Server one: threat-intel — when "search" is too vague to be a tool',
+        body: `The first server was internal. I work on a threat-intel pipeline, and I wanted Claude to answer questions like "what do we have on this hash" without me chaperoning every query.\n\nFirst draft, naturally, was one tool: \`search\`. One string in, JSON blob out. The model could ask for anything.\n\nIt was disastrous. Claude would call \`search("recent campaigns by APT-XX")\` and get back 4,800 tokens of mixed entities, not all of which were even campaigns. It would then call \`search\` again, and again, narrowing through prose. Token bills tripled. Latency tripled. Answers got worse, not better.\n\nThe fix was boring: split the one tool into five.\n\n\`\`\`json
+{
+  "tools": [
+    { "name": "lookup_indicator", "input": { "value": "string", "type": "ip|hash|domain|email" } },
+    { "name": "list_campaigns", "input": { "actor": "string?", "since": "iso-date?", "limit": "int<=20" } },
+    { "name": "fetch_campaign", "input": { "id": "uuid" } },
+    { "name": "list_actors", "input": { "region": "enum?", "limit": "int<=20" } },
+    { "name": "fetch_actor", "input": { "id": "uuid" } }
+  ]
+}
+\`\`\`\n\nFive narrow tools beat one wide one. The model picked the right one almost every time. Tool calls dropped, latency dropped, and — the part I did not expect — answers became more confident, because each tool returned a smaller, cleaner shape.\n\n### The lesson\n\nA tool's job is not to be powerful. It is to make the model's next decision obvious. If two of your tools could plausibly answer the same question, you have one tool too many — or one tool with too much surface.`,
+      },
+      {
+        heading: 'Server two: graph-search — turning Cypher into something a model can use',
+        body: `The second server wrapped a Neo4j knowledge graph. We had a correlation engine that linked indicators, actors, infrastructure, and campaigns. Internally, the team queried it with Cypher. I wanted Claude to query it without me writing Cypher for it on demand.\n\nThe naive approach: a \`run_cypher\` tool. Pass a query string, return rows.\n\nThis worked. It also broke every safety property I cared about. Claude wrote queries that scanned the entire graph. It wrote queries that returned six joined tables and a million rows. Once, helpfully, it wrote a query with a parameter named \`password\` because the schema had a property called \`password_leak_count\`.\n\nI replaced it with three things:\n\n- \`graph_neighbors(node_id, depth<=2)\` — the most common question, baked into a tool\n- \`graph_path(from, to, max_hops<=4)\` — the second most common\n- \`graph_query(template_id, params)\` — a curated set of named queries with parameter slots\n\nThe \`run_cypher\` tool stayed, gated behind an admin permission and never exposed to the default client. The model could ask the team to "request access" if it really needed raw query power, which meant a human reviewed the request.\n\n### The lesson\n\nIf your tool is "run arbitrary thing," you have not built a tool. You have built a hole. Bake the common questions into named tools, and keep the escape hatch behind a real permission boundary.`,
+      },
+      {
+        heading: 'Server three: runbooks — a server with one really good prompt',
+        body: `The third server was for ops. It wrapped our incident runbooks: a folder of markdown files with steps, escalation paths, and code snippets.\n\nI almost did not build this one. We already had a Slack channel and a wiki. But two things made it worthwhile:\n\n- Pages were stale. The model picked up the wiki version, the runbook channel had the new version, and confusion was the default.\n- Half the runbook value was in the prompt around the runbook — "if you see X, run Y first, otherwise stop and page humans."\n\nThis server was the smallest of the three. Two tools, one resource set, and one MCP \`prompt\` (the often-forgotten third primitive).\n\n\`\`\`yaml
+tools:
+  - name: list_runbooks
+    input: { area: "auth|ingest|api|infra|all" }
+  - name: fetch_runbook
+    input: { id: "string" }
+
+resources:
+  - uri: runbook://{area}
+    description: pinned, current runbook for an area
+
+prompts:
+  - name: triage_alert
+    description: |
+      Use when an alert fires and the user wants Claude
+      to suggest first steps. Loads the right runbook and
+      asks for log context before recommending anything.
+\`\`\`\n\nThat one prompt did most of the heavy lifting. It made the server's intent legible. People used the server because the prompt told them what it was for.\n\n### The lesson\n\n**Prompts** in MCP are not optional. They are the user manual the model reads. If your server has a "blessed way to use it," put the blessed way in a prompt. The cost is fifteen lines of YAML. The payoff is everyone — model and human — using the server the way you intended.`,
+      },
+      {
+        heading: 'A short list of things I would not let a future me forget',
+        body: `- **Tool descriptions are part of the schema.** Write them like a UX brief, not like a docstring. The model reads them on every call.\n- **Error messages are part of the API.** "500: internal error" is the same as silence. "no actor with id=ACT-1234; try \`list_actors\` to find valid ids" is the same as a working tool.\n- **Idempotency is a feature.** If a tool can be safely retried, say so in its description. The model will retry on flaky upstreams and you do not want surprises.\n- **stdio for local, HTTP for shared.** SSE is fine in between if you actually need streaming. Most people do not.\n- **Cap returned tokens.** A tool that returns "everything" is a tool that times out and burns context. Pick a sane page size and document it.\n- **Log every call.** A server with no logs is a server you cannot debug. JSON lines, request id, tool name, latency, status.\n- **Test the schema, not just the code.** A unit test that validates the JSON schema against three real payloads catches more bugs than the code tests do.\n- **Version the tool surface.** Adding a tool is safe. Removing a field is not. Treat your MCP server like a public API, because to your model, it is one.`,
+      },
+      {
+        heading: 'A diagram, because three servers deserve one',
+        body:
+`![End-to-end shape of a single MCP request — client to protocol to your server to whatever upstream you wrap.](/blog/diagram-mcp-architecture.svg)\n\nThe boring shape on top, the interesting choices in the middle. That is the whole job.`,
+      },
+      {
+        heading: 'The one-liner I keep repeating',
+        body: `Tools are the model's API. Schemas are your UX brief. Descriptions are your docs. Errors are your support team. Treat them like a product, not like an export.\n\nIf you only remember one thing from these notes: **the model is a user of your server, and like any user, it will only do what your interface makes obvious.**`,
+      },
+    ],
+  },
+  */
+
   {
     slug: 'honesty-with-cushions',
     cover: '/blog/cover-honesty-cushions.svg',

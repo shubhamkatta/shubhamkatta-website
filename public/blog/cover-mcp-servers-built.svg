@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="MCP servers I built cover">
+  <rect width="1200" height="600" fill="#fff6db"/>
+  <g transform="translate(80,140)">
+    <g transform="rotate(-3)">
+      <rect width="220" height="120" rx="18" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+      <text x="18" y="36" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#ff6b6b" letter-spacing="2">SERVER 01</text>
+      <text x="18" y="64" font-family="ui-monospace, monospace" font-size="14" fill="#1d1815">threat-intel</text>
+      <text x="18" y="86" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">5 tools · 1 resource</text>
+      <text x="18" y="106" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">87% uptime → 99.9%</text>
+    </g>
+    <g transform="translate(240,30) rotate(2)">
+      <rect width="220" height="120" rx="18" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/>
+      <text x="18" y="36" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#ff6b6b" letter-spacing="2">SERVER 02</text>
+      <text x="18" y="64" font-family="ui-monospace, monospace" font-size="14" fill="#1d1815">graph-search</text>
+      <text x="18" y="86" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">3 tools · 12 resources</text>
+      <text x="18" y="106" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">cypher behind a tool</text>
+    </g>
+    <g transform="translate(120,170) rotate(-1)">
+      <rect width="220" height="120" rx="18" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/>
+      <text x="18" y="36" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#ff6b6b" letter-spacing="2">SERVER 03</text>
+      <text x="18" y="64" font-family="ui-monospace, monospace" font-size="14" fill="#1d1815">runbooks</text>
+      <text x="18" y="86" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">2 tools · 1 prompt set</text>
+      <text x="18" y="106" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">ops-only access</text>
+    </g>
+  </g>
+  <g transform="translate(620,160)">
+    <text x="0" y="50" font-family="Inter, sans-serif" font-weight="900" font-size="48" fill="#1d1815" letter-spacing="-2">Three MCP servers</text>
+    <text x="0" y="118" font-family="Inter, sans-serif" font-weight="900" font-size="48" fill="#1d1815" letter-spacing="-2">I built &amp; what they</text>
+    <text x="0" y="180" font-family="Inter, sans-serif" font-weight="900" font-size="48" fill="#1d1815" letter-spacing="-2">taught me.</text>
+    <text x="0" y="230" font-family="Inter, sans-serif" font-weight="700" font-size="20" fill="#ff6b6b">field notes from the wire.</text>
+  </g>
+</svg>
