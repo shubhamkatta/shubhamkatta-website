@@ -78,6 +78,46 @@ prompts:
   */
 
   {
+    slug: 'the-myth-of-perfect-timing',
+    cover: '/blog/cover-perfect-timing.svg',
+    title: 'The myth of perfect timing',
+    type: 'observation',
+    date: 'May 8, 2026',
+    readingTime: '6 min',
+    color: 'paper-blue',
+    tags: ['decisions', 'courage', 'fear'],
+    excerpt:
+      'We overestimate timing because it lets us postpone courage. Sometimes that is wisdom. Often it is well-dressed fear.',
+    seoDescription:
+      'An honest essay on the myth of perfect timing — why we wait, when waiting is wisdom, and when "the moment isn\'t right" is a polite version of fear.',
+    keywords: 'timing, decisions, courage, fear, life choices, postponement',
+    intro:
+      `We overestimate timing because it lets us postpone courage. We tell ourselves the idea is good but the moment is wrong. Sometimes that is wisdom. Often it is well-dressed fear.\n\nMost life does not offer perfect timing. It offers costly windows — narrow openings where the cost of acting is high and the cost of not acting is mostly invisible. The invisibility is the trap.`,
+    sections: [
+      {
+        heading: '"the moment isn\'t right" is the most polite excuse',
+        body: `Timing language is socially safe. Nobody argues with timing. You can say "I'll do it when things settle down" or "the market needs to mature first" or "we should wait until the right person joins" and watch the room nod, because waiting is what reasonable adults do.\n\nThis is its main use. Timing language gives you cover. It lets you postpone something difficult while looking like you are making a calculated decision. The problem isn't the cover. The problem is when the cover starts believing itself.`,
+      },
+      {
+        heading: 'the cost of waiting is paid later, in a different currency',
+        body: `What looks like preservation is often deferral. The decision is still being made; you are just outsourcing it to time.\n\nWaiting has a few specific costs that do not show up on day one:\n\n- the version of you who could have made the decision is no longer there in two years\n- the people who would have joined you have moved on\n- the small window of cultural permission to try the thing has closed\n- you have rehearsed the postponement so many times it has become a habit\n\nNone of these announce themselves. They show up as a quiet feeling, much later, that you were never quite who you meant to be.`,
+      },
+      {
+        heading: 'what "right time" actually looks like when it is honest',
+        body: `Timing is real. There are conditions that genuinely justify waiting:\n\n- a specific resource you need is arriving on a known date\n- you are mid-recovery from something that needs full attention\n- the cost of acting is currently catastrophic and will be merely high in three months\n- you are missing one piece of information that will change the decision, not just decorate it\n\nIf your reason for waiting fits one of these, fine. If it does not — if it is a vague sense that "the time isn't right" or "let me see how things go" — you are not waiting. You are flinching.`,
+      },
+      {
+        heading: 'a small habit that helps you tell the two apart',
+        body: `Write down the exact reason you are waiting. Date it. Read it again in three weeks.\n\nIf the reason has changed — if last month it was "I want to wait for the bonus" and this month it is "I want to see how Q3 goes" — the original reason was a cover. You were not waiting for that thing. You were just waiting.\n\nThe trick of this habit is that it makes the cover visible to you. The cover only works while it stays vague. Once it has a date and a sentence, it has a shape, and shapes can be inspected.`,
+      },
+      {
+        heading: 'most timing is not yours to perfect',
+        body: `The biggest decisions of my life were made in conditions I did not choose, when I did not feel ready, with information that turned out to be partly wrong. The conditions did not improve. I improved through them.\n\nThis is not heroic. It is just what happens when you stop waiting for a moment that was never going to send a calendar invite.`,
+      },
+    ],
+  },
+
+  {
     slug: 'honesty-with-cushions',
     cover: '/blog/cover-honesty-cushions.svg',
     title: 'Some people want honesty with cushions',
