@@ -261,20 +261,18 @@ export function WritingIndexPage() {
         </div>
         <div className="badge-note">ongoing archive</div>
       </div>
-      <div className="split-grid">
-        <div className="grid-two stretch-top">
-          {posts.map((post) => <PostCard key={post.slug} post={post} />)}
-        </div>
-        <div className="side-stack">
-          <Paper tone="paper-blue">
-            <SectionLabel tone="ink">currently thinking about</SectionLabel>
-            <p>Incentives, performative professionalism, how digital memory works, and why some truths can only be said with a joke nearby.</p>
-          </Paper>
-          <Paper tone="paper-yellow">
-            <SectionLabel tone="ink">not everything here is about work</SectionLabel>
-            <p>This archive is also for journeys, personal experiences, casual findings, and whatever kept asking to be written down.</p>
-          </Paper>
-        </div>
+      <div className="writing-top-row">
+        <Paper tone="paper-blue" className="side-note">
+          <SectionLabel tone="ink">currently thinking about</SectionLabel>
+          <p>Incentives, memory, and truths that travel better with a joke nearby.</p>
+        </Paper>
+        <Paper tone="paper-yellow" className="side-note">
+          <SectionLabel tone="ink">not just work</SectionLabel>
+          <p>Also: journeys, findings, and notes that asked to be written down.</p>
+        </Paper>
+      </div>
+      <div className="grid-three stretch-top writing-grid">
+        {posts.map((post) => <PostCard key={post.slug} post={post} />)}
       </div>
     </main>
   );

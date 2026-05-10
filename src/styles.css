@@ -146,6 +146,14 @@ h2.work-heading { font-size: clamp(1rem, 2.5vw, 1.7rem); }
 .article-tags { display: flex; flex-wrap: wrap; gap: .45rem; margin-bottom: 1.4rem; }
 .article-tags .tag-pill { font-size: 0.72rem; padding: .35rem .7rem; }
 .meta-dot { margin: 0 .5rem; opacity: 0.5; }
+.writing-top-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+.writing-top-row .side-note { padding: 1rem 1.2rem; border-radius: 1.25rem; }
+.writing-top-row .side-note p { margin: 0; line-height: 1.55; font-size: .95rem; }
+.writing-top-row .section-label { margin-bottom: .35rem; font-size: .68rem; letter-spacing: .14em; }
+.writing-grid { gap: 1.1rem; }
+@media (max-width: 900px) {
+  .writing-top-row { grid-template-columns: 1fr; gap: .8rem; margin-bottom: 1.2rem; }
+}
 .site-footer { border-top: 1px solid var(--border); background: rgba(255,255,255,0.45); }
 .footer-row { font-size: .92rem; color: rgba(29,24,21,0.58); }
 .footer-links { display: flex; gap: 1rem; flex-wrap: wrap; }
