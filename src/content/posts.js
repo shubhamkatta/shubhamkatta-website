@@ -78,6 +78,152 @@ prompts:
   */
 
   {
+    slug: 'the-mcp-protocol-under-the-hood',
+    cover: '/blog/cover-mcp-protocol-deep-dive.svg',
+    title: 'The MCP protocol, under the hood: handshake, capabilities, notifications',
+    type: 'deep dive',
+    date: 'May 12, 2026',
+    readingTime: '13 min',
+    color: 'paper-blue',
+    tags: ['mcp', 'protocol', 'json-rpc', 'agents'],
+    excerpt:
+      'Most people use MCP without ever looking at the wire. The wire is dull on purpose. The dullness is the interesting part.',
+    seoDescription:
+      'A close look at the MCP protocol: JSON-RPC framing, the initialize handshake, capabilities negotiation, notifications, cancellation, progress, and the error semantics that actually matter.',
+    keywords: 'MCP protocol, Model Context Protocol, JSON-RPC, initialize, capabilities, notifications, cancellation, progress, Anthropic',
+    intro:
+      `If you have built or integrated an MCP server, you have probably never had to read the wire format. That is by design. MCP sits on top of JSON-RPC 2.0 and the SDK abstracts the framing, retries, and lifecycle.\n\nKnowing what is happening underneath still pays. It changes how you design servers, how you debug them when the SDK is hiding something, and how you reason about the small set of features (notifications, cancellation, progress, capabilities) that come up exactly when you most need them. This post walks the protocol with the kind of detail you'd want if you had to implement an MCP client from scratch on a Friday afternoon.`,
+    sections: [
+      {
+        heading: 'the mental model: it is JSON-RPC, with discipline',
+        body: `MCP is JSON-RPC 2.0 with a defined lifecycle, a small set of method names, and a capability negotiation step at the top of every connection. The base protocol you can implement in a hundred lines.\n\nThree kinds of messages travel on the wire:\n\n- **requests.** Have an \`id\`. Expect a single matching response (success or error).\n- **responses.** Have the same \`id\` as the request they answer.\n- **notifications.** Look like requests but have no \`id\` and expect no response. Fire-and-forget.\n\nA single, dull example:\n\n\`\`\`json
+// request
+{ "jsonrpc": "2.0", "id": 7, "method": "tools/call",
+  "params": { "name": "search", "arguments": { "q": "APT-29" } } }
+
+// response (success)
+{ "jsonrpc": "2.0", "id": 7,
+  "result": { "content": [ { "type": "text", "text": "..." } ] } }
+
+// response (error)
+{ "jsonrpc": "2.0", "id": 7,
+  "error": { "code": -32603, "message": "internal error",
+             "data": { "hint": "the upstream timed out" } } }
+
+// notification (no id)
+{ "jsonrpc": "2.0", "method": "notifications/tools/list_changed" }
+\`\`\`\n\nThat is the whole vocabulary. Everything else is convention layered on top.`,
+      },
+      {
+        heading: 'the handshake: initialize + initialized',
+        body:
+`Every MCP session starts with a four-message handshake. Not three. Four.\n\n![Initialize, response, initialized notification, then ready. The shape is rigid for good reasons.](/blog/diagram-mcp-handshake.svg)\n\n- **client → server.** \`initialize\` request. Carries: \`protocolVersion\`, \`clientInfo\` (name + version), and \`capabilities\` (what the client supports — sampling, roots, etc.).\n- **server → client.** \`initialize\` response. Carries: \`protocolVersion\`, \`serverInfo\`, and \`capabilities\` (what the server offers — tools, resources, prompts, logging, etc.).\n- **client → server.** \`notifications/initialized\` notification. Tells the server the client has finished setup and the connection is ready.\n- after that, both sides may start making normal calls (\`tools/list\`, \`tools/call\`, etc.).\n\nThe initialized notification is the part everyone forgets. It is the difference between "the connection exists" and "the connection is ready to do real work." Servers that start sending notifications between step 2 and step 3 are technically violating the spec; clients should ignore them. Servers that wait until step 4 to send anything are correct.`,
+      },
+      {
+        heading: 'capabilities: what each side promises',
+        body: `Both \`capabilities\` blocks are how the protocol negotiates features without versioning everything in stone. A client says "I support sampling, roots, and elicitation." A server says "I expose tools (with list_changed notifications), resources (with subscribe and list_changed), and prompts. I do not support logging."\n\nThe rules:\n\n- if a side did not advertise a capability, the other side **must not** use it. A server that didn't advertise \`logging\` should never receive \`logging/setLevel\`.\n- nested capabilities can specify sub-features. \`tools: { listChanged: true }\` means "I support tools, and I will send you \`notifications/tools/list_changed\` when the list changes."\n- capabilities are not extensible past what the spec defines. If you want a new feature, the protocol version goes up.\n\nIn practice: build your server to inspect the client's capabilities and call into them, and build your client to respect the server's. Don't assume; ask.`,
+      },
+      {
+        heading: 'the three primitives, briefly',
+        body: `MCP servers expose at most three kinds of things. Each has a "list" and a "use" verb:\n\n- **tools.** Functions the model calls. \`tools/list\` returns definitions; \`tools/call\` invokes one. Tools may have side effects.\n- **resources.** Read-only blobs. \`resources/list\` enumerates them; \`resources/read\` fetches one. Resources may be subscribed to with \`resources/subscribe\` for change notifications.\n- **prompts.** Saved templates a user (or client) may pick. \`prompts/list\` and \`prompts/get\`.\n\nThe distinction between tools and resources matters more than people first think. A tool is something the **model** decides to call, autonomously. A resource is something the **user** (or client UI) picks. Mis-classifying a destructive operation as a resource is how accidents happen; mis-classifying a static document as a tool is how token budgets explode.\n\nWhen in doubt: read-only → resource; side-effectful → tool; templated invocation → prompt.`,
+      },
+      {
+        heading: 'notifications and why they matter',
+        body: `Notifications are one-way messages with no \`id\` and no expected response. They are how the protocol stays live without polling.\n\nThe ones worth knowing:\n\n- \`notifications/initialized\` (client → server). Handshake completion.\n- \`notifications/cancelled\` (either direction). Cancellation of a pending request.\n- \`notifications/progress\` (either direction). Progress reports on a long-running request.\n- \`notifications/tools/list_changed\` (server → client). The set of tools has changed; the client should refetch.\n- \`notifications/resources/list_changed\` (server → client). Same for resources.\n- \`notifications/resources/updated\` (server → client). A specific subscribed resource changed.\n- \`notifications/prompts/list_changed\` (server → client). Prompts changed.\n- \`notifications/message\` (server → client, logging). Server-emitted log message at a level the client subscribed to.\n\nIf you are building a server, ship the change notifications. They are how clients keep their cache of your tool surface fresh. Without them, clients are forced to poll \`tools/list\` defensively, which is wasteful and slow.`,
+      },
+      {
+        heading: 'cancellation: how to stop in flight',
+        body: `Cancellation is a notification, not a request. Either side can send:\n\n\`\`\`json
+{ "jsonrpc": "2.0", "method": "notifications/cancelled",
+  "params": { "requestId": 7, "reason": "user cancelled" } }
+\`\`\`\n\nThe receiver should stop work on request 7 and may either:\n\n- not respond at all (correct — the request is "withdrawn")\n- respond with an error indicating cancellation\n\nA few realities to know:\n\n- cancellation is **advisory**, not guaranteed. If the response is already on the wire when the cancel arrives, you get the response.\n- the request id may be re-used after cancellation in some implementations; check the SDK.\n- never send a cancellation for a request that hasn't been issued yet — the receiver has no idea what to cancel.\n\nIn server code: register an \`AbortController\` (or equivalent) per request id. On cancel, abort it. Most leaks live in servers that never honour cancel and run the work to completion regardless.`,
+      },
+      {
+        heading: 'progress: the boring win',
+        body: `Long-running requests should report progress. The pattern: the requester opts in by including a \`progressToken\` in \`_meta\`; the responder sends \`notifications/progress\` periodically until the request completes.\n\n\`\`\`json
+// requester opts in
+{ "jsonrpc": "2.0", "id": 11, "method": "tools/call",
+  "params": { "name": "ingest_corpus",
+              "arguments": { "path": "/data" },
+              "_meta": { "progressToken": "ingest-2026-05-12-abc" } } }
+
+// responder reports progress along the way
+{ "jsonrpc": "2.0", "method": "notifications/progress",
+  "params": { "progressToken": "ingest-2026-05-12-abc",
+              "progress": 47, "total": 200,
+              "message": "embedding shard 47 of 200" } }
+\`\`\`\n\nThe token is opaque; the receiver echoes it back unchanged. Servers that implement progress feel orders of magnitude more pleasant to use than servers that go silent for two minutes and then return a result. The cost is small. Ship it.`,
+      },
+      {
+        heading: 'errors that are actionable',
+        body: `JSON-RPC defines a small set of standard error codes:\n\n- \`-32700\` Parse error\n- \`-32600\` Invalid Request\n- \`-32601\` Method not found\n- \`-32602\` Invalid params\n- \`-32603\` Internal error\n- \`-32000\` to \`-32099\` Implementation-defined (free for your use)\n\nMCP defines a few above that, in the \`-32xxx\` range, for things like "resource not found." The numbers matter less than what you put in the body.\n\nThe error envelope I have settled on:\n\n\`\`\`json
+{ "code": -32602, "message": "invalid argument 'priority'",
+  "data": {
+    "field": "priority",
+    "received": 9,
+    "expected": "integer in [1, 4]",
+    "hint": "use list_priorities to see allowed values"
+  } }
+\`\`\`\n\nWhy each field exists:\n\n- \`code\` is for the client's switch statement; stable, machine-readable\n- \`message\` is for the human reading the log\n- \`data\` is for context — what was wrong, what was expected\n- \`hint\` is for the model that is going to retry; tells it what to do next\n\nIf your errors are "an error occurred," your model is going to apologise and stop. If your errors carry actionable context, your model is going to recover. That is the entire difference between a brittle agent and a robust one.`,
+      },
+      {
+        heading: 'transport layering, briefly',
+        body: `JSON-RPC framing depends on transport:\n\n- **stdio.** Newline-delimited JSON. One message per line. Flush after each.\n- **SSE.** Each message is an SSE \`data:\` event with a JSON body. Multi-line JSON must be careful about embedded newlines.\n- **Streamable HTTP.** Each POST body is one JSON message; streaming responses use SSE framing within the response body.\n\nThis is the only layer that changes per transport. Everything above — methods, ids, capabilities, notifications — is the same. Covered in more depth in [Choosing an MCP transport](/writing/choosing-an-mcp-transport).`,
+      },
+      {
+        heading: 'a minimum-viable MCP server',
+        body: `Stripped to the bones, an MCP server is roughly this much code (Python, stdio, pseudocode-y but accurate):\n\n\`\`\`python
+import sys, json
+
+def respond(msg):
+    sys.stdout.write(json.dumps(msg) + "\\n")
+    sys.stdout.flush()
+
+CAPS = {"tools": {"listChanged": False}}
+
+def handle(req):
+    m = req.get("method")
+    if m == "initialize":
+        return {"protocolVersion": "2025-06-18",
+                "serverInfo": {"name": "tiny-server", "version": "0.1"},
+                "capabilities": CAPS}
+    if m == "tools/list":
+        return {"tools": [{"name": "echo",
+                           "description": "echo a string",
+                           "inputSchema": {"type":"object",
+                                           "required":["s"],
+                                           "properties":{"s":{"type":"string"}}}}]}
+    if m == "tools/call":
+        name = req["params"]["name"]
+        args = req["params"]["arguments"]
+        if name == "echo":
+            return {"content":[{"type":"text","text":args["s"]}]}
+        return {"_error":(-32601, f"unknown tool: {name}")}
+    return {"_error":(-32601, f"unknown method: {m}")}
+
+for line in sys.stdin:
+    line = line.strip()
+    if not line: continue
+    req = json.loads(line)
+    if req.get("method","").startswith("notifications/"):
+        continue  # one-way, no response expected
+    out = handle(req)
+    if "_error" in out:
+        code, msg = out["_error"]
+        respond({"jsonrpc":"2.0", "id":req.get("id"),
+                 "error":{"code":code, "message":msg}})
+    else:
+        respond({"jsonrpc":"2.0", "id":req.get("id"), "result":out})
+\`\`\`\n\nThis isn't production code. It is the shape. Once you have this running, every richer feature — resources, prompts, notifications, cancellation, progress — slots in at the right place. The SDK saves you from writing this yourself, but knowing what it is doing is what lets you reason about it when something goes wrong.`,
+      },
+      {
+        heading: 'the closer',
+        body: `MCP's wire format is unexciting. That is the feature. JSON-RPC is one of the few protocols a developer can fully internalise on a weekend, and MCP's discipline on top — the handshake, capabilities, notifications — is a small list of well-chosen patterns you have probably implemented before in other shapes.\n\nWhich means: the time you would otherwise spend learning the protocol can go into the thing that actually matters — what your server exposes, how you describe it, and what your tools return. That is the interesting layer. The wire is just there to get you there.`,
+      },
+    ],
+  },
+
+  {
     slug: 'the-myth-of-perfect-timing',
     cover: '/blog/cover-perfect-timing.svg',
     title: 'The myth of perfect timing',

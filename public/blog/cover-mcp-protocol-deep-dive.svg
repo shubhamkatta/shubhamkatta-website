@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="The MCP protocol under the hood">
+  <rect width="1200" height="600" fill="#eaf7ff"/>
+  <rect x="540" y="30" width="180" height="22" rx="4" fill="#fff6db" opacity="0.85" transform="rotate(-2 630 41)"/>
+  <g transform="translate(80,150) rotate(-1)">
+    <rect width="520" height="320" rx="22" fill="#1d1815"/>
+    <circle cx="22" cy="22" r="6" fill="#ff6b6b"/>
+    <circle cx="42" cy="22" r="6" fill="#ffd166"/>
+    <circle cx="62" cy="22" r="6" fill="#a3e4a3"/>
+    <text x="22" y="76" font-family="ui-monospace, monospace" font-size="13" fill="#9eb7ff">→ client</text>
+    <text x="22" y="100" font-family="ui-monospace, monospace" font-size="13" fill="#f6efe6">{ "jsonrpc": "2.0", "id": 7,</text>
+    <text x="22" y="120" font-family="ui-monospace, monospace" font-size="13" fill="#f6efe6">  "method": "tools/call",</text>
+    <text x="22" y="140" font-family="ui-monospace, monospace" font-size="13" fill="#f6efe6">  "params": { "name": "search",</text>
+    <text x="22" y="160" font-family="ui-monospace, monospace" font-size="13" fill="#f6efe6">    "arguments": {"q": "APT-29"} } }</text>
+    <text x="22" y="200" font-family="ui-monospace, monospace" font-size="13" fill="#a3e4a3">← server</text>
+    <text x="22" y="224" font-family="ui-monospace, monospace" font-size="13" fill="#f6efe6">{ "jsonrpc": "2.0", "id": 7,</text>
+    <text x="22" y="244" font-family="ui-monospace, monospace" font-size="13" fill="#f6efe6">  "result": { "content": [{ "type":</text>
+    <text x="22" y="264" font-family="ui-monospace, monospace" font-size="13" fill="#f6efe6">  "text", "text": "..." }] } }</text>
+    <text x="22" y="296" font-family="ui-monospace, monospace" font-size="11" fill="rgba(255,255,255,0.4)">request id 7. matched on response. boring on purpose.</text>
+  </g>
+  <g transform="translate(640,160)">
+    <text x="0" y="50" font-family="Inter, sans-serif" font-weight="900" font-size="48" fill="#1d1815" letter-spacing="-2">The MCP protocol,</text>
+    <text x="0" y="118" font-family="Inter, sans-serif" font-weight="900" font-size="48" fill="#1d1815" letter-spacing="-2">under the hood.</text>
+    <text x="0" y="170" font-family="Inter, sans-serif" font-weight="700" font-size="22" fill="#ff6b6b">handshake, capabilities, notifications.</text>
+    <text x="0" y="225" font-family="Inter, sans-serif" font-size="17" fill="rgba(29,24,21,0.7)">It's JSON-RPC with discipline. The</text>
+    <text x="0" y="252" font-family="Inter, sans-serif" font-size="17" fill="rgba(29,24,21,0.7)">discipline is the interesting part.</text>
+  </g>
+</svg>

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 420" role="img" aria-label="MCP initialize handshake">
+  <rect width="1000" height="420" fill="#fff8ef"/>
+  <text x="40" y="44" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">The initialize handshake (in 4 messages)</text>
+  <line x1="220" y1="90" x2="220" y2="380" stroke="#1d1815" stroke-width="2" stroke-dasharray="4,4"/>
+  <line x1="780" y1="90" x2="780" y2="380" stroke="#1d1815" stroke-width="2" stroke-dasharray="4,4"/>
+  <g transform="translate(120,72)">
+    <rect width="200" height="32" rx="10" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <text x="100" y="22" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#1d1815">client</text>
+  </g>
+  <g transform="translate(680,72)">
+    <rect width="200" height="32" rx="10" fill="#1d1815"/>
+    <text x="100" y="22" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#f6efe6">server</text>
+  </g>
+  <g transform="translate(230,130)">
+    <rect width="540" height="44" rx="8" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/>
+    <text x="14" y="20" font-family="ui-monospace, monospace" font-size="12" fill="rgba(29,24,21,0.65)">→ request id=1</text>
+    <text x="14" y="38" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">method: initialize · params: { protocolVersion, capabilities, clientInfo }</text>
+    <polygon points="540,22 558,22 548,16 548,28" fill="#1d1815"/>
+  </g>
+  <g transform="translate(230,188)">
+    <rect width="540" height="44" rx="8" fill="#fff6db" stroke="#1d1815" stroke-width="2"/>
+    <text x="14" y="20" font-family="ui-monospace, monospace" font-size="12" fill="rgba(29,24,21,0.65)">← response id=1</text>
+    <text x="14" y="38" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">result: { protocolVersion, capabilities, serverInfo }</text>
+    <polygon points="2,22 -16,22 -6,16 -6,28" fill="#1d1815"/>
+  </g>
+  <g transform="translate(230,246)">
+    <rect width="540" height="44" rx="8" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/>
+    <text x="14" y="20" font-family="ui-monospace, monospace" font-size="12" fill="rgba(29,24,21,0.65)">→ notification (no id)</text>
+    <text x="14" y="38" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">method: notifications/initialized</text>
+    <polygon points="540,22 558,22 548,16 548,28" fill="#1d1815"/>
+  </g>
+  <g transform="translate(230,304)">
+    <rect width="540" height="44" rx="8" fill="#1d1815"/>
+    <text x="14" y="20" font-family="ui-monospace, monospace" font-size="12" fill="rgba(255,255,255,0.55)">↔ now ready</text>
+    <text x="14" y="38" font-family="ui-monospace, monospace" font-size="13" fill="#a3e4a3">tools/list · resources/list · prompts/list · tools/call · ...</text>
+  </g>
+  <text x="40" y="402" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.55)">Capabilities are negotiated, not assumed. If the server didn't advertise it, the client shouldn't call it.</text>
+</svg>
