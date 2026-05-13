@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="Choosing an MCP transport">
+  <rect width="1200" height="600" fill="#fff6db"/>
+  <rect x="540" y="30" width="180" height="22" rx="4" fill="#eaf7ff" opacity="0.85" transform="rotate(-2 630 41)"/>
+  <g transform="translate(100,160)">
+    <g transform="translate(0,0) rotate(-2)">
+      <rect width="180" height="260" rx="22" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+      <text x="16" y="36" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#ff6b6b" letter-spacing="2">TRANSPORT 01</text>
+      <text x="16" y="72" font-family="Inter, sans-serif" font-weight="900" font-size="26" fill="#1d1815">stdio</text>
+      <text x="16" y="104" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.7)">local subprocess.</text>
+      <text x="16" y="122" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.7)">stdin in, stdout out.</text>
+      <text x="16" y="150" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="#1d1815" letter-spacing="2">USE IT WHEN</text>
+      <text x="16" y="172" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.65)">- you control both ends</text>
+      <text x="16" y="190" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.65)">- single user, single host</text>
+      <text x="16" y="208" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.65)">- you want zero ops</text>
+      <text x="16" y="240" font-family="ui-monospace, monospace" font-size="11" fill="#b3422f">latency: nanoseconds</text>
+    </g>
+    <g transform="translate(200,12) rotate(1)">
+      <rect width="180" height="260" rx="22" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/>
+      <text x="16" y="36" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#ff6b6b" letter-spacing="2">TRANSPORT 02</text>
+      <text x="16" y="72" font-family="Inter, sans-serif" font-weight="900" font-size="26" fill="#1d1815">SSE</text>
+      <text x="16" y="104" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.7)">long-lived HTTP</text>
+      <text x="16" y="122" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.7)">stream + POST channel.</text>
+      <text x="16" y="150" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="#1d1815" letter-spacing="2">USE IT WHEN</text>
+      <text x="16" y="172" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.65)">- shared server, many clients</text>
+      <text x="16" y="190" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.65)">- server pushes notifications</text>
+      <text x="16" y="208" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.65)">- your hosting allows long conns</text>
+      <text x="16" y="240" font-family="ui-monospace, monospace" font-size="11" fill="#b3422f">latency: milliseconds</text>
+    </g>
+    <g transform="translate(400,0) rotate(-1)">
+      <rect width="180" height="260" rx="22" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/>
+      <text x="16" y="36" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#ff6b6b" letter-spacing="2">TRANSPORT 03</text>
+      <text x="16" y="72" font-family="Inter, sans-serif" font-weight="900" font-size="22" fill="#1d1815">streamable</text>
+      <text x="16" y="98" font-family="Inter, sans-serif" font-weight="900" font-size="22" fill="#1d1815">HTTP</text>
+      <text x="16" y="124" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.7)">single endpoint.</text>
+      <text x="16" y="142" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.7)">stream when needed.</text>
+      <text x="16" y="170" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="#1d1815" letter-spacing="2">USE IT WHEN</text>
+      <text x="16" y="192" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.65)">- behind serverless / proxies</text>
+      <text x="16" y="210" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.65)">- you want stateless option</text>
+      <text x="16" y="228" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.65)">- shared infra, many tenants</text>
+      <text x="16" y="252" font-family="ui-monospace, monospace" font-size="11" fill="#b3422f">where MCP is heading</text>
+    </g>
+  </g>
+  <g transform="translate(110,460)">
+    <text x="0" y="40" font-family="Inter, sans-serif" font-weight="900" font-size="40" fill="#1d1815" letter-spacing="-2">Choosing an MCP transport (and meaning it).</text>
+  </g>
+</svg>

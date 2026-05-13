@@ -78,6 +78,80 @@ prompts:
   */
 
   {
+    slug: 'choosing-an-mcp-transport',
+    cover: '/blog/cover-mcp-transports.svg',
+    title: 'Choosing an MCP transport: stdio vs SSE vs streamable HTTP',
+    type: 'deep dive',
+    date: 'May 13, 2026',
+    readingTime: '12 min',
+    color: 'paper-yellow',
+    tags: ['mcp', 'transports', 'protocol', 'http'],
+    excerpt:
+      'Three transports, three operational profiles, three deployment stories. A practical look at when each one is correct, and what their failure modes have in common.',
+    seoDescription:
+      'A detailed comparison of MCP transports — stdio, HTTP+SSE, and streamable HTTP — with concrete deployment guidance, scaling characteristics, and session-state advice.',
+    keywords: 'MCP transport, stdio, SSE, streamable HTTP, MCP server design, MCP session, MCP scaling, Model Context Protocol',
+    intro:
+      `The MCP protocol is transport-agnostic on paper and pleasantly opinionated in practice. You can run an MCP server in three meaningful ways: as a local subprocess piped over stdio, as a long-lived HTTP server pushing notifications via SSE, or as a "streamable HTTP" endpoint that handles both regular request/response and streaming through a single URL.\n\nEach transport is a different operational profile. Choosing the right one is less about performance and more about who owns the lifecycle, who pays for state, and what your hosting environment will tolerate. This post walks the three with enough detail to make the choice without later regret.`,
+    sections: [
+      {
+        heading: 'the three transports at a glance',
+        body: `- **stdio.** Client spawns the server as a subprocess and talks over stdin/stdout. Strictly local. Connection is the process lifetime.\n- **HTTP + SSE.** Client opens a long-lived HTTP GET to the server, which becomes a one-way notification channel (Server-Sent Events). The client makes requests via separate HTTP POSTs. Two channels, one logical session.\n- **Streamable HTTP.** A newer single-endpoint design where every request is an HTTP POST, and the server can choose to respond with a plain JSON body or upgrade to a stream when there is more to send. One channel, simpler ops.\n\nAll three carry the same JSON-RPC payloads. The protocol layer above doesn't change. What changes is how the bytes move, who keeps state, and how the connection ends.`,
+      },
+      {
+        heading: 'stdio: when local and simple wins',
+        body: `Stdio is the default for a reason. The model is: the host (Claude Desktop, Claude Code, Cursor) launches your server as a child process. They speak JSON-RPC over stdin and stdout, one JSON object per line (newline-delimited). When the host quits, the child quits.\n\nWhat this gets you:\n\n- **zero auth.** The process boundary is the trust boundary. If the user can run the binary, they can use the server.\n- **zero networking.** No ports, no TLS, no proxies, no CORS, no DNS.\n- **process isolation.** Crashes don't take down the host.\n- **trivial debugging.** You can run the server manually, type JSON into stdin, and see what comes back.\n\nWhat it costs:\n\n- **one user per server.** Each Claude session typically spawns its own subprocess. State is per-session.\n- **no cross-machine.** The server only exists where the client runs. A teammate cannot share your subprocess.\n- **environment is yours to manage.** The server inherits the user's shell environment; misconfigured paths or missing system libraries surface as silent startup failures.\n\nUse stdio for: dev tools, personal automations, anything where the server wraps something on the user's local machine (filesystem, local DB, local script). Avoid it for: anything that touches shared backends, anything that needs centralised auth or rate limiting, anything that has any concept of "team."`,
+      },
+      {
+        heading: 'a useful detail about stdio framing',
+        body: `Stdio uses **newline-delimited JSON-RPC**. One message per line. No length prefix, no framing protocol — just JSON terminated by \`\\n\`.\n\nThis sounds simple and bites the people who write servers in languages where stdout is line-buffered, block-buffered, or worse. If you write a server in Python and forget to flush, the host hangs waiting for a response that is sitting in your buffer.\n\nThe practical incantations:\n\n- Python: \`print(json.dumps(msg), flush=True)\` — note the flush.\n- Node: \`process.stdout.write(JSON.stringify(msg) + '\\n')\` — Node's stdout is line-buffered when attached to a TTY but block-buffered when piped. Calling write directly avoids surprises.\n- Go: explicit \`bufio.Writer\` with \`Flush()\` after each write.\n\nIf your stdio server "stops responding" after a few messages, the buffer is the prime suspect. Always.`,
+      },
+      {
+        heading: 'SSE: the long-lived connection model',
+        body: `HTTP+SSE was MCP's original networked transport. The pattern:\n\n- client opens \`GET /mcp/sse\`. Server keeps the connection open and writes JSON-RPC notifications and responses as Server-Sent Events.\n- client posts requests to \`POST /mcp/messages\` with a session id. Server pushes the response back through the SSE channel.\n\nTwo channels, one logical session. The server has somewhere to push (the SSE stream), and the client has somewhere to send (the POST endpoint).\n\nThis works well in environments where:\n\n- you can hold connections open for minutes to hours (most VPS, dedicated hosting, k8s with reasonable timeouts)\n- you have a small to medium number of concurrent clients\n- you want server-initiated notifications (resource changes, tool list changes, etc.) without polling\n\nIt does **not** work well behind:\n\n- serverless platforms with strict request timeouts (some let SSE through, many don't)\n- proxies that buffer responses (NGINX with default config, some CDNs); buffered SSE is broken SSE\n- load balancers that don't pin a session to a backend (the POST and the SSE must reach the same server instance)\n- environments where long-lived connections are charged differently or limited\n\nIf your hosting passes all four of those tests, SSE is fine. If any one fails, look at streamable HTTP instead.`,
+      },
+      {
+        heading: 'streamable HTTP: where MCP is heading',
+        body: `Streamable HTTP collapses the two SSE channels into one endpoint. Every request is a POST to the same URL. The server decides per-response whether to return a single JSON body (normal HTTP response) or a stream (chunked Server-Sent Events in the same response body).\n\nWhy this matters:\n\n- **simpler ops.** One URL, one auth surface, no session-id-to-backend pinning required for the common case.\n- **serverless-friendly.** Short calls fit in a typical 30-second budget. Streams are opt-in for the calls that need them.\n- **statelessness as a choice.** A pure request/response server (no notifications, no long-running operations) can be fully stateless across instances. Throw it behind a load balancer and you are done.\n- **easier to firewall.** It is just HTTP. Existing infra for HTTP works.\n\nWhat it asks of you:\n\n- if you have server-initiated notifications, the client needs to open a "listening" POST to the server, and the server keeps that one open as a stream. You still need long-lived connections for that subset of calls, but only for those.\n- session id management moves into HTTP headers (\`Mcp-Session-Id\`) instead of being implicit in the SSE channel.\n\nIn 2026 this is the transport I default to for any networked MCP server. It plays well with cloud, with proxies, with auth middleware. The SSE-only transport still exists for backward compat, but new servers should ship streamable HTTP first.`,
+      },
+      {
+        heading: 'a deployment table',
+        body: `\`\`\`
+                       stdio          SSE              streamable HTTP
+local dev              ★★★★★          ★★               ★★★
+single user prod       ★★★★           ★★★              ★★★★
+shared / multi-tenant  —              ★★★              ★★★★★
+serverless host        —              ★                ★★★★
+behind a proxy/CDN     —              depends          ★★★★
+needs notifications    via subproc    natively         natively (POST stream)
+auth & rate limits     process trust  HTTP middleware  HTTP middleware
+debugging              cat / tee      curl + sse-cli   curl
+\`\`\`\n\nNothing magic here, just the operational shape made explicit.`,
+      },
+      {
+        heading: 'session state: where it lives matters',
+        body: `Regardless of transport, every non-trivial MCP server has session state: which tools the client has discovered, which subscriptions are active, any per-session caches, the auth context.\n\nThree places it can live:\n\n- **in the server process, in memory.** Simple. Forces sticky sessions on a load balancer (client must always reach the same instance). Works for stdio always, SSE often, streamable HTTP if you can pin.\n- **in a shared store (Redis, DB).** Adds a hop but makes the server stateless across instances. Required if you want horizontal scaling without pinning.\n- **on the client.** The client passes everything it needs in each request. Maximally stateless server, but increases payload size and shifts complexity to clients.\n\nFor production, I default to: streamable HTTP + a small per-session record in Redis keyed by \`Mcp-Session-Id\`. The server is otherwise stateless. Instances can come and go. The session id is the only thing the load balancer needs to route on, and that only matters when streams are active.`,
+      },
+      {
+        heading: 'auth at the transport layer',
+        body: `Stdio handles auth by trust: if the user could run the binary, they're allowed. Done.\n\nSSE and streamable HTTP need real auth. The pattern that has held up:\n\n- **bearer tokens in the \`Authorization\` header.** Standard. Works with every middleware. Easy to rotate. Compatible with most proxies and gateways.\n- **OAuth flows for end-user clients.** The MCP spec includes an authorization flow profile that lines up with OAuth 2.1. Use it when your server is going to be added by users to clients they don't control.\n- **never put secrets in the URL.** Tokens in query strings show up in proxy logs, CDN logs, browser histories, and Bash command history. The \`Authorization\` header is the only correct place.\n- **rate limit by token, not IP.** Multiple users behind a NAT will share an IP and break each other.\n\nIf your auth model is "we don't have one yet, the network is private," your network is not as private as you think. Put a bearer token in front of it on day one.`,
+      },
+      {
+        heading: 'scaling patterns',
+        body: `stdio doesn't scale — it's per-user, by design. Don't try.\n\nFor SSE and streamable HTTP:\n\n- **stateless instances + shared session store.** The default. Servers behind a normal load balancer. Sticky sessions only when a stream is actively open.\n- **one instance per tenant.** Useful for very heavy per-tenant state or strict isolation. Higher cost, simpler auth.\n- **read replicas for tool definitions.** If \`tools/list\` is the hot path, cache it at the edge. Most servers have static tool definitions; a CDN can serve them.\n\nA pattern that has bitten me: **don't keep open client connections through your normal API gateway.** Most are not tuned for long-lived connections and will silently drop them under load. Put streaming traffic on a separate ingress with appropriate timeouts.`,
+      },
+      {
+        heading: 'a small decision tree',
+        body: `Use **stdio** if:\n\n- the server's job is local (touches the user's machine)\n- exactly one user, exactly one host\n- you want zero ops\n\nUse **streamable HTTP** if:\n\n- multiple users, shared backends\n- you want centralised auth, rate limits, observability\n- you may eventually run multiple instances\n- you live in a cloud / serverless / containerised environment\n\nUse **HTTP + SSE** if:\n\n- you have an existing SSE-based MCP server that works\n- you have a deployment where streamable HTTP isn't supported yet by the client you target\n- otherwise, prefer streamable HTTP\n\nThe protocol on top is the same in all three. The plumbing is what you're choosing.`,
+      },
+      {
+        heading: 'the closer',
+        body: `Transports are usually a one-time decision and a long-term consequence. The "wrong" choice rarely makes the server unworkable, but it makes every operational task slightly harder forever — auth, scaling, debugging, observability, multi-tenancy.\n\nDefault to streamable HTTP for new networked servers. Default to stdio for anything local. Reach for SSE only when something specific requires it. Almost everything else — caching, retries, observability, auth — is the same boring HTTP work you'd do for any other server. Which is the entire point.`,
+      },
+    ],
+  },
+
+  {
     slug: 'the-mcp-protocol-under-the-hood',
     cover: '/blog/cover-mcp-protocol-deep-dive.svg',
     title: 'The MCP protocol, under the hood: handshake, capabilities, notifications',
