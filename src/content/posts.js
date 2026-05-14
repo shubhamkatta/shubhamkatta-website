@@ -78,6 +78,85 @@ prompts:
   */
 
   {
+    slug: 'rag-isnt-a-thing-its-a-pipeline',
+    cover: '/blog/cover-rag-anatomy.svg',
+    title: "RAG isn't a thing, it's a pipeline",
+    type: 'deep dive',
+    date: 'May 14, 2026',
+    readingTime: '14 min',
+    color: 'paper-coral',
+    tags: ['rag', 'pipeline', 'systems'],
+    excerpt:
+      'Six stages, each with its own failure modes. A close look at what production RAG actually contains, and how to tell which stage is hurting you.',
+    seoDescription:
+      'A deep, stage-by-stage look at production RAG systems: ingest, parse, chunk, embed, retrieve, generate. Where each stage fails, how to diagnose it, and why pipeline evals beat end-to-end evals.',
+    keywords: 'RAG pipeline, retrieval augmented generation, ingest, parse, chunk, embed, retrieve, generation, RAG architecture, RAG evaluation, RAG failures',
+    intro:
+      `"Our RAG isn't working" is one of those sentences that sounds like a problem statement and is actually a question waiting to happen. There is no such object as RAG. There is a pipeline of six (sometimes seven) stages, and at any given moment one of them is hurting you. The skill is in figuring out which.\n\nThis post walks the full pipeline, end to end, with the failure modes that actually show up in production. It is the post I wish I had when I started building this stuff, in place of the dozen blog posts that each treated their favourite stage as the whole job.`,
+    sections: [
+      {
+        heading: 'RAG is not a model. it is a pipeline.',
+        body: `Think of RAG as a UNIX pipe with six stages:\n\n\`\`\`
+ingest → parse → chunk → embed → retrieve → generate
+\`\`\`\n\nEach stage takes input from the previous one and produces output for the next. Each stage has its own failure modes. None of them are visible in end-to-end answer quality unless you instrument them separately.\n\nThe single most useful framing I can give you: when an answer is wrong, the question is not "is RAG broken." It is "which stage is broken." Six possible diagnoses. Different fixes for each. End-to-end "answer quality went up" tells you nothing about which.`,
+      },
+      {
+        heading: 'stage 1: ingest',
+        body: `Ingest is the part everyone underestimates because it sounds boring. It is: get documents from where they live (S3 / Confluence / Notion / GitHub / a database / the file system / scraped web) into your processing pipeline.\n\nReal-world failures:\n\n- **stale snapshots.** Your index reflects the corpus from three weeks ago. Users ask about today's runbook; your retriever returns last quarter's. The fix is a refresh cadence with versioning, not a smarter retriever.\n- **silent duplicates.** The same document was crawled three times from three URLs, embedded as three chunks, and now occupies three slots in your top-k. Looks fine in tests; ships as a quality problem.\n- **partial ingests.** Half a folder was loaded before a network error. Nobody noticed because nobody is monitoring "documents added this week" with a threshold.\n- **mixed permissions.** You ingested a doc the user shouldn't see, and now retrieval surfaces it. RAG security failures almost always live here.\n\nThe fix is not technical sophistication. It is content hygiene: dedup by content hash, version your indexes, monitor cardinality changes, gate by access controls **at the index level**, not just at the prompt level.`,
+      },
+      {
+        heading: 'stage 2: parse (the silently broken step)',
+        body: `Parsing turns raw bytes into structured text. For HTML it's straightforward-ish. For PDFs it is a nightmare. For Word docs, slides, mixed-content pages — varies wildly.\n\nWhat goes wrong, in approximate order of frequency:\n\n- **tables are flattened to junk.** A 4-column table becomes "Apr Jan 12 Feb 8 Mar 4 Q1 ..." and the model can never recover the structure. Fix: use a parser that emits tables as markdown or HTML.\n- **PDF reading order is wrong.** Multi-column PDFs read column-by-column when a naive parser walks top-to-bottom. The result is interleaved paragraphs that look like nonsense.\n- **headers, footers, page numbers are inline noise.** They appear inside paragraphs and confuse chunkers and embedders.\n- **scanned PDFs need OCR.** If your parser silently returns empty strings for image-only pages, you may have empty chunks. Worse, if OCR succeeds with errors, you have wrong chunks.\n- **inline code is destroyed.** Code blocks lose indentation, identifiers get tokenized wrongly, function names get split.\n\nThe fix is to invest in parsing as a first-class step. Validate randomly sampled outputs by eye. Use multiple parsers if needed and compare. The cost of bad parsing is invisible in retrieval evals (the chunks just look like chunks). It shows up in answer quality and you blame the model.`,
+      },
+      {
+        heading: 'stage 3: chunk',
+        body: `Covered exhaustively in [Chunking, the most-ignored knob in RAG](/writing/chunking-the-most-ignored-knob-in-rag). One-line summary: start with fixed-size, respect document structure, consider parent-child for QA workloads, and measure chunk recall@k separately from end-to-end quality.\n\nThe single most useful chunking-stage diagnostic: pick 10 queries where the answer is wrong. For each, find the right chunk in your index by hand (or grep). Was the chunk:\n\n- present? then the issue is downstream (embed / retrieve / generate)\n- absent because the answer was split across chunks? chunking is too aggressive — add overlap or move to parent-child\n- absent because the chunk contains junk? parsing is broken — go back to stage 2\n- present but in a form unlikely to embed well? consider structural prefixes (heading paths) or a different chunker\n\nMost teams skip this exercise because it takes an hour. It is the cheapest hour you will ever spend on RAG.`,
+      },
+      {
+        heading: 'stage 4: embed',
+        body: `Embedding turns chunks into vectors. The model choice matters more than people admit, and most defaults are fine.\n\nThe failures that actually bite:\n\n- **changing the embedding model without reindexing.** Old vectors and new vectors live in different geometries. Cosine similarity becomes meaningless. You will discover this when retrieval quality silently halves after a deploy.\n- **wrong distance metric.** Some indexes default to L2 (Euclidean), some to cosine, some to inner product. They are not equivalent except on unit-length vectors. Pick one consciously and stay there.\n- **forgetting query vs passage prefixes.** Modern encoders often expect different inputs for the query side and the document side. Skipping the prefix on one side costs 5-15 points of recall, and the symptom is "retrieval is bad" with no obvious cause.\n- **the dimensions trap.** People assume 3072-dim is twice as good as 1536-dim. It is mostly twice as expensive. Pick by quality on your domain, not size.\n- **a stale index.** Documents change but the embeddings don't. The chunk in your vector store no longer matches the content people are seeing. Always reindex when content changes; never embed once and assume.\n\nA short routine: pin the embedding model version. Reindex on every change. Monitor recall@k weekly with a fixed eval set. If recall ever drops by more than 2 points, suspect this stage first.`,
+      },
+      {
+        heading: 'stage 5: retrieve',
+        body: `Retrieval is where most teams ship "good enough" and never come back. Covered in detail in [Hybrid retrieval and rerankers](/writing/hybrid-retrieval-and-rerankers). The two big lessons:\n\n- one retriever is never enough; combine BM25 + dense with RRF\n- a cross-encoder reranker on top-50 typically buys 5-15 points of recall@10 for 100-200ms of latency\n\nThe diagnostic question: when the answer is wrong, **was the right chunk in the top-50 candidates?** If yes, your problem is reranking or generation. If no, your problem is retrieval — chunking, embedding, or the retriever itself.\n\nThis single bit of information ("was the answer reachable from retrieval?") cuts your debugging surface in half. Most teams don't compute it because nobody owns retrieval as a distinct product. Fix that.`,
+      },
+      {
+        heading: 'stage 6: generate (with citations)',
+        body: `The final stage: assemble the retrieved chunks into a prompt and ask the model. This is the stage where most attention goes in tutorials and the least where the real gains live.\n\nThe failure modes:\n\n- **the model ignores the context.** Usually because the prompt doesn't make grounding explicit, the chunks are buried in the middle of a long prompt (attention sinks at start and end), or the model "knows" the answer from training and uses that.\n- **the model hallucinates citations.** It dutifully cites \`[1]\` but the chunk \`[1]\` doesn't say what it claims. Fix: ask for exact-quote citations and validate post-hoc.\n- **the model can't distinguish authoritative chunks from supporting ones.** If you retrieve the runbook AND someone's old comment, the model might prefer the comment. Use chunk metadata: source, recency, confidence.\n- **the model answers from one chunk when the answer requires synthesising across many.** Often a prompt problem ("synthesise across the snippets, don't quote one"), sometimes a retrieval diversity problem (MMR helps).\n\nThe generation prompt I keep coming back to:\n\n\`\`\`
+Answer the question using ONLY the snippets below. If the answer is
+not in the snippets, say "I don't have that in my sources" — do not
+guess. Each claim must reference the snippet it came from, like [#3].
+
+Snippets:
+[1] source: runbook/auth.md (updated 2026-02-12)
+"..."
+[2] source: wiki/sessions (updated 2025-09-30)
+"..."
+
+Question: ...
+\`\`\`\n\nNothing exotic. The combination of "ONLY," the explicit fallback ("I don't have that"), and the citation requirement does most of the work.`,
+      },
+      {
+        heading: 'where each stage actually breaks',
+        body:
+`A map I keep returning to:\n\n![Six stages, six different failure modes. Diagnose per stage, not per answer.](/blog/diagram-rag-failures.svg)\n\nWhen an answer is wrong, walk the pipeline backward. The right chunk was there in retrieval? Then it's generation. It wasn't there? Then it's chunking, embedding, or retrieval. If it wasn't even in the corpus? Then it's ingest. Each step rules out two or three other stages.\n\nThis is the same debugging discipline you'd use for any UNIX pipeline. RAG is no more mysterious than \`cat | grep | awk | sort\`. It just has a model on the end.`,
+      },
+      {
+        heading: 'pipeline evals beat end-to-end evals',
+        body: `An end-to-end eval ("did the answer match the gold answer?") tells you the system is broken. It does not tell you where.\n\nPipeline evals are cheap to add and tell you exactly where to look:\n\n- **ingest:** monitor document count, content hash dedup ratio, ingest age (freshness)\n- **parse:** sample-check parsed outputs by eye, weekly; track empty-page ratio for PDFs\n- **chunk:** chunk recall@k (does any chunk contain the answer span?)\n- **embed:** unchanged-corpus retrieval stability (rerun yesterday's queries and check stability)\n- **retrieve:** recall@k, MRR, nDCG on a labelled eval set\n- **generate:** faithfulness (does the answer match the chunks?), citation accuracy (do the cites point to claims that exist?)\n\nA simple dashboard with these six numbers will tell you in 30 seconds where the regression is. Without it, you are running the same experiment over and over and arguing about which model to use.`,
+      },
+      {
+        heading: 'a few things I would not skip',
+        body: `1. **Treat retrieval as a product.** Give it its own owner, its own metrics, its own eval set. The team that does this has dramatically better RAG than the team that treats retrieval as "the part before the model."\n2. **Instrument every stage.** Cheap logs at every transition, queryable later. When something regresses, you want logs, not theories.\n3. **Have a fixed eval set per stage.** 50-100 cases is enough. The point is stability, not coverage.\n4. **Practise the backward walk.** Train your team to diagnose backward from "answer is wrong" through the six stages. The first time it takes an hour. By the tenth time, ten minutes.\n5. **Be skeptical of frameworks that hide stages.** A "one-call RAG" library is great for prototypes and bad for production, because it hides exactly the boundaries you need to inspect.`,
+      },
+      {
+        heading: 'the closer',
+        body: `RAG is not magic. It is a pipeline with six well-understood stages, each with well-understood failure modes. The teams that get good at it are not the ones with the best embeddings. They are the ones who internalised the pipeline mental model and built the small habits to debug it.\n\nIf "RAG" is a single noun in your team's vocabulary, you are about to spend a quarter being confused. If it is a pipeline you can name the parts of, you already won the hardest fight.`,
+      },
+    ],
+  },
+
+  {
     slug: 'choosing-an-mcp-transport',
     cover: '/blog/cover-mcp-transports.svg',
     title: 'Choosing an MCP transport: stdio vs SSE vs streamable HTTP',

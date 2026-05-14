@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="Anatomy of a production RAG pipeline">
+  <rect width="1200" height="600" fill="#ffe9e4"/>
+  <rect x="540" y="30" width="180" height="22" rx="4" fill="#fff6db" opacity="0.85" transform="rotate(-2 630 41)"/>
+  <g transform="translate(80,180)">
+    <g><rect width="160" height="80" rx="14" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="28" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="rgba(29,24,21,0.55)" letter-spacing="2">STAGE 01</text>
+      <text x="14" y="54" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">ingest</text>
+      <text x="14" y="72" font-family="Inter, sans-serif" font-size="11" fill="rgba(29,24,21,0.55)">pdf · md · web</text>
+    </g>
+    <g transform="translate(176,0)"><rect width="160" height="80" rx="14" fill="#fff6db" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="28" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="rgba(29,24,21,0.55)" letter-spacing="2">STAGE 02</text>
+      <text x="14" y="54" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">parse</text>
+      <text x="14" y="72" font-family="Inter, sans-serif" font-size="11" fill="rgba(29,24,21,0.55)">silently broken</text>
+    </g>
+    <g transform="translate(352,0)"><rect width="160" height="80" rx="14" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="28" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="rgba(29,24,21,0.55)" letter-spacing="2">STAGE 03</text>
+      <text x="14" y="54" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">chunk</text>
+      <text x="14" y="72" font-family="Inter, sans-serif" font-size="11" fill="rgba(29,24,21,0.55)">the real knob</text>
+    </g>
+    <g transform="translate(528,0)"><rect width="160" height="80" rx="14" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="28" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="rgba(29,24,21,0.55)" letter-spacing="2">STAGE 04</text>
+      <text x="14" y="54" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">embed</text>
+      <text x="14" y="72" font-family="Inter, sans-serif" font-size="11" fill="rgba(29,24,21,0.55)">model + dim</text>
+    </g>
+    <g transform="translate(704,0)"><rect width="160" height="80" rx="14" fill="#fff6db" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="28" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="rgba(29,24,21,0.55)" letter-spacing="2">STAGE 05</text>
+      <text x="14" y="54" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">retrieve</text>
+      <text x="14" y="72" font-family="Inter, sans-serif" font-size="11" fill="rgba(29,24,21,0.55)">hybrid + rerank</text>
+    </g>
+    <g transform="translate(880,0)"><rect width="160" height="80" rx="14" fill="#1d1815"/>
+      <text x="14" y="28" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="rgba(255,255,255,0.45)" letter-spacing="2">STAGE 06</text>
+      <text x="14" y="54" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#f6efe6">generate</text>
+      <text x="14" y="72" font-family="Inter, sans-serif" font-size="11" fill="rgba(255,255,255,0.55)">+ cite</text>
+    </g>
+    <g stroke="#1d1815" stroke-width="2" fill="none">
+      <line x1="160" y1="40" x2="176" y2="40"/>
+      <line x1="336" y1="40" x2="352" y2="40"/>
+      <line x1="512" y1="40" x2="528" y2="40"/>
+      <line x1="688" y1="40" x2="704" y2="40"/>
+      <line x1="864" y1="40" x2="880" y2="40"/>
+    </g>
+  </g>
+  <g transform="translate(80,330)">
+    <text x="0" y="50" font-family="Inter, sans-serif" font-weight="900" font-size="48" fill="#1d1815" letter-spacing="-2">RAG isn't a thing.</text>
+    <text x="0" y="118" font-family="Inter, sans-serif" font-weight="900" font-size="48" fill="#1d1815" letter-spacing="-2">It's a pipeline.</text>
+    <text x="0" y="166" font-family="Inter, sans-serif" font-weight="700" font-size="22" fill="#ff6b6b">six stages. each breaks differently.</text>
+  </g>
+</svg>
