@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 460" role="img" aria-label="Chunking strategies compared">
+  <rect width="1000" height="460" fill="#fff8ef"/>
+  <text x="40" y="44" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">Five chunking strategies, side by side</text>
+  <text x="40" y="68" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">same document, same query — what each strategy returns</text>
+  <g transform="translate(40,100)" font-family="Inter, sans-serif">
+    <g><text x="0" y="14" font-weight="900" font-size="12" fill="rgba(29,24,21,0.55)" letter-spacing="2">FIXED (512 tok)</text>
+      <rect x="160" y="0" width="800" height="18" fill="rgba(29,24,21,0.06)"/>
+      <rect x="160" y="0" width="200" height="18" fill="#ffe9e4" stroke="#1d1815"/>
+      <rect x="360" y="0" width="200" height="18" fill="#fff6db" stroke="#1d1815"/>
+      <rect x="560" y="0" width="200" height="18" fill="#ffe9e4" stroke="#1d1815"/>
+      <rect x="760" y="0" width="200" height="18" fill="#fff6db" stroke="#1d1815"/>
+      <text x="0" y="36" font-size="11" fill="rgba(29,24,21,0.6)">cheap, predictable, occasionally cuts mid-sentence</text>
+    </g>
+    <g transform="translate(0,64)"><text x="0" y="14" font-weight="900" font-size="12" fill="rgba(29,24,21,0.55)" letter-spacing="2">FIXED + OVERLAP</text>
+      <rect x="160" y="0" width="800" height="18" fill="rgba(29,24,21,0.06)"/>
+      <rect x="160" y="0" width="220" height="18" fill="#ffe9e4" stroke="#1d1815"/>
+      <rect x="340" y="0" width="220" height="18" fill="#fff6db" stroke="#1d1815" opacity="0.85"/>
+      <rect x="520" y="0" width="220" height="18" fill="#ffe9e4" stroke="#1d1815"/>
+      <rect x="700" y="0" width="220" height="18" fill="#fff6db" stroke="#1d1815" opacity="0.85"/>
+      <text x="0" y="36" font-size="11" fill="rgba(29,24,21,0.6)">cheap insurance against boundary cuts; ~10% overlap is the sweet spot</text>
+    </g>
+    <g transform="translate(0,128)"><text x="0" y="14" font-weight="900" font-size="12" fill="rgba(29,24,21,0.55)" letter-spacing="2">SENTENCE WINDOW</text>
+      <rect x="160" y="0" width="800" height="18" fill="rgba(29,24,21,0.06)"/>
+      <rect x="160" y="0" width="40" height="18" fill="#a3e4a3" stroke="#1d1815"/>
+      <rect x="200" y="0" width="40" height="18" fill="#a3e4a3" stroke="#1d1815"/>
+      <rect x="240" y="0" width="40" height="18" fill="#a3e4a3" stroke="#1d1815"/>
+      <rect x="280" y="0" width="40" height="18" fill="#a3e4a3" stroke="#1d1815"/>
+      <rect x="320" y="0" width="40" height="18" fill="#a3e4a3" stroke="#1d1815"/>
+      <rect x="160" y="0" width="200" height="18" fill="none" stroke="#ff6b6b" stroke-width="2"/>
+      <text x="0" y="36" font-size="11" fill="rgba(29,24,21,0.6)">embed one sentence; retrieve a window around it for context — great for QA</text>
+    </g>
+    <g transform="translate(0,192)"><text x="0" y="14" font-weight="900" font-size="12" fill="rgba(29,24,21,0.55)" letter-spacing="2">SEMANTIC</text>
+      <rect x="160" y="0" width="800" height="18" fill="rgba(29,24,21,0.06)"/>
+      <rect x="160" y="0" width="120" height="18" fill="#9ec5ff" stroke="#1d1815"/>
+      <rect x="280" y="0" width="280" height="18" fill="#bce6ff" stroke="#1d1815"/>
+      <rect x="560" y="0" width="80" height="18" fill="#9ec5ff" stroke="#1d1815"/>
+      <rect x="640" y="0" width="320" height="18" fill="#bce6ff" stroke="#1d1815"/>
+      <text x="0" y="36" font-size="11" fill="rgba(29,24,21,0.6)">split where the topic shifts (embedding distance &gt; threshold) — variable size</text>
+    </g>
+    <g transform="translate(0,256)"><text x="0" y="14" font-weight="900" font-size="12" fill="rgba(29,24,21,0.55)" letter-spacing="2">PARENT-CHILD</text>
+      <rect x="160" y="0" width="800" height="8" fill="#1d1815"/>
+      <rect x="160" y="12" width="120" height="14" fill="#ffe9e4" stroke="#1d1815"/>
+      <rect x="280" y="12" width="120" height="14" fill="#ffe9e4" stroke="#1d1815"/>
+      <rect x="400" y="12" width="120" height="14" fill="#ffe9e4" stroke="#1d1815"/>
+      <rect x="520" y="12" width="120" height="14" fill="#ffe9e4" stroke="#1d1815"/>
+      <rect x="640" y="12" width="120" height="14" fill="#ffe9e4" stroke="#1d1815"/>
+      <rect x="760" y="12" width="120" height="14" fill="#ffe9e4" stroke="#1d1815"/>
+      <text x="0" y="44" font-size="11" fill="rgba(29,24,21,0.6)">embed small children, return parent for context — best of both worlds</text>
+    </g>
+  </g>
+</svg>

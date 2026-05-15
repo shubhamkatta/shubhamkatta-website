@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="Chunking, the most ignored knob in RAG">
+  <rect width="1200" height="600" fill="#fff6db"/>
+  <rect x="540" y="30" width="180" height="22" rx="4" fill="#ffe9e4" opacity="0.85" transform="rotate(-2 630 41)"/>
+  <g transform="translate(80,170) rotate(-2)">
+    <rect width="500" height="280" rx="18" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <text x="20" y="38" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="rgba(29,24,21,0.55)" letter-spacing="2">A SINGLE DOCUMENT, CHUNKED FOUR WAYS</text>
+    <g transform="translate(20,60)">
+      <rect width="460" height="24" rx="4" fill="rgba(29,24,21,0.05)"/>
+      <rect x="0" y="0" width="115" height="24" rx="4" fill="#ffe9e4" stroke="#1d1815" stroke-width="1"/>
+      <rect x="115" y="0" width="115" height="24" rx="4" fill="#fff6db" stroke="#1d1815" stroke-width="1"/>
+      <rect x="230" y="0" width="115" height="24" rx="4" fill="#ffe9e4" stroke="#1d1815" stroke-width="1"/>
+      <rect x="345" y="0" width="115" height="24" rx="4" fill="#fff6db" stroke="#1d1815" stroke-width="1"/>
+      <text x="-4" y="18" text-anchor="end" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.6)">fixed</text>
+    </g>
+    <g transform="translate(20,100)">
+      <rect width="460" height="24" rx="4" fill="rgba(29,24,21,0.05)"/>
+      <rect x="0" y="0" width="120" height="24" rx="4" fill="#ffe9e4" stroke="#1d1815" stroke-width="1"/>
+      <rect x="105" y="0" width="120" height="24" rx="4" fill="#fff6db" stroke="#1d1815" stroke-width="1" opacity="0.9"/>
+      <rect x="210" y="0" width="120" height="24" rx="4" fill="#ffe9e4" stroke="#1d1815" stroke-width="1"/>
+      <rect x="315" y="0" width="120" height="24" rx="4" fill="#fff6db" stroke="#1d1815" stroke-width="1" opacity="0.9"/>
+      <text x="-4" y="18" text-anchor="end" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.6)">+overlap</text>
+    </g>
+    <g transform="translate(20,140)">
+      <rect width="460" height="24" rx="4" fill="rgba(29,24,21,0.05)"/>
+      <rect x="0" y="0" width="80" height="24" rx="4" fill="#a3e4a3" stroke="#1d1815" stroke-width="1"/>
+      <rect x="80" y="0" width="160" height="24" rx="4" fill="#9ec5ff" stroke="#1d1815" stroke-width="1"/>
+      <rect x="240" y="0" width="60" height="24" rx="4" fill="#a3e4a3" stroke="#1d1815" stroke-width="1"/>
+      <rect x="300" y="0" width="160" height="24" rx="4" fill="#9ec5ff" stroke="#1d1815" stroke-width="1"/>
+      <text x="-4" y="18" text-anchor="end" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.6)">semantic</text>
+    </g>
+    <g transform="translate(20,180)">
+      <rect width="460" height="24" rx="4" fill="rgba(29,24,21,0.05)"/>
+      <rect x="0" y="0" width="460" height="6" rx="3" fill="#1d1815"/>
+      <rect x="0" y="8" width="80" height="14" rx="3" fill="#ffe9e4" stroke="#1d1815" stroke-width="1"/>
+      <rect x="84" y="8" width="80" height="14" rx="3" fill="#ffe9e4" stroke="#1d1815" stroke-width="1"/>
+      <rect x="168" y="8" width="80" height="14" rx="3" fill="#ffe9e4" stroke="#1d1815" stroke-width="1"/>
+      <rect x="252" y="8" width="80" height="14" rx="3" fill="#ffe9e4" stroke="#1d1815" stroke-width="1"/>
+      <rect x="336" y="8" width="80" height="14" rx="3" fill="#ffe9e4" stroke="#1d1815" stroke-width="1"/>
+      <text x="-4" y="18" text-anchor="end" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.6)">parent-child</text>
+    </g>
+    <text x="20" y="240" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">same input, four very different recall and precision profiles.</text>
+  </g>
+  <g transform="translate(620,220)">
+    <text x="0" y="50" font-family="Inter, sans-serif" font-weight="900" font-size="46" fill="#1d1815" letter-spacing="-2">Chunking,</text>
+    <text x="0" y="114" font-family="Inter, sans-serif" font-weight="900" font-size="46" fill="#1d1815" letter-spacing="-2">the most-ignored</text>
+    <text x="0" y="170" font-family="Inter, sans-serif" font-weight="900" font-size="46" fill="#1d1815" letter-spacing="-2">knob in RAG.</text>
+    <text x="0" y="216" font-family="Inter, sans-serif" font-weight="700" font-size="20" fill="#ff6b6b">strategies, trade-offs, real numbers.</text>
+  </g>
+</svg>

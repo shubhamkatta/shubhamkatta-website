@@ -78,6 +78,120 @@ prompts:
   */
 
   {
+    slug: 'chunking-the-most-ignored-knob-in-rag',
+    cover: '/blog/cover-rag-chunking.svg',
+    title: 'Chunking, the most-ignored knob in RAG',
+    type: 'deep dive',
+    date: 'May 15, 2026',
+    readingTime: '13 min',
+    color: 'paper-yellow',
+    tags: ['rag', 'chunking', 'retrieval'],
+    excerpt:
+      'Most RAG teams accept the default 1000-token chunks and never look back. The single biggest jump in retrieval quality I have ever shipped came from looking back.',
+    seoDescription:
+      'A deep look at chunking strategies for RAG: fixed-size, overlap, sentence-window, semantic, parent-child, and late chunking — with trade-offs and real-workload numbers.',
+    keywords: 'RAG chunking, chunk size, semantic chunking, sentence window, parent-child, late chunking, recursive splitter, retrieval, document splitting',
+    intro:
+      `Chunking is the layer of RAG with the loudest "we'll deal with it later" energy and the largest hidden quality lift. You inherit a default — 1000 tokens with 200 overlap, usually — from a tutorial, and you ship. Six months later, retrieval is "fine" and answers are "kinda right." The system has been hobbled since day one and nobody has questioned the chunks.\n\nThe most embarrassing-in-hindsight retrieval gain I have ever shipped came from changing nothing except the chunking. Same embeddings. Same retriever. Same model. Same prompts. Just better chunks. Recall@5 went from 71% to 86%. The lesson stuck.`,
+    sections: [
+      {
+        heading: 'why chunking is where most teams lose',
+        body: `Three properties of chunks decide most of your retrieval quality:\n\n- **Size.** A chunk too small can't carry enough context to answer anything; a chunk too large dilutes its own embedding and recalls badly.\n- **Boundary.** Where you cut decides whether the answer is mid-sentence with no antecedent ("it depends on the previous value") or self-contained.\n- **Granularity vs context trade-off.** Small chunks retrieve precisely but lack context; large chunks have context but match imprecisely. The classic resolution is to embed small and return large.\n\nThe defaults you start with rarely satisfy all three. Worse, you can't tell from end-to-end answer quality whether chunking is the problem. You have to look at retrieval directly.`,
+      },
+      {
+        heading: 'fixed-size: cheap, predictable, underrated',
+        body:
+`Fixed-size chunking splits the text into N-token windows. Maybe with overlap. That's it.\n\n![Five strategies, same document. The boundaries determine what your retriever can ever find.](/blog/diagram-chunk-strategies.svg)\n\nIt sounds primitive because it is. It also has properties the fancier strategies don't always have: predictable embedding cost, predictable index size, deterministic boundaries, easy to debug. On many corpora, fixed-size is within a few points of any "smarter" strategy and far easier to operate.\n\nThe two knobs:\n\n- **size.** 256-1024 tokens is the practical range. Smaller for QA over technical docs, larger for narrative content. Match it to the typical answer span. If most answers are 1-2 sentences, 256-512 wins. If most answers need a paragraph of surrounding logic, 768-1024.\n- **overlap.** 10-20% is the sweet spot. Less than 10%, you start losing answers that straddle boundaries. More than 20%, you mostly inflate your index for diminishing returns.\n\nIf you're starting a new RAG system today and don't have time to experiment, start with **fixed-size 512 tokens, 64 token overlap, split on sentence boundaries within the window**. You can ship that on Monday and it won't embarrass you.`,
+      },
+      {
+        heading: 'recursive character splitting (the workhorse)',
+        body: `What most production systems actually run is fixed-size with **boundary preference**. The splitter tries to break at paragraph boundaries first, falls back to sentence boundaries, then to whitespace, then to characters — whichever lands closest to the target size without exceeding it.\n\nLangChain's RecursiveCharacterTextSplitter, LlamaIndex's SentenceSplitter, and most homegrown chunkers implement some version of this. The implementation is short:\n\n\`\`\`python
+SEPARATORS = ["\\n\\n", "\\n", ". ", " ", ""]
+
+def recursive_split(text: str, target: int, overlap: int, seps=SEPARATORS) -> list[str]:
+    if len(text) <= target:
+        return [text]
+    sep = seps[0]
+    parts = text.split(sep) if sep else list(text)
+    out, cur = [], ""
+    for p in parts:
+        candidate = (cur + sep + p) if cur else p
+        if len(candidate) <= target:
+            cur = candidate
+        else:
+            if cur:
+                out.append(cur)
+            if len(p) > target:
+                out.extend(recursive_split(p, target, overlap, seps[1:]))
+                cur = ""
+            else:
+                cur = p
+    if cur:
+        out.append(cur)
+    if overlap:
+        out = _apply_overlap(out, overlap)
+    return out
+\`\`\`\n\nIt is not glamorous. It is the right default for 80% of corpora.`,
+      },
+      {
+        heading: 'sentence-window: small for retrieval, big for context',
+        body: `Sentence-window chunking embeds **one sentence** per chunk, but on retrieval returns a window of N sentences around the matched sentence. So your retriever is matching at sentence granularity (precise) but the model sees a small paragraph (context).\n\nThis is the technique that punched well above its weight in my experience for QA-style RAG. It is dead simple, it is well-suited to documents where answers are localised to a sentence or two, and it solves the "tiny chunks retrieve great but lose context" problem directly.\n\nThe data shape:\n\n\`\`\`
+chunk_0: { embed_text: "sentence_5", parent_text: "sentence_3 ... sentence_7" }
+chunk_1: { embed_text: "sentence_6", parent_text: "sentence_4 ... sentence_8" }
+\`\`\`\n\nYou embed only \`embed_text\`. You return \`parent_text\` to the model. Storage cost roughly doubles; retrieval quality on QA workloads typically moves 5-15 points.`,
+      },
+      {
+        heading: 'semantic chunking: split where the topic shifts',
+        body: `Semantic chunking splits text based on **embedding distance between consecutive sentences**. Compute the embedding of each sentence; when the cosine distance between sentence i and sentence i+1 exceeds a threshold, draw a chunk boundary there.\n\nThe result: chunks of variable size, but each chunk holds a single topical unit.\n\nWhen it shines:\n\n- documents with clear topical transitions (long-form articles, mixed-topic pages, transcripts)\n- corpora where fixed-size frequently splits the answer span\n\nWhen it disappoints:\n\n- documents that are already well-structured (good headings, short sections — fixed-size + heading-respect does just as well)\n- highly technical content where consecutive sentences have low cosine distance even when they discuss different things (the threshold is hard to tune)\n- giant compute cost: you need to embed every sentence just to chunk, before you embed for retrieval\n\nIt is a real technique with real wins. It is also frequently chosen because it sounds smart, on workloads where simpler chunking would have done the same job for a tenth of the engineering effort.`,
+      },
+      {
+        heading: 'parent-child (hierarchical): the best general default',
+        body: `Parent-child chunking is the natural extension of sentence-window. You define two granularities:\n\n- **child chunks.** Small (128-256 tokens). The thing you embed and retrieve against.\n- **parent chunks.** Large (1024-2048 tokens). The thing you return to the model. Each child knows which parent it belongs to.\n\nOn retrieval, you find the best children, then deduplicate by parent (often multiple top children belong to the same parent) and return parents. The model gets coherent, surrounded context. The retriever still matches at small granularity.\n\nThis is the strongest "general" chunking strategy I know — works well across most domains, is straightforward to implement, and pairs cleanly with reranking (rerank at child granularity, return parents).\n\nA short implementation:\n\n\`\`\`python
+def build_parent_child(text, parent_size=1024, child_size=256, overlap=32):
+    parents = recursive_split(text, parent_size, 0)
+    items = []
+    for pi, p in enumerate(parents):
+        children = recursive_split(p, child_size, overlap)
+        for c in children:
+            items.append({"text": c, "parent_id": pi, "parent_text": p})
+    return items
+
+def retrieve_parents(query, items, top_k_children=20, top_parents=5):
+    children = nearest_children(query, items, k=top_k_children)
+    seen, parents = set(), []
+    for c in children:
+        if c["parent_id"] not in seen:
+            seen.add(c["parent_id"])
+            parents.append(c["parent_text"])
+        if len(parents) == top_parents:
+            break
+    return parents
+\`\`\`\n\nIt is more storage, but the retrieval gains are usually unambiguous.`,
+      },
+      {
+        heading: 'late chunking: a newer trick worth knowing',
+        body: `Late chunking is a 2024-ish technique that changes the order of operations. Normally you chunk first, then embed. Late chunking does the opposite: embed the whole document (or a long window) with a long-context encoder, then chunk the resulting token-level embeddings and pool each chunk to produce its representation.\n\nThe idea: each chunk's embedding now reflects the document's full context, not just the words inside the chunk. A chunk that says "the threshold should be 12" now embeds with knowledge that "the threshold" refers to risk score, because the encoder saw the preceding context.\n\nReality check:\n\n- requires a long-context encoder (Jina v3, BGE-M3, others)\n- compute is higher (you encode the full doc, even if you only retrieve a few chunks)\n- the gain on most workloads is real but modest (1-4 points recall@10)\n- great for documents where coreference is heavy ("it," "this," "the above")\n\nWorth experimenting with on coreference-heavy corpora. Not worth ripping out fixed-size for, if your retrieval is already at 90%+ recall@5.`,
+      },
+      {
+        heading: 'respecting document structure (the thing nobody mentions)',
+        body: `Almost no chunker out of the box respects:\n\n- markdown headings (level 1 vs 2 vs 3)\n- code blocks (which should never be split)\n- tables (which lose meaning when split)\n- list items (which should usually stay together)\n- footnotes / citations\n\nThe single highest-ROI chunker improvement I have ever made was a 50-line wrapper that: split on heading boundaries first, refused to split inside code blocks, kept whole tables together, and prefixed each chunk with the heading path it came from ("Auth > Tokens > Rotation"). Retrieval got noticeably better. Nobody on the team had to learn any new theory.\n\nThis kind of structure-aware chunking is unglamorous and underdiscussed. It is also where most production wins live.`,
+      },
+      {
+        heading: 'what to measure',
+        body: `Two evaluations, separate from end-to-end answer quality:\n\n- **chunk recall@k.** Of the queries whose answer span is in the corpus, how many have a chunk containing the span in the top-k? This isolates "did we find the right chunk?"\n- **answer reconstructability.** Given the top-k chunks, can a human (or a strong model) reconstruct the answer? If not, you might be retrieving fine but cutting the answer in half. Common when chunks are too small or there is no overlap.\n\nThese two together diagnose 90% of chunking issues. If recall is high but reconstructability is low: your chunks are too small or you need a parent-child setup. If recall is low: your chunks are mis-bounded, or your embedding strategy doesn't suit your content.`,
+      },
+      {
+        heading: 'a short checklist',
+        body: `- start with fixed-size (512 tokens, 10% overlap, respect sentence boundaries)\n- respect document structure: don't split inside code, tables, or list items\n- prefix each chunk with its heading path\n- if QA quality is uneven, try sentence-window\n- if context is missing, try parent-child\n- if topics shift unpredictably, consider semantic chunking\n- only consider late chunking if coreference is killing you and you already have long-context encoders\n- measure chunk recall@k separately from end-to-end quality\n\nNone of this is exotic. All of it is what teams shipping good RAG actually do.`,
+      },
+      {
+        heading: 'the boring closer',
+        body: `Chunking is engineering, not research. There is no breakthrough hiding in a paper. There is just a series of small, sensible decisions about size, boundary, granularity, and structure — and a willingness to measure your own choices.\n\nThe teams that ship great RAG treat chunking like a first-class part of the system. The ones that don't are still arguing about embedding models a year later, wondering why nothing helped.`,
+      },
+    ],
+  },
+
+  {
     slug: 'rag-isnt-a-thing-its-a-pipeline',
     cover: '/blog/cover-rag-anatomy.svg',
     title: "RAG isn't a thing, it's a pipeline",
