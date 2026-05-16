@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 420" role="img" aria-label="Reciprocal Rank Fusion worked example">
+  <rect width="1000" height="420" fill="#fff8ef"/>
+  <text x="40" y="44" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">RRF: combining two rankings without a learned model</text>
+  <text x="40" y="68" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">score(d) = Σ 1 / (k + rank<tspan dy="3" font-size="10">i</tspan><tspan dy="-3">(d))   ·   k usually 60</tspan></text>
+  <g transform="translate(40,100)">
+    <text x="0" y="0" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="rgba(29,24,21,0.55)" letter-spacing="2">BM25 ranking</text>
+    <g transform="translate(0,16)">
+      <rect width="280" height="160" rx="10" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="28" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">1. doc_A   1/(60+1) = 0.01639</text>
+      <text x="14" y="54" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">2. doc_C   1/(60+2) = 0.01613</text>
+      <text x="14" y="80" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">3. doc_D   1/(60+3) = 0.01587</text>
+      <text x="14" y="106" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">4. doc_F   1/(60+4) = 0.01563</text>
+      <text x="14" y="132" font-family="ui-monospace, monospace" font-size="13" fill="rgba(29,24,21,0.5)">5. doc_E   ...</text>
+    </g>
+  </g>
+  <g transform="translate(360,100)">
+    <text x="0" y="0" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="rgba(29,24,21,0.55)" letter-spacing="2">DENSE ranking</text>
+    <g transform="translate(0,16)">
+      <rect width="280" height="160" rx="10" fill="#fff6db" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="28" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">1. doc_B   1/(60+1) = 0.01639</text>
+      <text x="14" y="54" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">2. doc_A   1/(60+2) = 0.01613</text>
+      <text x="14" y="80" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">3. doc_C   1/(60+3) = 0.01587</text>
+      <text x="14" y="106" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">4. doc_G   1/(60+4) = 0.01563</text>
+      <text x="14" y="132" font-family="ui-monospace, monospace" font-size="13" fill="rgba(29,24,21,0.5)">5. doc_E   ...</text>
+    </g>
+  </g>
+  <g transform="translate(680,100)">
+    <text x="0" y="0" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#ff6b6b" letter-spacing="2">FUSED (RRF)</text>
+    <g transform="translate(0,16)">
+      <rect width="280" height="160" rx="10" fill="#1d1815"/>
+      <text x="14" y="28" font-family="ui-monospace, monospace" font-size="13" fill="#a3e4a3">1. doc_A   0.03252</text>
+      <text x="14" y="54" font-family="ui-monospace, monospace" font-size="13" fill="#a3e4a3">2. doc_C   0.03200</text>
+      <text x="14" y="80" font-family="ui-monospace, monospace" font-size="13" fill="#f6efe6">3. doc_B   0.01639</text>
+      <text x="14" y="106" font-family="ui-monospace, monospace" font-size="13" fill="#f6efe6">4. doc_D   0.01587</text>
+      <text x="14" y="132" font-family="ui-monospace, monospace" font-size="13" fill="rgba(255,255,255,0.55)">5. doc_F   ...</text>
+    </g>
+  </g>
+  <g transform="translate(40,300)">
+    <text x="0" y="0" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="rgba(29,24,21,0.55)" letter-spacing="2">WHY THIS WORKS</text>
+    <text x="0" y="26" font-family="Inter, sans-serif" font-size="14" fill="rgba(29,24,21,0.78)">• docs that show up in both rankings score above docs that appear in only one</text>
+    <text x="0" y="48" font-family="Inter, sans-serif" font-size="14" fill="rgba(29,24,21,0.78)">• the constant k=60 dampens the gap between rank 1 and rank 2 (don't overweight the top)</text>
+    <text x="0" y="70" font-family="Inter, sans-serif" font-size="14" fill="rgba(29,24,21,0.78)">• zero training. zero tuning. zero learned weights. works the first day, costs nothing to maintain.</text>
+  </g>
+</svg>

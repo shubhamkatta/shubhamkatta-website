@@ -78,6 +78,84 @@ prompts:
   */
 
   {
+    slug: 'hybrid-retrieval-and-rerankers',
+    cover: '/blog/cover-hybrid-retrieval.svg',
+    title: 'Hybrid retrieval and rerankers: how to actually win at retrieval',
+    type: 'deep dive',
+    date: 'May 16, 2026',
+    readingTime: '14 min',
+    color: 'paper-blue',
+    tags: ['rag', 'retrieval', 'bm25', 'reranker'],
+    excerpt:
+      'One retriever is never enough. BM25 + dense embeddings + RRF + a cross-encoder reranker — the full stack, with numbers.',
+    seoDescription:
+      'Why hybrid retrieval beats any single retriever, how Reciprocal Rank Fusion works, when a cross-encoder reranker is worth its latency, and how to measure retrieval honestly with recall@k, MRR, and nDCG.',
+    keywords: 'hybrid retrieval, BM25, dense retrieval, reciprocal rank fusion, RRF, cross-encoder reranker, retrieval evaluation, recall, MRR, nDCG, RAG',
+    intro:
+      `Most teams plug in a vector database, look at top-5 results that look "kinda right," and call retrieval solved. Then they spend the next six months debugging why the model "ignores the context," which is rarely what's actually happening. The context never had the right chunks to begin with.\n\nThe single biggest lever in RAG quality, after chunking, is retrieval design. And the single most reliable retrieval design is not "a better embedding model." It is a stack: lexical recall, semantic recall, fused ranking, and a second-stage reranker. Each piece does a different job. Most teams ship the first one and stop.`,
+    sections: [
+      {
+        heading: 'one retriever is never enough',
+        body: `BM25 is good at exact matches — product names, error codes, function names, identifiers, jargon, anything that has a precise lexical form. It is terrible at synonyms and paraphrasing. Ask "how do I roll back" when the doc says "revert," and BM25 misses.\n\nDense embeddings are good at meaning. "roll back" and "revert" sit near each other in vector space. Ask for a "P95 latency dashboard" when the doc talks about "tail latency monitoring," and dense retrieval finds it. Dense is terrible at exact identifiers — \`ERR_CONN_REFUSED\` and \`ERR_CONN_RESET\` are basically the same vector, and that's the wrong answer.\n\nThese are not the same failure mode, and they don't degrade gracefully together. The fix is to run both, and combine the rankings.`,
+      },
+      {
+        heading: 'BM25, in two paragraphs',
+        body: `BM25 is the modern descendant of TF-IDF, used by Elasticsearch / OpenSearch / Lucene / Tantivy / Vespa / pretty much every keyword search engine since 1994. It scores a document for a query as:\n\n\`\`\`
+score(d, q) = Σ IDF(qᵢ) · (tf(qᵢ, d) · (k₁ + 1)) / (tf(qᵢ, d) + k₁ · (1 - b + b · |d|/avgdl))
+\`\`\`\n\nYou don't need to memorise this. You need to remember two things. First: BM25 has a saturation curve — the 50th occurrence of a term in a doc adds almost nothing over the 10th. Second: BM25 normalises for document length, so long docs don't trivially win.\n\nTune knobs (\`k₁ ≈ 1.2\`, \`b ≈ 0.75\`) once and forget. The defaults are good. The real gains are in tokenization (stem? lowercase? handle code identifiers?) and field weighting (boost titles 2-3x over body). Spend an afternoon there.`,
+      },
+      {
+        heading: 'dense embeddings, in a few honest paragraphs',
+        body: `Dense retrieval is: turn each chunk into a vector (typically 384-3072 dimensions), turn the query into a vector with the same encoder, find the nearest chunks by cosine similarity. The "find the nearest" part uses an approximate nearest-neighbour index — HNSW, IVF-PQ, ScaNN, or Voyager — because exact search at scale is too slow.\n\nA few practical realities:\n\n- **Model choice matters more than dimension count.** A 768-dim model from a strong family will beat a 3072-dim model from a weaker one. Pick by quality on your domain, not by dimension.\n- **Reindex on every model change.** Your old embeddings are not comparable to new embeddings. There is no fix for this; it is a property of the geometry.\n- **Normalise your vectors** if your index expects unit-length (most do). Cosine similarity and dot product are the same on unit vectors; only one of those is fast in most indexes.\n- **Ask the encoder how it wants the input.** Some models expect "query: …" / "passage: …" prefixes. If you skip the prefix on one side and not the other, your recall drops 10-15% and you have no idea why.\n\nDense alone is a strong baseline. It is also a single point of failure. The next section is why.`,
+      },
+      {
+        heading: 'fusing the two: Reciprocal Rank Fusion',
+        body:
+`The simplest way to combine two rankings — without training anything, without learning weights — is Reciprocal Rank Fusion (RRF). For each document, sum \`1 / (k + rank)\` across the retrievers that returned it. The constant \`k\` is usually 60. That's it. That's the whole algorithm.\n\n![Two rankings, one fused list. The docs that appear in both bubble to the top without any tuning.](/blog/diagram-rrf-fusion.svg)\n\nWhy RRF works:\n\n- documents that appear in **both** rankings score above documents that appear in only one\n- the \`k=60\` constant **dampens** the gap between rank 1 and rank 2; you don't over-trust the top of either list\n- there are no learned weights to tune, drift, or version\n- it is trivially fast — a hashmap and a sort\n\nA tiny implementation:\n\n\`\`\`python
+from collections import defaultdict
+
+def rrf(rankings: list[list[str]], k: int = 60, topn: int = 50) -> list[str]:
+    scores = defaultdict(float)
+    for ranking in rankings:
+        for rank, doc_id in enumerate(ranking, start=1):
+            scores[doc_id] += 1.0 / (k + rank)
+    return sorted(scores, key=scores.get, reverse=True)[:topn]
+\`\`\`\n\nUse it. It works. The two-page paper that proposed it (Cormack et al., 2009) has held up because it captures a real property: a document that two different retrievers independently surface is more likely to be relevant than a document only one of them found. RRF is the cheap way to use that signal.`,
+      },
+      {
+        heading: 'when to reach for a learned fusion model',
+        body: `RRF is good enough almost always. The cases where it isn't:\n\n- you have a strong learned ranker (e.g., a fine-tuned cross-encoder) and you want to use its scores directly\n- you have a labelled dataset large enough to train a linear blend (a few thousand judgements minimum)\n- one of your retrievers is reliably weaker, and you want to down-weight it\n\nFor the first case, just skip fusion and put the cross-encoder on top (next section). For the second, normalise scores per-retriever (z-score or min-max), then learn a weighted sum on held-out data. For the third, RRF already handles it gracefully — a weak retriever surfaces fewer of the right docs, so those docs get only a small contribution.\n\nIn 90% of production setups: stop at RRF.`,
+      },
+      {
+        heading: 'rerankers: the second-stage sort that earns its latency',
+        body: `A reranker is a model that takes the query and a candidate doc, **looks at them together**, and produces a relevance score. Unlike retrievers, which encode query and docs separately and compare in vector space, a reranker reads both as one input. This is called a **cross-encoder**.\n\nCross-encoders are slow. You cannot run one over a million documents. You can run one over 50-100. Which is exactly what the previous stage gives you.\n\nThe full stack:\n\n- retrieve top-100 from BM25\n- retrieve top-100 from dense\n- fuse with RRF → top-50\n- rerank with a cross-encoder → top-5 or top-10\n- send those to the model\n\nA well-chosen reranker (BGE-reranker, Cohere Rerank, ColBERT-v2, or a fine-tuned variant for your domain) typically moves recall@5 up by 4-15 points over fused retrieval alone, with a 50-200ms cost. On most workloads, that latency is worth it. On chat workloads where every second matters, it sometimes isn't. Measure it.`,
+      },
+      {
+        heading: 'measuring retrieval honestly',
+        body: `If you only measure end-to-end answer quality, you can't tell whether retrieval, reranking, or generation is the bottleneck. Three retrieval-specific metrics, in order of how often I reach for them:\n\n- **recall@k.** Of the queries whose answer lives somewhere in your index, how many have at least one relevant doc in the top-k? Easy to compute, the most important number, the one that catches "the answer isn't even in the candidate set."\n- **MRR (Mean Reciprocal Rank).** For each query, take \`1 / (rank of first relevant doc)\`; average across queries. Captures how high the first good doc lands.\n- **nDCG@k (Normalized Discounted Cumulative Gain).** Like MRR but accounts for multiple relevance levels (highly relevant > somewhat relevant > irrelevant). Necessary when your judgements are graded, not binary.\n\nYou need labelled data to compute any of these. Most teams skip this and pay for it later. The cheap version: pick 50-100 representative queries, hand-label which docs in the corpus are relevant for each, freeze it, and run your retriever against the labels weekly.\n\nIf labelling 100 queries sounds expensive, your retrieval problem is not your top priority anyway.`,
+      },
+      {
+        heading: 'diversity: stop sending the model five copies of the same chunk',
+        body: `One under-discussed retrieval failure: the top-k looks great on recall but the model still flounders, because chunks 1-5 are near-duplicates. The model gets one perspective five times instead of five perspectives.\n\nThe fix is **Maximum Marginal Relevance (MMR)**: at each step, pick the next doc that maximises a blend of (relevance to query) and (dissimilarity from already-picked docs). It's a one-liner over an inner loop, and it makes top-k far more useful for generation.\n\n\`\`\`
+choose doc d that maximises: λ · rel(q, d) - (1-λ) · max(sim(d, d') for d' in chosen)
+\`\`\`\n\nλ = 0.7 is a sensible default. Run MMR after reranking, not before — you want to diversify high-relevance candidates, not lose them.`,
+      },
+      {
+        heading: 'when to skip a stage',
+        body: `- **skip BM25** if your corpus has no identifiers, function names, or precise jargon — pure prose, semantic-only domain\n- **skip dense** if your corpus is small (< 10k docs) and your users always type queries that match the doc language — BM25 alone can be enough\n- **skip RRF** if you only have one retriever; you already have a ranking\n- **skip the reranker** if your latency budget is sub-300ms and your fused recall@5 is already > 90%\n- **skip MMR** if your chunks are large and naturally diverse (less common than people think)\n\nNothing is mandatory. Everything is a trade-off. The point is to know which trade-off you're making.`,
+      },
+      {
+        heading: 'a realistic stack, with numbers',
+        body: `Numbers from a corpus I work with (~1.2M docs, technical content with identifiers and prose):\n\n- BM25 alone: recall@10 = 71%, p50 latency = 18ms\n- Dense alone (768-dim, HNSW): recall@10 = 78%, p50 latency = 24ms\n- BM25 + dense + RRF: recall@10 = 86%, p50 latency = 35ms\n- BM25 + dense + RRF + cross-encoder rerank (top-50 → top-10): recall@10 = 93%, p50 latency = 140ms\n\nThe reranker delivers most of the final gain. RRF is the cheapest 8 points of recall you will ever buy. Dense alone is fine for a Monday demo. Nothing alone gets above 80% on this kind of corpus.\n\nYour numbers will differ. The shape — that each stage adds non-overlapping recall, with diminishing returns — usually does not.`,
+      },
+      {
+        heading: 'the boring closer',
+        body: `Retrieval is the part of RAG with the highest ratio of "obvious in retrospect" to "actually shipped." The hard part is committing to measuring it. Once you have honest recall@k numbers on a fixed eval set, every other decision — should I switch embedding models, should I add a reranker, should I tweak my chunking — becomes a small, evidence-backed experiment instead of a vibes argument in a planning meeting.\n\nIf you take one thing from this post: instrument retrieval as its own product, separate from generation. Treat it like search. Because that's what it is.`,
+      },
+    ],
+  },
+
+  {
     slug: 'chunking-the-most-ignored-knob-in-rag',
     cover: '/blog/cover-rag-chunking.svg',
     title: 'Chunking, the most-ignored knob in RAG',
