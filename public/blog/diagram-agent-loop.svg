@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 360" role="img" aria-label="The minimal agent loop">
+  <rect width="1000" height="360" fill="#fff8ef"/>
+  <text x="40" y="46" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">The minimal agent loop, in five boxes</text>
+  <text x="40" y="70" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">everything else is a refinement of this</text>
+  <g transform="translate(40,110)">
+    <rect width="140" height="60" rx="14" fill="#1d1815"/>
+    <text x="70" y="26" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(255,255,255,0.55)" letter-spacing="2">1. ASK</text>
+    <text x="70" y="46" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" fill="#f6efe6">user goal</text>
+  </g>
+  <g transform="translate(220,110)">
+    <rect width="140" height="60" rx="14" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <text x="70" y="26" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(29,24,21,0.55)" letter-spacing="2">2. DECIDE</text>
+    <text x="70" y="46" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">model call</text>
+  </g>
+  <g transform="translate(400,110)">
+    <rect width="140" height="60" rx="14" fill="#fff6db" stroke="#1d1815" stroke-width="2"/>
+    <text x="70" y="26" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(29,24,21,0.55)" letter-spacing="2">3. ACT</text>
+    <text x="70" y="46" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">tool call</text>
+  </g>
+  <g transform="translate(580,110)">
+    <rect width="140" height="60" rx="14" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/>
+    <text x="70" y="26" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(29,24,21,0.55)" letter-spacing="2">4. OBSERVE</text>
+    <text x="70" y="46" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">tool result</text>
+  </g>
+  <g transform="translate(760,110)">
+    <rect width="200" height="60" rx="14" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/>
+    <text x="100" y="26" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(29,24,21,0.6)" letter-spacing="2">5. DONE?</text>
+    <text x="100" y="46" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">stop or loop back</text>
+  </g>
+  <g stroke="#1d1815" stroke-width="2" fill="none">
+    <line x1="180" y1="140" x2="220" y2="140"/>
+    <line x1="360" y1="140" x2="400" y2="140"/>
+    <line x1="540" y1="140" x2="580" y2="140"/>
+    <line x1="720" y1="140" x2="760" y2="140"/>
+  </g>
+  <path d="M 830 170 Q 830 240 290 240 Q 290 200 290 170" stroke="#ff6b6b" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="6,6"/>
+  <polygon points="290,170 282,178 298,178" fill="#ff6b6b"/>
+  <text x="500" y="260" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#ff6b6b">if not done, loop</text>
+  <g transform="translate(40,290)" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.78)">
+    <text x="0" y="0">A one-shot LLM call stops at step 2. An agent is what happens when you keep going.</text>
+    <text x="0" y="22">The "done?" check is the single most important box. If it never trips, your agent runs forever.</text>
+    <text x="0" y="44">Refinements — memory, planning, sub-agents, parallelism — are extensions of this skeleton, not replacements for it.</text>
+  </g>
+</svg>

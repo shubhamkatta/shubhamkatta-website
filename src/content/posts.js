@@ -78,6 +78,116 @@ prompts:
   */
 
   {
+    slug: 'what-are-agents',
+    cover: '/blog/cover-what-are-agents.svg',
+    title: 'What are agents? (without the marketing)',
+    type: 'deep dive',
+    date: 'May 17, 2026',
+    readingTime: '11 min',
+    color: 'paper-blue',
+    tags: ['agents', 'fundamentals', 'llm'],
+    excerpt:
+      'A model, some tools, and a loop. Strip away the buzzwords and that\'s most of it. The interesting parts are everywhere else.',
+    seoDescription:
+      'A grounded explanation of what AI agents are — model + tools + loop — with the minimal architecture, what an agent is not, and the small set of properties that make one useful in production.',
+    keywords: 'AI agents, what is an agent, agent loop, LLM agents, tool use, ReAct, autonomous agents, agent definition',
+    intro:
+      `If you ask twelve engineers what an "agent" is, you get fourteen answers. Most of them are right; some of them disagree with each other; none of them are wrong enough to argue about. The word "agent" is doing too much work in 2026.\n\nHere is the definition I keep coming back to, after building a few of these in production: **an agent is a model that can take actions in a loop until it decides it is done.** That's it. A model, some tools, a loop, and a stop condition. Everything else — planning, memory, sub-agents, reflection, frameworks with three-letter acronyms — is a refinement of that skeleton, not a replacement for it.`,
+    sections: [
+      {
+        heading: 'the minimal definition',
+        body:
+`Three components and one property:\n\n- a **model** that can reason about the next step\n- a set of **tools** the model can call to act on the world\n- a **loop** that keeps running until a stop condition trips\n\nAnd one property: the model — not your code — chooses the next action each turn.\n\n![Five boxes: ask, decide, act, observe, done. The agent is the loop back.](/blog/diagram-agent-loop.svg)\n\nA one-shot LLM call stops at "decide." An agent is what happens when "decide" can produce a tool call, the tool runs, the result goes back to the model, and the model decides again. The loop is the agency.`,
+      },
+      {
+        heading: 'what an agent is not',
+        body: `Three things that get called agents and shouldn't be:\n\n- **a one-shot LLM call with retries.** A model call, however clever, is not an agent. No tools, no loop, no choice of next action.\n- **a RAG system.** RAG is "retrieve, then generate." There is a step. There is not a model deciding what to do next. RAG can be a component of an agent, but RAG alone is not an agent.\n- **a workflow with LLM calls in it.** If your code controls the sequence and the LLM just fills in the work, you have a workflow. Workflows are often the right answer — see [What are agentic workflows?](/writing/what-are-agentic-workflows) — but they are a different shape than agents, and conflating them muddles every conversation about what to ship.\n\nThe simple test: at the next step, who decides what happens? If it's the model, you have an agent. If it's your code, you have a workflow. Both are useful. They are not the same.`,
+      },
+      {
+        heading: 'the agent loop, in roughly 30 lines',
+        body: `Stripped to the bones, the loop is unimpressive:\n\n\`\`\`python
+def run_agent(goal, tools, model, max_turns=20):
+    history = [system_prompt(tools), user(f"Goal: {goal}")]
+    for turn in range(max_turns):
+        resp = model.call(history, tools=tools)
+        history.append(assistant(resp))
+        if resp.tool_calls:
+            for call in resp.tool_calls:
+                result = tools[call.name].run(**call.args)
+                history.append(tool_result(call, result))
+        else:
+            return resp.text  # model didn't call a tool; done
+    raise BudgetExceeded("max turns reached")
+\`\`\`\n\nThis is ~15 lines of orchestration. It runs. It is also brittle, and the brittleness is where the engineering lives. There is no error handling, no observability, no loop detection, no explicit "done" tool, no budget for tokens or wall time, no recovery from malformed tool calls. Adding each of those is a small, sensible step. Doing them well is the difference between a demo and a production system.\n\nMost of the interesting work in agents is in those next 200 lines, not in this 15.`,
+      },
+      {
+        heading: 'what gives an agent its agency',
+        body: `Three properties an agent has that a workflow doesn't:\n\n- **the action space is the model's choice.** At each turn, the model picks from a set of tools. Different turns can pick different tools, in different orders, depending on what the agent has observed so far.\n- **the loop is open-ended.** There is no fixed sequence. The number of turns depends on what the agent finds and decides.\n- **the stop is decided, not pre-coded.** The agent declares "done" (or hits a budget). Your code doesn't say "stop after step 3."\n\nThese three together produce flexibility. They also produce the operational difficulty: an open-ended loop has more failure modes than a closed sequence. The trade-off is real, and it is why workflows ship first in most teams.`,
+      },
+      {
+        heading: 'three properties of useful agents',
+        body: `Not every system that fits the definition is useful. The agents that work in practice share three properties:\n\n- **bounded.** Explicit stop conditions — budget, turn limit, loop detection, "done" tool, "ask human" tool. Unbounded agents are processes that surprise you.\n- **observable.** Every step logged. Every tool call recorded. Every decision traceable. You should be able to answer "why did the agent do that on turn 7" in two minutes.\n- **recoverable.** Tools return structured errors with hints. The model can retry intelligently. The state of the world is consistent whether the agent ran one turn or fifteen.\n\nA flexible, unbounded, unobservable agent is not an agent. It is a process you'll eventually shut down by killing the process.`,
+      },
+      {
+        heading: 'common misunderstandings',
+        body: `A few I run into often:\n\n- **"agents need planning."** They benefit from it for complex tasks. They don't require it. Simple agents can work without an explicit plan; complex agents almost always plan poorly without one. Choose based on the task.\n- **"agents need memory."** They need memory if the task spans long enough that the context can't hold it all. Otherwise context is enough. Most agents that "added a vector store for memory" didn't need to.\n- **"agents need to be autonomous."** Autonomy is a spectrum. The most useful agents in my experience are mostly bounded with one or two open-ended steps. Full autonomy is rarely the goal; flexibility within constraints is.\n- **"agents need a framework."** Frameworks help; they also obscure. The skeleton above is 15 lines of code. If you can't write that without a framework, you don't yet understand the system you're shipping.`,
+      },
+      {
+        heading: 'a 60-line agent that does something real',
+        body: `Here's an agent that reads code and explains a function:\n\n\`\`\`python
+TOOLS = {
+    "read_file": lambda path: open(path).read(),
+    "list_files": lambda dir: os.listdir(dir),
+    "grep": lambda pattern, path: subprocess.run(["rg", pattern, path], capture_output=True).stdout.decode(),
+    "done": lambda explanation: explanation,
+}
+
+SYSTEM = """You are a code-reading assistant. Given a function name and a repo,
+find the function, read it, understand it, and call \`done\` with a clear explanation.
+- use \`list_files\` and \`grep\` to find the file
+- use \`read_file\` to read it
+- if the function calls other functions, read those too if needed
+- call \`done\` when you have a confident explanation
+"""
+
+def run(goal: str, max_turns=15, token_budget=80_000):
+    history = [{"role": "system", "content": SYSTEM},
+               {"role": "user", "content": goal}]
+    tokens_used = 0
+    for turn in range(max_turns):
+        if tokens_used > token_budget: return "STOP: budget"
+        resp = model.create(model="claude-sonnet-4-6",
+                            messages=history,
+                            tools=TOOL_SCHEMAS)
+        tokens_used += resp.usage.input_tokens + resp.usage.output_tokens
+        history.append({"role": "assistant", "content": resp.content})
+        for block in resp.content:
+            if block.type == "tool_use":
+                if block.name == "done":
+                    return block.input["explanation"]
+                try:
+                    result = TOOLS[block.name](**block.input)
+                except Exception as e:
+                    result = {"ok": False, "error": str(e), "hint": "check the tool args"}
+                history.append({"role": "user", "content": [
+                    {"type": "tool_result", "tool_use_id": block.id,
+                     "content": str(result)[:4000]}  # trim long results
+                ]})
+    return "STOP: max_turns"
+\`\`\`\n\nNot production-ready. No structured logging, no loop detection, no fancy error handling. But it's a real agent. It uses tools. It loops. The model decides the next action. It has stop conditions. That is the whole shape.`,
+      },
+      {
+        heading: 'where agents live on the autonomy spectrum',
+        body: `Agents are not "autonomous" or "not autonomous." They sit on a spectrum:\n\n- **rung 1.** Every action approved by a human. Very safe, very slow.\n- **rung 2.** Read-only tools auto; writes need approval. Most production agents start here.\n- **rung 3.** Writes auto within a sandbox; cross-boundary actions need approval.\n- **rung 4.** Mostly auto, with checkpoints at major transitions. Approval is the exception.\n- **rung 5.** Fully autonomous within configured budgets. Reviewed after the fact, not before.\n\nMost useful agents in 2026 sit at rung 2 or 3. Rung 5 systems exist in narrow, well-bounded domains. Anyone shipping a rung-5 agent on day one is shipping a story they'll tell at industry meetups.`,
+      },
+      {
+        heading: 'the closer',
+        body: `Strip the marketing and the picture stays simple. An agent is a model with tools, a loop, and a stop condition. That is the whole skeleton. Everything else — planning, memory, sub-agents, reflection, reranking, the cleverest framework on the market — is operational craft layered on top.\n\nThe craft matters. It is the part that turns a 30-line agent loop into a system you trust at 3am. But it is craft, not magic. Once the skeleton is clear, the rest is engineering. The next posts walk that engineering: [workflows](/writing/what-are-agentic-workflows), [autonomous agents](/writing/what-are-autonomous-agents-and-how-to-build-them), and the [ten habits](/writing/10-things-to-ensure-you-are-building-agents-right) that decide whether what you ship holds up.`,
+      },
+    ],
+  },
+
+  {
     slug: 'hybrid-retrieval-and-rerankers',
     cover: '/blog/cover-hybrid-retrieval.svg',
     title: 'Hybrid retrieval and rerankers: how to actually win at retrieval',
