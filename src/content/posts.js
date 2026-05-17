@@ -78,6 +78,78 @@ prompts:
   */
 
   {
+    slug: 'what-are-agentic-workflows',
+    cover: '/blog/cover-agentic-workflows.svg',
+    title: 'What are agentic workflows? (and why most "agents" are actually workflows)',
+    type: 'deep dive',
+    date: 'May 17, 2026',
+    readingTime: '12 min',
+    color: 'paper-yellow',
+    tags: ['agents', 'workflows', 'patterns'],
+    excerpt:
+      'Most production "agentic" systems are not agents. They are workflows with LLMs inside. Five patterns cover the vast majority — and they ship before agents do.',
+    seoDescription:
+      'A clear taxonomy of agentic workflows: prompt chaining, routing, parallelization, orchestrator-workers, and evaluator-optimizer. Why workflows ship before agents, and when each pattern is the right choice.',
+    keywords: 'agentic workflows, prompt chaining, routing, parallelization, orchestrator workers, evaluator optimizer, Anthropic, LLM workflows',
+    intro:
+      `If you read the agent literature for an hour, you'd think production systems are open-ended autonomous loops solving novel problems. Then you look at what teams actually ship, and the reality is calmer. Most production "agentic" systems are **workflows** — orchestrated sequences of LLM calls with structured control flow between them. The model fills in the work; the workflow tells it what work to do, in what order, with what guardrails.\n\nThis distinction sounds pedantic. It is not. Workflows and agents have different operational profiles, different failure modes, different costs, and different debugging stories. Calling them all "agents" is how teams ship the wrong thing.`,
+    sections: [
+      {
+        heading: 'the terminology problem',
+        body: `Two definitions, in the form I find most useful:\n\n- **a workflow** is a system where LLM calls and tool calls happen in **predetermined paths**. The control flow is in your code. The model fills in the work.\n- **an agent** is a system where the LLM **directs its own actions and tool use** dynamically. The control flow is in the model. Your code provides the loop.\n\nMost systems sold as "agents" are workflows. That is not a criticism; workflows are usually the right answer. The criticism is the mislabel, because it sends teams into open-loop debugging when they have a closed-loop system.\n\nThe simple test: if you can draw the system as a directed graph where each node is "LLM does X" and each edge is fixed, it's a workflow. If the edges are decided by the model at runtime, it's an agent.`,
+      },
+      {
+        heading: 'why workflows ship first',
+        body: `Workflows ship first because they are predictable. You can:\n\n- write tests for each step\n- reason about cost (sum of per-step costs)\n- reason about latency (sum of per-step latencies)\n- debug a failure to a specific step\n- swap models per step (cheap model here, expensive model there)\n- evaluate each step independently\n\nAgents have none of these properties as cleanly. They are flexible at the cost of being harder to reason about. There is a time and place for that flexibility; it is later in the project, after the workflow has proven the basic shape works.\n\nThe pragmatic order: workflow first, agent only when the workflow you'd write is mostly conditionals and the open loop is doing the work the conditionals would have done.`,
+      },
+      {
+        heading: 'the five patterns that cover almost everything',
+        body:
+`Five workflow patterns cover the vast majority of production "agentic" systems. Anthropic's research on "Building effective agents" frames these well; I'll keep the names and add field notes.\n\n![Five patterns, each with a distinct shape. Most production systems compose two or three of these.](/blog/diagram-workflow-patterns.svg)\n\nThe five:\n\n- **prompt chaining** — sequential LLM calls\n- **routing** — classifier picks a branch\n- **parallelization** — fan out, gather, aggregate\n- **orchestrator-workers** — an orchestrator delegates to specialists\n- **evaluator-optimizer** — generate, judge, revise\n\nThe next five sections walk each one, with when to use it, when not, and the failure mode it has.`,
+      },
+      {
+        heading: 'prompt chaining',
+        body: `**Shape.** Step A produces input for step B; step B produces input for step C. Each step is a model call.\n\n**Use it when.** A task decomposes cleanly into ordered sub-tasks. Outline → draft → polish. Extract → classify → format. Parse → validate → store.\n\n**Strengths.** Easy to reason about. Easy to add validation between steps ("the output of A must match this schema before B sees it"). Easy to swap models per step.\n\n**Failure mode.** Each step's errors propagate. A bad outline produces a bad draft no matter how good the polish step is. The fix is per-step evals plus a "gate" between steps that catches malformed output before the chain continues.\n\n**Practical tip.** Inject a deterministic validator between every two model calls. JSON schema check, regex check, length check. Catches 80% of cascading failures.`,
+      },
+      {
+        heading: 'routing',
+        body: `**Shape.** A classifier (often a small, fast model) categorises the input, then dispatches to a specialist handler. Each handler is itself a workflow.\n\n**Use it when.** Inputs vary in nature ("refund request" vs "technical question" vs "billing dispute"). Different handlers have different prompts, different tools, different models.\n\n**Strengths.** Each handler is simpler than a "one prompt fits all" approach. Easier to evaluate each branch independently. Cheaper — you don't pay for the most expensive model on the easiest inputs.\n\n**Failure mode.** The router misclassifies. Misclassification quietly degrades quality and is invisible until you sample by category and notice the wrong handler ran.\n\n**Practical tip.** Log the classification and the chosen branch. Run a weekly review: pick 20 random tasks, check whether the router picked the right branch. Misclassification is the leading cause of "the system mostly works but sometimes is weirdly bad."`,
+      },
+      {
+        heading: 'parallelization',
+        body: `**Shape.** Fan out independent sub-tasks; aggregate the results. Sometimes the fan-out is "the same task with different inputs" (process 100 documents in parallel); sometimes it's "different aspects of the same task" (summarise + extract entities + classify sentiment, in parallel, then combine).\n\n**Use it when.** Sub-tasks are independent. Latency matters and the work can be split. Multiple perspectives on the same input help (voting, ensembling).\n\n**Strengths.** Cuts latency proportionally. Naturally rate-limit-friendly (you control concurrency). Good fit for ensembling.\n\n**Failure mode.** Sub-tasks were not actually independent — one's output should have informed another's. The result is incoherent aggregation. Spot it by reading the final outputs side-by-side and asking "do these feel like they came from one mind?"\n\n**Practical tip.** Limit concurrency to your provider's rate limit minus a margin. Add a "joiner" model call at the end whose only job is to make the aggregated output coherent.`,
+      },
+      {
+        heading: 'orchestrator-workers',
+        body: `**Shape.** An orchestrator LLM decides what work needs doing and delegates to worker LLMs. The orchestrator owns the plan; workers do the focused tasks.\n\n**Use it when.** Tasks decompose dynamically — you don't know the sub-tasks until the orchestrator has looked at the input. Different sub-tasks need different specialists.\n\n**Strengths.** Combines the predictability of a workflow with some flexibility on what gets done. Workers can be specialised (different prompts, different tools).\n\n**Failure mode.** The orchestrator under-decomposes (one giant sub-task that should have been three) or over-decomposes (ten tiny sub-tasks that should have been two). Both quietly degrade quality.\n\n**Practical tip.** Constrain the orchestrator to produce a structured plan **first**, then execute. Review the plan in eval samples — most orchestration failures show up at the plan stage, not the execution stage.`,
+      },
+      {
+        heading: 'evaluator-optimizer',
+        body: `**Shape.** A generator produces a candidate output. An evaluator judges it against a rubric. If acceptable, ship. If not, the generator revises, possibly with the evaluator's feedback. Loop until accepted or budget exhausted.\n\n**Use it when.** Quality matters and you have a clear rubric. Iterative refinement helps. The cost of one extra round is much smaller than the cost of shipping a worse output.\n\n**Strengths.** Genuinely improves quality on tasks with clear standards — translation, code, structured outputs, formatting-sensitive content. The judge can be a cheaper model than the generator.\n\n**Failure mode.** The judge agrees with the generator too easily (same-model bias). The loop never converges and burns budget. The rubric is too vague to be useful.\n\n**Practical tip.** Use a different model family for the judge than the generator. Cap rounds at 3. Log the judge's verdicts on a sample weekly — if it almost always says "ship," your rubric is too loose.`,
+      },
+      {
+        heading: 'when to use a workflow vs an agent',
+        body: `A short decision rule:\n\n- if you can write the steps down, write a workflow\n- if you can mostly write the steps down with a few conditionals, write a workflow with routing\n- if the steps depend on what you find along the way and you'd be writing dozens of conditionals, consider an agent\n- if the cost of a wrong step is high, write a workflow (predictable failure modes)\n- if the cost of being slow is high, write a workflow (fewer round trips)\n- if you don't have evals yet, write a workflow (easier to evaluate per-step)\n\nThe migration path is: ship a workflow, run it, find the parts that are 80% conditionals, replace those with an open-loop agent. Don't start with the agent; you'll end up rebuilding the workflow inside the agent and losing the operational benefits.`,
+      },
+      {
+        heading: 'composing the patterns',
+        body: `Real production systems compose. A typical shape:\n\n\`\`\`
+user request
+  → router (small model, classify intent)
+    → branch A: prompt chain (extract → validate → format)
+    → branch B: orchestrator-workers (plan, then parallel workers)
+    → branch C: evaluator-optimizer (draft, judge, revise)
+      → final answer (with optional human-in-the-loop)
+\`\`\`\n\nThree of the five patterns, working together. Each one named, each one debuggable, each one swappable. This is what "production agentic" usually looks like. Not a single open loop; a composition of patterns, each chosen for the part of the job it does well.`,
+      },
+      {
+        heading: 'the closer',
+        body: `If the word "agent" got you here, you can leave with two ideas. First: most things called agents are workflows, and that is usually the right answer. Second: workflows have a small, well-understood pattern language — chain, route, parallelize, orchestrate, evaluate — that covers the vast majority of useful systems.\n\nLearn the patterns. Compose them. Reach for an autonomous agent only when the workflow you'd write is mostly conditionals. Most days, it isn't.`,
+      },
+    ],
+  },
+
+  {
     slug: 'what-are-agents',
     cover: '/blog/cover-what-are-agents.svg',
     title: 'What are agents? (without the marketing)',
