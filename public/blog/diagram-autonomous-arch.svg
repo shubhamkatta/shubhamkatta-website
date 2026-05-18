@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 440" role="img" aria-label="Autonomous agent architecture">
+  <rect width="1000" height="440" fill="#fff8ef"/>
+  <text x="40" y="46" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">An autonomous agent, in four moving parts</text>
+  <text x="40" y="70" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">none of these are optional once the loop runs longer than a few turns</text>
+  <g transform="translate(40,100)">
+    <rect width="200" height="100" rx="14" fill="#1d1815"/>
+    <text x="14" y="28" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="rgba(255,255,255,0.55)" letter-spacing="2">MODEL</text>
+    <text x="14" y="56" font-family="ui-monospace, monospace" font-size="13" fill="#f6efe6">- chooses next action</text>
+    <text x="14" y="76" font-family="ui-monospace, monospace" font-size="13" fill="#f6efe6">- reads memory</text>
+    <text x="14" y="96" font-family="ui-monospace, monospace" font-size="13" fill="#f6efe6">- writes notes</text>
+  </g>
+  <g transform="translate(260,100)">
+    <rect width="200" height="100" rx="14" fill="#ffd166" stroke="#1d1815" stroke-width="2"/>
+    <text x="14" y="28" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="rgba(29,24,21,0.6)" letter-spacing="2">TOOLS</text>
+    <text x="14" y="56" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">- narrow, named</text>
+    <text x="14" y="76" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">- side effects flagged</text>
+    <text x="14" y="96" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">- idempotent if possible</text>
+  </g>
+  <g transform="translate(480,100)">
+    <rect width="200" height="100" rx="14" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/>
+    <text x="14" y="28" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="rgba(29,24,21,0.6)" letter-spacing="2">ENVIRONMENT</text>
+    <text x="14" y="56" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">- filesystem, db, api</text>
+    <text x="14" y="76" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">- bounded perms</text>
+    <text x="14" y="96" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">- read &gt; write</text>
+  </g>
+  <g transform="translate(700,100)">
+    <rect width="260" height="100" rx="14" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/>
+    <text x="14" y="28" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#ff6b6b" letter-spacing="2">MEMORY</text>
+    <text x="14" y="56" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">- scratchpad (per task)</text>
+    <text x="14" y="76" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">- long-term (across tasks)</text>
+    <text x="14" y="96" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">- summary buffer (compressed)</text>
+  </g>
+  <g transform="translate(40,224)">
+    <rect width="920" height="80" rx="14" fill="#1d1815"/>
+    <text x="14" y="28" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#ff6b6b" letter-spacing="2">STOP CONDITIONS · MUST BE EXPLICIT</text>
+    <text x="14" y="54" font-family="ui-monospace, monospace" font-size="13" fill="#f6efe6">goal met (model declares) · budget hit (tokens, calls, wall time) · ask-human triggered · external signal · turn limit</text>
+    <text x="14" y="72" font-family="Inter, sans-serif" font-size="12" fill="rgba(255,255,255,0.6)">an agent without explicit stops is a process that will surprise you, eventually.</text>
+  </g>
+  <g transform="translate(40,330)">
+    <rect width="920" height="80" rx="14" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <text x="14" y="28" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="rgba(29,24,21,0.55)" letter-spacing="2">OBSERVABILITY · CHEAP, EARLY, STRUCTURED</text>
+    <text x="14" y="54" font-family="ui-monospace, monospace" font-size="13" fill="#1d1815">per-step: turn, model, tool, args, latency, tokens (in/out), cost, status, errors, summary</text>
+    <text x="14" y="72" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.55)">a long-running agent without per-step logs is a debugging problem you cannot solve later.</text>
+  </g>
+</svg>

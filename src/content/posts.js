@@ -78,6 +78,116 @@ prompts:
   */
 
   {
+    slug: 'what-are-autonomous-agents-and-how-to-build-them',
+    cover: '/blog/cover-autonomous-agents.svg',
+    title: 'What are autonomous agents, and how to build them',
+    type: 'deep dive',
+    date: 'May 18, 2026',
+    readingTime: '14 min',
+    color: 'paper-coral',
+    tags: ['agents', 'autonomous', 'architecture'],
+    excerpt:
+      'A close look at agents that decide their own next steps, run for many turns, and manage their own state — and the small set of decisions that make them work.',
+    seoDescription:
+      'A deep, practical guide to autonomous agents: what "autonomous" really means, the four-part architecture, designing the action space, stop conditions, error handling, observability, and a worked research-agent example.',
+    keywords: 'autonomous agents, agent architecture, agent loop, agent memory, agent design, ReAct, long-running agents, multi-turn agents',
+    intro:
+      `Autonomous agents are the loudest topic and the smallest fraction of working production systems. Most "agents" you see in the wild are workflows with one open-ended step. A truly autonomous agent — one that decides its own next move, picks its own tools, manages its own state, and runs for many turns — is rarer, harder, and worth understanding precisely.\n\nThis post is what I wish I had on day one of building one: the architecture, the action space, the stop conditions, the failure modes, and a worked example you can adapt.`,
+    sections: [
+      {
+        heading: 'what "autonomous" actually means',
+        body: `An agent is autonomous to the degree it decides:\n\n- **what to do next** — without a human picking from a menu\n- **which tools to use** — without a router forcing a specific branch\n- **when it is done** — without a fixed sequence of steps\n- **how to recover from failure** — without a pre-coded retry table\n\nMost systems advertised as "agents" are not autonomous in all four senses. A pipeline that calls "search, then summarise, then send" with retries is a workflow with three model calls. That is fine; in fact, that is what you usually want. It just isn't an autonomous agent.\n\nA real autonomous agent looks more like: "given this goal, work on it. You have these tools. You decide what to do next. Stop when you're done or when you hit one of these limits." The shape is more like delegation than orchestration. That shape is also where the operational difficulty lives.`,
+      },
+      {
+        heading: 'the four-part architecture',
+        body:
+`At a minimum, an autonomous agent has four parts.\n\n![Model, tools, environment, memory — plus an explicit stop condition. None of these are optional once the loop runs for more than a few turns.](/blog/diagram-autonomous-arch.svg)\n\n- **the model** — the deciding layer. Reads context, chooses an action, writes a step of reasoning if it helps.\n- **the tools** — the doing layer. Narrow, named, with schemas. Side effects flagged.\n- **the environment** — what the tools touch: a filesystem, a database, an API, a chat channel, a browser. Always bounded by permissions.\n- **the memory** — what survives across turns. Scratchpad for the current task, long-term for facts that should persist, summary buffer for compressed history.\n\nEverything else — planning, sub-agents, reflection, evaluator-optimizer loops — is an extension. If you can name the four parts in your system, you have an agent. If you can't, you have a workflow that thinks it's an agent.`,
+      },
+      {
+        heading: 'designing the action space',
+        body: `The single most consequential design decision in an autonomous agent is **what actions it can take**. Get this right and the agent feels capable. Get it wrong and the agent feels either trapped (too narrow) or chaotic (too wide).\n\nTwo failure modes I see often:\n\n- **the action space is one wide tool.** \`run\` takes a string and does whatever the model wrote. The agent picks unpredictable paths and you cannot reason about it. Avoid.\n- **the action space is a hundred narrow tools.** The model spends turns picking between near-duplicates. Trim.\n\nThe shape that has worked for me: 5-15 well-named tools, each doing one focused thing, with the most common actions baked in and an escape hatch for the unusual.\n\nFor a coding agent:\n\n\`\`\`
+read_file, edit_file, write_file, run_tests, search_code,
+list_files, run_shell (gated, with allowlist), ask_human, done
+\`\`\`\n\nFor a research agent:\n\n\`\`\`
+search_web, fetch_url, extract_facts, store_note, query_notes,
+ask_human, done
+\`\`\`\n\nNotice \`done\` in both. An explicit "done" tool — instead of letting the agent declare done in free text — is the single highest-ROI design choice. It gives you a clean signal to exit the loop. Without it, the agent has to be parsed for "done-like" phrases, which is fragile and wrong.\n\nNotice also \`ask_human\` in both. Autonomy doesn't mean isolation. An agent that can ask is more useful than one that guesses.`,
+      },
+      {
+        heading: 'stop conditions, in order of importance',
+        body: `An autonomous loop without explicit stops is a process that will surprise you. The stops I always have, in priority order:\n\n- **the model called \`done\`.** Goal declared met. Cleanest stop.\n- **token budget exceeded.** Hard cap. No "warning"; it just stops.\n- **wall-time budget exceeded.** Same as above. A two-hour cap on a task that should take five minutes is a good cap, not a generous one.\n- **turn count exceeded.** A 30-turn agent that hasn't finished is rarely going to finish on turn 31.\n- **same-tool-same-args three times in a row.** Loop detection. Stop and surface, don't keep spinning.\n- **a critical tool failed N times.** The upstream is dead; no amount of model cleverness fixes that.\n- **\`ask_human\` was called.** Pause and wait. The model decided this needs a human.\n\nEvery stop condition logs why it fired. The audit log distinguishes "completed" from "exhausted budget" from "loop detected." Different stops imply different fixes.`,
+      },
+      {
+        heading: 'memory: scratchpad, summary, long-term',
+        body: `An autonomous agent that runs for 30 turns can't keep all 30 turns verbatim in context. Three memory tiers, each doing a different job:\n\n- **scratchpad.** The full content of the current task — recent turns verbatim, tool results in full, the model's working notes. Lives for the task. Discarded when done.\n- **summary buffer.** Older turns compressed into "what I did so far, in short." Updated periodically by a small model. Keeps the context affordable.\n- **long-term memory.** Facts that should outlive the task. User preferences, project decisions, learned constraints. File-based works well for most cases (more in [Memory systems for AI agents](/writing/memory-systems-for-ai-agents-that-dont-forget)). Vector stores only when you actually have a corpus.\n\nA practical pattern: keep the last 5 turns verbatim, summarise everything older than that into a single "actions so far" block, and only touch long-term memory when the task explicitly references it. Context stays small. Quality stays high.`,
+      },
+      {
+        heading: 'error handling and recovery',
+        body: `Things will fail. The question is whether your agent recovers gracefully or compounds the failure.\n\nFour patterns that have held up:\n\n- **structured errors.** Every tool returns either \`{ok: true, result}\` or \`{ok: false, code, message, hint}\`. The hint field is what the model uses to recover.\n- **bounded retries.** Transient errors retry up to 3 times with exponential backoff. Logic errors (bad arguments) don't retry — they surface immediately.\n- **idempotency keys.** Any side-effectful tool accepts and respects an idempotency key. The agent passes one. Retries are safe.\n- **checkpointing.** After every major step, persist enough state to resume. If the agent crashes on turn 17, the next run starts from turn 17, not from turn 1.\n\nThe rule of thumb: an autonomous agent is going to fail in production. The question is whether the failure costs you a tweet or a day.`,
+      },
+      {
+        heading: 'observability is non-negotiable',
+        body: `A long-running autonomous agent without observability is a debugging problem you cannot solve.\n\nThe per-step log row I always have:\n\n\`\`\`
+task_id, turn, ts, model, tool, args (redacted),
+result_summary, tokens_in, tokens_out, cost, latency_ms,
+status, error_code, approver
+\`\`\`\n\nStructured columns. SQL-queryable. With this, you can answer "why did this agent take 17 turns on Tuesday when the same task usually takes 4" in five minutes. Without it, you can't.\n\nAdd it on day one. Retrofitting observability into an agent that already runs is twice the work and half the value.`,
+      },
+      {
+        heading: 'a worked example: a research agent',
+        body:
+`The shape of a small research agent:\n\n\`\`\`python
+TOOLS = [search_web, fetch_url, extract_facts, store_note, query_notes, ask_human, done]
+MAX_TURNS = 30
+TOKEN_BUDGET = 200_000
+WALL_TIME = 10 * 60  # seconds
+
+def run_agent(goal: str):
+    ctx = ContextBuffer()
+    ctx.append_system(SYSTEM_PROMPT)
+    ctx.append_user(f"Goal: {goal}\\nAvailable tools listed above.\\nCall \`done\` when complete.")
+    for turn in range(MAX_TURNS):
+        if ctx.tokens_used > TOKEN_BUDGET: return stop("budget")
+        if time.time() - start > WALL_TIME: return stop("time")
+        if ctx.loop_detected(): return stop("loop")
+
+        resp = model.call(ctx, tools=TOOLS)
+        log_step(task_id, turn, resp)
+
+        if resp.tool == "done":
+            return finish(resp.summary)
+        if resp.tool == "ask_human":
+            answer = wait_for_human(resp.question)
+            ctx.append_tool_result(resp.tool, answer)
+            continue
+
+        try:
+            result = call_tool(resp.tool, resp.args)
+            ctx.append_tool_result(resp.tool, summarize(result))
+        except RecoverableError as e:
+            ctx.append_tool_result(resp.tool, {"ok": False, "hint": e.hint})
+        except FatalError as e:
+            return stop(f"fatal: {e}")
+
+    return stop("max_turns")
+\`\`\`\n\nThis is ~30 lines of orchestration around a model call. Nothing exotic. The interesting design is not in the code; it is in the choices: the tool list, the stop conditions, the structured error handling, the "done" tool, the explicit budgets.\n\nThe rest of the work — schema design, prompt tuning, observability, evals, sampling review — is what turns this skeleton into something you trust on a Tuesday morning.`,
+      },
+      {
+        heading: 'where autonomy breaks',
+        body: `Three failure modes that recur:\n\n- **the model commits to a confidently wrong plan.** It picks an approach in turn 1, marches through 8 turns, then hits a wall the plan didn't account for. The fix: add a "re-plan after N turns" checkpoint, or use an evaluator-optimizer loop on the plan itself.\n- **silent stalls.** The agent makes calls that succeed but don't advance the goal. Tool calls run, results come back, but nothing actually moves. The fix: a "what did this turn change about the world" check; if nothing changed for 2 turns, escalate or stop.\n- **the long-context drift.** After 20 turns, the original goal has drifted in the agent's working memory. The fix: pin the goal to the top of every context refresh; require the model to restate it before each significant action.\n\nNone of these are model problems. They are loop-design problems. The fixes are in the orchestration, not the prompt.`,
+      },
+      {
+        heading: 'when to build an autonomous agent (and when not to)',
+        body: `Autonomous agents earn their keep when:\n\n- the task is open-ended (research, debugging, multi-step planning)\n- the right sequence of steps depends on what the agent finds along the way\n- a human cannot pre-specify the path without writing a workflow that is mostly conditionals\n\nThey don't earn their keep when:\n\n- the workflow is known and stable — write the workflow\n- the task is one model call away from done — just call the model\n- the cost of a wrong action is high and the agent can take it autonomously — keep a human in the loop\n\nThe rule I keep: **default to a workflow. Reach for an autonomous agent only when the workflow you'd write is mostly branches and you'd rather have the agent decide.** Most production systems I admire are workflows with one or two truly autonomous steps inside.`,
+      },
+      {
+        heading: 'the closer',
+        body: `Autonomous agents are not magic. They are a particular software pattern — model + tools + environment + memory + explicit stops — with well-understood failure modes and a small set of operational practices that decide whether they work. Most of the engineering happens outside the prompt: in the tool surface, in the orchestration, in the observability, in the budgets.\n\nIf you internalise the four-part architecture and the stop-condition discipline, you can build an autonomous agent that holds up. If you don't, no model upgrade will rescue you.`,
+      },
+    ],
+  },
+
+  {
     slug: 'what-are-agentic-workflows',
     cover: '/blog/cover-agentic-workflows.svg',
     title: 'What are agentic workflows? (and why most "agents" are actually workflows)',
