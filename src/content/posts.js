@@ -78,6 +78,73 @@ prompts:
   */
 
   {
+    slug: '10-things-to-ensure-you-are-building-agents-right',
+    cover: '/blog/cover-10-things-agents.svg',
+    title: '10 things to ensure you are building agents right',
+    type: 'guide',
+    date: 'May 19, 2026',
+    readingTime: '13 min',
+    color: 'paper-yellow',
+    tags: ['agents', 'engineering', 'checklist', 'production'],
+    excerpt:
+      'A small, opinionated checklist. None of it is exciting. All of it is what separates an impressive demo from an agent that works at 3am.',
+    seoDescription:
+      'A practical checklist for building production-ready agents: workflow-first design, stop conditions, tool descriptions, context limits, observability, partial-failure handling, model routing, real-world evals, budgets, and treating the agent like a teammate.',
+    keywords: 'building agents, agent design, agent engineering, production agents, agent checklist, agent best practices, LLM agents',
+    intro:
+      `Most agent failures in production are not from the model being wrong. They are from the **scaffold** around the model — the tool descriptions, the stop conditions, the budgets, the observability, the way context grows over time, the way errors propagate. The model is the most-discussed part and almost never the part that breaks.\n\nThis is the boring layer. Ten things, in rough order of how often I see them ignored. None of them require a research breakthrough. All of them require care.`,
+    sections: [
+      {
+        heading: '1. start with a workflow, not an agent',
+        body: `An agent is an open-ended loop. A workflow is an orchestrated set of steps. Workflows are predictable, debuggable, testable, and cheaper. Agents are flexible and harder to reason about.\n\nMost problems sold as "we need an agent" are workflows in disguise. Three sequential model calls with a router on top is not an agent — it's a workflow, and shipping it as one will save you weeks of debugging an open loop you didn't need.\n\nThe rule I keep: **start with a workflow. Promote to an agent only when the open-ended loop is doing work the workflow can't.** Most production "agentic" systems I admire are workflows with one or two truly autonomous steps. (More on this in [Agentic workflows](/writing/what-are-agentic-workflows).)`,
+      },
+      {
+        heading: '2. define stop conditions before anything else',
+        body: `Write the stop conditions on day one. Not "before we ship" — day one, before the first line of orchestration code.\n\nA real list:\n\n- the model declares the goal met (with an explicit "done" tool, not free text)\n- token budget exceeded\n- wall-time budget exceeded\n- turn count exceeded\n- a specific tool failed N times in a row\n- the agent has called the same tool with the same args three times (loop detection)\n- a human-defined "ask for help" condition trips\n\nWithout these, an agent that runs longer than a few turns will eventually surprise you. The cheapest line of code in agent engineering is the one that exits cleanly.`,
+      },
+      {
+        heading: '3. write tool descriptions like a UX brief',
+        body: `Tool descriptions are not docstrings. They are the only thing the model reads to decide whether to call your tool. They have the highest signal-to-token ratio of anything in your prompt.\n\nThree habits:\n\n- open with a verb. "Open a ticket." not "Ticket creation utility."\n- say when **not** to use it. "Do not use for general questions; use \`get_metric\` first for known metrics."\n- name side effects. "Sends an email." "Charges the customer." "Writes to the audit log."\n\nA description like "Filing helper" is the same as no description. Detail in [Tool use, schemas, and the quiet art of making agents reliable](/writing/tool-use-schemas-and-the-quiet-art-of-reliable-agents).`,
+      },
+      {
+        heading: '4. cap context growth',
+        body: `An agent's context grows every turn — past actions, past tool results, accumulated reasoning. Left alone, it balloons. Latency rises. The model's attention dilutes. Cost climbs. Quality drops.\n\nThree patterns that work:\n\n- **trim tool results** before they enter context. A tool that returns 8k tokens is a tool that just spent half your budget.\n- **summarise old turns** once context crosses a threshold. Keep the last 3-5 turns verbatim; collapse older ones into "actions so far" notes.\n- **hand off to subagents** for anything that needs >8k tokens of context to verify. The main thread keeps its discipline.\n\nMore in [The hidden cost of long context](/writing/the-hidden-cost-of-long-context) and [Subagents and parallelism](/writing/subagents-and-parallelism-stop-cramming-context).`,
+      },
+      {
+        heading: '5. observability before you need it',
+        body: `A long-running agent without per-step logs is a debugging problem you cannot solve after the fact.\n\nMinimum schema per agent step:\n\n\`\`\`
+task_id, turn, ts, model, tool, args, result_summary,
+tokens_in, tokens_out, cost, latency_ms, status, error
+\`\`\`\n\nStructured columns, not JSON blobs. Queryable from SQL. With this, you can answer "why did this agent take 14 turns when it usually takes 4" in a minute. Without it, you can't answer it at all.\n\nDo this in week one. By week three you'll need it and won't have time to retrofit.`,
+      },
+      {
+        heading: '6. plan for partial failure',
+        body: `Tools fail. APIs time out. Networks blip. Models occasionally produce malformed JSON. None of these are unusual. All of them will happen to your agent.\n\nA few habits:\n\n- **retry with backoff** on transient errors (5xx, network, timeout). Cap retries at 3.\n- **fail loudly** on logic errors. A schema-invalid tool argument is a bug, not a retry opportunity.\n- **return actionable errors** to the model. A tool that returns "an error occurred" is silence. A tool that returns "no record matched; use \`list_records\` to find valid ids" is a tool the model can recover from.\n- **idempotency keys** on any side-effectful tool. The model will retry; you do not want side effects to double.\n- **partial progress capture.** If the agent has done 7 of 10 subtasks when it crashes, the next run should resume, not restart.\n\nFailing safely is more important than failing rarely.`,
+      },
+      {
+        heading: '7. cheaper models for routing',
+        body: `Not every step needs your top-tier model. A short list of work that runs well on a small, fast, cheap model:\n\n- routing/classification ("is this a question or a command?")\n- extraction ("pull the dates from this text")\n- short reformulations\n- LLM-as-judge in eval pipelines\n- the "summarise the last 5 turns" pass that compresses context\n\nUse Haiku-class (or equivalent) for these. Save Sonnet/Opus for the calls that actually move the needle on quality. A typical agent pipeline I run hits the top-tier model on 2-3 steps and a cheap model on the other 8-10. Cost drops by 5-10x; quality barely moves.`,
+      },
+      {
+        heading: '8. evals on real workloads, not just goldens',
+        body: `A golden dataset of 50 hand-curated examples is a starting point, not an answer. The agent that passes your goldens can still bomb on real user traffic, because real traffic is messier than goldens.\n\nA practical sequence:\n\n- **goldens** for "does the basic flow work."\n- **synthetic adversarial** for "what happens at the edges."\n- **shadow runs** on real traffic for "is it actually better than the previous version."\n- **production sampling** for "what is actually happening every day."\n\nNever ship a change to an agent based on goldens alone. Goldens lie because they are clean. The world isn't. More on this in [Building evals that don't lie to you](/writing/building-evals-that-dont-lie-to-you).`,
+      },
+      {
+        heading: '9. budgets per task: tokens, time, cost',
+        body: `Set explicit budgets for every agent task. Hard caps, not aspirations:\n\n- **tokens** — input + output, summed across the task\n- **time** — wall clock from start to stop\n- **cost** — dollar figure, summed across all model and tool calls\n- **turns** — number of model invocations\n\nThe budgets should be sized to the 95th percentile of expected runs, with a small margin. Tasks that exceed budget don't get more budget; they get terminated and surfaced.\n\nThis is also how you catch loops, runaway tool calls, and context bloat — they all show up as budget overruns. A loud failure is dramatically more useful than a silent expensive success.`,
+      },
+      {
+        heading: '10. treat the agent like a teammate',
+        body: `Brief it. Debrief it. Review its work.\n\nThe practices that work for new junior engineers also work for agents:\n\n- **briefing** — a clear goal, the constraints, the rubric for done\n- **office hours** — checkpoints where the agent surfaces what it's thinking\n- **debrief** — a short summary at the end of each task, in a fixed format\n- **review** — a human reads a real sample of real runs on a real schedule (covered in detail in the next post)\n\nThe analogy isn't whimsy. The agent has many of the same failure modes as a smart new teammate: misreads vague briefs, over-commits to confident-sounding plans, gets stuck without asking, occasionally produces work that looks done but isn't. The same management practices that fix those failure modes in a person fix them in an agent.\n\nThe difference is the agent never sleeps and never gets tired, which means the management cadence has to be **yours**, not the agent's. More on that in [Are you managing your agents or are they managing you?](/writing/are-you-managing-your-agents-or-are-they-managing-you).`,
+      },
+      {
+        heading: 'the boring closer',
+        body: `If you came here looking for the secret to building great agents, the secret is that there isn't one. There is a list of small, unsexy, well-understood practices, and the teams that follow most of them ship reliable agents. The teams that follow few of them ship demos.\n\nThe gap is not intelligence. It is discipline.`,
+      },
+    ],
+  },
+
+  {
     slug: 'what-are-autonomous-agents-and-how-to-build-them',
     cover: '/blog/cover-autonomous-agents.svg',
     title: 'What are autonomous agents, and how to build them',
