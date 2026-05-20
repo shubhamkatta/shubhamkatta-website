@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="Managing your agents or are they managing you">
+  <rect width="1200" height="600" fill="#eaf7ff"/>
+  <rect x="540" y="30" width="180" height="22" rx="4" fill="#ffe9e4" opacity="0.85" transform="rotate(-2 630 41)"/>
+  <g transform="translate(120,200)">
+    <line x1="200" y1="100" x2="400" y2="100" stroke="#1d1815" stroke-width="4"/>
+    <polygon points="300,100 280,80 320,80 300,60" fill="#1d1815"/>
+    <path d="M 300 60 L 300 30" stroke="#1d1815" stroke-width="3"/>
+    <g transform="translate(40,150) rotate(-3)">
+      <rect width="200" height="80" rx="14" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="28" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="rgba(29,24,21,0.55)" letter-spacing="2">YOU</text>
+      <text x="14" y="50" font-family="Inter, sans-serif" font-size="13" fill="#1d1815">- briefs, budgets,</text>
+      <text x="14" y="68" font-family="Inter, sans-serif" font-size="13" fill="#1d1815">  stop conditions</text>
+    </g>
+    <g transform="translate(360,150) rotate(3)">
+      <rect width="200" height="80" rx="14" fill="#1d1815"/>
+      <text x="14" y="28" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="rgba(255,255,255,0.5)" letter-spacing="2">AGENT</text>
+      <text x="14" y="50" font-family="Inter, sans-serif" font-size="13" fill="#f6efe6">- nudges you to</text>
+      <text x="14" y="68" font-family="Inter, sans-serif" font-size="13" fill="#f6efe6">  approve things</text>
+    </g>
+    <text x="100" y="270" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(29,24,21,0.5)" letter-spacing="2">SEAT OF JUDGEMENT</text>
+  </g>
+  <g transform="translate(620,160)">
+    <text x="0" y="50" font-family="Inter, sans-serif" font-weight="900" font-size="40" fill="#1d1815" letter-spacing="-2">Are you managing</text>
+    <text x="0" y="100" font-family="Inter, sans-serif" font-weight="900" font-size="40" fill="#1d1815" letter-spacing="-2">your agents,</text>
+    <text x="0" y="166" font-family="Inter, sans-serif" font-weight="900" font-size="40" fill="#1d1815" letter-spacing="-2">or are they managing</text>
+    <text x="0" y="216" font-family="Inter, sans-serif" font-weight="900" font-size="40" fill="#1d1815" letter-spacing="-2">you?</text>
+    <text x="0" y="260" font-family="Inter, sans-serif" font-weight="700" font-size="20" fill="#ff6b6b">the honest question.</text>
+  </g>
+</svg>

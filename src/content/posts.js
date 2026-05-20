@@ -78,6 +78,78 @@ prompts:
   */
 
   {
+    slug: 'are-you-managing-your-agents-or-are-they-managing-you',
+    cover: '/blog/cover-managing-agents.svg',
+    title: 'Are you managing your agents, or are they managing you?',
+    type: 'reflection',
+    date: 'May 20, 2026',
+    readingTime: '11 min',
+    color: 'paper-blue',
+    tags: ['agents', 'oversight', 'control', 'operations'],
+    excerpt:
+      'As agents take more autonomous action, the honest question stops being "is it smart enough" and starts being "who is actually in charge here?"',
+    seoDescription:
+      'A reflective look at the control surface for production agents — permissions, budgets, checkpoints, audit logs, kill switches, alerts, and review cadence. The boring layer that decides whether you stay in the seat.',
+    keywords: 'agent oversight, agent control, autonomous agents, permissions, audit log, kill switch, human in the loop, AI safety, agent management',
+    intro:
+      `There is a quiet shift that happens about three weeks into running a real agent in production. The first week, you watch every move. The second week, you skim the logs. By the third week, the agent is opening tickets, drafting PRs, sending Slack messages, and you are mostly approving — quickly, often without reading carefully, because the queue is long.\n\nNobody made a decision to delegate that much. It just happened, one approval at a time. The agent didn't take over; you handed it the seat without noticing.\n\nThis post is about noticing.`,
+    sections: [
+      {
+        heading: 'the honest question',
+        body: `"Managing your agent" and "your agent managing you" are not opposites. They are two ends of a slow slide. Most teams end up further along than they meant to be, because the slide is comfortable.\n\nThe symptoms are subtle:\n\n- you approve actions you didn't read because the agent has been right before\n- you discover what the agent did from a Slack notification, not a plan\n- the agent's "summary" is the only place the day's work lives\n- two weeks of context exist only in the agent's scratchpad\n- the team has stopped asking "should we do this" and started asking "what did it do"\n\nNone of these are catastrophes by themselves. They are signals. The agent has crossed from a tool you operate to a colleague you cannot quite supervise. If that crossing is intentional and the stakes are low, great. If it happened to you while you were busy, that is the part worth catching.`,
+      },
+      {
+        heading: 'signs the agent is managing you',
+        body: `A short list, in order of how often I see it:\n\n- **the queue runs the day.** Your morning shape is "what did the agent leave overnight," not "what am I going to work on."\n- **you can't explain a recent decision without reading the logs.** The agent acted; you ratified; nobody remembers the reasoning.\n- **the "obvious" sign-offs got slower, not faster.** When something needs a real human read, the muscle for slow attention has atrophied.\n- **costs are surprising.** Not catastrophic, just consistently more than you guessed. Surprising costs are usually surprising autonomy.\n- **you've stopped saying no.** Every "ask" has had a reasonable rationale, so you've defaulted to yes. The default has quietly moved.\n\nIf two or more of these are true, you have a control problem. Not an agent problem.`,
+      },
+      {
+        heading: 'the control surface',
+        body:
+`The good news: this is operational, not philosophical. There is a small, well-understood set of knobs that puts you back in the seat.\n\n![Seven knobs and a review cadence. If your agent runs and these aren't configured, that's the problem.](/blog/diagram-control-surface.svg)\n\nThe seven knobs are not all equally important. If you only get three, get these three:\n\n- **budgets** (tokens, time, cost, turns)\n- **audit log** (every action, queryable)\n- **review cadence** (a real human reads a real sample on a real schedule)\n\nThe rest scale with stakes. A research agent that summarises web pages needs less. An agent that opens PRs against shared code needs all of it.`,
+      },
+      {
+        heading: 'permissions: allow, ask, deny',
+        body: `Treat each tool as carrying one of three permission levels:\n\n- **allow** — auto-execute. Reads, lookups, anything reversible and low-blast-radius.\n- **ask** — pause and confirm. Writes, side-effects, anything visible to other humans, anything that costs money.\n- **deny** — never. Destructive, irreversible, or out of scope for this agent.\n\nThe move that catches the most teams off-guard: never put a destructive tool in "ask." Habituation is real. The fifteenth time you approve "delete deprecated branch," you don't read carefully. Put destructive tools in "deny" and require a different mode to enable them. Friction is a feature here.`,
+      },
+      {
+        heading: 'budgets, hard caps, not aspirations',
+        body: `Budgets that "warn" don't work. Budgets that "stop" do.\n\nFour I always set:\n\n- **token budget per task.** Sized to the 95th percentile of expected usage, plus a small margin. If a task is exceeding 5x that, something is wrong — loop, runaway tool call, context bloat.\n- **wall-time budget.** Even cheap calls add up. A 60-minute cap on a task that "should take three minutes" is the difference between a paged engineer at 2am and a graceful failure.\n- **per-tool call cap.** If \`search_web\` runs 40 times in one task, the agent is stuck. Cap it at 10. Make it surface what it would have asked.\n- **daily $ budget per agent.** A hard ceiling on aggregated spend. Crossing it pauses the agent until reviewed.\n\nThese sound paranoid until the day something runs in a loop and burns $400 in three hours. After that day, they sound minimal.`,
+      },
+      {
+        heading: 'checkpoints worth keeping',
+        body: `Not every action needs an approval. Some need a pause-and-tell, which is different.\n\nGood checkpoints:\n\n- **before a destructive action.** "About to delete X. Confirm." Even if the user pre-approved the workflow, confirm the specific instance.\n- **before crossing a domain boundary.** Agent is leaving the dev environment and touching prod. Pause.\n- **before a message goes to a human who didn't ask for it.** The agent drafted an email to support@external; show me before send.\n- **at the end of a long task.** Not for approval, for visibility. "Done. Here's what I did, in five bullets."\n\nBad checkpoints (the ones that train you to click yes):\n\n- "I'm going to read this file. OK?"\n- "Should I use this tool?"\n- "Confirming I'm about to summarise."\n\nIf an approval feels routine, it isn't an approval. It's a click. Either remove it (auto-allow) or make it real.`,
+      },
+      {
+        heading: 'audit logs you actually read',
+        body: `Audit logs are cheap to write and expensive to ignore.\n\nThe schema that has held up for me, one row per agent action:\n\n\`\`\`
+task_id · turn · ts · model · tool · args (redacted) · result_summary
+  · tokens_in · tokens_out · cost · latency_ms · status · approver
+\`\`\`\n\nNot a JSON blob. Structured columns you can query. The day you need to ask "what did the agent do at 14:22 on Tuesday," you want SQL, not grep.\n\nThe critical column most teams forget: \`approver\`. Was this action auto-allowed, or did a human approve? Because in three months, when something went wrong, you need to know whether the agent did it on its own or with a co-signature. They are different failure modes with different fixes.`,
+      },
+      {
+        heading: 'the kill switch (tested, not assumed)',
+        body: `Every long-running agent needs a verified stop. Not "I'll Ctrl-C." Not "I think the worker will eventually time out." A single command that:\n\n- terminates the current task immediately\n- cancels in-flight tool calls where possible\n- flushes the audit log before exiting\n- leaves the system in a known state (no half-applied edits, no orphaned locks)\n\nIf your "kill switch" hasn't been tested in the last 30 days, you don't have one. Test it on a sandbox agent quarterly. The cost is one engineer-hour. The cost of not testing it is a story you'll tell at industry meetups.`,
+      },
+      {
+        heading: 'review cadence — the one most teams skip',
+        body: `The single most under-invested practice in agent operations: a human reading a sample of real runs on a real schedule.\n\nThe minimum viable version:\n\n- once a week, pick 10 random tasks from the last 7 days\n- read each one end to end — prompt, tool calls, results, summary\n- note: was the decision correct? was the path efficient? did anything surprise you?\n- one person owns it. it goes in their calendar. it doesn't get skipped.\n\nWhy this matters: aggregate metrics tell you the system is "working." They don't tell you it is doing the right thing. Sampling tells you what is actually happening. You will find, every single week, at least one task where the agent took a path you wouldn't have. Sometimes that path is better. Often it isn't. The pattern across weeks is where the operational improvements come from.\n\nIf you cannot afford an hour a week to read 10 tasks, you cannot afford the agent.`,
+      },
+      {
+        heading: 'the trust ladder',
+        body: `Trust is not a single bit. It is a ladder with rungs you climb explicitly:\n\n- **rung 1.** Every action approved. Slow, safe, expensive in attention.\n- **rung 2.** Read-only auto, writes still approved. Most agents live here longer than they should.\n- **rung 3.** Writes auto in bounded domains (a specific repo, a specific dataset). Approvals for crossing boundaries.\n- **rung 4.** Most actions auto, with checkpoints at key transitions. Approval is the exception.\n- **rung 5.** Fully autonomous within configured budgets and permissions. Human reviews after the fact.\n\nMove up one rung at a time. Earn each rung with a track record on the rung below. Going from rung 1 to rung 4 in a week is how you end up with the slide I described in the intro.`,
+      },
+      {
+        heading: 'reclaiming the seat',
+        body: `If you read this and recognised yourself, the fix isn't a rewrite. It's a few small interventions:\n\n- pick a weekly slot and do the sampling review. Just one week to start.\n- audit your permissions list. Any "ask" on a destructive action becomes "deny" until you have a real reason otherwise.\n- pull your usage chart for the last 30 days. Surprised? That's data. Set budgets that would have caught the surprises.\n- write down what you want the agent to do this week, in advance. Compare to what it did. Reconcile.\n\nNone of this is dramatic. All of it is the difference between an agent that works for you and an agent that works around you.`,
+      },
+      {
+        heading: 'the closer',
+        body: `Agents are remarkable. They will also, given the chance, accumulate authority you didn't intend to delegate, because each individual delegation seemed fine. The slide is structural; it isn't a moral failing.\n\nThe job of someone managing agents is not to be paranoid. It is to keep the seat of judgement on the human side of the line, even when the agent is faster, more available, and right more often than feels comfortable.\n\nIf you're going to err, err on the side of asking the question this post is named for. Quarterly. Out loud. With your team in the room. The answer changes; the question shouldn't have to.`,
+      },
+    ],
+  },
+
+  {
     slug: '10-things-to-ensure-you-are-building-agents-right',
     cover: '/blog/cover-10-things-agents.svg',
     title: '10 things to ensure you are building agents right',
