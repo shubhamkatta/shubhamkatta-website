@@ -32,22 +32,24 @@ export function HomePage() {
               <Link to="/work" className="button button-blue">yes, there is work too</Link>
             </div>
           </Paper>
-        <Paper className="bio-card" tone="paper-yellow">
-          <Link
-            to="/now"
-            className="badge-note hello-badge at-the-moment-link"
-            aria-label="See the /now page for a longer snapshot"
-          >
-            at the moment →
-          </Link>
-          <div className="bio-hero">
-            <img className="bitmoji" src="/bitmoji-relax.png" alt="Shubham bitmoji reading with a cat" />
-            <div>
-              <h2>building things, collecting patterns, staying curious</h2>
+        <div className="hero-right-stack">
+          <Paper className="bio-card bio-card-compact" tone="paper-yellow">
+            <Link
+              to="/now"
+              className="badge-note hello-badge at-the-moment-link"
+              aria-label="See the /now page for a longer snapshot"
+            >
+              at the moment →
+            </Link>
+            <div className="bio-hero">
+              <img className="bitmoji" src="/bitmoji-relax.png" alt="Shubham bitmoji reading with a cat" />
+              <div>
+                <h2>building things, collecting patterns, staying curious</h2>
+              </div>
             </div>
-          </div>
+          </Paper>
           <CurrentlyBlock />
-        </Paper>
+        </div>
         </div>
       </section>
 

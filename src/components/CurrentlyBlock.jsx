@@ -20,11 +20,11 @@ export function CurrentlyBlock() {
   }, []);
 
   return (
-    <dl className="currently-block" aria-label="Current status snapshot">
+    <dl className="currently-block sticky-note" aria-label="Current status snapshot">
       <div className="currently-row">
         <dt className="currently-label">in</dt>
         <dd className="currently-value">
-          Bengaluru, IN · <time dateTime={new Date().toISOString()}>{time} IST</time>
+          Moradabad, IN · <time dateTime={new Date().toISOString()}>{time} IST</time>
         </dd>
       </div>
       <div className="currently-row">

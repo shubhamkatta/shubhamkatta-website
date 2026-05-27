@@ -1,5 +1,5 @@
 export const now = {
-  byline: 'from a desk in Bengaluru, between two monitors and three half-finished cups',
+  byline: 'from a desk in Moradabad, between two monitors and three half-finished cups',
   lastUpdated: 'May 27, 2026',
   intro:
     'A small, periodic snapshot. What I am building, reading, ignoring, and quietly suspicious of. Replaces the part of an "about" page that ages into being wrong.',
@@ -9,7 +9,7 @@ export const now = {
       title: 'where',
       tone: 'paper-white',
       items: [
-        '{pin} Bengaluru. Home desk most days; outdoor café before the city remembers it is a city.',
+        '{pin} Moradabad. Home desk most days; outdoor café before the city remembers it is a city.',
         'Cyble — Principal Engineer, year six. Still happily entangled in threat-intel.',
         'Claude Code is the editor I open first and close last.',
         '{coffee} Aeropress, custom grind on most mornings; {tea} masala ginger tea on the slower ones — whichever the day asks for.',
