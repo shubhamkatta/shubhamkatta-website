@@ -53,7 +53,8 @@ export function HomePage() {
       </section>
 
       <section className="container compact-top">
-        <Paper className="about-home" tone="paper-white">
+        <Paper className="about-home now-bg now-bg-notebook" tone="paper-white">
+          <span className="now-bg-art" aria-hidden="true" />
           <div className="badge-note about-badge">me, but with paragraphs</div>
           <SectionLabel tone="sky">me</SectionLabel>
           <h2 style={{ marginBottom: '1.5rem' }}>I like people who think clearly, write honestly, and don’t confuse depth with heaviness.</h2>
@@ -172,7 +173,8 @@ export function HomePage() {
         <div className="split-grid work-grid">
           <div className="stack-list">
             {roles.map((role) => (
-              <Paper key={role.company} tone={role.color}>
+              <Paper key={role.company} tone={role.color} className="now-bg now-bg-work">
+                <span className="now-bg-art" aria-hidden="true" />
                 <div className="role-head">
                   <h3>{role.company}</h3>
                   <span className="date-pill">{role.period}</span>
@@ -186,7 +188,8 @@ export function HomePage() {
             ))}
           </div>
           <div className="side-stack">
-            <Paper tone="paper-yellow">
+            <Paper tone="paper-yellow" className="now-bg now-bg-chart">
+              <span className="now-bg-art" aria-hidden="true" />
               <div className="mini-note">quick numbers</div>
               {metrics.map(([value, label]) => (
                 <div key={value} className="metric-row">
@@ -195,7 +198,8 @@ export function HomePage() {
                 </div>
               ))}
             </Paper>
-            <Paper tone="paper-white">
+            <Paper tone="paper-white" className="now-bg now-bg-folder">
+              <span className="now-bg-art" aria-hidden="true" />
               <SectionLabel>case files</SectionLabel>
               <div className="stack-list compact">
                 {caseStudies.map((item) => <CaseCard key={item.slug} item={item} />)}

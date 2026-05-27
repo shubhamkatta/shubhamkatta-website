@@ -267,13 +267,14 @@ export function NowPage() {
             <Fragment key={section.key}>
               <Paper
                 tone={section.tone}
-                className={`now-card timeline-card timeline-${side}`}
+                className={`now-card timeline-card timeline-${side} now-bg now-bg-${section.key}`}
                 style={{
                   gridColumn: side === 'left' ? 1 : 3,
                   gridRow: `${startRow} / span 5`,
                   transform: `rotate(${tilt}deg)`,
                 }}
               >
+                <span className="now-bg-art" aria-hidden="true" />
                 <h2>
                   <span className="arrow-prefix">↬</span>
                   {section.title}
@@ -307,14 +308,16 @@ export function NowPage() {
       </div>
 
       <div className="now-bottom-row">
-        <Paper tone="paper-yellow" className="now-card">
+        <Paper tone="paper-yellow" className="now-card now-bg now-bg-currently">
+          <span className="now-bg-art" aria-hidden="true" />
           <SectionLabel>currently</SectionLabel>
           <p className="now-quote">
             The work is mostly translation — what the team meant, what the model can act on, what
             the user actually wanted. Three different languages, one keyboard.
           </p>
         </Paper>
-        <Paper tone="paper-coral" className="now-card">
+        <Paper tone="paper-coral" className="now-card now-bg now-bg-now-page">
+          <span className="now-bg-art" aria-hidden="true" />
           <SectionLabel tone="sky">a /now page is</SectionLabel>
           <p>
             A dated snapshot. Inspired by{' '}
@@ -329,7 +332,8 @@ export function NowPage() {
             . The promise is that this page is mine and current; if it's stale, please nudge.
           </p>
         </Paper>
-        <Paper tone="paper-blue" className="now-card">
+        <Paper tone="paper-blue" className="now-card now-bg now-bg-elsewhere">
+          <span className="now-bg-art" aria-hidden="true" />
           <SectionLabel tone="ink">elsewhere on the site</SectionLabel>
           <ul className="simple-list">
             {/* <li>
