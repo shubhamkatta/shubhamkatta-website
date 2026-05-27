@@ -17,6 +17,7 @@ import { CaseStudiesPage, CaseStudyPage } from './pages/CaseStudyPages';
 import { ContactPage } from './pages/ContactPage';
 import { NowPage } from './pages/NowPage';
 import { UsesPage } from './pages/UsesPage';
+import { ColophonPage } from './pages/ColophonPage';
 import { SiteLayout } from './components/SiteLayout';
 
 const router = createBrowserRouter([
@@ -33,6 +34,7 @@ const router = createBrowserRouter([
       { path: 'case-studies/:slug', element: <CaseStudyPage /> },
       { path: 'now', element: <NowPage /> },
       { path: 'uses', element: <UsesPage /> },
+      { path: 'colophon', element: <ColophonPage /> },
       { path: 'contact', element: <ContactPage /> },
     ],
   },

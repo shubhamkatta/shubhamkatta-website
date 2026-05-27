@@ -1,5 +1,4 @@
 import { NavLink, Outlet } from 'react-router-dom';
-import { site } from '../content/site';
 import { ThemeToggle } from './ThemeToggle';
 
 const links = [
@@ -37,13 +36,11 @@ export function SiteLayout() {
         <div className="container footer-row">
           <div>© 2026 Shubham Katta · still figuring things out, just with better tools now</div>
           <div className="footer-links">
-            <NavLink to="/writing">Writings</NavLink>
-            <NavLink to="/now">Now</NavLink>
-            <NavLink to="/uses">Uses</NavLink>
+            <NavLink to="/now">/now</NavLink>
+            <NavLink to="/uses">/uses</NavLink>
+            <NavLink to="/colophon">/colophon</NavLink>
             <NavLink to="/case-studies">Case Files</NavLink>
-            <NavLink to="/work">Work</NavLink>
-            <a href={site.linkedin}>LinkedIn</a>
-            <a href={`mailto:${site.email}`}>Email</a>
+            <NavLink to="/contact">Say hello</NavLink>
           </div>
         </div>
       </footer>

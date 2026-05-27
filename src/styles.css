@@ -368,6 +368,10 @@ h2.work-heading { font-size: clamp(1rem, 2.5vw, 1.7rem); }
 .now-bg-frame { --now-bg-art: url('/now-bg/frame.svg'); }
 .now-bg-software { --now-bg-art: url('/now-bg/software.svg'); }
 .now-bg-off-screen { --now-bg-art: url('/now-bg/off-screen.svg'); }
+.now-bg-type { --now-bg-art: url('/now-bg/type.svg'); }
+.now-bg-palette { --now-bg-art: url('/now-bg/palette.svg'); }
+.now-bg-principles { --now-bg-art: url('/now-bg/principles.svg'); }
+.now-bg-debts { --now-bg-art: url('/now-bg/debts.svg'); }
 .now-bottom-row .now-bg-art { width: 110px; height: 110px; bottom: -0.4rem; right: -0.5rem; }
 @media (max-width: 760px) {
   .now-bg-art { width: 110px; height: 110px; }
@@ -492,3 +496,18 @@ h2.work-heading { font-size: clamp(1rem, 2.5vw, 1.7rem); }
   .container { width: min(1180px, calc(100vw - 1.25rem)); }
   .paper, .hero-card, .contact-copy, .contact-card { padding: 1.2rem; }
 }
+
+/* /colophon — palette swatches + font specimens */
+.colophon-row { display: flex; align-items: flex-start; gap: 1rem; padding: .35rem 0; }
+.colophon-row-text { flex: 1; min-width: 0; }
+.colophon-swatch {
+  display: block;
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06), 0 2px 6px rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+.colophon-specimen { display: inline-block; font-size: 1.25rem; line-height: 1; letter-spacing: -0.005em; }

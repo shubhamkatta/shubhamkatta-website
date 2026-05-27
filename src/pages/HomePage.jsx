@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom';
-import { caseStudies } from '../content/caseStudies';
 import { posts } from '../content/posts';
 import { chips, findings, metrics, roles, site } from '../content/site';
 import { build } from '../content/build';
-import { CaseCard, Chip, Paper, PostCard, SectionLabel } from '../components/Shared';
+import { Chip, Paper, PostCard, SectionLabel } from '../components/Shared';
 import { CurrentlyBlock } from '../components/CurrentlyBlock';
 
 export function HomePage() {
@@ -197,13 +196,6 @@ export function HomePage() {
                   <span>{label}</span>
                 </div>
               ))}
-            </Paper>
-            <Paper tone="paper-white" className="now-bg now-bg-folder">
-              <span className="now-bg-art" aria-hidden="true" />
-              <SectionLabel>case files</SectionLabel>
-              <div className="stack-list compact">
-                {caseStudies.map((item) => <CaseCard key={item.slug} item={item} />)}
-              </div>
             </Paper>
           </div>
         </div>
