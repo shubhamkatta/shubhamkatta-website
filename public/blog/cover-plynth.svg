@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="Why I built Plynth — rebuilding the same SaaS plumbing four times">
+  <rect width="1200" height="600" fill="#fff6db"/>
+  <rect x="540" y="30" width="180" height="22" rx="4" fill="#ffe9e4" opacity="0.85" transform="rotate(-2 630 41)"/>
+
+  <g transform="translate(80,90)">
+    <g transform="rotate(-3 110 60)">
+      <rect width="220" height="120" rx="14" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="26" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="#ff6b6b" letter-spacing="2">SaaS #1</text>
+      <text x="14" y="48" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.65)">auth · tenancy · RBAC</text>
+      <text x="14" y="64" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.65)">billing · audit · jobs</text>
+      <text x="14" y="98" font-family="Inter, sans-serif" font-size="10" fill="rgba(29,24,21,0.45)" font-style="italic">"this time, write it right"</text>
+    </g>
+    <g transform="translate(40,30) rotate(2 110 60)">
+      <rect width="220" height="120" rx="14" fill="#fff6db" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="26" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="#ff6b6b" letter-spacing="2">SaaS #2</text>
+      <text x="14" y="48" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.65)">auth · tenancy · RBAC</text>
+      <text x="14" y="64" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.65)">billing · audit · jobs</text>
+      <text x="14" y="98" font-family="Inter, sans-serif" font-size="10" fill="rgba(29,24,21,0.45)" font-style="italic">"different stack, same code"</text>
+    </g>
+    <g transform="translate(80,60) rotate(-2 110 60)">
+      <rect width="220" height="120" rx="14" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="26" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="#ff6b6b" letter-spacing="2">SaaS #3</text>
+      <text x="14" y="48" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.65)">auth · tenancy · RBAC</text>
+      <text x="14" y="64" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.65)">billing · audit · jobs</text>
+      <text x="14" y="98" font-family="Inter, sans-serif" font-size="10" fill="rgba(29,24,21,0.45)" font-style="italic">"this time, generic"</text>
+    </g>
+    <g transform="translate(120,90) rotate(3 110 60)">
+      <rect width="220" height="120" rx="14" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="26" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="#ff6b6b" letter-spacing="2">SaaS #4</text>
+      <text x="14" y="48" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.65)">auth · tenancy · RBAC</text>
+      <text x="14" y="64" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.65)">billing · audit · jobs</text>
+      <text x="14" y="98" font-family="Inter, sans-serif" font-size="10" fill="#ff6b6b" font-style="italic">"...oh no, again?"</text>
+    </g>
+  </g>
+
+  <g transform="translate(80,400)">
+    <rect width="440" height="70" rx="14" fill="#1d1815"/>
+    <text x="20" y="32" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(255,255,255,0.55)" letter-spacing="2">SHARED PLUMBING · PLYNTH v0.1</text>
+    <text x="20" y="56" font-family="ui-monospace, monospace" font-size="13" fill="#a3e4a3">one backend · many products · isolated tenants</text>
+  </g>
+
+  <g transform="translate(620,150)">
+    <text x="0" y="50" font-family="Inter, sans-serif" font-weight="900" font-size="50" fill="#1d1815" letter-spacing="-2">Why I built</text>
+    <text x="0" y="118" font-family="Inter, sans-serif" font-weight="900" font-size="50" fill="#1d1815" letter-spacing="-2">Plynth.</text>
+    <text x="0" y="170" font-family="Inter, sans-serif" font-weight="700" font-size="22" fill="#ff6b6b">rebuilding the same SaaS plumbing,</text>
+    <text x="0" y="198" font-family="Inter, sans-serif" font-weight="700" font-size="22" fill="#ff6b6b">four times in a row.</text>
+    <text x="0" y="250" font-family="Inter, sans-serif" font-size="17" fill="rgba(29,24,21,0.7)">the fourth time, I sat down and</text>
+    <text x="0" y="276" font-family="Inter, sans-serif" font-size="17" fill="rgba(29,24,21,0.7)">wrote the thing I should have</text>
+    <text x="0" y="302" font-family="Inter, sans-serif" font-size="17" fill="rgba(29,24,21,0.7)">had on day one.</text>
+  </g>
+</svg>

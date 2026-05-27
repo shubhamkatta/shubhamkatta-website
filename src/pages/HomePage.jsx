@@ -195,7 +195,7 @@ export function HomePage() {
               <a className="contact-link white-link" href={site.cal} target="_blank" rel="noopener noreferrer">book a 15-min call →</a>
               <a className="contact-link ghost-link" href={site.linkedin}>connect on LinkedIn</a>
               <a className="contact-link ghost-link" href={`mailto:${site.email}`}>send an email</a>
-              <p className="contact-note">Call for the quick chat. LinkedIn for fast notes. Email for longer thoughts. Formality is optional.</p>
+              <p className="contact-note">LinkedIn is fast. Email is better for longer thoughts. Either way, formality is optional. Got an idea you want to think out loud? Fifteen minutes usually finds the next step.</p>
             </div>
           </div>
         </Paper>

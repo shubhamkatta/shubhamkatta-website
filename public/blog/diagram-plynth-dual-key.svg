@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 400" role="img" aria-label="Dual-key isolation by product_id and tenant_id">
+  <rect width="1000" height="400" fill="#fff8ef"/>
+  <text x="40" y="46" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">Dual-key isolation, enforced at the repository</text>
+  <text x="40" y="70" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">every tenant-scoped query filters by (product_id, tenant_id) — no exceptions, no leaks</text>
+
+  <g transform="translate(40,100)">
+    <rect width="440" height="160" rx="16" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <text x="14" y="26" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(29,24,21,0.55)" letter-spacing="2">PRODUCT_ID = "intel"</text>
+    <g transform="translate(14,40)">
+      <rect width="195" height="50" rx="10" fill="#ffe9e4" stroke="#1d1815"/>
+      <text x="10" y="20" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">tenant_id = acme</text>
+      <text x="10" y="36" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.6)">12,402 rows</text>
+    </g>
+    <g transform="translate(220,40)">
+      <rect width="200" height="50" rx="10" fill="#fff6db" stroke="#1d1815"/>
+      <text x="10" y="20" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">tenant_id = globex</text>
+      <text x="10" y="36" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.6)">847 rows</text>
+    </g>
+    <g transform="translate(14,100)">
+      <rect width="195" height="50" rx="10" fill="#eaf7ff" stroke="#1d1815"/>
+      <text x="10" y="20" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">tenant_id = initech</text>
+      <text x="10" y="36" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.6)">22,118 rows</text>
+    </g>
+    <g transform="translate(220,100)">
+      <rect width="200" height="50" rx="10" fill="#ffe9e4" stroke="#1d1815"/>
+      <text x="10" y="20" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">tenant_id = soylent</text>
+      <text x="10" y="36" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.6)">3,990 rows</text>
+    </g>
+  </g>
+
+  <g transform="translate(520,100)">
+    <rect width="440" height="160" rx="16" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <text x="14" y="26" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(29,24,21,0.55)" letter-spacing="2">PRODUCT_ID = "billing"</text>
+    <g transform="translate(14,40)">
+      <rect width="195" height="50" rx="10" fill="#fff6db" stroke="#1d1815"/>
+      <text x="10" y="20" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">tenant_id = acme</text>
+      <text x="10" y="36" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.6)">142 rows</text>
+    </g>
+    <g transform="translate(220,40)">
+      <rect width="200" height="50" rx="10" fill="#eaf7ff" stroke="#1d1815"/>
+      <text x="10" y="20" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">tenant_id = umbrella</text>
+      <text x="10" y="36" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.6)">9,210 rows</text>
+    </g>
+    <g transform="translate(14,100)">
+      <rect width="195" height="50" rx="10" fill="#ffe9e4" stroke="#1d1815"/>
+      <text x="10" y="20" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">tenant_id = wayne</text>
+      <text x="10" y="36" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.6)">2,750 rows</text>
+    </g>
+    <g transform="translate(220,100)">
+      <rect width="200" height="50" rx="10" fill="#fff6db" stroke="#1d1815"/>
+      <text x="10" y="20" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">tenant_id = stark</text>
+      <text x="10" y="36" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.6)">615 rows</text>
+    </g>
+  </g>
+
+  <line x1="490" y1="92" x2="490" y2="270" stroke="#ff6b6b" stroke-width="3" stroke-dasharray="6,6"/>
+  <text x="498" y="178" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="#ff6b6b" letter-spacing="2">HARD WALL</text>
+
+  <g transform="translate(40,290)">
+    <rect width="920" height="80" rx="16" fill="#1d1815"/>
+    <text x="20" y="30" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(255,255,255,0.55)" letter-spacing="2">REPOSITORY LAYER · ALWAYS FILTERS BY BOTH KEYS</text>
+    <text x="20" y="56" font-family="ui-monospace, monospace" font-size="13" fill="#a3e4a3">SELECT … WHERE product_id = :p AND tenant_id = :t  ← bypassing requires an admin override, and an audit row</text>
+  </g>
+</svg>

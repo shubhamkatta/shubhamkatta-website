@@ -78,6 +78,74 @@ prompts:
   */
 
   {
+    slug: 'why-i-built-plynth-rebuilding-the-same-saas-plumbing-four-times',
+    cover: '/blog/cover-plynth.svg',
+    title: 'Why I built Plynth: rebuilding the same SaaS plumbing four times',
+    type: 'field notes',
+    date: 'May 27, 2026',
+    readingTime: '14 min',
+    color: 'paper-yellow',
+    tags: ['plynth', 'open source', 'saas', 'fastapi', 'multi-tenancy', 'backend'],
+    excerpt:
+      'The fourth time I wrote the same authentication flow, I noticed. Not the third. That is how Plynth got built — not in a moment of vision, but in a moment of irritation.',
+    seoDescription:
+      'Why I built Plynth, an open-source multi-product SaaS backend scaffold: the four times I rebuilt the same auth, tenancy, RBAC, and billing plumbing, what good enough plumbing has to be, and the design decisions that mattered most.',
+    keywords: 'Plynth, open source, SaaS scaffold, FastAPI, SQLAlchemy, multi-tenancy, RBAC, billing, audit logs, Argon2id, JWT, Postgres, Redis, arq, Electron admin, dual-key isolation',
+    intro:
+      `The fourth time I wrote the same authentication flow, I noticed. Not the third. The third still felt like progress — different language, different framework, different team. The fourth had every "I should remember this" sticky note from the third, and I still ended up Googling Argon2 parameters.\n\nThat is how [Plynth](https://github.com/shubhamkatta/plynth) got built. Not in a moment of vision, but in a moment of irritation. The work below is the long version of "I am tired of rebuilding the same plumbing."`,
+    sections: [
+      {
+        heading: 'four SaaS apps, four times the same plumbing',
+        body: `I have been the engineer — and sometimes the founder, sometimes the consultant — who showed up on day one of four different SaaS products in the last decade. None of them shared a codebase. Each one started over.\n\nEvery one of them needed, almost identically:\n\n- registration, login, password reset\n- multi-tenancy (B2B sometimes, B2C sometimes, mixed once)\n- role-based access control\n- billing with plans, trials, dunning, grace periods\n- audit logs\n- background jobs for "do something later"\n- email and the same dance with whichever provider was cheapest that quarter\n\nAnd every single one of those products had a "real product" sitting somewhere behind the plumbing — the thing the founder actually wanted to build. The plumbing was not the product. The plumbing was what stood between us and the product.\n\nThe first time, I considered it normal. The second time, slightly frustrating. The third time, suspicious. The fourth time was the one that made me sit down.`,
+      },
+      {
+        heading: 'the shape of what kept showing up',
+        body:
+`If I sketched the four projects on the back of a napkin and squinted, the architecture was nearly identical. Different stacks, different vocabulary, same building blocks.\n\n![Four SaaS apps, side-by-side. The red row of plumbing is identical across all of them; only the white row underneath — the actual product — differs.](/blog/diagram-plynth-stack.svg)\n\nAuth was always there. Tenancy was always there. RBAC was almost always there (and when it was not on day one, it was a sprint of regret in month four). Billing was unavoidable. Audit logs were either built carefully or built badly and discovered in an incident.\n\nWhat changed between products was:\n\n- the **domain** (the actual product logic)\n- the **frontend** (always different, always opinionated)\n- the **integrations** (different APIs, different vendors)\n- the **scale** (10 users vs 100k)\n\nWhat did not change was the plumbing.`,
+      },
+      {
+        heading: 'why nobody just reuses theirs',
+        body: `Three reasons I noticed, in myself and in others:\n\n- **The plumbing is tangled with the product.** "Authentication" in product A knows about product A's user model. It cannot trivially be lifted to product B because product B has a different user shape. Until you build it product-agnostic from day one, you cannot.\n- **Frameworks try to solve this and then change.** SaaS starter kits exist. Most of them ship with a frontend choice you do not want, an auth provider you do not trust, or an opinion about deployment you cannot follow. By the time you have stripped them down, you have rebuilt the plumbing.\n- **It feels easier to start fresh.** It is not, after the second time. But the inertia of "I will just type the User model again" is real.\n\nThe fix I wanted: one well-designed backend foundation, deliberately product-agnostic, that I could fork once and use to host every SaaS I worked on for the next decade.`,
+      },
+      {
+        heading: 'what "good enough plumbing" needs to be',
+        body: `Before writing a line of code, I made a list of properties the plumbing has to have. Most of these I had learned the hard way.\n\n- **Product-agnostic.** It should assume nothing about the product I am building on top of it.\n- **Multi-product on day one.** Not "one deployment per app." One deployment hosts many independent products, with strict data isolation between them.\n- **Dual-keyed isolation.** Every row that should be tenant-private is keyed on \`(product_id, tenant_id)\`. The repository layer enforces this. Application code cannot accidentally cross-pollinate.\n- **B2B and B2C in the same model.** A "tenant" is a tenant whether it is a company, a household, or a single user. Do not fork the codebase for the two cases.\n- **Boring, swappable billing.** Stripe is fine. So is the next thing. The interface is \`BillingProvider\`; the driver is replaceable.\n- **Audit everything.** State changes get rows. Who, what, when, on behalf of whom — all of it.\n- **No surprise frontend.** I want a backend. The product team brings the frontend.\n- **No surprise email vendor.** I want an interface. The product team brings the provider.\n\nThe list became 22 items. The shortest version of the project is: build a backend that satisfies 22 boring requirements so that no one ever has to build them again.`,
+      },
+      {
+        heading: 'enter Plynth',
+        body:
+`Plynth is a multi-product SaaS backend scaffold. It is the thing that should have existed the second time I built the same auth flow. It is now public, MIT-licensed, at [v0.1.0](https://github.com/shubhamkatta/plynth).\n\nThe thesis: instead of forking a starter for every new SaaS, fork Plynth once, plug in the products you build, and never write the plumbing again. Same Postgres. Same Redis. Same admin UI. Different products, fully isolated, sharing the boring 80%.\n\nConcretely, Plynth ships:\n\n- **Identity** — email/password (Argon2id), Google OAuth2, JWT access + refresh with server-side revocation, password reset via single-use tokens.\n- **Multi-tenancy** — dual-key isolation at the repository layer. Parent-child tenant hierarchies. Role-gated "act-as" for support. Zero cross-product paths without explicit admin bypass.\n- **RBAC** — resource:action catalogue, system roles, custom roles per product, role bindings scoped to child tenants.\n- **Billing** — plan catalogues per product, lifecycle (\`trial → active → past_due → grace → suspended → cancelled\`), Stripe driver in the box, mock driver for local dev, metered credits via an append-only ledger with atomic \`SELECT … FOR UPDATE\` consumption.\n- **Operations** — audit logs of every state change (including \`acting_from_tenant_id\` for act-as), per-product JSONB config, structured logs with \`request_id\` / \`product_id\` / \`tenant_id\` / \`user_id\` propagation, background jobs with arq.\n- **Security hardening** — \`/docs\` and \`/openapi.json\` hidden in production, partial unique indexes that free soft-deleted rows, typed \`AppError\` hierarchy, central error handlers, idempotency keys on every mutating endpoint.\n- **Admin UI** — a reference Electron desktop app that talks to the backend. Tokens stored in keytar (not localStorage). \`contextIsolation: true\`, \`nodeIntegration: false\`.`,
+      },
+      {
+        heading: 'two design decisions that mattered most',
+        body:
+`**Multi-product on one deployment.** The first version of Plynth in my head had one product per deployment. I would have shipped that and regretted it. Halfway through writing the data model I realised: the whole point is that I am going to run *several* SaaS apps from this thing. They should share infrastructure but not data. So \`Product\` became a first-class concept, and every tenant-scoped table got a \`(product_id, tenant_id)\` index. Cross-product access requires an explicit admin bypass that gets logged.\n\n**Repositories enforce isolation, not services.** It is tempting to put the "always filter by product_id" logic in service code. It is also fragile — one missed filter, one new endpoint that forgets, and you have a leak. In Plynth, the dual-filter lives at the repository layer. If you bypass the repository, you have to do it on purpose, and there are tests that scream when you do.\n\n![Two products, four tenants each. The hard wall down the middle is enforced by every repository — every query filters on both keys.](/blog/diagram-plynth-dual-key.svg)\n\nThat hard wall is the difference between "we have multi-tenancy" and "we will never accidentally show one customer another's data."`,
+      },
+      {
+        heading: 'what I deliberately left out',
+        body: `The opinions Plynth refuses to have:\n\n- **No frontend for the product.** The Electron admin is for managing the platform. The product UI is yours.\n- **No email or SMS vendor.** There is an interface. Plug in SES, Postmark, Resend, Twilio — whatever you have.\n- **No object storage opinion.** Same pattern. S3 integration sketched out, but the driver is yours.\n- **No cross-product SSO.** Two products on the same Plynth instance are siblings. They do not share users by default. If you want SSO between them, that is a feature you build.\n- **No search or analytics layers.** Plynth is plumbing. Plumbing is not search.\n\nEach of these was tempting. Each would have made Plynth less reusable. Boring-on-purpose is the design.`,
+      },
+      {
+        heading: 'the stack, briefly',
+        body: `I picked the stack with one rule: each choice should be the one I would reach for at 3am after a long week.\n\n- **FastAPI** — async-first, OpenAPI built-in, fast enough that I never had to debug performance in the first month.\n- **SQLAlchemy 2.0 async + asyncpg** — old codebase, new API, the typed \`Mapped[T]\` syntax is a quiet joy.\n- **PostgreSQL 16** — JSONB, partial unique indexes, optional RLS. Postgres remains the answer.\n- **Redis 7 + arq** — Redis-native job queue. arq is small, opinionated, and good.\n- **Pydantic v2** — fastest pure-Python validator. The migration from v1 hurt; v2 is worth it.\n- **Stripe driver** — pluggable. Mock driver bundled for local dev.\n- **Argon2id** — what the password hashing best-practice docs have said for years.\n\nFrontend stack for the admin: Electron 32, React 18, Mantine 7, TanStack Query. Mantine because it is well-designed and stays out of the way.\n\nThe Docker image is roughly 120 MB. The test suite — 170+ tests — runs in about 17 seconds. The repository is structured as a monorepo: \`app/\` for the FastAPI service, \`apps/admin-electron/\` for the desktop admin, \`docs/\` as the source of truth for architecture.`,
+      },
+      {
+        heading: 'what I learned writing it',
+        body: `A few things that surprised me even after thinking I knew what I was building.\n\n- **Documentation has to ship with the code.** Plynth's \`ARCHITECTURE.md\` and the deep-dive guides for tenancy, RBAC, billing, credits — those got written the same week as the corresponding modules. Without them, the modules would not be reusable. Code without docs is plumbing nobody wants to inherit.\n- **The Electron admin saved me from building a web admin.** I was tempted. An Electron app is unfashionable. It is also drastically less work than a hosted admin, and the security story is better: tokens live in keytar, not in any browser.\n- **\`SELECT … FOR UPDATE\` is underrated.** The metered credits ledger uses it for atomic consumption. Everyone reaches for fancy distributed locks before considering that a row lock in Postgres usually does the job.\n- **Idempotency keys are a feature you cannot add later.** They have to be in the schema from day one, or the day you need them is the day a webhook double-charges a customer.\n- **Audit logs feel like overhead until they are not.** The first time someone asks "who suspended this account three months ago," you will wish you had \`acting_from_tenant_id\` recorded. Plynth records it.`,
+      },
+      {
+        heading: 'where it is going',
+        body:
+`v0.1.0 is the initial public release. The shape is right; the polish is incremental. The next things on my list, roughly in order:\n\n- more billing providers in the box (Razorpay, Paddle)\n- an SMTP / Postmark / Resend reference driver for emails, behind the existing interface\n- a "tenant import" tool for migrating from existing apps\n- hardening for high-volume metered credit consumption (sharded ledgers)\n- a small library of Claude Code skills that automate the most common "I added a model" / "I added an endpoint" tasks\n\nPlynth is on GitHub: [github.com/shubhamkatta/plynth](https://github.com/shubhamkatta/plynth). MIT licence. Pull requests welcome; issues even more so. If you have ever rebuilt the same auth flow for the fourth time, you are exactly the person this is for.`,
+      },
+      {
+        heading: 'the honest closer',
+        body: `I did not build Plynth because I wanted to ship an open source project. I built it because the next time I start a SaaS, I would like to spend the first week on the product, not on plumbing. If it spares anyone else the fourth-time-fatigue, that is the whole point.\n\nThe fifth time I write the same authentication flow, it is going to be \`from plynth.identity import …\`. That is the whole point.`,
+      },
+    ],
+  },
+
+  {
     slug: 'are-you-managing-your-agents-or-are-they-managing-you',
     cover: '/blog/cover-managing-agents.svg',
     title: 'Are you managing your agents, or are they managing you?',

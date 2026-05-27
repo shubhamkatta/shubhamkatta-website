@@ -1,6 +1,5 @@
 import { site } from '../content/site';
 import { Paper, SectionLabel } from '../components/Shared';
-import { CalEmbed } from '../components/CalEmbed';
 
 export function ContactPage() {
   return (
@@ -24,18 +23,24 @@ export function ContactPage() {
         </Paper>
       </div>
 
-      <section className="section-space" style={{ marginTop: '1.5rem' }}>
-        <div className="section-head with-badge">
-          <div>
-            <SectionLabel>book a call</SectionLabel>
-            <h2 style={{ fontSize: 'clamp(1.2rem, 3vw, 1.8rem)' }}>
-              Or, if you'd rather just pick a slot.
-            </h2>
-            <p>Fifteen minutes. Bring a conversation, not a deck.</p>
-          </div>
-          <div className="badge-note">cal.com</div>
+      <section className="section-space cal-cta-section" style={{ marginTop: '1.5rem' }}>
+        <div className="cal-cta-copy">
+          <SectionLabel>book a call</SectionLabel>
+          <h2 style={{ fontSize: 'clamp(1.2rem, 3vw, 1.8rem)' }}>
+            Or, if you'd rather just pick a slot.
+          </h2>
+          <p>Fifteen minutes. Bring a conversation, not a deck.</p>
         </div>
-        <CalEmbed calLink="shubham-katta-cdzvpk/15min" namespace="sk-cal-15" />
+        <a
+          href={site.cal}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="cal-cta-button"
+          aria-label="Book a 15-minute call on Cal.com"
+        >
+          <span className="cal-cta-label">book 15 minutes</span>
+          <span className="cal-cta-arrow" aria-hidden="true">→</span>
+        </a>
       </section>
     </main>
   );
