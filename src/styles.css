@@ -112,8 +112,13 @@ h3 { font-size: 1.55rem; font-weight: 900; }
 .brand { font-weight: 900; font-size: 1.05rem; }
 .brand span { color: var(--red); }
 .desktop-nav { display: flex; gap: 1.2rem; flex-wrap: wrap; }
-.nav-link { font-weight: 700; color: var(--ink-muted-3); text-transform: lowercase; letter-spacing: 0.01em; }
+.nav-link { font-weight: 700; color: var(--ink-muted-3); text-transform: lowercase; letter-spacing: 0.01em; transition: color 0.2s ease; }
 .nav-link.active, .nav-link:hover { color: var(--text); }
+.nav-link-highlight { color: var(--red); position: relative; padding: 0.25rem 0; }
+.nav-link-highlight::after { content: ''; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px; background: var(--red); transform-origin: left; }
+.nav-link-highlight.active, .nav-link-highlight:hover { color: var(--red); }
+.footer-link-highlight { color: var(--red); }
+.footer-link-highlight:hover { color: var(--red); }
 .header-button, .button { display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; font-weight: 900; transition: transform .18s ease; }
 .header-button:hover, .button:hover, .contact-link:hover, .text-link:hover { transform: translateY(-2px); }
 .header-button { padding: .7rem 1rem; background: var(--white); border: 2px solid var(--border); box-shadow: var(--soft-shadow); font-size: .9rem; }
@@ -163,7 +168,7 @@ h2.work-heading { font-size: clamp(1rem, 2.5vw, 1.7rem); }
 .bitmoji-tag, .badge-note, .date-pill { background: var(--chip-bg); color: var(--ink-muted-2); }
 .hello-badge { position: absolute; right: -0.75rem; top: -0.75rem; transform: rotate(8deg); background: #ff6b6b; color: #fff; padding: .5rem .75rem; border-radius: 1rem; box-shadow: var(--paper-shadow); z-index: 1; }
 .about-badge { position: absolute; right: -0.5rem; top: 1.5rem; transform: rotate(6deg); background: var(--about-badge-bg); color: var(--text); padding: .5rem .75rem; border-radius: 1rem; box-shadow: 0 4px 12px rgba(31,24,21,.1); }
-.mini-note.gold { position: relative; top: -8px; background: #ffd166; color: #1d1815; box-shadow: var(--soft-shadow); border-radius: 14px; padding: .15rem .75rem; }
+.mini-note.gold { position: relative; top: -22px; font-size: 2.24rem; background: #ffd166; color: #1d1815; box-shadow: var(--soft-shadow); border-radius: 14px; padding: .15rem .7rem; margin-bottom: -16px; }
 .stack-list { display: grid; gap: .8rem; }
 .side-stack { display: grid; gap: 1rem; }
 .compact-top { padding-top: .5rem; }
@@ -253,7 +258,7 @@ h2.work-heading { font-size: clamp(1rem, 2.5vw, 1.7rem); }
 .site-footer { border-top: 1px solid var(--border); background: var(--footer-bg); }
 .footer-row { font-size: .92rem; color: var(--ink-soft); }
 .footer-links { display: flex; gap: 1rem; flex-wrap: wrap; }
-.footer-links a { text-transform: lowercase; letter-spacing: 0.01em; }
+.footer-links a { text-transform: lowercase; letter-spacing: 0.01em; transition: color 0.2s ease; }
 .stretch-top { align-items: start; }
 
 /* "at the moment" → /now link, sitting as the corner tape-badge on the bio card */
@@ -268,6 +273,23 @@ h2.work-heading { font-size: clamp(1rem, 2.5vw, 1.7rem); }
 .work-quote p { font-family: 'Playfair Display', 'Times New Roman', Georgia, serif; font-style: italic; font-weight: 500; font-size: clamp(2rem, 4.6vw, 3.2rem); line-height: 1.15; letter-spacing: -0.015em; color: var(--red); margin: 0 0 .65rem; }
 .work-quote cite { display: block; text-align: right; font-family: 'Playfair Display', Georgia, serif; font-style: normal; font-weight: 500; font-size: 1rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-soft); margin-top: .35rem; }
 [data-theme="dark"] .work-quote::before { opacity: 0.4; }
+
+/* Featured post card on the home page */
+.featured-card { padding: 0; overflow: hidden; }
+.featured-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 0; align-items: stretch; min-height: 300px; }
+.featured-cover { display: block; overflow: hidden; background: rgba(29, 24, 21, 0.05); }
+.featured-cover img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+.featured-cover:hover img { transform: scale(1.02); }
+.featured-content { padding: 2rem 2.4rem; display: flex; flex-direction: column; justify-content: center; gap: .7rem; }
+.featured-content .post-type { align-self: flex-start; }
+.featured-title { font-size: clamp(1.4rem, 3vw, 2.1rem); margin: .2rem 0 .3rem; line-height: 1.18; letter-spacing: -0.02em; }
+.featured-excerpt { font-size: 1.04rem; line-height: 1.55; color: var(--ink-on-paper); margin: 0; }
+.featured-card .read-more-link { margin-top: .4rem; }
+@media (max-width: 760px) {
+  .featured-grid { grid-template-columns: 1fr; min-height: 0; }
+  .featured-cover img { aspect-ratio: 2 / 1; }
+  .featured-content { padding: 1.4rem 1.6rem; }
+}
 
 /* Hero right-column stack: two tilted scrapbook cards */
 .bio-stack { display: grid; gap: 1.1rem; }
@@ -301,6 +323,49 @@ h2.work-heading { font-size: clamp(1rem, 2.5vw, 1.7rem); }
 /* /now and /uses pages */
 .now-grid { display: grid; grid-template-columns: 1.3fr 0.85fr; gap: 1.5rem; align-items: start; }
 .now-stack { display: grid; gap: 1rem; }
+.now-stack-main { max-width: 760px; margin: 0 auto; }
+
+/* Vertical timeline view for /now — alternating cards, staggered so each card starts at 60% of the previous, with enough row size that same-side cards never overlap. */
+.now-timeline { display: grid; grid-template-columns: 1fr 4rem 1fr; grid-auto-rows: 100px; position: relative; max-width: 1080px; margin: 1.5rem auto 0; padding: 1rem 0 2rem; }
+.now-timeline::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; transform: translateX(-50%); width: 2px; background: repeating-linear-gradient(to bottom, var(--border) 0 6px, transparent 6px 12px); z-index: 0; }
+.timeline-card { align-self: start; position: relative; z-index: 1; }
+.timeline-card.timeline-left::after,
+.timeline-card.timeline-right::before {
+  content: '';
+  position: absolute;
+  top: 2.1rem;
+  width: 1.9rem;
+  height: 2px;
+  background: var(--border);
+  z-index: 0;
+}
+.timeline-card.timeline-left::after { right: -2rem; }
+.timeline-card.timeline-right::before { left: -2rem; }
+.timeline-dot { align-self: start; justify-self: center; position: relative; width: 18px; height: 18px; background: #4ade80; border-radius: 50%; margin-top: 1.55rem; z-index: 2; box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.2), 0 0 18px rgba(74, 222, 128, 0.45); }
+.timeline-dot::after { content: ''; position: absolute; inset: -6px; border-radius: 50%; background: rgba(74, 222, 128, 0.45); animation: timeline-pulse 2.6s ease-out infinite; }
+[data-theme="dark"] .timeline-dot { background: #6ee7a1; box-shadow: 0 0 0 4px rgba(110, 231, 161, 0.18), 0 0 18px rgba(110, 231, 161, 0.4); }
+[data-theme="dark"] .timeline-dot::after { background: rgba(110, 231, 161, 0.5); }
+@keyframes timeline-pulse {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(2.8); opacity: 0; }
+}
+@media (max-width: 760px) {
+  .now-timeline { display: block; padding-left: 2.5rem; position: relative; }
+  .now-timeline::before { left: 14px; transform: none; }
+  .timeline-card.timeline-left, .timeline-card.timeline-right { transform: none !important; display: block; margin-bottom: 1.2rem; }
+  .timeline-card.timeline-left::after, .timeline-card.timeline-right::before { display: none; }
+  .timeline-dot { display: block; position: absolute; left: 14px; margin-top: 1.6rem; transform: translateX(-50%); }
+}
+.now-bottom-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.1rem; margin-top: 2.4rem; align-items: start; }
+.now-bottom-row .now-card { padding: 1.3rem 1.4rem; }
+.now-bottom-row .section-label { font-size: 2.32rem; margin-bottom: .5rem; }
+.now-bottom-row .now-card:nth-child(1) { transform: rotate(-0.7deg); }
+.now-bottom-row .now-card:nth-child(2) { transform: rotate(0.6deg); }
+.now-bottom-row .now-card:nth-child(3) { transform: rotate(-0.4deg); }
+@media (max-width: 900px) {
+  .now-bottom-row { grid-template-columns: 1fr; gap: 1rem; }
+  .now-stack-main { max-width: none; }
+}
 .now-card { padding: 1.4rem 1.6rem; }
 .now-card h2 { font-size: clamp(1.1rem, 2.2vw, 1.5rem); margin-bottom: .7rem; letter-spacing: -0.02em; }
 .now-card .arrow-prefix { color: var(--red); font-weight: 900; margin-right: .4rem; }

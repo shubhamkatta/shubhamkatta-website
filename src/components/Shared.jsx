@@ -4,8 +4,12 @@ export function SectionLabel({ children, tone = 'coral' }) {
   return <p className={`section-label tone-${tone}`}>{children}</p>;
 }
 
-export function Paper({ children, className = '', tone = 'paper-white' }) {
-  return <div className={`paper ${tone} ${className}`.trim()}>{children}</div>;
+export function Paper({ children, className = '', tone = 'paper-white', style, ...rest }) {
+  return (
+    <div className={`paper ${tone} ${className}`.trim()} style={style} {...rest}>
+      {children}
+    </div>
+  );
 }
 
 export function Chip({ children, tone = 'paper-white' }) {

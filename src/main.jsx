@@ -15,7 +15,7 @@ import { WorkPage } from './pages/WorkPage';
 import { WritingIndexPage, WritingPostPage } from './pages/WritingPages';
 import { CaseStudiesPage, CaseStudyPage } from './pages/CaseStudyPages';
 import { ContactPage } from './pages/ContactPage';
-// import { NowPage } from './pages/NowPage';   // /now — held back; uncomment to enable
+import { NowPage } from './pages/NowPage';
 // import { UsesPage } from './pages/UsesPage'; // /uses — held back; uncomment to enable
 import { SiteLayout } from './components/SiteLayout';
 
@@ -31,7 +31,7 @@ const router = createBrowserRouter([
       { path: 'writing/:slug', element: <WritingPostPage /> },
       { path: 'case-studies', element: <CaseStudiesPage /> },
       { path: 'case-studies/:slug', element: <CaseStudyPage /> },
-      // { path: 'now', element: <NowPage /> },     // /now route held back
+      { path: 'now', element: <NowPage /> },
       // { path: 'uses', element: <UsesPage /> },   // /uses route held back
       { path: 'contact', element: <ContactPage /> },
     ],

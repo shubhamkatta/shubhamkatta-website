@@ -67,6 +67,31 @@ export function HomePage() {
         </Paper>
       </section>
 
+      {posts[0] && (
+        <section className="container section-space">
+          <div className="section-head with-badge">
+            <div>
+              <SectionLabel>featured</SectionLabel>
+              <h2>Just shipped — a longer piece worth a read.</h2>
+            </div>
+            <div className="badge-note">new</div>
+          </div>
+          <Paper className="featured-card" tone="paper-yellow">
+            <div className="featured-grid">
+              <Link to={`/writing/${posts[0].slug}`} className="featured-cover" aria-label={posts[0].title}>
+                <img src={posts[0].cover} alt={posts[0].title} loading="lazy" />
+              </Link>
+              <div className="featured-content">
+                <span className="post-type">{posts[0].type}</span>
+                <h3 className="featured-title">{posts[0].title}</h3>
+                <p className="featured-excerpt">{posts[0].excerpt}</p>
+                <Link to={`/writing/${posts[0].slug}`} className="read-more-link">read this →</Link>
+              </div>
+            </div>
+          </Paper>
+        </section>
+      )}
+
       <section className="container section-space">
         <div className="section-head with-badge">
           <div>
@@ -76,7 +101,7 @@ export function HomePage() {
           <div className="badge-note">ongoing archive</div>
         </div>
         <div className="grid-three">
-          {posts.slice(0, 3).map((post) => <PostCard key={post.slug} post={post} />)}
+          {posts.slice(1, 4).map((post) => <PostCard key={post.slug} post={post} />)}
         </div>
       </section>
 

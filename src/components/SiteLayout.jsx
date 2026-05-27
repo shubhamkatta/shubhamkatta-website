@@ -7,7 +7,7 @@ const links = [
   ['Me', '/about'],
   ['Work', '/work'],
   ['Writings', '/writing'],
-  // ['Now', '/now'],   // held back; uncomment when /now route is enabled
+  ['Now', '/now'],
   ['Say hello', '/contact'],
 ];
 
@@ -24,7 +24,11 @@ export function SiteLayout() {
           </NavLink>
           <nav className="desktop-nav">
             {links.map(([label, href]) => (
-              <NavLink key={href} to={href} className="nav-link">
+              <NavLink
+                key={href}
+                to={href}
+                className={`nav-link${href === '/now' ? ' nav-link-highlight' : ''}`}
+              >
                 {label}
               </NavLink>
             ))}
@@ -38,7 +42,7 @@ export function SiteLayout() {
           <div>© 2026 Shubham Katta · still figuring things out, just with better tools now</div>
           <div className="footer-links">
             <NavLink to="/writing">Writings</NavLink>
-            {/* <NavLink to="/now">Now</NavLink>   — held back */}
+            <NavLink to="/now" className="footer-link-highlight">Now</NavLink>
             {/* <NavLink to="/uses">Uses</NavLink> — held back */}
             <NavLink to="/case-studies">Case Files</NavLink>
             <NavLink to="/work">Work</NavLink>
