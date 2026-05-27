@@ -198,6 +198,9 @@ h2.work-heading { font-size: clamp(1rem, 2.5vw, 1.7rem); }
 [data-theme="dark"] .findings-block .finding-gold { background: rgba(255, 209, 102, 0.35); border-color: rgba(255, 209, 102, 0.55); }
 [data-theme="dark"] .findings-block .finding-label { color: rgba(26, 22, 18, 0.5); }
 
+.me-findings-section { padding: 3rem 0 3.2rem; }
+@media (max-width: 900px) { .me-findings-section { padding: 2rem 0 2.2rem; } }
+
 /* Me + casual findings — irregular tilted split */
 .me-findings { padding: 2rem 2.2rem 2.2rem; transform: rotate(-0.35deg); }
 .me-findings-split { display: grid; grid-template-columns: 1.08fr 0.92fr; gap: 2.4rem; position: relative; align-items: start; }

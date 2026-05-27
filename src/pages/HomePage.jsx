@@ -4,7 +4,6 @@ import { chips, findings, metrics, roles, site } from '../content/site';
 import { build } from '../content/build';
 import { Chip, Paper, PostCard, SectionLabel } from '../components/Shared';
 import { CurrentlyBlock } from '../components/CurrentlyBlock';
-import { OngoingTerminal } from '../components/OngoingTerminal';
 
 export function HomePage() {
   return (
@@ -54,7 +53,7 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="container compact-top">
+      <section className="container me-findings-section">
         <Paper className="about-home findings-block ink-block me-findings now-bg now-bg-notebook" tone="ink-block">
           <span className="now-bg-art" aria-hidden="true" />
           <div className="me-findings-split">
@@ -164,7 +163,6 @@ export function HomePage() {
             <SectionLabel tone="sky">work</SectionLabel>
           </div>
         </div>
-        <OngoingTerminal />
         <div className="split-grid work-grid">
           <div className="stack-list">
             {roles.map((role) => (
