@@ -39,7 +39,7 @@ export function SiteLayout() {
           <div className="footer-links">
             <NavLink to="/writing">Writings</NavLink>
             <NavLink to="/now">Now</NavLink>
-            {/* <NavLink to="/uses">Uses</NavLink> — held back */}
+            <NavLink to="/uses">Uses</NavLink>
             <NavLink to="/case-studies">Case Files</NavLink>
             <NavLink to="/work">Work</NavLink>
             <a href={site.linkedin}>LinkedIn</a>

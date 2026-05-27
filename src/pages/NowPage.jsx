@@ -336,11 +336,11 @@ export function NowPage() {
           <span className="now-bg-art" aria-hidden="true" />
           <SectionLabel tone="ink">elsewhere on the site</SectionLabel>
           <ul className="simple-list">
-            {/* <li>
+            <li>
               <a className="text-link" href="/uses">
                 what I use →
               </a>
-            </li> */}
+            </li>
             <li>
               <a className="text-link" href="/writing">
                 what I'm writing →
