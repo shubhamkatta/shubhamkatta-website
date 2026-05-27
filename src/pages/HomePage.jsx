@@ -2,27 +2,29 @@ import { Link } from 'react-router-dom';
 import { caseStudies } from '../content/caseStudies';
 import { posts } from '../content/posts';
 import { chips, findings, metrics, roles, site } from '../content/site';
+import { build } from '../content/build';
 import { CaseCard, Chip, Paper, PostCard, SectionLabel } from '../components/Shared';
+import { CurrentlyBlock } from '../components/CurrentlyBlock';
 
 export function HomePage() {
   return (
     <main>
-      <section className="hero container split-grid">
-        <div>
-          <div className="chip-row">
-            {chips.map((chip, i) => (
-              <Chip key={chip} tone={['paper-white', 'paper-yellow', 'paper-blue', 'paper-coral'][i % 4]}>
-                {chip}
-              </Chip>
-            ))}
-          </div>
+      <section className="hero container">
+        <div className="chip-row chip-row-tilted">
+          {chips.map((chip, i) => (
+            <Chip key={chip} tone={['paper-white', 'paper-yellow', 'paper-blue', 'paper-coral'][i % 4]}>
+              {chip}
+            </Chip>
+          ))}
+        </div>
+        <div className="split-grid hero-grid">
           <Paper className="hero-card">
             <SectionLabel>personal internet space</SectionLabel>
             <h1 style={{ marginBottom: '1.5rem' }}>A personal space for work, writing, humour, and whatever else survives being noticed.</h1>
             <p className="lead">
               Hi, I’m Shubham. I build software professionally, think about people a little too much, and write about systems, identity, work, the internet, and the odd patterns hiding inside ordinary life.
             </p>
-            <p>
+            <p className="lead">
               This is less a formal website and more a living archive — part notebook, part portfolio, part internet home, part place where I try to say certain things honestly before they become too polished to mean anything.
             </p>
             <div className="button-row">
@@ -31,46 +33,38 @@ export function HomePage() {
               <Link to="/work" className="button button-blue">yes, there is work too</Link>
             </div>
           </Paper>
-        </div>
-        <Paper className="bio-card tape" tone="paper-yellow">
-          <div className="badge-note hello-badge">hello, internet</div>
+        <Paper className="bio-card" tone="paper-yellow">
+          <Link
+            to="/now"
+            className="badge-note hello-badge at-the-moment-link"
+            aria-label="See the /now page for a longer snapshot"
+          >
+            at the moment →
+          </Link>
           <div className="bio-hero">
             <img className="bitmoji" src="/bitmoji-relax.png" alt="Shubham bitmoji reading with a cat" />
             <div>
-              <SectionLabel tone="ink">currently</SectionLabel>
               <h2>building things, collecting patterns, staying curious</h2>
             </div>
           </div>
-          <p>
-            Principal engineer by job title, pattern collector by default setting. Equal interest in systems, people, incentives, and why some truths arrive wearing jokes.
-          </p>
-          <div className="stack-list">
-            <Paper tone="paper-white">thinks deeply about systems and human behavior</Paper>
-            <Paper tone="paper-blue">writes essays, notes, personal journeys, and casual findings</Paper>
-            <Paper tone="paper-coral">wanted this site to feel alive, not laminated</Paper>
-          </div>
+          <CurrentlyBlock />
         </Paper>
+        </div>
       </section>
 
-      <section className="container split-grid compact-top">
+      <section className="container compact-top">
         <Paper className="about-home" tone="paper-white">
           <div className="badge-note about-badge">me, but with paragraphs</div>
           <SectionLabel tone="sky">me</SectionLabel>
-          <h2>I like people who think clearly, write honestly, and don’t confuse depth with heaviness.</h2>
+          <h2 style={{ marginBottom: '1.5rem' }}>I like people who think clearly, write honestly, and don’t confuse depth with heaviness.</h2>
           <p>
-            I’m interested in the gap between what people say, what they do, what they avoid, and the stories they tell themselves about all three. A surprising amount of work, identity, ambition, and love seems to live there.
+            I’m interested in the gap between what people say, what they do, what they avoid, and the stories they tell themselves about all three. A surprising amount of work, identity, ambition, and love seems to live there — equal interest in systems, people, incentives, and why some truths arrive wearing jokes.
           </p>
           <p>
             So yes, this site will have software. But it will also have personal experiences, strange realizations, casual findings, internet rabbit holes, and bits of humour that usually show up when truth gets tired of dressing formally.
           </p>
-          <Link to="/about" className="text-link">read more about me →</Link>
+          <Link to="/about" className="read-more-link">read more about me →</Link>
         </Paper>
-        <div className="side-stack">
-<Paper tone="paper-yellow">
-            <div className="mini-note">from the notebook</div>
-            <p>“Humour usually tells the truth faster than seriousness, mostly because it doesn’t have the stamina to keep pretending.”</p>
-          </Paper>
-        </div>
       </section>
 
       <section className="container section-space">
@@ -106,12 +100,48 @@ export function HomePage() {
         </Paper>
       </section>
 
+      {/*
+        Build section — temporarily disabled while we plan specifics.
+        Restore by uncommenting. Data lives in src/content/build.js.
+
+        <section id="build" className="container section-space">
+          <div className="section-head with-badge">
+            <div>
+              <SectionLabel>build</SectionLabel>
+              <h2 style={{ fontSize: 'clamp(1.2rem, 3vw, 2rem)' }}>{build.headline}</h2>
+              <p>{build.subhead}</p>
+            </div>
+            <div className="badge-note">in progress, always</div>
+          </div>
+          <div className="build-grid">
+            {build.cards.map((card) => (
+              <Paper
+                key={card.num}
+                tone={card.num === 'i' ? 'paper-yellow' : card.num === 'ii' ? 'paper-blue' : 'paper-coral'}
+                className="build-card"
+              >
+                <span className="build-num">{card.num}</span>
+                <h3>{card.title}</h3>
+                <p>{card.body}</p>
+                <div className="tag-row">
+                  {card.tags.map((tag) => <span key={tag} className="tag-pill">{tag}</span>)}
+                </div>
+              </Paper>
+            ))}
+          </div>
+          <div className="build-note">{build.note}</div>
+        </section>
+      */}
+
       <section className="container section-space">
         <div className="section-head">
-          <div>
+          <div style={{ maxWidth: 'none' }}>
             <SectionLabel tone="sky">work</SectionLabel>
-            <h2 style={{ fontSize: '0.9rem' }}>The professional chapter. Important, but not the whole autobiography.</h2>
-            <p>I do serious work and care about doing it well. I just don’t want the website to behave as though a person is only the cleanest version of their timeline.</p>
+            <blockquote className="work-quote">
+              <p>Work is love made visible.</p>
+              <cite>— Khalil Gibran</cite>
+            </blockquote>
+            <p className="lead">I do serious work and care about doing it well. I just don’t want the website to behave as though a person is only the cleanest version of their timeline.</p>
           </div>
         </div>
         <div className="split-grid work-grid">
@@ -162,9 +192,10 @@ export function HomePage() {
             </div>
             <div className="contact-blended-right">
               <img className="contact-bitmoji" src="/bitmoji-hmu.png" alt="Shubham bitmoji holding HMU sign" />
-              <a className="contact-link white-link" href={site.linkedin}>connect on LinkedIn</a>
+              <a className="contact-link white-link" href={site.cal} target="_blank" rel="noopener noreferrer">book a 15-min call →</a>
+              <a className="contact-link ghost-link" href={site.linkedin}>connect on LinkedIn</a>
               <a className="contact-link ghost-link" href={`mailto:${site.email}`}>send an email</a>
-              <p className="contact-note">LinkedIn is fast. Email is better for longer thoughts. Either way, formality is optional.</p>
+              <p className="contact-note">Call for the quick chat. LinkedIn for fast notes. Email for longer thoughts. Formality is optional.</p>
             </div>
           </div>
         </Paper>

@@ -19,7 +19,7 @@ export function PostCard({ post }) {
       <div className="post-type">{post.type}</div>
       <h3>{post.title}</h3>
       <p>{post.excerpt || post.body}</p>
-      <Link to={`/writing/${post.slug}`} className="text-link">
+      <Link to={`/writing/${post.slug}`} className="read-more-link">
         read this →
       </Link>
     </article>
@@ -31,7 +31,7 @@ export function CaseCard({ item }) {
     <article className="paper paper-white case-card">
       <h3>{item.title}</h3>
       <p>{item.summary}</p>
-      <Link to={`/case-studies/${item.slug}`} className="text-link">
+      <Link to={`/case-studies/${item.slug}`} className="read-more-link">
         read case file →
       </Link>
     </article>

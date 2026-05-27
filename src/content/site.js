@@ -3,6 +3,8 @@ export const site = {
   tag: 'A personal space for work, writing, humour, and whatever else survives being noticed.',
   email: 'hello@shubhamkatta.com',
   linkedin: 'https://www.linkedin.com/in/kattashubham/',
+  cal: 'https://cal.com/shubham-katta-cdzvpk/15min',
+  calLink: 'shubham-katta-cdzvpk/15min',
 };
 
 export const chips = [
@@ -23,7 +25,7 @@ export const findings = [
 
 export const roles = [
   {
-    company: 'Cyble',
+    company: 'Cyble Inc.',
     period: 'Sep 2020 — Present',
     title: 'Principal Software Engineer',
     note:
@@ -32,7 +34,7 @@ export const roles = [
     color: 'paper-white',
   },
   {
-    company: 'R1 RCM',
+    company: 'R1 RCM Global Private Limited',
     period: 'Aug 2019 — Sep 2020',
     title: 'Engineer — Applications & Engineering',
     note:
@@ -41,7 +43,7 @@ export const roles = [
     color: 'paper-blue',
   },
   {
-    company: 'Calibrated Advisory',
+    company: 'Calibrated Advisory, LLP',
     period: 'Dec 2016 — Aug 2019',
     title: 'Software Development Engineer',
     note:

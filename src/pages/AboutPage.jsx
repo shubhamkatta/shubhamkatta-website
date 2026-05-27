@@ -7,7 +7,7 @@ export function AboutPage() {
         <SectionLabel tone="sky">me</SectionLabel>
         <h1 style={{ fontSize: 'clamp(1.35rem, 4vw, 2.9rem)', marginBottom: '1.5rem' }}>More internet room, less corporate lobby.</h1>
         <p style={{ marginBottom: '2rem' }}>
-          I'm interested in the gap between what people say, what they do, what they avoid, and the stories they tell themselves about all three. A surprising amount of work, identity, ambition, and love seems to live there.
+          I'm interested in the gap between what people say, what they do, what they avoid, and the stories they tell themselves about all three. A surprising amount of work, identity, ambition, and love seems to live there — equal interest in systems, people, incentives, and why some truths arrive wearing jokes.
         </p>
         <p>
           I build systems for a living, but I'm equally interested in the human machinery around them — incentives, judgment, ambiguity, communication, and the stories people tell themselves when the metrics are fine but something still feels off.

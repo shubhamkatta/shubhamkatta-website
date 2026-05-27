@@ -1,12 +1,13 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import { site } from '../content/site';
+import { ThemeToggle } from './ThemeToggle';
 
 const links = [
   ['Home', '/'],
   ['Me', '/about'],
   ['Work', '/work'],
   ['Writings', '/writing'],
-  ['Case Files', '/case-studies'],
+  // ['Now', '/now'],   // held back; uncomment when /now route is enabled
   ['Say hello', '/contact'],
 ];
 
@@ -28,9 +29,7 @@ export function SiteLayout() {
               </NavLink>
             ))}
           </nav>
-          <a href={`mailto:${site.email}`} className="header-button">
-            say hello
-          </a>
+          <ThemeToggle />
         </div>
       </header>
       <Outlet />
@@ -39,6 +38,9 @@ export function SiteLayout() {
           <div>© 2026 Shubham Katta · still figuring things out, just with better tools now</div>
           <div className="footer-links">
             <NavLink to="/writing">Writings</NavLink>
+            {/* <NavLink to="/now">Now</NavLink>   — held back */}
+            {/* <NavLink to="/uses">Uses</NavLink> — held back */}
+            <NavLink to="/case-studies">Case Files</NavLink>
             <NavLink to="/work">Work</NavLink>
             <a href={site.linkedin}>LinkedIn</a>
             <a href={`mailto:${site.email}`}>Email</a>
