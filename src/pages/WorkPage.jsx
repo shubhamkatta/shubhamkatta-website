@@ -1,5 +1,6 @@
 import { roles, metrics } from '../content/site';
 import { Paper, SectionLabel } from '../components/Shared';
+import { OngoingTerminal } from '../components/OngoingTerminal';
 
 export function WorkPage() {
   return (
@@ -8,6 +9,9 @@ export function WorkPage() {
         <SectionLabel tone="sky">work</SectionLabel>
         <h1 style={{ fontSize: 'clamp(1.35rem, 4vw, 2.9rem)' }}>The professional chapter. Important, but not the whole autobiography.</h1>
       </Paper>
+      <div className="page-space-small">
+        <OngoingTerminal />
+      </div>
       <div className="split-grid work-grid page-space-small">
         <div className="stack-list">
           {roles.map((role) => (

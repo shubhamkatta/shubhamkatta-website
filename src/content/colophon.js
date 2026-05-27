@@ -26,12 +26,6 @@ export const colophon = {
           context: 'a serif with a small smirk. Reserved for the lines I want to feel slightly dressed up.',
         },
         {
-          name: 'Playfair Display',
-          font: '"Playfair Display", "Times New Roman", Georgia, serif',
-          detail: 'one pull quote, that is it',
-          context: 'comes out for the Khalil Gibran line on /work, then goes back in the drawer. Restraint is the whole reason it still feels special.',
-        },
-        {
           name: 'ui-monospace',
           font: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
           detail: 'code blocks + inline snippets',

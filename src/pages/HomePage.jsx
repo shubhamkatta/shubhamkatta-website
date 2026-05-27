@@ -4,6 +4,7 @@ import { chips, findings, metrics, roles, site } from '../content/site';
 import { build } from '../content/build';
 import { Chip, Paper, PostCard, SectionLabel } from '../components/Shared';
 import { CurrentlyBlock } from '../components/CurrentlyBlock';
+import { OngoingTerminal } from '../components/OngoingTerminal';
 
 export function HomePage() {
   return (
@@ -54,18 +55,35 @@ export function HomePage() {
       </section>
 
       <section className="container compact-top">
-        <Paper className="about-home now-bg now-bg-notebook" tone="paper-white">
+        <Paper className="about-home findings-block ink-block me-findings now-bg now-bg-notebook" tone="ink-block">
           <span className="now-bg-art" aria-hidden="true" />
-          <div className="badge-note about-badge">me, but with paragraphs</div>
-          <SectionLabel tone="sky">me</SectionLabel>
-          <h2 style={{ marginBottom: '1.5rem' }}>I like people who think clearly, write honestly, and don’t confuse depth with heaviness.</h2>
-          <p>
-            I’m interested in the gap between what people say, what they do, what they avoid, and the stories they tell themselves about all three. A surprising amount of work, identity, ambition, and love seems to live there — equal interest in systems, people, incentives, and why some truths arrive wearing jokes.
-          </p>
-          <p>
-            So yes, this site will have software. But it will also have personal experiences, strange realizations, casual findings, internet rabbit holes, and bits of humour that usually show up when truth gets tired of dressing formally.
-          </p>
-          <Link to="/about" className="read-more-link">read more about me →</Link>
+          <div className="me-findings-split">
+            <div className="me-side">
+              <div className="badge-note about-badge">me, but with paragraphs</div>
+              <SectionLabel tone="light">me</SectionLabel>
+              <h2 style={{ marginBottom: '1.2rem' }}>I like people who think clearly, write honestly, and don’t confuse depth with heaviness.</h2>
+              <p>
+                I’m interested in the gap between what people say, what they do, what they avoid, and the stories they tell themselves about all three. A surprising amount of work, identity, ambition, and love seems to live there — equal interest in systems, people, incentives, and why some truths arrive wearing jokes.
+              </p>
+              <p>
+                So yes, this site will have software. But it will also have personal experiences, strange realizations, casual findings, internet rabbit holes, and bits of humour that usually show up when truth gets tired of dressing formally.
+              </p>
+              <Link to="/about" className="read-more-link">read more about me →</Link>
+            </div>
+            <div className="findings-side">
+              <div className="badge-note dark findings-badge">collected in real time</div>
+              <SectionLabel tone="light">casual findings</SectionLabel>
+              <h3 className="findings-headline">Some thoughts I’ve probably earned the right to overstate.</h3>
+              <div className="findings-stack">
+                {findings.slice(0, 3).map((item, idx) => (
+                  <div key={item} className={`finding-card ${idx % 2 ? 'finding-gold' : 'finding-dark'}`}>
+                    <div className="finding-label">finding 0{idx + 1}</div>
+                    <div>{item}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </Paper>
       </section>
 
@@ -107,26 +125,6 @@ export function HomePage() {
         </div>
       </section>
 
-      <section className="container section-space">
-        <Paper className="findings-block ink-block" tone="ink-block">
-          <div className="section-head with-badge light">
-            <div>
-              <SectionLabel tone="light">casual findings</SectionLabel>
-              <h2>Some thoughts I’ve probably earned the right to overstate.</h2>
-            </div>
-            <div className="badge-note dark">collected in real time</div>
-          </div>
-          <div className="grid-two">
-            {findings.slice(0, 4).map((item, idx) => (
-              <div key={item} className={`finding-card ${idx % 2 ? 'finding-gold' : 'finding-dark'}`}>
-                <div className="finding-label">finding 0{idx + 1}</div>
-                <div>{item}</div>
-              </div>
-            ))}
-          </div>
-        </Paper>
-      </section>
-
       {/*
         Build section — temporarily disabled while we plan specifics.
         Restore by uncommenting. Data lives in src/content/build.js.
@@ -164,13 +162,9 @@ export function HomePage() {
         <div className="section-head">
           <div style={{ maxWidth: 'none' }}>
             <SectionLabel tone="sky">work</SectionLabel>
-            <blockquote className="work-quote">
-              <p>Work is love made visible.</p>
-              <cite>— Khalil Gibran</cite>
-            </blockquote>
-            <p className="lead">I do serious work and care about doing it well. I just don’t want the website to behave as though a person is only the cleanest version of their timeline.</p>
           </div>
         </div>
+        <OngoingTerminal />
         <div className="split-grid work-grid">
           <div className="stack-list">
             {roles.map((role) => (
