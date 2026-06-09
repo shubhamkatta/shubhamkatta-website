@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="What AI agent governance actually means">
+  <rect width="1200" height="600" fill="#eaf7ff"/>
+  <rect x="510" y="34" width="220" height="22" rx="4" fill="#fff6db" opacity="0.9" transform="rotate(-2 620 45)"/>
+  <g transform="translate(96,140) rotate(-1.5)">
+    <rect width="470" height="340" rx="22" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <text x="24" y="40" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="rgba(29,24,21,0.55)" letter-spacing="2">THE CONTROL PLANE</text>
+    <g transform="translate(150,58)">
+      <rect width="170" height="42" rx="10" fill="#1d1815"/>
+      <text x="85" y="27" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="13" fill="#f6efe6">agent proposes</text>
+    </g>
+    <path d="M 235 100 L 235 118" stroke="#1d1815" stroke-width="2"/>
+    <g font-family="Inter, sans-serif" font-weight="800" font-size="12" fill="#1d1815">
+      <g transform="translate(40,118)"><rect width="390" height="34" rx="8" fill="#fff6db" stroke="#1d1815" stroke-width="2"/><text x="14" y="22">identity · who, on behalf of whom</text></g>
+      <g transform="translate(40,158)"><rect width="390" height="34" rx="8" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/><text x="14" y="22">policy-as-code · is this allowed?</text></g>
+      <g transform="translate(40,198)"><rect width="390" height="34" rx="8" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/><text x="14" y="22">verify · check output before effect</text></g>
+      <g transform="translate(40,238)"><rect width="390" height="34" rx="8" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/><text x="14" y="22">audit · every action, immutably</text></g>
+    </g>
+    <g transform="translate(150,284)">
+      <rect width="170" height="40" rx="10" fill="#ff6b6b" stroke="#1d1815" stroke-width="2"/>
+      <text x="85" y="26" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="13" fill="#fff">effect executes</text>
+    </g>
+  </g>
+  <g transform="translate(610,200)">
+    <text x="0" y="48" font-family="Inter, sans-serif" font-weight="900" font-size="50" fill="#1d1815" letter-spacing="-2">Governance</text>
+    <text x="0" y="108" font-family="Inter, sans-serif" font-weight="900" font-size="50" fill="#1d1815" letter-spacing="-2">is a plane,</text>
+    <text x="0" y="168" font-family="Inter, sans-serif" font-weight="900" font-size="50" fill="#1d1815" letter-spacing="-2">not a doc.</text>
+    <text x="0" y="218" font-family="Inter, sans-serif" font-weight="700" font-size="21" fill="#ff6b6b">a layer every action must</text>
+    <text x="0" y="244" font-family="Inter, sans-serif" font-weight="700" font-size="21" fill="#ff6b6b">pass through. every time.</text>
+  </g>
+</svg>

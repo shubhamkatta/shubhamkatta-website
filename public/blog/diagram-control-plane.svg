@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 480" role="img" aria-label="The agent control plane: eight layers every consequential action passes through">
+  <rect width="1000" height="480" fill="#fff8ef"/>
+  <text x="40" y="46" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">The control plane: a layer the agent must pass through for every action</text>
+  <text x="40" y="70" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">not permission checks sprinkled across services — one first-class layer the runtime invokes every time.</text>
+  <g transform="translate(40,96)">
+    <rect width="180" height="356" rx="16" fill="#1d1815"/>
+    <text x="90" y="170" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="rgba(255,255,255,0.55)" letter-spacing="2">AGENT</text>
+    <text x="90" y="196" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" fill="#f6efe6">proposes</text>
+    <text x="90" y="214" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" fill="#f6efe6">an action</text>
+  </g>
+  <path d="M 220 274 L 256 274" stroke="#1d1815" stroke-width="2" marker-end="url(#dcpar)"/>
+  <g font-family="Inter, sans-serif" font-weight="800" font-size="12" fill="#1d1815">
+    <g transform="translate(266,96)"><rect width="222" height="52" rx="11" fill="#fff6db" stroke="#1d1815" stroke-width="2"/><text x="14" y="22">1 · IDENTITY</text><text x="14" y="40" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">agent + initiating human</text></g>
+    <g transform="translate(266,156)"><rect width="222" height="52" rx="11" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/><text x="14" y="22">2 · AUTHORIZATION</text><text x="14" y="40" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">context + resource sensitivity</text></g>
+    <g transform="translate(266,216)"><rect width="222" height="52" rx="11" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/><text x="14" y="22">3 · POLICY-AS-CODE</text><text x="14" y="40" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">versioned, testable</text></g>
+    <g transform="translate(266,276)"><rect width="222" height="52" rx="11" fill="#fff6db" stroke="#1d1815" stroke-width="2"/><text x="14" y="22">4 · TOOL REGISTRY</text><text x="14" y="40" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">owner · risk · approvals</text></g>
+    <g transform="translate(266,336)"><rect width="222" height="52" rx="11" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/><text x="14" y="22">5 · EXECUTION LIMITS</text><text x="14" y="40" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">sandbox · quota · rate</text></g>
+    <g transform="translate(508,96)"><rect width="222" height="52" rx="11" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/><text x="14" y="22">6 · VERIFICATION</text><text x="14" y="40" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">validate output before effect</text></g>
+    <g transform="translate(508,156)"><rect width="222" height="52" rx="11" fill="#fff6db" stroke="#1d1815" stroke-width="2"/><text x="14" y="22">7 · AUDIT</text><text x="14" y="40" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">every decision, immutable</text></g>
+    <g transform="translate(508,216)"><rect width="222" height="52" rx="11" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/><text x="14" y="22">8 · OBSERVABILITY</text><text x="14" y="40" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">anomaly + alerting</text></g>
+  </g>
+  <path d="M 730 242 L 766 242" stroke="#1d1815" stroke-width="2" marker-end="url(#dcpar)"/>
+  <g transform="translate(776,206)">
+    <rect width="184" height="72" rx="14" fill="#ff6b6b" stroke="#1d1815" stroke-width="2"/>
+    <text x="92" y="32" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#fff">EFFECT EXECUTES</text>
+    <text x="92" y="54" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="rgba(255,255,255,0.85)">only if every layer passed</text>
+  </g>
+  <text x="776" y="320" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.6)" width="184">core rule: an agent's effective</text>
+  <text x="776" y="338" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.6)">permissions ≤ the human's,</text>
+  <text x="776" y="356" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.6)">intersected with the agent's scope.</text>
+  <defs>
+    <marker id="dcpar" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1d1815"/></marker>
+  </defs>
+</svg>

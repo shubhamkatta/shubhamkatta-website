@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 460" role="img" aria-label="The layered defense: generator proposes, three layers contain the damage">
+  <rect width="1000" height="460" fill="#fff8ef"/>
+  <text x="40" y="46" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">The layered defense between a model and anything that matters</text>
+  <text x="40" y="70" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">the model proposes. nothing it says reaches a customer or triggers an action without passing through.</text>
+  <g font-family="Inter, sans-serif">
+    <g transform="translate(40,100)">
+      <rect width="200" height="300" rx="16" fill="#1d1815"/>
+      <text x="100" y="140" text-anchor="middle" font-weight="900" font-size="13" fill="rgba(255,255,255,0.55)" letter-spacing="2">GENERATOR</text>
+      <text x="100" y="168" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" fill="#f6efe6">proposes</text>
+      <text x="100" y="190" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" fill="#f6efe6">enrichment</text>
+    </g>
+    <path d="M 240 250 L 286 250" stroke="#1d1815" stroke-width="2" marker-end="url(#dgvar)"/>
+    <g transform="translate(296,100)">
+      <rect width="300" height="92" rx="14" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/>
+      <text x="16" y="28" font-weight="900" font-size="11" fill="#ff6b6b" letter-spacing="2">1 · DETERMINISTIC VALIDATION</text>
+      <text x="16" y="52" font-size="13" fill="#1d1815">check verifiable claims vs a source of truth</text>
+      <text x="16" y="74" font-size="12" fill="rgba(29,24,21,0.6)">CVE exists? indicator well-formed? → drop if not</text>
+    </g>
+    <g transform="translate(296,204)">
+      <rect width="300" height="92" rx="14" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/>
+      <text x="16" y="28" font-weight="900" font-size="11" fill="rgba(29,24,21,0.55)" letter-spacing="2">2 · CONFIDENCE ROUTING</text>
+      <text x="16" y="52" font-size="13" fill="#1d1815">for claims you can't deterministically check</text>
+      <text x="16" y="74" font-size="12" fill="rgba(29,24,21,0.6)">high → flows through · low → human review</text>
+    </g>
+    <g transform="translate(296,308)">
+      <rect width="300" height="92" rx="14" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/>
+      <text x="16" y="28" font-weight="900" font-size="11" fill="rgba(29,24,21,0.55)" letter-spacing="2">3 · CONTINUOUS EVALUATION</text>
+      <text x="16" y="52" font-size="13" fill="#1d1815">sample production output, score it over time</text>
+      <text x="16" y="74" font-size="12" fill="rgba(29,24,21,0.6)">catch drift after a model or prompt change</text>
+    </g>
+    <path d="M 596 146 L 686 146" stroke="#1d1815" stroke-width="2" marker-end="url(#dgvar)"/>
+    <path d="M 596 250 L 686 250" stroke="#1d1815" stroke-width="2" marker-end="url(#dgvar)"/>
+    <g transform="translate(696,150)">
+      <rect width="260" height="92" rx="14" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+      <text x="130" y="34" text-anchor="middle" font-weight="900" font-size="12" fill="#1d1815">PUBLISHED / ACTIONED</text>
+      <text x="130" y="60" text-anchor="middle" font-size="12" fill="rgba(29,24,21,0.65)">residual error lands in the</text>
+      <text x="130" y="78" text-anchor="middle" font-size="12" fill="rgba(29,24,21,0.65)">least harmful bucket</text>
+    </g>
+    <g transform="translate(696,254)">
+      <rect width="260" height="60" rx="14" fill="#fff6db" stroke="#1d1815" stroke-width="2"/>
+      <text x="130" y="28" text-anchor="middle" font-weight="900" font-size="12" fill="#1d1815">HUMAN REVIEW QUEUE</text>
+      <text x="130" y="48" text-anchor="middle" font-size="12" fill="rgba(29,24,21,0.65)">feeds back into the benchmark</text>
+    </g>
+  </g>
+  <defs>
+    <marker id="dgvar" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1d1815"/></marker>
+  </defs>
+</svg>

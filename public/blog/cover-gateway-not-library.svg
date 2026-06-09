@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="Build a gateway, not a library">
+  <rect width="1200" height="600" fill="#a3e4a3"/>
+  <rect x="520" y="34" width="210" height="22" rx="4" fill="#fff6db" opacity="0.9" transform="rotate(-2 625 45)"/>
+  <g transform="translate(90,150) rotate(-1.5)">
+    <rect width="500" height="320" rx="22" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <text x="24" y="40" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="rgba(29,24,21,0.55)" letter-spacing="2">EVERY TEAM CALLS THE MIDDLE</text>
+    <g font-family="Inter, sans-serif" font-weight="700" font-size="12" fill="#1d1815">
+      <g transform="translate(28,70)"><rect width="120" height="36" rx="9" fill="#fff6db" stroke="#1d1815" stroke-width="2"/><text x="60" y="24" text-anchor="middle">team A</text></g>
+      <g transform="translate(28,118)"><rect width="120" height="36" rx="9" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/><text x="60" y="24" text-anchor="middle">team B</text></g>
+      <g transform="translate(28,166)"><rect width="120" height="36" rx="9" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/><text x="60" y="24" text-anchor="middle">team C</text></g>
+    </g>
+    <g transform="translate(190,96)">
+      <rect width="120" height="128" rx="14" fill="#1d1815"/>
+      <text x="60" y="40" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="#f6efe6" letter-spacing="1">GATEWAY</text>
+      <text x="60" y="66" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" fill="rgba(255,255,255,0.7)">limit · cache</text>
+      <text x="60" y="84" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" fill="rgba(255,255,255,0.7)">fallback · cost</text>
+      <text x="60" y="102" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" fill="rgba(255,255,255,0.7)">audit</text>
+    </g>
+    <g font-family="Inter, sans-serif" font-weight="700" font-size="11" fill="#1d1815">
+      <g transform="translate(352,96)"><rect width="116" height="36" rx="9" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/><text x="58" y="23" text-anchor="middle">provider 1</text></g>
+      <g transform="translate(352,144)"><rect width="116" height="36" rx="9" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/><text x="58" y="23" text-anchor="middle">provider 2</text></g>
+    </g>
+    <g stroke="#1d1815" stroke-width="2" fill="none">
+      <path d="M 148 88 L 190 130"/>
+      <path d="M 148 136 L 190 150"/>
+      <path d="M 148 184 L 190 172"/>
+      <path d="M 310 130 L 352 114"/>
+      <path d="M 310 150 L 352 162"/>
+    </g>
+  </g>
+  <g transform="translate(640,206)">
+    <text x="0" y="48" font-family="Inter, sans-serif" font-weight="900" font-size="54" fill="#1d1815" letter-spacing="-2">Build a</text>
+    <text x="0" y="112" font-family="Inter, sans-serif" font-weight="900" font-size="54" fill="#1d1815" letter-spacing="-2">gateway.</text>
+    <text x="0" y="160" font-family="Inter, sans-serif" font-weight="700" font-size="24" fill="#ff6b6b">not a library.</text>
+    <text x="0" y="208" font-family="Inter, sans-serif" font-size="18" fill="rgba(29,24,21,0.75)">fairness and budgets can only be</text>
+    <text x="0" y="234" font-family="Inter, sans-serif" font-size="18" fill="rgba(29,24,21,0.75)">enforced from the middle.</text>
+  </g>
+</svg>

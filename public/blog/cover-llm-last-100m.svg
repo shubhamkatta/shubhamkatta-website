@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="Running an LLM over a hundred million items a day">
+  <rect width="1200" height="600" fill="#fff6db"/>
+  <rect x="500" y="34" width="230" height="22" rx="4" fill="#ffe9e4" opacity="0.9" transform="rotate(-2 615 45)"/>
+  <g transform="translate(90,140) rotate(-1.5)">
+    <rect width="500" height="340" rx="22" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <text x="24" y="40" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="rgba(29,24,21,0.55)" letter-spacing="2">THE LLM-LAST FUNNEL</text>
+    <g font-family="Inter, sans-serif">
+      <g transform="translate(40,58)">
+        <rect width="420" height="42" rx="10" fill="#1d1815"/>
+        <text x="210" y="27" text-anchor="middle" font-weight="800" font-size="13" fill="#f6efe6">100M ingested</text>
+      </g>
+      <g transform="translate(80,108)">
+        <rect width="340" height="40" rx="10" fill="#fff6db" stroke="#1d1815" stroke-width="2"/>
+        <text x="170" y="26" text-anchor="middle" font-weight="700" font-size="12" fill="#1d1815">rules handle structured data</text>
+      </g>
+      <g transform="translate(118,156)">
+        <rect width="264" height="40" rx="10" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/>
+        <text x="132" y="26" text-anchor="middle" font-weight="700" font-size="12" fill="#1d1815">dedup against history</text>
+      </g>
+      <g transform="translate(150,204)">
+        <rect width="200" height="40" rx="10" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/>
+        <text x="100" y="26" text-anchor="middle" font-weight="700" font-size="12" fill="#1d1815">cluster near-dupes</text>
+      </g>
+      <g transform="translate(176,252)">
+        <rect width="148" height="40" rx="10" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/>
+        <text x="74" y="26" text-anchor="middle" font-weight="700" font-size="12" fill="#1d1815">cheap model</text>
+      </g>
+      <g transform="translate(206,300)">
+        <rect width="88" height="36" rx="10" fill="#ff6b6b" stroke="#1d1815" stroke-width="2"/>
+        <text x="44" y="24" text-anchor="middle" font-weight="800" font-size="11" fill="#fff">big model</text>
+      </g>
+    </g>
+  </g>
+  <g transform="translate(640,200)">
+    <text x="0" y="48" font-family="Inter, sans-serif" font-weight="900" font-size="58" fill="#1d1815" letter-spacing="-2">100M</text>
+    <text x="0" y="112" font-family="Inter, sans-serif" font-weight="900" font-size="58" fill="#1d1815" letter-spacing="-2">a day.</text>
+    <text x="0" y="164" font-family="Inter, sans-serif" font-weight="700" font-size="22" fill="#ff6b6b">the craft is what never</text>
+    <text x="0" y="192" font-family="Inter, sans-serif" font-weight="700" font-size="22" fill="#ff6b6b">reaches the model.</text>
+    <text x="0" y="236" font-family="Inter, sans-serif" font-size="18" fill="rgba(29,24,21,0.7)">spend intelligence where the</text>
+    <text x="0" y="262" font-family="Inter, sans-serif" font-size="18" fill="rgba(29,24,21,0.7)">stakes are high. optimize the rest.</text>
+  </g>
+</svg>

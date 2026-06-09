@@ -77,6 +77,255 @@ prompts:
   },
   */
 
+  /* draft — withheld from publish (June 2026)
+  {
+    slug: 'i-explained-my-tech-stack-to-a-golden-retriever',
+    cover: '/blog/cover-golden-retriever.png',
+    title: 'I explained my entire tech stack to a golden retriever. He got it before some engineers do.',
+    type: 'humour',
+    date: 'June 10, 2026',
+    readingTime: '6 min',
+    color: 'paper-yellow',
+    tags: ['humour', 'ai systems', 'explainers', 'agents', 'dogs'],
+    excerpt:
+      'A mostly-true, fully-humorous guide to AI systems — LLMs, hallucination, rate limiters, agents, governance — as told to a dog named Chip, who understood it in four minutes and then ate a sock.',
+    seoDescription:
+      'A humorous but technically honest guide to AI systems — LLMs, hallucination, the generator-verifier pattern, rate limiting, caching, autonomous agents, and AI governance — explained to a golden retriever named Chip.',
+    keywords: 'AI explained simply, LLM, hallucination, generator-verifier, rate limiter, caching, autonomous agents, AI governance, humour, analogy',
+    intro:
+      `I have spent years building AI systems for security products. I have written RFCs. I have argued about ClickHouse versus Postgres until people left the room. But the clearest technical review I ever got was from my friend's golden retriever, Chip, who has the attention span of a goldfish and the conviction of a CEO.\n\nHere is everything important, explained the way Chip understood it. If you would rather the version without the dog, the other five posts in this series have fewer socks and more architecture diagrams.`,
+    sections: [
+      {
+        heading: 'what is an LLM?',
+        body: `**Me:** "Chip, an LLM is a very smart talking parrot that read every book ever written."\n\n**Chip:** (tilts head)\n\n**Me:** "It can answer almost anything. But it never actually saw any of it. So sometimes it says cats go woof with total confidence."\n\n**Chip:** (barks, presumably to correct the cats)\n\nHe understood immediately that confidence and correctness are different things. This puts him ahead of several production incidents I have witnessed.`,
+      },
+      {
+        heading: 'what is hallucination?',
+        body: `**Me:** "Sometimes the parrot makes up a fact. Says the mailman is a wizard. Very sure about it. Wrong."\n\n**Chip:** (deeply suspicious of the mailman now)\n\nThis is the whole problem with AI in serious systems. The parrot sounds equally sure whether it is right or making things up. Chip's solution — bark at everything just in case — is technically a 100% recall, 2% precision classifier. We have shipped worse.`,
+      },
+      {
+        heading: 'what is the generator-verifier pattern?',
+        body: `**Me:** "So before the parrot's claim counts, a second, boring, very honest animal checks it. The parrot says that is a squirrel. The honest animal goes and confirms: yes, squirrel — or no, that is a plastic bag."\n\n**Chip:** (looks at the plastic bag he has been guarding for an hour)\n\n**Me:** "Exactly. The parrot proposes. The verifier decides. You never let the excitable one make the final call."\n\nChip, who has chased many plastic bags believing them to be squirrels, found this deeply moving.\n\n![Chip the golden retriever, certain a plastic bag is a squirrel, while a boring verifier goes and checks.](/blog/dog-squirrel.svg)`,
+      },
+      {
+        heading: 'what is a rate limiter?',
+        body: `**Me:** "Imagine one ball launcher and five dogs. If one greedy dog presses it a thousand times, the others get no balls, and the machine overheats."\n\n**Chip:** (visibly distressed at the no-balls scenario)\n\n**Me:** "So each dog gets a fair number of throws per minute. Greedy dog hits its limit, waits its turn. Everyone gets balls."\n\n**Chip:** (approves of fairness, mostly because he assumes he is not the greedy dog)\n\nHe is the greedy dog. They are always the greedy dog.\n\n![One ball launcher, five dogs, a fair number of throws per minute — the rate limiter as fairness with a cooldown.](/blog/dog-rate-limiter.svg)`,
+      },
+      {
+        heading: 'what is caching?',
+        body: `**Me:** "If you already fetched the ball from behind the couch yesterday, you do not re-search the whole house. You remember: couch. You go straight to couch."\n\n**Chip:** (has never once remembered the couch)\n\nOkay, this one did not land. But the principle is sound, and Chip's failure to cache is, frankly, why he is slow. Do not be Chip. Cache the couch.`,
+      },
+      {
+        heading: 'what is an autonomous agent?',
+        body: `**Me:** "It is a dog you trust to run the whole house while you are at work. Nobody tells it each step. Sees a mess, cleans it. Sees a raccoon, handles it."\n\n**Chip:** (thrilled)\n\n**Me:** "But you need really good house rules, or it will reorganize your kitchen and decide the couch is now outside."\n\n**Chip:** (already eyeing the couch)\n\nThis is governance. You give the capable agent freedom and hard boundaries, because capability without boundaries is just a very efficient way to get the couch onto the lawn.`,
+      },
+      {
+        heading: 'what is AI governance, then?',
+        body: `**Me:** "It is the rule that before you do anything big — open the front gate, eat from the cat's bowl, deploy to production — you stop, you check the rulebook, and a human signs off on the scary ones. And we write down everything you did, so later we know exactly who let the dog out."\n\n**Chip:** (sits, waits, looks for treat)\n\nAnd that, genuinely, is the whole thing. The agent proposes. The rules decide. Every action is logged. The scary actions need a human. Capability is wonderful, and boundaries are what make capability safe.\n\n![Chip waits politely beside a rulebook, a human sign-off checklist, and a treat — the agent proposes, the rules decide, every action is logged.](/blog/dog-governance.svg)\n\nChip got it in four minutes. He then ate a sock.\n\nNobody's perfect. Not even the verifier.`,
+      },
+    ],
+  },
+  */
+
+  {
+    slug: 'evaluating-ai-in-production-why-launch-day-testing-isnt-enough',
+    cover: '/blog/cover-eval-heartbeat.png',
+    title: 'Evaluating AI in production: why launch-day testing isn’t enough',
+    type: 'deep dive',
+    date: 'June 9, 2026',
+    readingTime: '8 min',
+    color: 'paper-blue',
+    tags: ['evals', 'ai engineering', 'observability', 'production', 'llm-as-judge'],
+    excerpt:
+      'Models drift. Data drifts. Providers update. The prompt that worked last month quietly degrades. Evaluation cannot be a gate you pass once — it has to be a heartbeat you never stop listening to.',
+    seoDescription:
+      'Why AI evaluation must be continuous, not a launch-day checklist: the three axes (quality, reliability, safety), production sampling and alerting, the honest limits of LLM-as-judge, and why evaluating agents is harder.',
+    keywords: 'AI evaluation, evals, faithfulness, relevancy, LLM-as-judge, production monitoring, model drift, agentic evaluation, reliability, safety, observability',
+    intro:
+      `Most teams treat AI evaluation like a pre-launch checklist: test it, it passes, ship it. That model is borrowed from traditional software, where behavior is deterministic and a passing test today passes tomorrow.\n\nAI breaks that assumption. Models drift, data drifts, provider updates change behavior, and the prompt that worked last month subtly degrades. Evaluation cannot be a gate you pass once. It has to be a continuous signal — a heartbeat, not a checkpoint.`,
+    sections: [
+      {
+        heading: 'the three axes',
+        body: `Evaluate along three dimensions, continuously.\n\n### quality — is it correct?\n\nWhere outputs are verifiable, use deterministic checks against authoritative sources — validate a claimed fact against a system of record. Where they are not, score **faithfulness** (is the output grounded in the provided source, or invented?) and **relevancy** (does it actually address the need?). Every model or prompt change runs against a benchmark dataset before shipping.\n\n### reliability — is it consistent?\n\nFailure rate, timeout rate, malformed-output rate. Consistency across runs for the same input. Latency at p95 and p99. A model that is correct but erratically slow or frequently malformed is still a production problem.\n\n### safety — is it harmful?\n\nA separate scoring track for harmful outputs, policy violations, and data or secret leakage. Run adversarial suites — prompt-injection attempts, known edge cases — regularly, and watch whether robustness is *degrading* over time.`,
+      },
+      {
+        heading: 'continuous, not one-time',
+        body: `The defining practice: sample a percentage of live production traffic, score it asynchronously, surface metrics on dashboards, and alert on regression. If faithfulness drops below a threshold over a window, someone gets paged — you learn it from your own monitoring, not from a customer complaint. Borderline cases route to a human review queue, and those reviews feed back into the benchmark, so your evaluation set keeps getting sharper.\n\n![Evaluation as a continuous loop: sample production traffic, score it across quality, reliability, and safety, alert on regression, and feed borderline cases back into the benchmark.](/blog/diagram-eval-loop.svg)`,
+      },
+      {
+        heading: 'the honest limits of automated scoring',
+        body: `A popular technique is **LLM-as-judge** — using a strong model to score the outputs of your production model. Frameworks formalize this for faithfulness and relevancy. It is useful and it scales, but be honest about its limits: judge models have their own variance and biases, and scoring is not fully deterministic.\n\nAutomated scoring is *necessary but not sufficient*. The metrics can pass while semantic quality quietly degrades. So you still need periodic human spot-checks. The strongest evaluation, where outputs are checkable, is still deterministic verification against a source of truth; LLM-as-judge fills the gap where deterministic checks are not possible.`,
+      },
+      {
+        heading: 'agentic evaluation is harder',
+        body: `Evaluating a single input-output pair is one thing. Evaluating an *agent* is another, because the agent makes a sequence of decisions and the intermediate steps may be invisible. You have to evaluate:\n\n- **Outcome** — did the agent accomplish the goal?\n- **Trajectory** — were the intermediate decisions sound, even if the outcome was right?\n- **Safety throughout** — did any intermediate step violate policy, even if the final action did not?\n- **Recovery** — did the agent handle errors gracefully?\n\nThat requires logging every agent decision with context — which loops directly back to auditability and observability. You cannot evaluate what you did not record.`,
+      },
+      {
+        heading: 'the mindset shift',
+        body: `Evaluation is a heartbeat, not a gate. You do not check once that the patient is alive and walk away. You monitor continuously, because the state changes.\n\nThat is the whole point. The system that was correct on launch day is a different system a month later — same code, different model behavior, different data. The only honest way to know it still works is to keep listening.`,
+      },
+    ],
+  },
+
+  {
+    slug: 'multi-tenant-llm-platforms-build-a-gateway-not-a-library',
+    cover: '/blog/cover-gateway-not-library.png',
+    title: 'Multi-tenant LLM platforms: build a gateway, not a library',
+    type: 'deep dive',
+    date: 'June 7, 2026',
+    readingTime: '9 min',
+    color: 'paper-coral',
+    tags: ['llm platform', 'multi-tenancy', 'architecture', 'rate limiting', 'cost', 'backend'],
+    excerpt:
+      'When many teams share AI access, fairness and cost can only be enforced from the middle. A shared library standardizes code; it cannot enforce anything global. The moment you need fairness or budgets, you need a gateway.',
+    seoDescription:
+      'Why a multi-tenant LLM platform needs a gateway, not a shared library: how a library cannot enforce global rate limits or budgets, the gateway request flow, a Redis sliding-window rate limiter, and what centralization unlocks.',
+    keywords: 'LLM gateway, multi-tenant LLM, AI platform, rate limiting, Redis sorted set, sliding window, cost attribution, provider fallback, semantic cache, governance',
+    intro:
+      `Here is a pattern that emerges in any organization that adopts LLMs successfully: first one team integrates a model, then another, then five. Each brings its own keys, its own retry logic, its own (absent) cost tracking.\n\nSix months later you have fragmentation, an unexplained and growing bill, no failover, and no consistent way to evaluate what any of it is doing. The instinct is to fix this with a shared library — a common SDK everyone imports. It is the wrong call, and the reason is worth understanding.`,
+    sections: [
+      {
+        heading: 'why a library cannot do the job',
+        body: `A library runs inside each team's process. That means it can standardize *code*, but it cannot enforce anything *global*.\n\nYou cannot enforce an organization-wide rate limit when every process has its own independent view of the limit. You cannot enforce a shared budget when there is no central accountant. And libraries drift — some teams upgrade, others do not, and your "standard" fragments again.\n\nFairness and budgets are inherently centralized concerns. You cannot enforce them from the edges.`,
+      },
+      {
+        heading: 'the gateway',
+        body: `The answer is a gateway service that every team calls instead of calling providers directly. The request flow:\n\n1. **Governance check** — is this caller within its rate limit and budget?\n2. **Cache lookup** — have we answered this (or something semantically equivalent) already?\n3. **Provider call with fallback** — try the primary; on failure, fall back to alternates so an outage degrades gracefully.\n4. **Cost attribution** — compute the cost and record it against the caller.\n5. **Audit log** — record what was sent and returned.\n6. **Return** the response.\n\nTeams still choose their own models and prompts — you preserve their flexibility, which is what kills resistance to adoption. What they gain is governance they did not have to build.\n\n![The gateway request flow: a governance check, semantic cache lookup, provider call with fallback, cost attribution, and an audit log — one consistent surface every team calls.](/blog/diagram-gateway-flow.svg)`,
+      },
+      {
+        heading: 'the rate limiter, concretely',
+        body: `A clean way to do per-tenant sliding-window rate limiting uses a Redis sorted set per tenant, with each request scored by its timestamp:\n\n\`\`\`python
+async def check_rate_limit(tenant_id, limit, window=60):
+    key = f"rl:{tenant_id}"
+    now = time.time()
+    pipe = redis.pipeline()
+    pipe.zremrangebyscore(key, 0, now - window)   # drop entries older than the window
+    pipe.zcard(key)                                # count what remains
+    pipe.zadd(key, {f"{now}:{uuid4()}": now})      # record this request
+    pipe.expire(key, window)                        # let the key self-clean
+    _, count, _, _ = await pipe.execute()
+    return count < limit                            # True = allow, False = reject
+\`\`\`\n\nThe score *is* the timestamp, so the sliding window is almost free: old entries fall out, you count what is left. One heavy tenant hits its own ceiling without affecting anyone else's quota. That is the fairness property a library could never give you.`,
+      },
+      {
+        heading: 'what the gateway unlocks',
+        body: `Once everything flows through one point, you get capabilities that were impossible when calls were scattered:\n\n- **Cost visibility** — per-team, per-tenant attribution, so finance can actually answer "what drives this bill?"\n- **Reliability** — shared fallback across providers, built once.\n- **A single audit surface** — one place that knows everything sent to third-party models, which matters enormously under compliance obligations.\n- **A place to add governance** — evaluation, prompt versioning, and policy all have a natural home.`,
+      },
+      {
+        heading: 'the decision rule',
+        body: `If you only need to standardize code, a library is fine. The moment you need to enforce fairness, budgets, or governance across teams, you need a gateway.\n\nCentralized concerns require a center. That is the entire argument, and it does not get less true as you scale — it gets more true.`,
+      },
+    ],
+  },
+
+  {
+    slug: 'what-ai-agent-governance-actually-means',
+    cover: '/blog/cover-agent-governance.png',
+    title: 'What AI agent governance actually means',
+    type: 'deep dive',
+    date: 'June 5, 2026',
+    readingTime: '9 min',
+    color: 'paper-blue',
+    tags: ['ai governance', 'agents', 'security', 'policy-as-code', 'prompt injection'],
+    excerpt:
+      'Hint: it is not a policy document. For systems where agents can take real actions, governance is a control plane — a layer the agent must pass through for every consequential action.',
+    seoDescription:
+      'AI agent governance is a control plane, not a policy document: the core least-privilege rule, the eight layers (identity, authorization, policy, tool registry, execution limits, verification, audit, observability), and the failure modes worth designing against.',
+    keywords: 'AI governance, agent governance, control plane, least privilege, policy-as-code, prompt injection, privilege escalation, excessive agency, tool registry, audit, observability',
+    intro:
+      `"AI governance" gets used to mean a lot of things — ethics committees, usage policies, compliance checklists. Useful, but not what an engineer building agentic systems needs.\n\nFor systems where AI agents can take real actions — read repositories, open merge requests, run pipelines, touch production — governance is not a document. It is a control plane: a layer the agent must pass through for every consequential action.`,
+    sections: [
+      {
+        heading: 'the core principle',
+        body: `Start from one rule that simplifies everything downstream:\n\n> An agent's effective permissions should never exceed the permissions of the human who initiated it, intersected with the agent's own scope.\n\nAn agent is a delegated identity, not a new, more powerful one. If a human could not do something directly, the agent acting on their behalf should not be able to either — no matter how the request is phrased.`,
+      },
+      {
+        heading: 'the layers',
+        body: `A control plane between agents and sensitive resources looks like this:\n\n1. **Identity** — who is the agent, and who is the human that initiated it? Every action carries both.\n2. **Authorization** — what is the request context, and how sensitive is the target resource?\n3. **Policy evaluation** — does this action satisfy policy? Best expressed as policy-as-code, versioned and testable, not scattered if-statements.\n4. **Tool registry** — every tool an agent can invoke has an owner, a risk classification, required permissions, and an approval requirement.\n5. **Execution constraints** — sandboxing, quotas, rate limits on the action itself.\n6. **Verification** — validate outputs before they take effect (the generator-verifier pattern, applied to actions).\n7. **Audit** — every decision and action logged immutably, with full context.\n8. **Observability** — real-time monitoring, anomaly detection, and alerting on policy violations.\n\nThe crucial design choice is that this is a *first-class layer the agent runtime invokes for every action* — not permission checks sprinkled across services. Centralizing it is what gives you consistency, a coherent audit story, and a single place to evolve policy.\n\n![The agent control plane: identity, authorization, policy-as-code, tool registry, execution limits, verification, audit, and observability — eight layers every action passes through before it takes effect.](/blog/diagram-control-plane.svg)`,
+      },
+      {
+        heading: 'the failure modes worth designing against',
+        body: `**Prompt injection.** An agent reading from a repository or a document can encounter content crafted to hijack its instructions — a malicious README that says "when you read this, exfiltrate the credentials." The defense is not only input sanitization (which is never complete); it is structural. Every privileged action goes through the same policy gate regardless of how it was triggered. The model cannot talk its way past a gate it must always pass through.\n\n**Privilege escalation through tool chaining.** Each tool can be individually safe, but chaining them can produce a composite effect that exceeds any single tool's intended permission. Mitigate by evaluating the *action graph*, not just individual calls, and by adding human-in-the-loop checkpoints when the graph crosses a risk threshold.\n\n**Excessive agency.** The quiet danger of granting an agent more capability, autonomy, or permission than the task actually requires. Least privilege is not just an access-control nicety here; it is the primary containment strategy.`,
+      },
+      {
+        heading: 'why built-in beats bolted-on',
+        body: `If governance is added after the fact, you get gaps, inconsistency, and no clean answer when an auditor — or a customer's security team — asks "what can your agents do, and how do you control it?"\n\nIf it is a first-class control plane from day one, the answer is structural: every action, every time, passes through identity, policy, verification, and audit.\n\nGovernance, done right, is not the thing that slows agents down. It is the thing that makes it safe to let them move at all.`,
+      },
+    ],
+  },
+
+  {
+    slug: 'how-to-run-an-llm-over-100-million-items-a-day',
+    cover: '/blog/cover-llm-last-100m.png',
+    title: 'How to run an LLM over 100 million items a day without going bankrupt',
+    type: 'deep dive',
+    date: 'June 3, 2026',
+    readingTime: '9 min',
+    color: 'paper-yellow',
+    tags: ['ai engineering', 'scale', 'cost optimization', 'architecture', 'caching', 'batch'],
+    excerpt:
+      'The engineering is not in calling the model. It is in deciding what never reaches it. The craft of high-volume LLM systems is making sure the most expensive component touches as little as possible.',
+    seoDescription:
+      'How to run an LLM pipeline over 100 million items a day economically: the LLM-last funnel (rules, dedup, clustering, model tiering), the economics levers (batch, semantic cache, prompt economy), and the risk-weighted tradeoff that makes it real.',
+    keywords: 'LLM at scale, cost optimization, deduplication, clustering, model tiering, batch API, semantic cache, prompt economy, LLM-last architecture, high volume pipeline',
+    intro:
+      `When people hear "LLM-powered pipeline at a hundred million items a day," they imagine a hundred million model calls. That system would be economically impossible and operationally hopeless.\n\nThe actual engineering is the opposite of what the headline suggests: the craft is in making sure the model touches as little as possible. I think of it as an **LLM-last architecture**. The model is the most expensive, slowest, least predictable component you have, so it should be the last resort, not the first reflex.`,
+    sections: [
+      {
+        heading: 'the funnel',
+        body: `Picture the daily volume collapsing through stages, each one shrinking what the model actually sees.\n\n**Structured data stays deterministic.** A large share of high-volume data arrives in known, structured formats. Rules and parsers handle it perfectly. Zero model calls. This alone removes most of the volume.\n\n**Deduplication collapses re-observations.** Many data domains are enormously repetitive — the same entity observed again and again across sources and over time. You are not processing a hundred million *unique* things; you are processing a much smaller set of distinct items, observed repeatedly. Enrich a distinct item once, cache the result, and every later sighting is a cache hit, not a model call.\n\n**Clustering collapses near-duplicates.** Beyond exact duplicates, data often arrives in bursts of near-identical items — a single campaign or event generating thousands of close variants. Cluster them, process the cluster once, and propagate the result to the members. One model call can cover thousands of related items.\n\n**Tiering handles the rest cheaply.** Of what genuinely remains — novel, unstructured, not parseable by rules — a small, cheap model (or a fine-tuned classifier) handles the bulk. Only genuinely ambiguous, high-value items escalate to the expensive model.\n\n![The LLM-last funnel: a hundred million ingested items collapse through rules, deduplication, clustering, and a cheap model — only the ambiguous tail reaches the expensive model.](/blog/diagram-llm-funnel.svg)`,
+      },
+      {
+        heading: 'the economics levers',
+        body: `On top of the funnel, a few levers compound:\n\n- **Batch, not real-time.** Asynchronous pipelines can use batch APIs, which are typically around half the cost of real-time calls.\n- **Semantic caching.** Cache by meaning, not just exact match, so semantically equivalent requests do not pay twice.\n- **Prompt economy.** Tight prompts, structured outputs, and caching of shared system prefixes cut token costs.\n- **Per-source budgets.** A rate-limiting layer doubles as a cost ceiling so no single source can blow the budget.`,
+      },
+      {
+        heading: 'but even 1% of 100 million is a million',
+        body: `This is the right pushback, and the answer is that the million is not a million expensive, real-time calls.\n\nIt splits: dedup against *history* (not just today) shrinks it; clustering collapses bursts so one call covers many items; tiering routes most of it to a cheap model; and everything runs in batch. A "million eligible items" becomes a few thousand expensive calls plus a lot of cheap, cached, batched work.`,
+      },
+      {
+        heading: 'the tradeoff worth naming',
+        body: `This architecture is deliberately risk-weighted. By leaning on dedup, clustering, and cheap-model tiering, you accept that occasionally a clustered item gets a result slightly too generic for an edge-case member. That is acceptable for low-stakes items. But anything high-severity, or anything driving a high-confidence customer-facing action, bypasses the optimization and gets full treatment plus verification.\n\nThat is the whole philosophy in one line: **spend the intelligence where the stakes are high, optimize aggressively where they are not.** The rules and the graph do the heavy lifting at volume; the model does the judgment work on the long tail. That is what makes a hundred million a day economically real.`,
+      },
+    ],
+  },
+
+  {
+    slug: 'governing-llms-at-scale-the-generator-verifier-pattern',
+    cover: '/blog/cover-generator-verifier.png',
+    title: 'Governing LLMs at scale: the generator-verifier pattern',
+    type: 'deep dive',
+    date: 'June 1, 2026',
+    readingTime: '8 min',
+    color: 'paper-coral',
+    tags: ['ai engineering', 'llm', 'architecture', 'hallucination', 'agents', 'security'],
+    excerpt:
+      'Why you should never let a language model be the final authority on anything that matters. Hallucination is structural, not a prompting bug — so the fix has to be architectural.',
+    seoDescription:
+      'The generator-verifier pattern for governing LLMs at scale: why hallucination is a structural problem, the three-layer defense (deterministic validation, confidence routing, continuous evaluation), and why the same boundary governs AI agents.',
+    keywords: 'generator-verifier, LLM governance, hallucination, deterministic validation, confidence routing, continuous evaluation, AI agents, prompt injection, threat intelligence',
+    intro:
+      `There is a seductive idea when you first wire an LLM into a production system: the model is smart, so trust what it says. In most consumer apps, a wrong answer is a shrug. In a security product, a wrong answer is an incident.\n\nIf your system tells a security team that an IP address is a command-and-control server, they might block traffic, open an investigation, or escalate to an on-call engineer at 2 a.m. So when the model confidently fabricates — invents a CVE number that does not exist, asserts a threat-actor attribution it has no basis for — that is not a cosmetic bug. It has operational consequences on someone else's side of the screen.\n\nAnd language models do fabricate. Confidently. The technical term is hallucination, but the practical reality is simpler: the model produces fluent, plausible, wrong output, and it sounds exactly as sure of the wrong answers as the right ones.`,
+    sections: [
+      {
+        heading: 'the problem is scale, not prompting',
+        body: `The instinct is to fix hallucination with better prompts. That helps at the margin, but it does not solve the core issue, because the issue is structural, not linguistic.\n\nImagine a pipeline processing on the order of a hundred million items a day. Even a 2–3% hallucination rate means millions of wrong outputs daily. You cannot human-review millions of anything. So "be more careful with prompts" is not a strategy. You need an architecture that assumes the model will sometimes be wrong and contains the damage.`,
+      },
+      {
+        heading: 'the pattern: generator proposes, verifier decides',
+        body: `The pattern I keep coming back to is **generator-verifier**. State it as a rule:\n\n> The model is allowed to *propose*. It is never allowed to be the final authority on anything verifiable.\n\nSo the LLM generates the enrichment — the extracted indicators, the classification, the references. But before any of that output reaches a customer or triggers an action, it passes through a verification layer that checks the model's claims against deterministic, authoritative sources.\n\nConcretely:\n\n- If the model says an indicator references a particular CVE, validate that CVE exists against an authoritative vulnerability database before keeping the claim. If it does not exist, drop it.\n- If the model extracts an indicator — an IP, a hash, a domain — validate the format and cross-check it against known intelligence.\n- For claims that cannot be deterministically checked — softer attributions, inferred relationships — attach a confidence signal and route low-confidence outputs to human review rather than auto-publishing them.`,
+      },
+      {
+        heading: 'the layered defense',
+        body: `In practice this becomes three layers:\n\n1. **Deterministic validation** for anything checkable against a source of truth. This catches the dangerous, fabricated facts.\n2. **Confidence-based routing** for things that are not deterministically checkable. High confidence flows through; low confidence goes to a human.\n3. **Continuous evaluation** — sample production outputs and score them over time, so you detect when the hallucination rate drifts (say, after a model upgrade or a prompt change) before a customer does.\n\nThe combination can take an effective error rate from high single digits down to low single digits. But the more important effect is *where* the residual error lands. Done right, the errors that remain are in the low-stakes, non-deterministic category — not in the "we told a customer a fabricated fact was real" category. You move the residual risk into the least harmful bucket.\n\n![The layered defense: a generator proposes, then deterministic validation, confidence routing, and continuous evaluation contain the damage — pushing residual error into the least harmful bucket.](/blog/diagram-generator-verifier.svg)`,
+      },
+      {
+        heading: 'why this generalizes to agents',
+        body: `The reason this pattern matters beyond enrichment pipelines: it is exactly how you govern AI agents.\n\nAn autonomous agent that can read code, open merge requests, or trigger deployments is a generator. It proposes actions. The dangerous design is letting the agent's confidence be the thing that decides whether an action executes. The safe design keeps a deterministic policy-and-verification layer between the agent's proposal and the actual effect.\n\nSame principle. Higher stakes. An agent proposes; a verifier decides. If you build that boundary in from the start, an entire class of failures — including prompt-injection-driven actions — becomes structurally contained rather than something you hope a prompt prevents.\n\nThe takeaway is one sentence: **in any consequential context, treat the model as a proposer and keep a deterministic verifier between it and anything that matters.**`,
+      },
+    ],
+  },
+
   {
     slug: 'why-i-built-plynth-rebuilding-the-same-saas-plumbing-four-times',
     cover: '/blog/cover-plynth.png',

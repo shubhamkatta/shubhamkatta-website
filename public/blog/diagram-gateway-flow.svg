@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 420" role="img" aria-label="The gateway request flow: governance, cache, provider with fallback, cost, audit">
+  <rect width="1000" height="420" fill="#fff8ef"/>
+  <text x="40" y="46" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">One gateway every team calls instead of the providers</text>
+  <text x="40" y="70" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">teams keep their own models and prompts. they gain governance they didn't have to build.</text>
+  <g font-family="Inter, sans-serif">
+    <g transform="translate(40,110)">
+      <rect width="120" height="220" rx="14" fill="#1d1815"/>
+      <text x="60" y="104" text-anchor="middle" font-weight="900" font-size="12" fill="rgba(255,255,255,0.55)" letter-spacing="1">CALLER</text>
+      <text x="60" y="126" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#f6efe6">a team</text>
+    </g>
+    <path d="M 160 220 L 196 220" stroke="#1d1815" stroke-width="2" marker-end="url(#dgfar)"/>
+    <rect x="206" y="96" width="540" height="248" rx="18" fill="none" stroke="#1d1815" stroke-width="2" stroke-dasharray="6,5"/>
+    <text x="226" y="120" font-weight="900" font-size="12" fill="rgba(29,24,21,0.55)" letter-spacing="2">GATEWAY</text>
+    <g font-weight="800" font-size="12" fill="#1d1815">
+      <g transform="translate(226,134)"><rect width="240" height="44" rx="10" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/><text x="14" y="20">1 · governance check</text><text x="14" y="36" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">within rate limit + budget?</text></g>
+      <g transform="translate(226,186)"><rect width="240" height="44" rx="10" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/><text x="14" y="20">2 · cache lookup</text><text x="14" y="36" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">semantic match? return it</text></g>
+      <g transform="translate(226,238)"><rect width="240" height="44" rx="10" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/><text x="14" y="20">3 · provider + fallback</text><text x="14" y="36" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">primary fails → alternate</text></g>
+      <g transform="translate(486,134)"><rect width="240" height="44" rx="10" fill="#fff6db" stroke="#1d1815" stroke-width="2"/><text x="14" y="20">4 · cost attribution</text><text x="14" y="36" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">record against the caller</text></g>
+      <g transform="translate(486,186)"><rect width="240" height="44" rx="10" fill="#fff" stroke="#1d1815" stroke-width="2"/><text x="14" y="20">5 · audit log</text><text x="14" y="36" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">what was sent + returned</text></g>
+      <g transform="translate(486,238)"><rect width="240" height="44" rx="10" fill="#1d1815"/><text x="14" y="20" fill="#f6efe6">6 · return response</text><text x="14" y="36" font-weight="400" font-size="11" fill="rgba(255,255,255,0.6)">one consistent surface</text></g>
+    </g>
+    <path d="M 746 290 L 800 290" stroke="#1d1815" stroke-width="2" marker-end="url(#dgfar)"/>
+    <g transform="translate(810,256)">
+      <rect width="150" height="44" rx="10" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/>
+      <text x="75" y="20" text-anchor="middle" font-weight="800" font-size="12" fill="#1d1815">providers</text>
+      <text x="75" y="36" text-anchor="middle" font-size="11" fill="rgba(29,24,21,0.6)">shared failover</text>
+    </g>
+  </g>
+  <defs>
+    <marker id="dgfar" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1d1815"/></marker>
+  </defs>
+</svg>

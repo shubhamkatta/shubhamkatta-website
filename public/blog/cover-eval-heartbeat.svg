@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="Evaluating AI in production is a heartbeat, not a gate">
+  <rect width="1200" height="600" fill="#ffe9e4"/>
+  <rect x="520" y="34" width="210" height="22" rx="4" fill="#eaf7ff" opacity="0.9" transform="rotate(-2 625 45)"/>
+  <g transform="translate(90,160) rotate(-1.5)">
+    <rect width="500" height="300" rx="22" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <text x="24" y="40" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="rgba(29,24,21,0.55)" letter-spacing="2">A CONTINUOUS SIGNAL</text>
+    <path d="M 30 110 L 110 110 L 130 70 L 155 150 L 180 110 L 260 110 L 280 64 L 305 156 L 330 110 L 470 110"
+          fill="none" stroke="#ff6b6b" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+    <g font-family="Inter, sans-serif">
+      <g transform="translate(30,170)"><rect width="140" height="86" rx="14" fill="#fff6db" stroke="#1d1815" stroke-width="2"/><text x="70" y="28" text-anchor="middle" font-weight="900" font-size="12" fill="#1d1815">QUALITY</text><text x="70" y="52" text-anchor="middle" font-size="11" fill="rgba(29,24,21,0.7)">is it correct?</text><text x="70" y="70" text-anchor="middle" font-size="11" fill="rgba(29,24,21,0.7)">faithful?</text></g>
+      <g transform="translate(180,170)"><rect width="140" height="86" rx="14" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/><text x="70" y="28" text-anchor="middle" font-weight="900" font-size="12" fill="#1d1815">RELIABILITY</text><text x="70" y="52" text-anchor="middle" font-size="11" fill="rgba(29,24,21,0.7)">consistent?</text><text x="70" y="70" text-anchor="middle" font-size="11" fill="rgba(29,24,21,0.7)">p95 / p99?</text></g>
+      <g transform="translate(330,170)"><rect width="140" height="86" rx="14" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/><text x="70" y="28" text-anchor="middle" font-weight="900" font-size="12" fill="#1d1815">SAFETY</text><text x="70" y="52" text-anchor="middle" font-size="11" fill="rgba(29,24,21,0.7)">harmful?</text><text x="70" y="70" text-anchor="middle" font-size="11" fill="rgba(29,24,21,0.7)">leaking?</text></g>
+    </g>
+  </g>
+  <g transform="translate(640,206)">
+    <text x="0" y="48" font-family="Inter, sans-serif" font-weight="900" font-size="52" fill="#1d1815" letter-spacing="-2">A heartbeat,</text>
+    <text x="0" y="112" font-family="Inter, sans-serif" font-weight="900" font-size="52" fill="#1d1815" letter-spacing="-2">not a gate.</text>
+    <text x="0" y="162" font-family="Inter, sans-serif" font-weight="700" font-size="22" fill="#ff6b6b">models drift. data drifts.</text>
+    <text x="0" y="208" font-family="Inter, sans-serif" font-size="18" fill="rgba(29,24,21,0.7)">you don't check the patient is alive</text>
+    <text x="0" y="234" font-family="Inter, sans-serif" font-size="18" fill="rgba(29,24,21,0.7)">once and walk away.</text>
+  </g>
+</svg>

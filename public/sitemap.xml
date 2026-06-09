@@ -46,6 +46,36 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://shubhamkatta.com/writing/evaluating-ai-in-production-why-launch-day-testing-isnt-enough</loc>
+    <lastmod>2026-06-08</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://shubhamkatta.com/writing/multi-tenant-llm-platforms-build-a-gateway-not-a-library</loc>
+    <lastmod>2026-06-06</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://shubhamkatta.com/writing/what-ai-agent-governance-actually-means</loc>
+    <lastmod>2026-06-04</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://shubhamkatta.com/writing/how-to-run-an-llm-over-100-million-items-a-day</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://shubhamkatta.com/writing/governing-llms-at-scale-the-generator-verifier-pattern</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://shubhamkatta.com/writing/why-i-built-plynth-rebuilding-the-same-saas-plumbing-four-times</loc>
     <lastmod>2026-05-26</lastmod>
     <changefreq>yearly</changefreq>
@@ -126,6 +156,24 @@
   <url>
     <loc>https://shubhamkatta.com/writing/not-every-breakdown-is-a-crisis</loc>
     <lastmod>2026-04-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://shubhamkatta.com/writing/what-could-go-wrong-the-five-questions</loc>
+    <lastmod>2026-04-21</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://shubhamkatta.com/writing/designing-for-the-right-to-be-forgotten</loc>
+    <lastmod>2026-04-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://shubhamkatta.com/writing/three-tools-holding-up-our-llm-pipeline</loc>
+    <lastmod>2026-04-17</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
