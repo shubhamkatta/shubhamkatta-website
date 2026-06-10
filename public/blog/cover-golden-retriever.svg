@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="I explained my entire tech stack to a cartoon golden retriever named Chip">
+  <rect width="1200" height="600" fill="#fff6db"/>
+  <rect x="500" y="34" width="230" height="22" rx="4" fill="#ffe9e4" opacity="0.9" transform="rotate(-2 615 45)"/>
+  <g transform="translate(120,150) rotate(-2)">
+    <rect width="470" height="320" rx="22" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <!-- cartoon golden retriever -->
+    <g transform="translate(60,72)">
+      <ellipse cx="120" cy="232" rx="120" ry="26" fill="rgba(29,24,21,0.07)"/>
+      <!-- chest / body -->
+      <path d="M 58 190 Q 120 250 182 190 L 176 232 Q 120 252 64 232 Z" fill="#f4c373" stroke="#1d1815" stroke-width="2.5"/>
+      <!-- floppy ears (behind head) -->
+      <path d="M 62 56 C 18 64 8 150 44 190 C 70 176 80 110 92 78 Z" fill="#e8a44b" stroke="#1d1815" stroke-width="2.5"/>
+      <path d="M 178 56 C 222 64 232 150 196 190 C 170 176 160 110 148 78 Z" fill="#e8a44b" stroke="#1d1815" stroke-width="2.5"/>
+      <!-- head -->
+      <ellipse cx="120" cy="100" rx="64" ry="60" fill="#f4c373" stroke="#1d1815" stroke-width="2.5"/>
+      <!-- forehead tuft -->
+      <path d="M 104 46 Q 120 30 136 46 Q 128 54 120 52 Q 112 54 104 46 Z" fill="#fad98c" stroke="#1d1815" stroke-width="2"/>
+      <!-- muzzle -->
+      <ellipse cx="120" cy="128" rx="42" ry="33" fill="#fdebc8" stroke="#1d1815" stroke-width="2.5"/>
+      <!-- eyes -->
+      <circle cx="96" cy="92" r="9" fill="#1d1815"/>
+      <circle cx="144" cy="92" r="9" fill="#1d1815"/>
+      <circle cx="99" cy="89" r="3" fill="#fff"/>
+      <circle cx="147" cy="89" r="3" fill="#fff"/>
+      <!-- brows -->
+      <path d="M 84 78 Q 96 72 108 78" fill="none" stroke="#1d1815" stroke-width="2" stroke-linecap="round"/>
+      <path d="M 132 78 Q 144 72 156 78" fill="none" stroke="#1d1815" stroke-width="2" stroke-linecap="round"/>
+      <!-- nose -->
+      <ellipse cx="120" cy="118" rx="13" ry="9" fill="#1d1815"/>
+      <ellipse cx="116" cy="116" rx="3" ry="2" fill="rgba(255,255,255,0.5)"/>
+      <!-- mouth -->
+      <path d="M 120 127 L 120 138 M 120 138 Q 104 150 92 140 M 120 138 Q 136 150 148 140" fill="none" stroke="#1d1815" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- tongue -->
+      <path d="M 113 142 Q 120 168 127 142 Q 124 150 120 150 Q 116 150 113 142 Z" fill="#ff9bb0" stroke="#1d1815" stroke-width="2"/>
+      <!-- collar + tag -->
+      <path d="M 70 178 Q 120 206 170 178" fill="none" stroke="#ff6b6b" stroke-width="9" stroke-linecap="round"/>
+      <circle cx="120" cy="198" r="9" fill="#ffd166" stroke="#1d1815" stroke-width="2"/>
+    </g>
+    <!-- speech bubble -->
+    <g transform="translate(252,40)">
+      <path d="M 0 50 Q 0 12 40 12 L 160 12 Q 200 12 200 50 L 200 92 Q 200 124 162 124 L 70 124 L 40 152 L 50 124 Q 0 124 0 92 Z" fill="#a3e4a3" stroke="#1d1815" stroke-width="2.5"/>
+      <text x="100" y="52" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="17" fill="#1d1815">the parrot</text>
+      <text x="100" y="78" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="17" fill="#1d1815">proposes, the</text>
+      <text x="100" y="104" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="17" fill="#1d1815">verifier decides.</text>
+    </g>
+  </g>
+  <g transform="translate(620,196)">
+    <text x="0" y="44" font-family="Inter, sans-serif" font-weight="900" font-size="44" fill="#1d1815" letter-spacing="-2">I explained my</text>
+    <text x="0" y="98" font-family="Inter, sans-serif" font-weight="900" font-size="44" fill="#1d1815" letter-spacing="-2">stack to a dog.</text>
+    <text x="0" y="150" font-family="Inter, sans-serif" font-weight="700" font-size="22" fill="#ff6b6b">he got it before</text>
+    <text x="0" y="178" font-family="Inter, sans-serif" font-weight="700" font-size="22" fill="#ff6b6b">some engineers do.</text>
+    <text x="0" y="224" font-family="Inter, sans-serif" font-size="18" fill="rgba(29,24,21,0.7)">his name is Chip. he ate a sock.</text>
+    <text x="0" y="250" font-family="Inter, sans-serif" font-size="18" fill="rgba(29,24,21,0.7)">nobody's perfect — not even the verifier.</text>
+  </g>
+</svg>

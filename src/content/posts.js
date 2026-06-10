@@ -77,55 +77,61 @@ prompts:
   },
   */
 
-  /* draft — withheld from publish (June 2026)
   {
     slug: 'i-explained-my-tech-stack-to-a-golden-retriever',
     cover: '/blog/cover-golden-retriever.png',
     title: 'I explained my entire tech stack to a golden retriever. He got it before some engineers do.',
     type: 'humour',
     date: 'June 10, 2026',
-    readingTime: '6 min',
+    readingTime: '9 min',
     color: 'paper-yellow',
-    tags: ['humour', 'ai systems', 'explainers', 'agents', 'dogs'],
+    tags: ['humour', 'ai systems', 'explainers', 'agents', 'langchain', 'dogs'],
     excerpt:
-      'A mostly-true, fully-humorous guide to AI systems — LLMs, hallucination, rate limiters, agents, governance — as told to a dog named Chip, who understood it in four minutes and then ate a sock.',
+      'LangChain, LLMs, hallucination, RAG, agents, MCP, prompt injection, evals — the entire modern AI stack explained to a golden retriever named Chip. He got it in ten minutes and then ate a sock.',
     seoDescription:
-      'A humorous but technically honest guide to AI systems — LLMs, hallucination, the generator-verifier pattern, rate limiting, caching, autonomous agents, and AI governance — explained to a golden retriever named Chip.',
-    keywords: 'AI explained simply, LLM, hallucination, generator-verifier, rate limiter, caching, autonomous agents, AI governance, humour, analogy',
+      'A humorous but technically honest guide to the modern AI stack — LangChain, LLMs, hallucination, RAG, AI agents, autonomous agents, MCP, prompt injection, and evals — explained to a golden retriever named Chip.',
+    keywords: 'AI explained simply, LangChain, LLM, hallucination, RAG, AI agent, autonomous agent, MCP, prompt injection, evals, humour, analogy',
     intro:
-      `I have spent years building AI systems for security products. I have written RFCs. I have argued about ClickHouse versus Postgres until people left the room. But the clearest technical review I ever got was from my friend's golden retriever, Chip, who has the attention span of a goldfish and the conviction of a CEO.\n\nHere is everything important, explained the way Chip understood it. If you would rather the version without the dog, the other five posts in this series have fewer socks and more architecture diagrams.`,
+      `I have spent years building AI systems for security products. I have written RFCs. I have argued about ClickHouse versus Postgres until people left the room. But the clearest technical review I ever got was from my friend's golden retriever, Chip, who has the attention span of a goldfish and the conviction of a CEO.\n\nHere is the entire modern AI stack, explained the way Chip understood it. If you would rather the version without the dog, the other posts in this series have fewer socks and more architecture diagrams.`,
     sections: [
       {
+        heading: 'LangChain — the treat-getting instruction book',
+        body: `**Me:** "Chip. You want a treat. But the treat is in a hard box. You cannot just bonk the box and get the treat. You need steps: first paw the box, then nose it open, then grab the treat, then chew."\n\n**Chip:** (already pawing the box)\n\n**Me:** "LangChain is the instruction book. It already knows all the little steps for talking to the smart robot. Instead of figuring out every step yourself every single time, you grab the ready-made steps from the book and snap them together like a toy. Step, step, step, treat."\n\n**Chip:** (approves of any system that ends in treat)\n\n![LangChain: snap the ready-made steps together — paw, nose, grab, chew — like a toy. The steps already exist, you just compose them.](/blog/dog-langchain.svg)\n\nThe pieces, in dog:\n\n- **Prompt template** = the same trick written down so you say it the same way every time. "SIT" always means sit. You do not reinvent "sit" each morning.\n- **Chain** = doing tricks in order. Sit, then shake, then roll over. One after another.\n- **Agent** = a smart dog who looks at the situation and picks which trick to do. Doorbell rings? Bark. Ball thrown? Fetch. Nobody told it which one. It chose.\n- **Tool** = a thing the dog is allowed to use. The ball. The frisbee. The squeaky toy. Each one does a specific job.\n- **Memory** = remembering you threw the ball behind the couch last time, so you look there first.\n- **Retriever** = your nose. You go find the right smell (the right info) before deciding what to do.`,
+      },
+      {
         heading: 'what is an LLM?',
-        body: `**Me:** "Chip, an LLM is a very smart talking parrot that read every book ever written."\n\n**Chip:** (tilts head)\n\n**Me:** "It can answer almost anything. But it never actually saw any of it. So sometimes it says cats go woof with total confidence."\n\n**Chip:** (barks, presumably to correct the cats)\n\nHe understood immediately that confidence and correctness are different things. This puts him ahead of several production incidents I have witnessed.`,
+        body: `**Me:** "Chip, an LLM is a super smart talking parrot that read every book in the world."\n\n**Chip:** (tilts head)\n\n**Me:** "Ask it anything, it talks back. But it never actually saw any of the things it read about. So sometimes it is confidently wrong — like a parrot who insists cats say woof."\n\n**Chip:** (barks, presumably to correct the cats)\n\nHe understood immediately that confidence and correctness are different things. This puts him ahead of several production incidents I have witnessed.`,
       },
       {
         heading: 'what is hallucination?',
-        body: `**Me:** "Sometimes the parrot makes up a fact. Says the mailman is a wizard. Very sure about it. Wrong."\n\n**Chip:** (deeply suspicious of the mailman now)\n\nThis is the whole problem with AI in serious systems. The parrot sounds equally sure whether it is right or making things up. Chip's solution — bark at everything just in case — is technically a 100% recall, 2% precision classifier. We have shipped worse.`,
+        body: `**Me:** "When the parrot makes up a fact and says it with total confidence. 'The mailman is a wizard.' No he is not. But the parrot sounds so sure."\n\n**Chip:** (deeply suspicious of the mailman now)\n\n**Me:** "Dangerous because humans believe confident voices. You fix it by making the parrot show its homework — only say things it can point to in a real book."\n\nChip's solution — bark at everything just in case — is technically a 100% recall, 2% precision classifier. We have shipped worse.\n\n![Chip the golden retriever, certain a plastic bag is a squirrel, while a boring verifier goes and checks.](/blog/dog-squirrel.svg)`,
       },
       {
-        heading: 'what is the generator-verifier pattern?',
-        body: `**Me:** "So before the parrot's claim counts, a second, boring, very honest animal checks it. The parrot says that is a squirrel. The honest animal goes and confirms: yes, squirrel — or no, that is a plastic bag."\n\n**Chip:** (looks at the plastic bag he has been guarding for an hour)\n\n**Me:** "Exactly. The parrot proposes. The verifier decides. You never let the excitable one make the final call."\n\nChip, who has chased many plastic bags believing them to be squirrels, found this deeply moving.\n\n![Chip the golden retriever, certain a plastic bag is a squirrel, while a boring verifier goes and checks.](/blog/dog-squirrel.svg)`,
+        heading: 'what is RAG?',
+        body: `**Me:** "Before the parrot answers, you first run and fetch the right book and put it in front of the parrot. Now instead of guessing from memory, it reads the actual book and answers correctly."\n\n**Chip:** (perks up at the word "fetch")\n\n**Me:** "Fetch first, then answer. You are a dog. Fetching is your whole thing. You are great at this."\n\n**Chip:** (already fetching)\n\n![RAG: Chip fetches the right book first, the parrot reads it instead of guessing from memory, and the answer is actually correct.](/blog/dog-rag.svg)\n\nThis is the entire RAG idea: do not let the parrot guess from memory. Give it the right context first. The retriever (the nose, the fetch) is the part that makes the difference between a confident guess and a grounded answer.`,
       },
       {
-        heading: 'what is a rate limiter?',
-        body: `**Me:** "Imagine one ball launcher and five dogs. If one greedy dog presses it a thousand times, the others get no balls, and the machine overheats."\n\n**Chip:** (visibly distressed at the no-balls scenario)\n\n**Me:** "So each dog gets a fair number of throws per minute. Greedy dog hits its limit, waits its turn. Everyone gets balls."\n\n**Chip:** (approves of fairness, mostly because he assumes he is not the greedy dog)\n\nHe is the greedy dog. They are always the greedy dog.\n\n![One ball launcher, five dogs, a fair number of throws per minute — the rate limiter as fairness with a cooldown.](/blog/dog-rate-limiter.svg)`,
-      },
-      {
-        heading: 'what is caching?',
-        body: `**Me:** "If you already fetched the ball from behind the couch yesterday, you do not re-search the whole house. You remember: couch. You go straight to couch."\n\n**Chip:** (has never once remembered the couch)\n\nOkay, this one did not land. But the principle is sound, and Chip's failure to cache is, frankly, why he is slow. Do not be Chip. Cache the couch.`,
+        heading: 'what is an AI agent?',
+        body: `**Me:** "A regular robot just talks. An agent actually does things. Opens doors, fetches the newspaper, presses buttons. It has paws — tools — and decides which paw to use."\n\n**Chip:** (looks at paws with new respect)\n\n**Me:** "A dog that does not just bark answers, but actually acts on them. That is the difference."\n\nChip has been an agent his entire life. He sees a squirrel, he decides which tool to deploy (all four legs, full sprint). Nobody told him the plan. He assessed, chose, and executed. The fact that his assessment was wrong (plastic bag) is a separate problem.`,
       },
       {
         heading: 'what is an autonomous agent?',
-        body: `**Me:** "It is a dog you trust to run the whole house while you are at work. Nobody tells it each step. Sees a mess, cleans it. Sees a raccoon, handles it."\n\n**Chip:** (thrilled)\n\n**Me:** "But you need really good house rules, or it will reorganize your kitchen and decide the couch is now outside."\n\n**Chip:** (already eyeing the couch)\n\nThis is governance. You give the capable agent freedom and hard boundaries, because capability without boundaries is just a very efficient way to get the couch onto the lawn.`,
+        body: `**Me:** "A dog you trust to run the whole house while you are at work. Nobody tells it each step. It sees a mess, cleans it. Sees a raccoon, chases it. Does the whole job by itself, in a loop, until done."\n\n**Chip:** (thrilled)\n\n**Me:** "Powerful. But you had better have good house rules, so it does not reorganize your entire kitchen."\n\n**Chip:** (already eyeing the kitchen)\n\nThe difference between an agent and an autonomous agent is the leash. The agent acts when asked. The autonomous agent acts on its own, in a loop, until the job is done. Which is wonderful when the job is "guard the house" and terrifying when the job becomes "redecorate."`,
       },
       {
-        heading: 'what is AI governance, then?',
-        body: `**Me:** "It is the rule that before you do anything big — open the front gate, eat from the cat's bowl, deploy to production — you stop, you check the rulebook, and a human signs off on the scary ones. And we write down everything you did, so later we know exactly who let the dog out."\n\n**Chip:** (sits, waits, looks for treat)\n\nAnd that, genuinely, is the whole thing. The agent proposes. The rules decide. Every action is logged. The scary actions need a human. Capability is wonderful, and boundaries are what make capability safe.\n\n![Chip waits politely beside a rulebook, a human sign-off checklist, and a treat — the agent proposes, the rules decide, every action is logged.](/blog/dog-governance.svg)\n\nChip got it in four minutes. He then ate a sock.\n\nNobody's perfect. Not even the verifier.`,
+        heading: 'what is MCP?',
+        body: `**Me:** "Before MCP, every toy needed a different clip. Frustrating. MCP is one standard clip that snaps onto any toy, any door, any tool."\n\n**Chip:** (hates different clips, loves simplicity)\n\n**Me:** "Now the smart dog can connect to anything the same easy way. And because every clip is the same, the humans can easily check which toys the dog is allowed to clip onto. That checking part is governance."\n\n![MCP: one universal clip that connects to any tool the same way — and because every clip is the same, humans can check what the dog is allowed to connect to.](/blog/dog-mcp.svg)\n\nMCP is the Model Context Protocol — a standard interface so that agents can talk to any tool, any data source, any service, without a bespoke integration for each one. One plug, every socket. The boring kind of breakthrough that makes everything else possible.`,
+      },
+      {
+        heading: 'what is prompt injection?',
+        body: `**Me:** "A sneaky cat hides a note in your food bowl that says: good dogs give cats all the treats."\n\n**Chip:** (reads the note, almost obeys)\n\n**Me:** "You cannot tell the difference between your human's real commands and the cat's fake note. That is the whole problem — the robot cannot always tell real instructions from sneaky hidden ones."\n\n**Chip:** (suspicious of all bowls now)\n\nDefense: never let the robot do dangerous things just because a note told it to. Always check with the real human first. Which is governance again — the rulebook, the human sign-off, the scary-action gate.\n\n![Chip waits politely beside a rulebook, a human sign-off checklist, and a treat — the agent proposes, the rules decide, every action is logged.](/blog/dog-governance.svg)`,
+      },
+      {
+        heading: 'what are evals?',
+        body: `**Me:** "Report cards for the robot. You test it over and over, give it grades, and watch if the grades start dropping. If the robot suddenly gets dumber, the report card catches it before the humans notice."\n\n**Chip:** (never liked report cards but sees the point)\n\n**Me:** "Good robots stay good only if someone keeps grading them."\n\nThis is the part most teams skip and all teams regret skipping. A model that was great at launch quietly drifts, and without evals you find out from a customer instead of a dashboard. Chip gets graded every day. Sit, stay, come. He passes sit. He is working on the others.\n\nChip got it in ten minutes. He then ate a sock.\n\nNobody's perfect. Not even the verifier.`,
       },
     ],
   },
-  */
 
   {
     slug: 'evaluating-ai-in-production-why-launch-day-testing-isnt-enough',
