@@ -83,20 +83,28 @@ prompts:
     title: 'I explained my entire tech stack to a golden retriever. He got it before some engineers do.',
     type: 'humour',
     date: 'June 10, 2026',
-    readingTime: '9 min',
+    readingTime: '12 min',
     color: 'paper-yellow',
-    tags: ['humour', 'ai systems', 'explainers', 'agents', 'langchain', 'dogs'],
+    tags: ['humour', 'ai systems', 'explainers', 'agents', 'langchain', 'litellm', 'ragas', 'dogs'],
     excerpt:
-      'LangChain, LLMs, hallucination, RAG, agents, MCP, prompt injection, evals — the entire modern AI stack explained to a golden retriever named Chip. He got it in ten minutes and then ate a sock.',
+      'LangChain, LiteLLM, RAGAS, LLMs, hallucination, RAG, agents, MCP, prompt injection, evals — the entire modern AI stack explained to a golden retriever named Chip. He got it in twelve minutes and then ate a sock.',
     seoDescription:
-      'A humorous but technically honest guide to the modern AI stack — LangChain, LLMs, hallucination, RAG, AI agents, autonomous agents, MCP, prompt injection, and evals — explained to a golden retriever named Chip.',
-    keywords: 'AI explained simply, LangChain, LLM, hallucination, RAG, AI agent, autonomous agent, MCP, prompt injection, evals, humour, analogy',
+      'A humorous but technically honest guide to the modern AI stack — LangChain, LiteLLM, RAGAS, LLMs, hallucination, RAG, AI agents, autonomous agents, MCP, prompt injection, and evals — explained to a golden retriever named Chip.',
+    keywords: 'AI explained simply, LangChain, LiteLLM, RAGAS, LLM, hallucination, RAG, AI agent, autonomous agent, MCP, prompt injection, evals, humour, analogy',
     intro:
       `I have spent years building AI systems for security products. I have written RFCs. I have argued about ClickHouse versus Postgres until people left the room. But the clearest technical review I ever got was from my friend's golden retriever, Chip, who has the attention span of a goldfish and the conviction of a CEO.\n\nHere is the entire modern AI stack, explained the way Chip understood it. If you would rather the version without the dog, the other posts in this series have fewer socks and more architecture diagrams.`,
     sections: [
       {
         heading: 'LangChain — the treat-getting instruction book',
         body: `**Me:** "Chip. You want a treat. But the treat is in a hard box. You cannot just bonk the box and get the treat. You need steps: first paw the box, then nose it open, then grab the treat, then chew."\n\n**Chip:** (already pawing the box)\n\n**Me:** "LangChain is the instruction book. It already knows all the little steps for talking to the smart robot. Instead of figuring out every step yourself every single time, you grab the ready-made steps from the book and snap them together like a toy. Step, step, step, treat."\n\n**Chip:** (approves of any system that ends in treat)\n\n![LangChain: snap the ready-made steps together — paw, nose, grab, chew — like a toy. The steps already exist, you just compose them.](/blog/dog-langchain.svg)\n\nThe pieces, in dog:\n\n- **Prompt template** = the same trick written down so you say it the same way every time. "SIT" always means sit. You do not reinvent "sit" each morning.\n- **Chain** = doing tricks in order. Sit, then shake, then roll over. One after another.\n- **Agent** = a smart dog who looks at the situation and picks which trick to do. Doorbell rings? Bark. Ball thrown? Fetch. Nobody told it which one. It chose.\n- **Tool** = a thing the dog is allowed to use. The ball. The frisbee. The squeaky toy. Each one does a specific job.\n- **Memory** = remembering you threw the ball behind the couch last time, so you look there first.\n- **Retriever** = your nose. You go find the right smell (the right info) before deciding what to do.`,
+      },
+      {
+        heading: 'LiteLLM — the one door every dog goes through',
+        body: `**Me:** "Chip. Imagine one ball launcher and five dogs. If one greedy dog presses it a thousand times, the others get no balls, and the machine overheats."\n\n**Chip:** (visibly distressed at the no-balls scenario)\n\n**Me:** "LiteLLM is the one door every model call goes through. It makes sure each dog gets a fair number of throws per minute. Greedy dog hits its limit, waits its turn. Everyone gets balls."\n\n**Chip:** (approves of fairness, mostly because he assumes he is not the greedy dog)\n\nHe is the greedy dog. They are always the greedy dog.\n\n![One ball launcher, five dogs, a fair number of throws per minute — the rate limiter as fairness with a cooldown.](/blog/dog-rate-limiter.svg)\n\nBut fairness is only the start. LiteLLM is a gateway — one service every team calls instead of calling providers directly. That single door gives you:\n\n- **Rate limiting** so one tenant cannot starve the rest.\n- **Cost attribution** so the bill is explainable, not one terrifying number.\n- **Provider failover** so when one model goes down, traffic shifts to a backup instead of taking the whole pipeline out.\n- **One audit surface** — a single place that knows everything you sent to a third-party model.\n\nNone of these can be enforced from inside each service. They are centralized concerns, and a gateway is what gives you a center.`,
+      },
+      {
+        heading: 'RAGAS — the report card nobody wants but everybody needs',
+        body: `**Me:** "Chip. The parrot answers questions all day. How do you know it is still answering correctly and has not quietly gone insane?"\n\n**Chip:** (has never questioned his own sanity)\n\n**Me:** "You grade it. You take a sample of its answers, check two things: one, is the answer actually based on the book it was given, or is it making stuff up? That is faithfulness. Two, does it actually answer the question that was asked, or did it wander off? That is answer-relevancy."\n\n**Chip:** (wanders off mid-explanation, proving the point)\n\nRAGAS is the grading system. You sample roughly 2% of production output, score it asynchronously, and watch the scores on a dashboard. If the grades drop over a 24-hour window, someone gets paged.\n\nThis caught a silent prompt regression once — a change that looked fine in review, passed spot checks, but quietly dropped faithfulness across the board. The dashboard saw it before any human did. One caveat: LLM-as-judge scoring has variance, so a human reviews flagged regressions rather than trusting the number blindly.\n\nGood robots stay good only if someone keeps grading them. RAGAS is the someone.`,
       },
       {
         heading: 'what is an LLM?',
