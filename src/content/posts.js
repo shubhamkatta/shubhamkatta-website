@@ -142,6 +142,113 @@ prompts:
   },
 
   {
+    slug: 'policy-as-code-governance-rules-that-actually-run',
+    cover: '/blog/cover-policy-as-code.png',
+    title: 'Policy-as-code: governance rules that actually run',
+    type: 'deep dive',
+    date: 'June 13, 2026',
+    readingTime: '10 min',
+    color: 'paper-coral',
+    tags: ['governance', 'policy-as-code', 'security', 'agents', 'backend', 'ai', 'ai governance', 'deep dive'],
+    excerpt:
+      'A governance policy in a PDF is a suggestion. A governance policy in code is a gate. Here is how to build policy-as-code for AI systems — versioned, testable, and impossible to skip.',
+    seoDescription:
+      'Building policy-as-code for AI agent governance: a policy engine that evaluates every action against versioned, testable rules — tool permissions, rate limits, sensitivity classification, and human-approval thresholds.',
+    keywords: 'policy-as-code, AI governance, policy engine, OPA, Rego, tool permissions, rate limiting, human-in-the-loop, agent security, governance automation',
+    intro:
+      `There is a governance document somewhere in your company's Notion. It says things like "AI agents should not access production databases without approval" and "sensitive data must be handled according to classification." It was last updated four months ago. Nobody checks it at runtime.\n\nThis is the gap between governance-as-a-document and governance-as-a-system. The document is a suggestion. The system is a gate. Here is how to build the gate.`,
+    sections: [
+      {
+        heading: 'why documents fail and code works',
+        body: `A PDF policy fails for three reasons:\n\n- **It is not in the execution path.** The agent does not read Notion before making a tool call. Unless the policy is evaluated at runtime, it is advisory.\n- **It cannot be tested.** You cannot write a unit test for a PDF. You cannot run a regression suite when the policy changes. You discover violations in production.\n- **It drifts from reality.** The policy says one thing, the code does another, and nobody notices until the audit.\n\nPolicy-as-code solves all three. The policy is a function that runs in the execution path, returns allow or deny, and can be tested like any other code.\n\n\`\`\`python
+# this is a policy. it runs. it tests. it ships.
+def evaluate(action, actor, context):
+    if action.tool == "database.write" and not actor.has_approval("db_write"):
+        return Deny("database writes require explicit approval")
+    if action.sensitivity > context.actor_clearance:
+        return Deny("action sensitivity exceeds actor clearance")
+    return Allow()
+\`\`\``,
+      },
+      {
+        heading: 'the policy engine',
+        body: `The engine sits between the agent and every tool or action. The agent proposes an action. The engine evaluates it against the current rules. The action proceeds only if the engine returns allow.\n\n\`\`\`python
+class PolicyEngine:
+    def __init__(self, rules):
+        self.rules = rules  # list of policy functions
+
+    def evaluate(self, action, actor, context):
+        for rule in self.rules:
+            result = rule(action, actor, context)
+            if result.denied:
+                self.audit_log.emit(action, actor, result)
+                return result
+        self.audit_log.emit(action, actor, Allow())
+        return Allow()
+\`\`\`\n\nThe critical design choice: the engine is a **first-class layer the agent runtime calls for every action**, not permission checks sprinkled across services. One gate, one evaluation path, one audit surface.\n\n![The policy engine: agent request in, versioned rules evaluated, allow or deny out — plus an audit log entry every time.](/blog/diagram-policy-engine.svg)`,
+      },
+      {
+        heading: 'the four rule categories',
+        body: `Most AI governance reduces to four categories of rules:\n\n**Tool permissions** — which tools can this agent use? A threat-enrichment agent can call the IOC lookup tool but not the billing API. Permissions are scoped per agent, per role.\n\n\`\`\`python
+def tool_permission_rule(action, actor, context):
+    allowed = get_tool_permissions(actor.agent_id)
+    if action.tool not in allowed:
+        return Deny(f"{actor.agent_id} not permitted to use {action.tool}")
+    return Allow()
+\`\`\`\n\n**Rate limits** — how many actions per time window? A single agent should not be able to make 10,000 API calls in a minute, even if each individual call is permitted.\n\n**Sensitivity classification** — how sensitive is the target resource? Data classified as PII requires a higher clearance level than public data. The classification lives in metadata, and the policy checks it at runtime.\n\n**Human-approval thresholds** — some actions are too consequential for an agent to execute alone. Deploying to production, deleting data, sending external communications — these require a human to approve before the action proceeds.\n\n\`\`\`python
+def human_approval_rule(action, actor, context):
+    if action.risk_level >= "high" and not context.has_human_approval:
+        return Deny("high-risk actions require human approval",
+                     require_human_review=True)
+    return Allow()
+\`\`\``,
+      },
+      {
+        heading: 'versioning and testing',
+        body: `Rules change. New tools get added, permissions shift, thresholds adjust. The rules must be versioned so you know which version was active when an action was evaluated.\n\n\`\`\`python
+# rules live in version-controlled files
+# each rule set has a version tag
+RULES_VERSION = "v2.4"
+
+# test them like code
+def test_db_write_requires_approval():
+    action = Action(tool="database.write")
+    actor = Actor(agent_id="agent_1", approvals=[])
+    result = evaluate(action, actor, Context())
+    assert result.denied
+    assert "approval" in result.reason
+
+def test_db_read_allowed():
+    action = Action(tool="database.read")
+    actor = Actor(agent_id="agent_1", permissions=["database.read"])
+    result = evaluate(action, actor, Context())
+    assert not result.denied
+\`\`\`\n\nWhen a rule changes, the test suite catches regressions before deployment. When an auditor asks "what were the rules on Tuesday?" you check out the version that was tagged for that date. This is the entire advantage over a PDF — rules that have tests, versions, and a deployment pipeline.`,
+      },
+      {
+        heading: 'the audit trail comes free',
+        body: `Because every action passes through the same policy engine, the audit trail is a natural byproduct — not a separate system you have to build. Every evaluation emits a record: what was requested, what rules were evaluated, what the decision was, and why.\n\n\`\`\`python
+# every evaluation produces an audit entry
+audit_entry = {
+    "timestamp": now_iso(),
+    "agent_id": actor.agent_id,
+    "action": action.tool,
+    "rules_version": RULES_VERSION,
+    "decision": "deny",
+    "reason": "database writes require explicit approval",
+    "request_id": context.request_id
+}
+\`\`\`\n\nThis is why centralization matters. If permission checks are scattered across services, there is no single audit surface. If every action flows through one engine, every decision is logged in one place. Governance and auditability emerge from the same design choice.`,
+      },
+      {
+        heading: 'the principle',
+        body: `A governance policy that does not run in the execution path is a wishlist. A policy that compiles, tests, deploys, and evaluates at runtime is a control.\n\nThe transition from document to code is not a technical challenge — the policy engine is straightforward to build. The challenge is organizational: agreeing that the rules are real, not aspirational, and that every agent action goes through the same gate.\n\nOnce you make that choice, the rest follows: versioning, testing, audit trails, and the ability to answer "what are the rules?" with a file path instead of a meeting.`,
+      },
+    ],
+  },
+
+
+  {
     slug: 'evaluating-ai-in-production-why-launch-day-testing-isnt-enough',
     cover: '/blog/cover-eval-heartbeat.png',
     title: 'Evaluating AI in production: why launch-day testing isn’t enough',

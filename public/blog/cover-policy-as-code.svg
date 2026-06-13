@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="Policy as code: governance rules that actually run">
+  <rect width="1200" height="600" fill="#a3e4a3"/>
+  <rect x="480" y="30" width="240" height="22" rx="4" fill="#fff6db" opacity="0.9" transform="rotate(-2 600 41)"/>
+  <g transform="translate(86,110) rotate(-1.5)">
+    <rect width="470" height="380" rx="22" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <text x="24" y="40" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="rgba(29,24,21,0.55)" letter-spacing="2">POLICY ENGINE</text>
+    <!-- Incoming request -->
+    <g transform="translate(60,60)">
+      <rect width="160" height="40" rx="10" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/>
+      <text x="80" y="26" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="13" fill="#1d1815">agent request</text>
+    </g>
+    <path d="M 140 100 L 140 118" stroke="#1d1815" stroke-width="2" marker-end="url(#cpac_ar)"/>
+    <!-- Policy engine box -->
+    <g transform="translate(60,118)">
+      <rect width="350" height="48" rx="12" fill="#1d1815"/>
+      <text x="175" y="20" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="rgba(255,255,255,0.55)" letter-spacing="2">POLICY ENGINE</text>
+      <text x="175" y="38" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#f6efe6">evaluate(request, rules) -> decision</text>
+    </g>
+    <path d="M 235 166 L 235 182" stroke="#1d1815" stroke-width="2" marker-end="url(#cpac_ar)"/>
+    <!-- Stacked rule cards -->
+    <g font-family="Inter, sans-serif" font-weight="800" font-size="12" fill="#1d1815">
+      <g transform="translate(60,182)"><rect width="350" height="32" rx="8" fill="#fff6db" stroke="#1d1815" stroke-width="2"/><text x="14" y="21">tool permissions</text><text x="336" y="21" text-anchor="end" font-size="10" fill="rgba(29,24,21,0.5)">v2.4</text></g>
+      <g transform="translate(60,220)"><rect width="350" height="32" rx="8" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/><text x="14" y="21">rate limits</text><text x="336" y="21" text-anchor="end" font-size="10" fill="rgba(29,24,21,0.5)">v1.7</text></g>
+      <g transform="translate(60,258)"><rect width="350" height="32" rx="8" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/><text x="14" y="21">sensitivity classification</text><text x="336" y="21" text-anchor="end" font-size="10" fill="rgba(29,24,21,0.5)">v3.1</text></g>
+      <g transform="translate(60,296)"><rect width="350" height="32" rx="8" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/><text x="14" y="21">human-approval thresholds</text><text x="336" y="21" text-anchor="end" font-size="10" fill="rgba(29,24,21,0.5)">v1.2</text></g>
+    </g>
+    <!-- Output: ALLOW / DENY -->
+    <g transform="translate(100,342)">
+      <rect width="120" height="30" rx="8" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/>
+      <text x="60" y="20" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#1d1815">ALLOW</text>
+    </g>
+    <g transform="translate(240,342)">
+      <rect width="120" height="30" rx="8" fill="#ff6b6b" stroke="#1d1815" stroke-width="2"/>
+      <text x="60" y="20" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#fff">DENY</text>
+    </g>
+  </g>
+  <!-- Right side text -->
+  <g transform="translate(610,180)">
+    <text x="0" y="48" font-family="Inter, sans-serif" font-weight="900" font-size="52" fill="#1d1815" letter-spacing="-2">Policy</text>
+    <text x="0" y="108" font-family="Inter, sans-serif" font-weight="900" font-size="52" fill="#1d1815" letter-spacing="-2">as code.</text>
+    <text x="0" y="166" font-family="Inter, sans-serif" font-weight="700" font-size="21" fill="#ff6b6b">versioned, testable,</text>
+    <text x="0" y="194" font-family="Inter, sans-serif" font-weight="700" font-size="21" fill="#ff6b6b">no exceptions.</text>
+    <text x="0" y="244" font-family="Inter, sans-serif" font-weight="500" font-size="14" fill="rgba(29,24,21,0.6)">governance rules that compile,</text>
+    <text x="0" y="264" font-family="Inter, sans-serif" font-weight="500" font-size="14" fill="rgba(29,24,21,0.6)">not documents that collect dust.</text>
+  </g>
+  <defs>
+    <marker id="cpac_ar" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1d1815"/></marker>
+  </defs>
+</svg>

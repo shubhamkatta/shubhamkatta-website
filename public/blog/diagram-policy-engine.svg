@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 460" role="img" aria-label="The policy engine: every action goes through the same gate">
+  <rect width="1000" height="460" fill="#fff8ef"/>
+  <text x="40" y="44" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">The policy engine: every action goes through the same gate</text>
+  <text x="40" y="68" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">one evaluation path, versioned rules, deterministic output — no ad-hoc permission checks scattered across services.</text>
+
+  <!-- Agent request (left) -->
+  <g transform="translate(40,100)">
+    <rect width="160" height="280" rx="16" fill="#1d1815"/>
+    <text x="80" y="120" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="rgba(255,255,255,0.55)" letter-spacing="2">AGENT</text>
+    <text x="80" y="146" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" fill="#f6efe6">sends</text>
+    <text x="80" y="164" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" fill="#f6efe6">request</text>
+    <text x="80" y="194" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="rgba(255,255,255,0.5)">tool call, API call,</text>
+    <text x="80" y="210" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="rgba(255,255,255,0.5)">data access...</text>
+  </g>
+  <path d="M 200 240 L 244 240" stroke="#1d1815" stroke-width="2" marker-end="url(#dpe_ar)"/>
+
+  <!-- Policy engine (center, dark box) -->
+  <g transform="translate(254,100)">
+    <rect width="200" height="280" rx="16" fill="#1d1815"/>
+    <text x="100" y="30" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="rgba(255,255,255,0.55)" letter-spacing="2">POLICY ENGINE</text>
+    <text x="100" y="56" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#f6efe6">evaluate(req, ctx)</text>
+    <!-- Inner process steps -->
+    <g transform="translate(20,72)">
+      <rect width="160" height="28" rx="6" fill="rgba(255,255,255,0.12)"/>
+      <text x="80" y="19" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="11" fill="#f6efe6">1. parse request</text>
+    </g>
+    <g transform="translate(20,108)">
+      <rect width="160" height="28" rx="6" fill="rgba(255,255,255,0.12)"/>
+      <text x="80" y="19" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="11" fill="#f6efe6">2. load rules (versioned)</text>
+    </g>
+    <g transform="translate(20,144)">
+      <rect width="160" height="28" rx="6" fill="rgba(255,255,255,0.12)"/>
+      <text x="80" y="19" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="11" fill="#f6efe6">3. evaluate conditions</text>
+    </g>
+    <g transform="translate(20,180)">
+      <rect width="160" height="28" rx="6" fill="rgba(255,255,255,0.12)"/>
+      <text x="80" y="19" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="11" fill="#f6efe6">4. compute decision</text>
+    </g>
+    <g transform="translate(20,216)">
+      <rect width="160" height="28" rx="6" fill="rgba(255,255,255,0.12)"/>
+      <text x="80" y="19" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600" font-size="11" fill="#f6efe6">5. emit audit log</text>
+    </g>
+  </g>
+
+  <!-- Arrow from engine to rules -->
+  <path d="M 354 140 L 354 130 L 480 130 L 480 140" stroke="#1d1815" stroke-width="1.5" stroke-dasharray="4,3" fill="none" marker-end="url(#dpe_ar)"/>
+  <text x="417" y="124" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="rgba(29,24,21,0.5)">loads</text>
+
+  <!-- Versioned rule cards (stacked on the right of engine) -->
+  <g font-family="Inter, sans-serif" font-weight="800" font-size="12" fill="#1d1815">
+    <g transform="translate(480,100)">
+      <rect width="220" height="48" rx="11" fill="#fff6db" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="22">tool permissions</text>
+      <text x="14" y="40" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">which tools each agent can invoke</text>
+    </g>
+    <g transform="translate(480,158)">
+      <rect width="220" height="48" rx="11" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="22">rate limits</text>
+      <text x="14" y="40" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">tokens, calls, cost per window</text>
+    </g>
+    <g transform="translate(480,216)">
+      <rect width="220" height="48" rx="11" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="22">sensitivity classification</text>
+      <text x="14" y="40" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">PII, financial, credentials</text>
+    </g>
+    <g transform="translate(480,274)">
+      <rect width="220" height="48" rx="11" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="22">human-approval thresholds</text>
+      <text x="14" y="40" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">risk score > N -> require human</text>
+    </g>
+    <!-- Version tag -->
+    <g transform="translate(480,332)">
+      <rect width="220" height="28" rx="8" fill="#fff" stroke="#1d1815" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <text x="110" y="19" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.5)">rules v2.4 · git-versioned · tested</text>
+    </g>
+  </g>
+
+  <!-- Arrow from engine to output -->
+  <path d="M 454 240 L 480 240 L 480 240 L 730 240" stroke="#1d1815" stroke-width="0" fill="none"/>
+  <path d="M 454 280 L 740 280" stroke="#1d1815" stroke-width="2" marker-end="url(#dpe_ar)"/>
+
+  <!-- Output: ALLOW or DENY -->
+  <g transform="translate(750,100)">
+    <rect width="200" height="70" rx="14" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/>
+    <text x="100" y="30" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="18" fill="#1d1815">ALLOW</text>
+    <text x="100" y="52" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.6)">action proceeds</text>
+  </g>
+  <g transform="translate(750,186)">
+    <rect width="200" height="70" rx="14" fill="#ff6b6b" stroke="#1d1815" stroke-width="2"/>
+    <text x="100" y="30" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="18" fill="#fff">DENY</text>
+    <text x="100" y="52" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" fill="rgba(255,255,255,0.85)">action blocked + reason</text>
+  </g>
+  <!-- Audit log -->
+  <g transform="translate(750,272)">
+    <rect width="200" height="56" rx="12" fill="#fff6db" stroke="#1d1815" stroke-width="2"/>
+    <text x="100" y="22" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="12" fill="#1d1815">AUDIT LOG</text>
+    <text x="100" y="42" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="rgba(29,24,21,0.6)">who, what, when, decision, why</text>
+  </g>
+
+  <!-- Caption -->
+  <text x="40" y="430" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.55)">Every agent action funnels through the same policy engine. Rules are code: versioned in git, validated in CI, deployed like any other artifact.</text>
+  <text x="40" y="448" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.55)">No prose documents. No tribal knowledge. No exceptions.</text>
+
+  <defs>
+    <marker id="dpe_ar" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1d1815"/></marker>
+  </defs>
+</svg>
