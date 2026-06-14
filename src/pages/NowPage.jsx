@@ -1,7 +1,8 @@
 import { Fragment } from 'react';
 import { Paper, SectionLabel } from '../components/Shared';
 import { now } from '../content/now';
-import { useSEO, SITE_ORIGIN } from '../components/useSEO';
+import { useSEO } from '../components/useSEO';
+import { nowSeo } from '../content/seo';
 
 const ICON_STYLE = {
   width: '1.9em',
@@ -207,13 +208,7 @@ function tiltFor(index) {
 }
 
 export function NowPage() {
-  useSEO({
-    title: 'Now — Shubham Katta',
-    description:
-      'What Shubham Katta is currently building, reading, thinking about, and avoiding — a periodic snapshot from a desk in Moradabad, India.',
-    keywords: 'Shubham Katta, now page, currently building, reading, AI engineering, threat intelligence',
-    url: `${SITE_ORIGIN}/now`,
-  });
+  useSEO(nowSeo);
   return (
     <main className="container page-space">
       <div className="section-head with-badge" style={{ marginBottom: '1.2rem' }}>

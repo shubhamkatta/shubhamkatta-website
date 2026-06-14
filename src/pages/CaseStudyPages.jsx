@@ -1,16 +1,11 @@
 import { Link, useParams } from 'react-router-dom';
 import { caseStudies } from '../content/caseStudies';
 import { CaseCard, Paper, SectionLabel } from '../components/Shared';
-import { useSEO, SITE_ORIGIN } from '../components/useSEO';
+import { useSEO } from '../components/useSEO';
+import { caseIndexSeo, caseSeo } from '../content/seo';
 
 export function CaseStudiesPage() {
-  useSEO({
-    title: 'Case files — Shubham Katta',
-    description:
-      'Detailed situations where technical problems were never only technical — domain theft, partner disputes, and the human stakes behind the systems.',
-    keywords: 'Shubham Katta, case studies, case files, domain theft, business continuity, technical problem solving',
-    url: `${SITE_ORIGIN}/case-studies`,
-  });
+  useSEO(caseIndexSeo);
   return (
     <main className="container page-space">
       <div className="section-head">
@@ -29,13 +24,7 @@ export function CaseStudiesPage() {
 export function CaseStudyPage() {
   const { slug } = useParams();
   const item = caseStudies.find((entry) => entry.slug === slug);
-  useSEO({
-    title: item ? `${item.title} — Shubham Katta` : 'Case study — Shubham Katta',
-    description: item?.summary || item?.intro,
-    keywords: 'Shubham Katta, case study, case files',
-    url: item ? `${SITE_ORIGIN}/case-studies/${item.slug}` : `${SITE_ORIGIN}/case-studies`,
-    type: 'article',
-  });
+  useSEO(caseSeo(item));
   if (!item) return <main className="container page-space"><Paper><h1>Not found</h1></Paper></main>;
   return (
     <main className="container page-space article-wrap">

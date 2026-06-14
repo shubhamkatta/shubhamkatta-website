@@ -1,7 +1,8 @@
 import { Link, useParams } from 'react-router-dom';
 import { posts } from '../content/posts';
 import { Paper, PostCard, SectionLabel } from '../components/Shared';
-import { useSEO, SITE_ORIGIN } from '../components/useSEO';
+import { useSEO } from '../components/useSEO';
+import { writingIndexSeo, postSeo } from '../content/seo';
 
 const QUOTE_OPENERS = ['“', '"', '‘', "'"];
 const ATTRIBUTION_OPENERS = ['–', '—', '-', 'Source:'];
@@ -201,14 +202,7 @@ function RichText({ text, className }) {
 }
 
 export function WritingIndexPage() {
-  useSEO({
-    title: 'Writings & notes — Shubham Katta',
-    description:
-      'Essays, technical deep-dives on Claude Code, MCP, prompt engineering, evals, token optimization, and observations on systems and people.',
-    keywords:
-      'Claude Code, AI engineering, MCP, prompt engineering, evals, token optimization, Anthropic, agents, skills, plugins',
-    url: `${SITE_ORIGIN}/writing`,
-  });
+  useSEO(writingIndexSeo);
   return (
     <main className="container page-space">
       <div className="section-head with-badge">
@@ -238,29 +232,7 @@ export function WritingIndexPage() {
 export function WritingPostPage() {
   const { slug } = useParams();
   const post = posts.find((item) => item.slug === slug);
-  const published = post?.date ? new Date(post.date) : null;
-  useSEO({
-    title: post ? `${post.title} — Shubham Katta` : 'Writing — Shubham Katta',
-    description: post?.seoDescription || post?.excerpt,
-    keywords: post?.keywords,
-    ogImage: post?.cover ? `${SITE_ORIGIN}${post.cover}` : undefined,
-    url: post ? `${SITE_ORIGIN}/writing/${post.slug}` : `${SITE_ORIGIN}/writing`,
-    type: 'article',
-    jsonLd: post
-      ? {
-          '@context': 'https://schema.org',
-          '@type': 'BlogPosting',
-          headline: post.title,
-          description: post.seoDescription || post.excerpt,
-          image: post.cover ? `${SITE_ORIGIN}${post.cover}` : undefined,
-          datePublished: published && !isNaN(published) ? published.toISOString() : undefined,
-          author: { '@type': 'Person', name: 'Shubham Katta', url: SITE_ORIGIN },
-          publisher: { '@type': 'Person', name: 'Shubham Katta', url: SITE_ORIGIN },
-          mainEntityOfPage: `${SITE_ORIGIN}/writing/${post.slug}`,
-          keywords: post.keywords,
-        }
-      : undefined,
-  });
+  useSEO(postSeo(post));
   if (!post) return <main className="container page-space"><Paper><h1>Not found</h1></Paper></main>;
 
   return (

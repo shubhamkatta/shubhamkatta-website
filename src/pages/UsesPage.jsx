@@ -1,7 +1,8 @@
 import { Fragment } from 'react';
 import { Paper, SectionLabel } from '../components/Shared';
 import { uses } from '../content/uses';
-import { useSEO, SITE_ORIGIN } from '../components/useSEO';
+import { useSEO } from '../components/useSEO';
+import { usesSeo } from '../content/seo';
 
 function tiltFor(index) {
   const tilts = [-1, 0.8, -0.6, 1, -0.5, 0.7, -0.8, 0.5];
@@ -9,13 +10,7 @@ function tiltFor(index) {
 }
 
 export function UsesPage() {
-  useSEO({
-    title: 'Uses — Shubham Katta',
-    description:
-      'A working inventory of the hardware, software, and small habits Shubham Katta relies on. Updated when something earns its keep.',
-    keywords: 'uses page, developer setup, tools, hardware, software, Shubham Katta',
-    url: `${SITE_ORIGIN}/uses`,
-  });
+  useSEO(usesSeo);
   return (
     <main className="container page-space">
       <div className="section-head" style={{ marginBottom: '1.2rem' }}>

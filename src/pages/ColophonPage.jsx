@@ -1,7 +1,8 @@
 import { Fragment } from 'react';
 import { Paper, SectionLabel } from '../components/Shared';
 import { colophon } from '../content/colophon';
-import { useSEO, SITE_ORIGIN } from '../components/useSEO';
+import { useSEO } from '../components/useSEO';
+import { colophonSeo } from '../content/seo';
 
 function tiltFor(index) {
   const tilts = [-1, 0.8, -0.6, 1, -0.5, 0.7, -0.8, 0.5];
@@ -9,13 +10,7 @@ function tiltFor(index) {
 }
 
 export function ColophonPage() {
-  useSEO({
-    title: 'Colophon — Shubham Katta',
-    description:
-      'How this site is built — the typefaces, the palette, the rules bent, and the people borrowed from. A margin note on the making of shubhamkatta.com.',
-    keywords: 'colophon, typography, color palette, design system, Inter, Caveat, Fraunces, Shubham Katta',
-    url: `${SITE_ORIGIN}/colophon`,
-  });
+  useSEO(colophonSeo);
   return (
     <main className="container page-space">
       <div className="section-head" style={{ marginBottom: '1.2rem' }}>

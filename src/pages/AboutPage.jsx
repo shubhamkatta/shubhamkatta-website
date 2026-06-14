@@ -1,14 +1,9 @@
 import { Paper, SectionLabel } from '../components/Shared';
-import { useSEO, SITE_ORIGIN } from '../components/useSEO';
+import { useSEO } from '../components/useSEO';
+import { aboutSeo } from '../content/seo';
 
 export function AboutPage() {
-  useSEO({
-    title: 'About — Shubham Katta',
-    description:
-      'More internet room, less corporate lobby. Shubham Katta on systems, people, incentives, and the gap between what people say and what they do.',
-    keywords: 'Shubham Katta, about, software engineer, systems thinking, writer, observer',
-    url: `${SITE_ORIGIN}/about`,
-  });
+  useSEO(aboutSeo);
   return (
     <main className="container page-space narrow-grid">
       <Paper tone="paper-white">

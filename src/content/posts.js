@@ -6,7 +6,7 @@ export const posts = [
    *
   {
     slug: 'mcp-servers-i-built-and-what-they-taught-me',
-    cover: '/blog/cover-mcp-servers-built.svg',
+    cover: '/blog/cover-mcp-servers-built.png',
     title: 'Three MCP servers I built, and what they taught me',
     type: 'field notes',
     date: 'May 4, 2026',
@@ -79,7 +79,7 @@ prompts:
 
   {
     slug: 'why-i-built-plynth-rebuilding-the-same-saas-plumbing-four-times',
-    cover: '/blog/cover-plynth.svg',
+    cover: '/blog/cover-plynth.png',
     title: 'Why I built Plynth: rebuilding the same SaaS plumbing four times',
     type: 'field notes',
     date: 'May 27, 2026',
@@ -147,7 +147,7 @@ prompts:
 
   {
     slug: 'are-you-managing-your-agents-or-are-they-managing-you',
-    cover: '/blog/cover-managing-agents.svg',
+    cover: '/blog/cover-managing-agents.png',
     title: 'Are you managing your agents, or are they managing you?',
     type: 'reflection',
     date: 'May 20, 2026',
@@ -219,7 +219,7 @@ task_id · turn · ts · model · tool · args (redacted) · result_summary
 
   {
     slug: '10-things-to-ensure-you-are-building-agents-right',
-    cover: '/blog/cover-10-things-agents.svg',
+    cover: '/blog/cover-10-things-agents.png',
     title: '10 things to ensure you are building agents right',
     type: 'guide',
     date: 'May 19, 2026',
@@ -286,7 +286,7 @@ tokens_in, tokens_out, cost, latency_ms, status, error
 
   {
     slug: 'what-are-autonomous-agents-and-how-to-build-them',
-    cover: '/blog/cover-autonomous-agents.svg',
+    cover: '/blog/cover-autonomous-agents.png',
     title: 'What are autonomous agents, and how to build them',
     type: 'deep dive',
     date: 'May 18, 2026',
@@ -396,7 +396,7 @@ def run_agent(goal: str):
 
   {
     slug: 'what-are-agentic-workflows',
-    cover: '/blog/cover-agentic-workflows.svg',
+    cover: '/blog/cover-agentic-workflows.png',
     title: 'What are agentic workflows? (and why most "agents" are actually workflows)',
     type: 'deep dive',
     date: 'May 17, 2026',
@@ -468,7 +468,7 @@ user request
 
   {
     slug: 'what-are-agents',
-    cover: '/blog/cover-what-are-agents.svg',
+    cover: '/blog/cover-what-are-agents.png',
     title: 'What are agents? (without the marketing)',
     type: 'deep dive',
     date: 'May 17, 2026',
@@ -578,7 +578,7 @@ def run(goal: str, max_turns=15, token_budget=80_000):
 
   {
     slug: 'hybrid-retrieval-and-rerankers',
-    cover: '/blog/cover-hybrid-retrieval.svg',
+    cover: '/blog/cover-hybrid-retrieval.png',
     title: 'Hybrid retrieval and rerankers: how to actually win at retrieval',
     type: 'deep dive',
     date: 'May 16, 2026',
@@ -656,7 +656,7 @@ choose doc d that maximises: λ · rel(q, d) - (1-λ) · max(sim(d, d') for d' i
 
   {
     slug: 'chunking-the-most-ignored-knob-in-rag',
-    cover: '/blog/cover-rag-chunking.svg',
+    cover: '/blog/cover-rag-chunking.png',
     title: 'Chunking, the most-ignored knob in RAG',
     type: 'deep dive',
     date: 'May 15, 2026',
@@ -770,7 +770,7 @@ def retrieve_parents(query, items, top_k_children=20, top_parents=5):
 
   {
     slug: 'rag-isnt-a-thing-its-a-pipeline',
-    cover: '/blog/cover-rag-anatomy.svg',
+    cover: '/blog/cover-rag-anatomy.png',
     title: "RAG isn't a thing, it's a pipeline",
     type: 'deep dive',
     date: 'May 14, 2026',
@@ -849,7 +849,7 @@ Question: ...
 
   {
     slug: 'choosing-an-mcp-transport',
-    cover: '/blog/cover-mcp-transports.svg',
+    cover: '/blog/cover-mcp-transports.png',
     title: 'Choosing an MCP transport: stdio vs SSE vs streamable HTTP',
     type: 'deep dive',
     date: 'May 13, 2026',
@@ -923,7 +923,7 @@ debugging              cat / tee      curl + sse-cli   curl
 
   {
     slug: 'the-mcp-protocol-under-the-hood',
-    cover: '/blog/cover-mcp-protocol-deep-dive.svg',
+    cover: '/blog/cover-mcp-protocol-deep-dive.png',
     title: 'The MCP protocol, under the hood: handshake, capabilities, notifications',
     type: 'deep dive',
     date: 'May 12, 2026',
@@ -1069,7 +1069,7 @@ for line in sys.stdin:
 
   {
     slug: 'the-myth-of-perfect-timing',
-    cover: '/blog/cover-perfect-timing.svg',
+    cover: '/blog/cover-perfect-timing.png',
     title: 'The myth of perfect timing',
     type: 'observation',
     date: 'May 8, 2026',
@@ -1109,7 +1109,7 @@ for line in sys.stdin:
 
   {
     slug: 'honesty-with-cushions',
-    cover: '/blog/cover-honesty-cushions.svg',
+    cover: '/blog/cover-honesty-cushions.png',
     title: 'Some people want honesty with cushions',
     type: 'observation',
     date: 'May 1, 2026',
@@ -1153,7 +1153,7 @@ for line in sys.stdin:
 
   {
     slug: 'not-every-breakdown-is-a-crisis',
-    cover: '/blog/cover-not-every-breakdown.svg',
+    cover: '/blog/cover-not-every-breakdown.png',
     title: 'Not every breakdown is a crisis',
     type: 'reflection',
     date: 'April 28, 2026',
@@ -1193,7 +1193,7 @@ for line in sys.stdin:
 
   {
     slug: 'tool-use-schemas-and-the-quiet-art-of-reliable-agents',
-    cover: '/blog/cover-tool-use-schemas.svg',
+    cover: '/blog/cover-tool-use-schemas.png',
     title: 'Tool use, schemas, and the quiet art of making agents reliable',
     type: 'deep dive',
     date: 'April 14, 2026',
@@ -1285,7 +1285,7 @@ for line in sys.stdin:
 
   {
     slug: 'why-praise-can-be-its-own-trap',
-    cover: '/blog/cover-praise-trap.svg',
+    cover: '/blog/cover-praise-trap.png',
     title: 'Why praise can be its own trap',
     type: 'observation',
     date: 'April 3, 2026',
@@ -1325,7 +1325,7 @@ for line in sys.stdin:
 
   {
     slug: 'memory-systems-for-ai-agents-that-dont-forget',
-    cover: '/blog/cover-memory-systems.svg',
+    cover: '/blog/cover-memory-systems.png',
     title: 'Memory systems for AI agents that don’t forget what matters',
     type: 'deep dive',
     date: 'March 17, 2026',
@@ -1406,7 +1406,7 @@ User prefers terse responses with no trailing summaries.
 
   {
     slug: 'the-emotional-side-of-good-engineering',
-    cover: '/blog/cover-emotional-engineering.svg',
+    cover: '/blog/cover-emotional-engineering.png',
     title: 'The emotional side of good engineering',
     type: 'reflection',
     date: 'March 5, 2026',
@@ -1450,7 +1450,7 @@ User prefers terse responses with no trailing summaries.
 
   {
     slug: 'claude-code-hooks-slash-commands-and-settings',
-    cover: '/blog/cover-hooks-slash-commands.svg',
+    cover: '/blog/cover-hooks-slash-commands.png',
     title: 'Hooks, slash commands, and settings: the Claude Code configuration you’re probably missing',
     type: 'guide',
     date: 'February 26, 2026',
@@ -1622,7 +1622,7 @@ You are about to open a PR for the current branch.
 
   {
     slug: 'the-strange-relief-of-admitting-you-care',
-    cover: '/blog/cover-admitting-you-care.svg',
+    cover: '/blog/cover-admitting-you-care.png',
     title: 'The strange relief of admitting you care',
     type: 'personal',
     date: 'February 18, 2026',
@@ -1666,7 +1666,7 @@ You are about to open a PR for the current branch.
 
   {
     slug: 'from-prompt-to-pipeline-eval-harness-in-200-lines',
-    cover: '/blog/cover-eval-harness-200.svg',
+    cover: '/blog/cover-eval-harness-200.png',
     title: 'From prompt to pipeline: a real eval harness in 200 lines',
     type: 'tutorial',
     date: 'February 10, 2026',
@@ -1846,7 +1846,7 @@ if __name__ == "__main__":
 
   {
     slug: 'caching-like-you-mean-it-anthropic-prompt-caching',
-    cover: '/blog/cover-prompt-caching.svg',
+    cover: '/blog/cover-prompt-caching.png',
     title: 'Caching like you mean it: Anthropic prompt caching patterns',
     type: 'deep dive',
     date: 'January 22, 2026',
@@ -1936,7 +1936,7 @@ print(resp.usage)  # check cache_creation_input_tokens vs cache_read_input_token
 
   {
     slug: 'why-clarity-feels-aggressive-to-confused-systems',
-    cover: '/blog/cover-clarity-aggressive.svg',
+    cover: '/blog/cover-clarity-aggressive.png',
     title: 'Why clarity feels aggressive to confused systems',
     type: 'observation',
     date: 'January 14, 2026',
@@ -1980,7 +1980,7 @@ print(resp.usage)  # check cache_creation_input_tokens vs cache_read_input_token
 
   {
     slug: 'the-hidden-cost-of-long-context',
-    cover: '/blog/cover-long-context-cost.svg',
+    cover: '/blog/cover-long-context-cost.png',
     title: 'The hidden cost of long context, and what to do about it',
     type: 'deep dive',
     date: 'January 6, 2026',
@@ -2029,7 +2029,7 @@ print(resp.usage)  # check cache_creation_input_tokens vs cache_read_input_token
 
   {
     slug: 'the-quiet-cost-of-being-the-reliable-one',
-    cover: '/blog/cover-reliable-cost.svg',
+    cover: '/blog/cover-reliable-cost.png',
     title: 'The quiet cost of being the reliable one',
     type: 'observation',
     date: 'December 28, 2025',
@@ -2073,7 +2073,7 @@ print(resp.usage)  # check cache_creation_input_tokens vs cache_read_input_token
 
   {
     slug: 'subagents-and-parallelism-stop-cramming-context',
-    cover: '/blog/cover-subagents.svg',
+    cover: '/blog/cover-subagents.png',
     title: 'Subagents and parallelism: stop cramming everything into one context',
     type: 'deep dive',
     date: 'December 16, 2025',
@@ -2140,7 +2140,7 @@ If you cannot answer (1) confidently, say so and stop. Do not guess.
 
   {
     slug: 'you-can-be-good-at-something-and-still-be-tired-of-it',
-    cover: '/blog/cover-good-but-tired.svg',
+    cover: '/blog/cover-good-but-tired.png',
     title: 'You can be good at something and still be tired of it',
     type: 'reflection',
     date: 'December 4, 2025',
@@ -2184,7 +2184,7 @@ If you cannot answer (1) confidently, say so and stop. Do not guess.
 
   {
     slug: 'ambition-looks-better-from-the-outside',
-    cover: '/blog/cover-ambition-outside.svg',
+    cover: '/blog/cover-ambition-outside.png',
     title: 'Ambition looks better from the outside',
     type: 'observation',
     date: 'November 30, 2025',
@@ -2228,7 +2228,7 @@ If you cannot answer (1) confidently, say so and stop. Do not guess.
 
   {
     slug: '12-best-claude-code-plugins-and-skills',
-    cover: '/blog/cover-12-best-plugins.svg',
+    cover: '/blog/cover-12-best-plugins.png',
     title: '12 Claude Code plugins and skills worth installing today',
     type: 'roundup',
     date: 'November 25, 2025',
@@ -2321,7 +2321,7 @@ description: Security review specifically tuned for this app — checks
 
   {
     slug: 'some-truths-arrive-wearing-jokes',
-    cover: '/blog/cover-truths-jokes.svg',
+    cover: '/blog/cover-truths-jokes.png',
     title: 'Some truths arrive wearing jokes',
     type: 'observation',
     date: 'November 19, 2025',
@@ -2365,7 +2365,7 @@ description: Security review specifically tuned for this app — checks
 
   {
     slug: 'claude-code-in-production-a-field-guide',
-    cover: '/blog/cover-claude-code-production.svg',
+    cover: '/blog/cover-claude-code-production.png',
     title: 'Claude Code, in production: a field guide',
     type: 'field notes',
     date: 'November 11, 2025',
@@ -2417,7 +2417,7 @@ description: Security review specifically tuned for this app — checks
 
   {
     slug: 'why-systems-fail-quietly',
-    cover: '/blog/cover-systems-fail-quietly.svg',
+    cover: '/blog/cover-systems-fail-quietly.png',
     title: 'Why systems fail quietly',
     type: 'observation',
     date: 'November 6, 2025',
@@ -2463,7 +2463,7 @@ description: Security review specifically tuned for this app — checks
 
   {
     slug: 'the-psychology-of-work-nobody-adds-to-sprint-planning',
-    cover: '/blog/cover-psychology-of-work.svg',
+    cover: '/blog/cover-psychology-of-work.png',
     title: 'The psychology of work nobody adds to sprint planning',
     type: 'observation',
     date: 'November 4, 2025',
@@ -2508,7 +2508,7 @@ description: Security review specifically tuned for this app — checks
 
   {
     slug: 'building-evals-that-dont-lie-to-you',
-    cover: '/blog/cover-evals-dont-lie.svg',
+    cover: '/blog/cover-evals-dont-lie.png',
     title: 'Building evals that don’t lie to you',
     type: 'deep dive',
     date: 'October 30, 2025',
@@ -2571,7 +2571,7 @@ description: Security review specifically tuned for this app — checks
 
   {
     slug: 'how-to-write-a-claude-code-skill',
-    cover: '/blog/cover-claude-code-skill.svg',
+    cover: '/blog/cover-claude-code-skill.png',
     title: 'How to write a Claude Code skill that people will actually use',
     type: 'tutorial',
     date: 'October 14, 2025',
@@ -2663,7 +2663,7 @@ description: |
 
   {
     slug: 'mcp-explained-for-people-with-real-work-to-do',
-    cover: '/blog/cover-mcp-explained.svg',
+    cover: '/blog/cover-mcp-explained.png',
     title: 'MCP, explained for people with real work to do',
     type: 'guide',
     date: 'September 28, 2025',
@@ -2756,7 +2756,7 @@ if __name__ == "__main__":
 
   {
     slug: 'prompt-engineering-beyond-hello-world',
-    cover: '/blog/cover-prompt-engineering.svg',
+    cover: '/blog/cover-prompt-engineering.png',
     title: 'Prompt engineering beyond hello world: patterns that actually move evals',
     type: 'deep dive',
     date: 'September 9, 2025',
@@ -2829,7 +2829,7 @@ You are a code review assistant for the auth subsystem.
 
   {
     slug: 'token-optimization-in-claude-12-hacks',
-    cover: '/blog/cover-token-optimization.svg',
+    cover: '/blog/cover-token-optimization.png',
     title: 'Token optimization in Claude: 12 hacks I use every day',
     type: 'guide',
     date: 'August 18, 2025',

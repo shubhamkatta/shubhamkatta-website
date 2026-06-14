@@ -1,17 +1,11 @@
 import { roles, metrics } from '../content/site';
 import { Paper, SectionLabel } from '../components/Shared';
 import { OngoingTerminal } from '../components/OngoingTerminal';
-import { useSEO, SITE_ORIGIN } from '../components/useSEO';
+import { useSEO } from '../components/useSEO';
+import { workSeo } from '../content/seo';
 
 export function WorkPage() {
-  useSEO({
-    title: 'Work — Shubham Katta',
-    description:
-      'Nine years of building systems and products — threat intelligence pipelines, correlation engines, and search-heavy APIs at scale. The professional chapter, told honestly.',
-    keywords:
-      'Shubham Katta, work experience, Principal Software Engineer, Cyble, threat intelligence, correlation engine, APIs at scale',
-    url: `${SITE_ORIGIN}/work`,
-  });
+  useSEO(workSeo);
   return (
     <main className="container page-space">
       <Paper tone="paper-white">
