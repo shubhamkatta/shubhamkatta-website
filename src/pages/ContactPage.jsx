@@ -1,7 +1,15 @@
 import { site } from '../content/site';
 import { Paper, SectionLabel } from '../components/Shared';
+import { useSEO, SITE_ORIGIN } from '../components/useSEO';
 
 export function ContactPage() {
+  useSEO({
+    title: 'Say hello — Shubham Katta',
+    description:
+      'Get in touch with Shubham Katta. Thoughtful messages, strange observations, work, collaborations, or a shared curiosity about how weirdly human everything turns out to be.',
+    keywords: 'Shubham Katta, contact, say hello, get in touch, book a call, LinkedIn, email',
+    url: `${SITE_ORIGIN}/contact`,
+  });
   return (
     <main className="container page-space">
       <div className="contact-grid">

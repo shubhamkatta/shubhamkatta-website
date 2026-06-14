@@ -4,8 +4,49 @@ import { chips, findings, metrics, roles, site } from '../content/site';
 import { build } from '../content/build';
 import { Chip, Paper, PostCard, SectionLabel } from '../components/Shared';
 import { CurrentlyBlock } from '../components/CurrentlyBlock';
+import { useSEO, SITE_ORIGIN } from '../components/useSEO';
+
+const HOME_JSONLD = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE_ORIGIN}/#website`,
+      url: SITE_ORIGIN,
+      name: 'Shubham Katta',
+      description: 'A personal space for work, writing, humour, and whatever else survives being noticed.',
+    },
+    {
+      '@type': 'Person',
+      '@id': `${SITE_ORIGIN}/#person`,
+      name: 'Shubham Katta',
+      url: SITE_ORIGIN,
+      image: `${SITE_ORIGIN}/bitmoji-relax.png`,
+      jobTitle: 'Principal Software Engineer',
+      worksFor: { '@type': 'Organization', name: 'Cyble Inc.' },
+      sameAs: ['https://www.linkedin.com/in/kattashubham/'],
+      knowsAbout: [
+        'Software Engineering',
+        'AI Engineering',
+        'Claude Code',
+        'Model Context Protocol',
+        'Threat Intelligence',
+        'Prompt Engineering',
+      ],
+    },
+  ],
+};
 
 export function HomePage() {
+  useSEO({
+    title: 'Shubham Katta — engineer, writer, observer of small patterns',
+    description:
+      'A personal space for work, writing, humour, and whatever else survives being noticed. Essays on Claude Code, MCP, prompt engineering, evals, and the human side of building software.',
+    keywords:
+      'Shubham Katta, software engineer, principal engineer, AI engineering, Claude Code, MCP, prompt engineering, evals, threat intelligence, writing',
+    url: `${SITE_ORIGIN}/`,
+    jsonLd: HOME_JSONLD,
+  });
   return (
     <main>
       <section className="hero container">

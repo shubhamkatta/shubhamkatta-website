@@ -1,46 +1,7 @@
-import { Fragment, useEffect } from 'react';
+import { Fragment } from 'react';
 import { Paper, SectionLabel } from '../components/Shared';
 import { now } from '../content/now';
-
-const SITE_ORIGIN = 'https://shubhamkatta.com';
-
-function setMeta(name, content, isProperty = false) {
-  if (!content) return;
-  const attr = isProperty ? 'property' : 'name';
-  let el = document.head.querySelector(`meta[${attr}="${name}"]`);
-  if (!el) {
-    el = document.createElement('meta');
-    el.setAttribute(attr, name);
-    document.head.appendChild(el);
-  }
-  el.setAttribute('content', content);
-}
-
-function setCanonical(url) {
-  let el = document.head.querySelector('link[rel="canonical"]');
-  if (!el) {
-    el = document.createElement('link');
-    el.setAttribute('rel', 'canonical');
-    document.head.appendChild(el);
-  }
-  el.setAttribute('href', url);
-}
-
-function useSEO() {
-  useEffect(() => {
-    const title = 'Now — Shubham Katta';
-    const description =
-      'What I am currently building, reading, thinking about, and avoiding. A periodic snapshot.';
-    document.title = title;
-    setMeta('description', description);
-    setMeta('og:title', title, true);
-    setMeta('og:description', description, true);
-    setMeta('og:url', `${SITE_ORIGIN}/now`, true);
-    setMeta('twitter:title', title);
-    setMeta('twitter:description', description);
-    setCanonical(`${SITE_ORIGIN}/now`);
-  }, []);
-}
+import { useSEO, SITE_ORIGIN } from '../components/useSEO';
 
 const ICON_STYLE = {
   width: '1.9em',
@@ -246,7 +207,13 @@ function tiltFor(index) {
 }
 
 export function NowPage() {
-  useSEO();
+  useSEO({
+    title: 'Now — Shubham Katta',
+    description:
+      'What Shubham Katta is currently building, reading, thinking about, and avoiding — a periodic snapshot from a desk in Moradabad, India.',
+    keywords: 'Shubham Katta, now page, currently building, reading, AI engineering, threat intelligence',
+    url: `${SITE_ORIGIN}/now`,
+  });
   return (
     <main className="container page-space">
       <div className="section-head with-badge" style={{ marginBottom: '1.2rem' }}>

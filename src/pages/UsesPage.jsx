@@ -1,46 +1,7 @@
-import { Fragment, useEffect } from 'react';
+import { Fragment } from 'react';
 import { Paper, SectionLabel } from '../components/Shared';
 import { uses } from '../content/uses';
-
-const SITE_ORIGIN = 'https://shubhamkatta.com';
-
-function setMeta(name, content, isProperty = false) {
-  if (!content) return;
-  const attr = isProperty ? 'property' : 'name';
-  let el = document.head.querySelector(`meta[${attr}="${name}"]`);
-  if (!el) {
-    el = document.createElement('meta');
-    el.setAttribute(attr, name);
-    document.head.appendChild(el);
-  }
-  el.setAttribute('content', content);
-}
-
-function setCanonical(url) {
-  let el = document.head.querySelector('link[rel="canonical"]');
-  if (!el) {
-    el = document.createElement('link');
-    el.setAttribute('rel', 'canonical');
-    document.head.appendChild(el);
-  }
-  el.setAttribute('href', url);
-}
-
-function useSEO() {
-  useEffect(() => {
-    const title = 'Uses — Shubham Katta';
-    const description =
-      'A working inventory of the hardware, software, and small habits I rely on. Updated when something earns its keep.';
-    document.title = title;
-    setMeta('description', description);
-    setMeta('og:title', title, true);
-    setMeta('og:description', description, true);
-    setMeta('og:url', `${SITE_ORIGIN}/uses`, true);
-    setMeta('twitter:title', title);
-    setMeta('twitter:description', description);
-    setCanonical(`${SITE_ORIGIN}/uses`);
-  }, []);
-}
+import { useSEO, SITE_ORIGIN } from '../components/useSEO';
 
 function tiltFor(index) {
   const tilts = [-1, 0.8, -0.6, 1, -0.5, 0.7, -0.8, 0.5];
@@ -48,7 +9,13 @@ function tiltFor(index) {
 }
 
 export function UsesPage() {
-  useSEO();
+  useSEO({
+    title: 'Uses — Shubham Katta',
+    description:
+      'A working inventory of the hardware, software, and small habits Shubham Katta relies on. Updated when something earns its keep.',
+    keywords: 'uses page, developer setup, tools, hardware, software, Shubham Katta',
+    url: `${SITE_ORIGIN}/uses`,
+  });
   return (
     <main className="container page-space">
       <div className="section-head" style={{ marginBottom: '1.2rem' }}>

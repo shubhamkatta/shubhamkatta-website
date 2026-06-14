@@ -1,46 +1,7 @@
-import { Fragment, useEffect } from 'react';
+import { Fragment } from 'react';
 import { Paper, SectionLabel } from '../components/Shared';
 import { colophon } from '../content/colophon';
-
-const SITE_ORIGIN = 'https://shubhamkatta.com';
-
-function setMeta(name, content, isProperty = false) {
-  if (!content) return;
-  const attr = isProperty ? 'property' : 'name';
-  let el = document.head.querySelector(`meta[${attr}="${name}"]`);
-  if (!el) {
-    el = document.createElement('meta');
-    el.setAttribute(attr, name);
-    document.head.appendChild(el);
-  }
-  el.setAttribute('content', content);
-}
-
-function setCanonical(url) {
-  let el = document.head.querySelector('link[rel="canonical"]');
-  if (!el) {
-    el = document.createElement('link');
-    el.setAttribute('rel', 'canonical');
-    document.head.appendChild(el);
-  }
-  el.setAttribute('href', url);
-}
-
-function useSEO() {
-  useEffect(() => {
-    const title = 'Colophon — Shubham Katta';
-    const description =
-      'How this site is built — the typefaces, the palette, the rules I bent, the tools on the desk, and the people I borrowed from.';
-    document.title = title;
-    setMeta('description', description);
-    setMeta('og:title', title, true);
-    setMeta('og:description', description, true);
-    setMeta('og:url', `${SITE_ORIGIN}/colophon`, true);
-    setMeta('twitter:title', title);
-    setMeta('twitter:description', description);
-    setCanonical(`${SITE_ORIGIN}/colophon`);
-  }, []);
-}
+import { useSEO, SITE_ORIGIN } from '../components/useSEO';
 
 function tiltFor(index) {
   const tilts = [-1, 0.8, -0.6, 1, -0.5, 0.7, -0.8, 0.5];
@@ -48,7 +9,13 @@ function tiltFor(index) {
 }
 
 export function ColophonPage() {
-  useSEO();
+  useSEO({
+    title: 'Colophon — Shubham Katta',
+    description:
+      'How this site is built — the typefaces, the palette, the rules bent, and the people borrowed from. A margin note on the making of shubhamkatta.com.',
+    keywords: 'colophon, typography, color palette, design system, Inter, Caveat, Fraunces, Shubham Katta',
+    url: `${SITE_ORIGIN}/colophon`,
+  });
   return (
     <main className="container page-space">
       <div className="section-head" style={{ marginBottom: '1.2rem' }}>
