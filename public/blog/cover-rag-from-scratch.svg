@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="RAG from scratch: every step of the retrieval-augmented generation pipeline explained simply">
+  <rect width="1200" height="600" fill="#eaf7ff"/>
+  <rect x="510" y="34" width="240" height="22" rx="4" fill="#fff6db" opacity="0.9" transform="rotate(-2 630 45)"/>
+  <g transform="translate(80,156) rotate(-1.5)">
+    <rect width="520" height="310" rx="22" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <text x="24" y="38" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="rgba(29,24,21,0.55)" letter-spacing="2">THE PIPELINE IN SEVEN STEPS</text>
+    <g font-family="Inter, sans-serif" font-weight="700" font-size="11" fill="#1d1815">
+      <g transform="translate(24,60)"><rect width="110" height="32" rx="8" fill="#fff6db" stroke="#1d1815" stroke-width="2"/><text x="55" y="21" text-anchor="middle">1 · load docs</text></g>
+      <g transform="translate(148,60)"><rect width="110" height="32" rx="8" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/><text x="55" y="21" text-anchor="middle">2 · chunk</text></g>
+      <g transform="translate(272,60)"><rect width="110" height="32" rx="8" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/><text x="55" y="21" text-anchor="middle">3 · embed</text></g>
+      <g transform="translate(396,60)"><rect width="100" height="32" rx="8" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/><text x="50" y="21" text-anchor="middle">4 · store</text></g>
+      <g transform="translate(24,110)"><rect width="140" height="32" rx="8" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/><text x="70" y="21" text-anchor="middle">5 · retrieve</text></g>
+      <g transform="translate(178,110)"><rect width="140" height="32" rx="8" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/><text x="70" y="21" text-anchor="middle">6 · stuff prompt</text></g>
+      <g transform="translate(332,110)"><rect width="164" height="32" rx="8" fill="#1d1815" stroke="#1d1815" stroke-width="2"/><text x="82" y="21" text-anchor="middle" fill="#f6efe6">7 · generate answer</text></g>
+    </g>
+    <g stroke="#1d1815" stroke-width="1.5" fill="none">
+      <path d="M 134 76 L 148 76"/><path d="M 258 76 L 272 76"/><path d="M 382 76 L 396 76"/>
+      <path d="M 164 76 L 164 110"/><path d="M 318 126 L 332 126"/>
+    </g>
+    <!-- Chip peeking from corner -->
+    <g transform="translate(420,210) scale(0.52)">
+      <path d="M -58 -44 C -102 -36 -112 50 -76 90 C -50 76 -40 10 -28 -22 Z" fill="#e8a44b" stroke="#1d1815" stroke-width="2.5"/>
+      <path d="M 58 -44 C 102 -36 112 50 76 90 C 50 76 40 10 28 -22 Z" fill="#e8a44b" stroke="#1d1815" stroke-width="2.5"/>
+      <ellipse cx="0" cy="0" rx="64" ry="60" fill="#f4c373" stroke="#1d1815" stroke-width="2.5"/>
+      <ellipse cx="0" cy="28" rx="42" ry="33" fill="#fdebc8" stroke="#1d1815" stroke-width="2.5"/>
+      <circle cx="-24" cy="-8" r="9" fill="#1d1815"/><circle cx="24" cy="-8" r="9" fill="#1d1815"/>
+      <circle cx="-21" cy="-11" r="3" fill="#fff"/><circle cx="27" cy="-11" r="3" fill="#fff"/>
+      <ellipse cx="0" cy="18" rx="13" ry="9" fill="#1d1815"/>
+      <path d="M 0 27 L 0 38 M 0 38 Q -16 50 -28 40 M 0 38 Q 16 50 28 40" fill="none" stroke="#1d1815" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
+    <text x="24" y="262" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.5)">fetch the right book first,</text>
+    <text x="24" y="278" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.5)">then answer. every step, with code.</text>
+  </g>
+  <g transform="translate(650,196)">
+    <text x="0" y="48" font-family="Inter, sans-serif" font-weight="900" font-size="52" fill="#1d1815" letter-spacing="-2">RAG from</text>
+    <text x="0" y="108" font-family="Inter, sans-serif" font-weight="900" font-size="52" fill="#1d1815" letter-spacing="-2">scratch.</text>
+    <text x="0" y="158" font-family="Inter, sans-serif" font-weight="700" font-size="22" fill="#ff6b6b">every step, with code.</text>
+    <text x="0" y="206" font-family="Inter, sans-serif" font-size="18" fill="rgba(29,24,21,0.75)">the complete retrieval-augmented</text>
+    <text x="0" y="232" font-family="Inter, sans-serif" font-size="18" fill="rgba(29,24,21,0.75)">generation pipeline, explained simply.</text>
+  </g>
+</svg>

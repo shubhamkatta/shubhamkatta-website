@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" role="img" aria-label="The complete RAG pipeline: seven steps from raw documents to a grounded answer">
+  <rect width="1000" height="520" fill="#fff8ef"/>
+  <text x="40" y="46" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">The complete RAG pipeline — seven steps, one job: answer from real sources</text>
+  <text x="40" y="70" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">Indexing happens once (steps 1-4). Retrieval + generation happen every time a user asks a question (steps 5-7).</text>
+  <!-- INDEXING PHASE -->
+  <text x="40" y="108" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="rgba(29,24,21,0.4)" letter-spacing="2">INDEXING (DO THIS ONCE)</text>
+  <g font-family="Inter, sans-serif" font-weight="800" font-size="13" fill="#1d1815">
+    <g transform="translate(40,122)">
+      <rect width="200" height="90" rx="14" fill="#fff6db" stroke="#1d1815" stroke-width="2.5"/>
+      <text x="16" y="30" font-size="28" fill="rgba(29,24,21,0.12)" font-weight="900">1</text>
+      <text x="50" y="34">load documents</text>
+      <text x="16" y="56" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">PDFs, docs, web pages,</text>
+      <text x="16" y="72" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">databases — your knowledge</text>
+    </g>
+    <g transform="translate(260,122)">
+      <rect width="200" height="90" rx="14" fill="#eaf7ff" stroke="#1d1815" stroke-width="2.5"/>
+      <text x="16" y="30" font-size="28" fill="rgba(29,24,21,0.12)" font-weight="900">2</text>
+      <text x="50" y="34">chunk</text>
+      <text x="16" y="56" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">split into bite-sized pieces</text>
+      <text x="16" y="72" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">~500 tokens each</text>
+    </g>
+    <g transform="translate(480,122)">
+      <rect width="200" height="90" rx="14" fill="#ffe9e4" stroke="#1d1815" stroke-width="2.5"/>
+      <text x="16" y="30" font-size="28" fill="rgba(29,24,21,0.12)" font-weight="900">3</text>
+      <text x="50" y="34">embed</text>
+      <text x="16" y="56" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">turn text into numbers</text>
+      <text x="16" y="72" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">that capture meaning</text>
+    </g>
+    <g transform="translate(700,122)">
+      <rect width="260" height="90" rx="14" fill="#a3e4a3" stroke="#1d1815" stroke-width="2.5"/>
+      <text x="16" y="30" font-size="28" fill="rgba(29,24,21,0.12)" font-weight="900">4</text>
+      <text x="50" y="34">store in vector DB</text>
+      <text x="16" y="56" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">save the numbers so you</text>
+      <text x="16" y="72" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">can search by meaning later</text>
+    </g>
+  </g>
+  <g stroke="#1d1815" stroke-width="2" fill="none">
+    <path d="M 240 167 L 260 167" marker-end="url(#drp)"/>
+    <path d="M 460 167 L 480 167" marker-end="url(#drp)"/>
+    <path d="M 680 167 L 700 167" marker-end="url(#drp)"/>
+  </g>
+  <!-- QUERY PHASE -->
+  <text x="40" y="264" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="rgba(29,24,21,0.4)" letter-spacing="2">QUERY TIME (EVERY QUESTION)</text>
+  <g font-family="Inter, sans-serif" font-weight="800" font-size="13" fill="#1d1815">
+    <g transform="translate(40,280)">
+      <rect width="130" height="90" rx="14" fill="#fff6db" stroke="#1d1815" stroke-width="2.5"/>
+      <text x="16" y="34">user asks</text>
+      <text x="16" y="56" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">"what is our</text>
+      <text x="16" y="72" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">refund policy?"</text>
+    </g>
+    <g transform="translate(190,280)">
+      <rect width="200" height="90" rx="14" fill="#eaf7ff" stroke="#1d1815" stroke-width="2.5"/>
+      <text x="16" y="30" font-size="28" fill="rgba(29,24,21,0.12)" font-weight="900">5</text>
+      <text x="50" y="34">retrieve</text>
+      <text x="16" y="56" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">find the most relevant</text>
+      <text x="16" y="72" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">chunks from the vector DB</text>
+    </g>
+    <g transform="translate(410,280)">
+      <rect width="230" height="90" rx="14" fill="#ffe9e4" stroke="#1d1815" stroke-width="2.5"/>
+      <text x="16" y="30" font-size="28" fill="rgba(29,24,21,0.12)" font-weight="900">6</text>
+      <text x="50" y="34">stuff the prompt</text>
+      <text x="16" y="56" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">paste the retrieved chunks +</text>
+      <text x="16" y="72" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">the question into a template</text>
+    </g>
+    <g transform="translate(660,280)">
+      <rect width="300" height="90" rx="14" fill="#1d1815"/>
+      <text x="16" y="30" font-size="28" fill="rgba(255,255,255,0.12)" font-weight="900">7</text>
+      <text x="50" y="34" fill="#f6efe6">generate the answer</text>
+      <text x="16" y="56" font-weight="400" font-size="11" fill="rgba(255,255,255,0.6)">the LLM reads the context and</text>
+      <text x="16" y="72" font-weight="400" font-size="11" fill="rgba(255,255,255,0.6)">answers grounded in real sources</text>
+    </g>
+  </g>
+  <g stroke="#1d1815" stroke-width="2" fill="none">
+    <path d="M 170 325 L 190 325" marker-end="url(#drp)"/>
+    <path d="M 390 325 L 410 325" marker-end="url(#drp)"/>
+    <path d="M 640 325 L 660 325" marker-end="url(#drp)"/>
+  </g>
+  <!-- connection from store to retrieve -->
+  <path d="M 830 212 L 830 240 L 290 240 L 290 280" stroke="#1d1815" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#drp)"/>
+  <text x="460" y="252" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="rgba(29,24,21,0.5)">the indexed vectors power the retrieval</text>
+  <text x="40" y="420" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">Without RAG the LLM guesses from training data. With RAG it reads your actual documents first — fetch, then answer.</text>
+  <text x="40" y="442" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">The indexing side is a batch job. The query side is real-time. Both are simple; the magic is the combination.</text>
+  <defs>
+    <marker id="drp" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1d1815"/></marker>
+  </defs>
+</svg>

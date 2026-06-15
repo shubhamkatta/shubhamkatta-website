@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 360" role="img" aria-label="Chunking: splitting a long document into bite-sized pieces the model can actually use">
+  <rect width="1000" height="360" fill="#fff8ef"/>
+  <text x="40" y="46" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">Chunking: cut the book into flashcards</text>
+  <text x="40" y="70" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">An LLM's context window is limited. A long document must become bite-sized pieces — small enough to fit, big enough to mean something.</text>
+  <!-- long document -->
+  <g transform="translate(40,96)">
+    <rect width="200" height="210" rx="12" fill="#fff" stroke="#1d1815" stroke-width="2.5"/>
+    <text x="100" y="28" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="12" fill="#1d1815">your document</text>
+    <g stroke="rgba(29,24,21,0.25)" stroke-width="2" stroke-linecap="round">
+      <path d="M 20 48 L 180 48 M 20 62 L 180 62 M 20 76 L 160 76"/>
+      <path d="M 20 96 L 180 96 M 20 110 L 180 110 M 20 124 L 140 124"/>
+      <path d="M 20 144 L 180 144 M 20 158 L 180 158 M 20 172 L 170 172"/>
+      <path d="M 20 192 L 180 192"/>
+    </g>
+    <text x="100" y="204" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="rgba(29,24,21,0.4)">50 pages</text>
+  </g>
+  <!-- scissors / arrow -->
+  <g transform="translate(268,186)">
+    <text x="0" y="0" font-family="Inter, sans-serif" font-weight="800" font-size="14" fill="#ff6b6b">✂ split</text>
+    <path d="M 50 4 L 86 4" stroke="#1d1815" stroke-width="2" fill="none" marker-end="url(#dchk)"/>
+  </g>
+  <!-- chunks -->
+  <g transform="translate(370,96)" font-family="Inter, sans-serif">
+    <g>
+      <rect width="140" height="64" rx="10" fill="#fff6db" stroke="#1d1815" stroke-width="2"/>
+      <text x="12" y="20" font-weight="800" font-size="11" fill="#1d1815">chunk 1</text>
+      <g stroke="rgba(29,24,21,0.3)" stroke-width="1.5"><path d="M 12 34 L 128 34 M 12 46 L 128 46 M 12 56 L 100 56"/></g>
+    </g>
+    <g transform="translate(0,76)">
+      <rect width="140" height="64" rx="10" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/>
+      <text x="12" y="20" font-weight="800" font-size="11" fill="#1d1815">chunk 2</text>
+      <g stroke="rgba(29,24,21,0.3)" stroke-width="1.5"><path d="M 12 34 L 128 34 M 12 46 L 128 46 M 12 56 L 90 56"/></g>
+    </g>
+    <g transform="translate(0,152)">
+      <rect width="140" height="64" rx="10" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/>
+      <text x="12" y="20" font-weight="800" font-size="11" fill="#1d1815">chunk 3</text>
+      <g stroke="rgba(29,24,21,0.3)" stroke-width="1.5"><path d="M 12 34 L 128 34 M 12 46 L 128 46 M 12 56 L 110 56"/></g>
+    </g>
+    <text x="70" y="234" text-anchor="middle" font-size="11" fill="rgba(29,24,21,0.4)">~500 tokens each</text>
+  </g>
+  <!-- overlap note -->
+  <g transform="translate(550,96)">
+    <rect width="410" height="210" rx="14" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <text x="18" y="30" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#1d1815">three decisions</text>
+    <g font-family="Inter, sans-serif" font-size="12" fill="#1d1815">
+      <text x="18" y="62" font-weight="800">chunk size</text>
+      <text x="18" y="80" fill="rgba(29,24,21,0.6)" font-size="11">too small = lost context. too big = noise + cost.</text>
+      <text x="18" y="96" fill="rgba(29,24,21,0.6)" font-size="11">sweet spot: 200-1000 tokens, depends on your data.</text>
+      <text x="18" y="126" font-weight="800">overlap</text>
+      <text x="18" y="144" fill="rgba(29,24,21,0.6)" font-size="11">chunks share ~10-20% at the edges so an idea</text>
+      <text x="18" y="160" fill="rgba(29,24,21,0.6)" font-size="11">that spans a boundary does not get cut in half.</text>
+      <text x="18" y="190" font-weight="800">strategy</text>
+      <text x="18" y="206" fill="rgba(29,24,21,0.6)" font-size="11">split by paragraphs, headings, or sentences — not arbitrary byte count.</text>
+    </g>
+  </g>
+  <text x="40" y="340" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">Think of it like cutting a rope of dog treats into bite-sized pieces. Each piece should be one complete thought — not half a thought.</text>
+  <defs>
+    <marker id="dchk" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1d1815"/></marker>
+  </defs>
+</svg>

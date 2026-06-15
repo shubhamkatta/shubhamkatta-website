@@ -142,6 +142,180 @@ prompts:
   },
 
   {
+    slug: 'rag-from-scratch-every-step-explained',
+    cover: '/blog/cover-rag-from-scratch.png',
+    title: 'RAG from scratch: every step, explained simply',
+    type: 'guide',
+    date: 'June 15, 2026',
+    readingTime: '14 min',
+    color: 'paper-blue',
+    tags: ['rag', 'llm', 'embeddings', 'vector database', 'tutorial', 'backend', 'ai', 'basics'],
+    excerpt:
+      'The complete retrieval-augmented generation pipeline in seven steps — what each step does, why it exists, and the code to build it. Explained like you are a golden retriever or a very smart four-year-old.',
+    seoDescription:
+      'A complete guide to building a RAG pipeline from scratch: document loading, chunking, embeddings, vector storage, retrieval, prompt stuffing, and generation — every step explained simply with code.',
+    keywords: 'RAG, retrieval augmented generation, embeddings, vector database, chunking, LLM, tutorial, pipeline, LangChain, ChromaDB, OpenAI embeddings',
+    intro:
+      `RAG stands for Retrieval-Augmented Generation. It sounds complicated but the idea is dead simple: before the AI answers a question, go fetch the right information first, then answer using that information instead of guessing.\n\nWithout RAG, an LLM answers from its training data — which might be stale, incomplete, or just wrong about your specific domain. With RAG, it reads your actual documents first. Fetch, then answer.\n\nThis guide walks through every step of the pipeline, with code. If you can follow a recipe, you can build RAG.`,
+    sections: [
+      {
+        heading: 'the full pipeline at a glance',
+        body: `The pipeline has two phases:\n\n**Indexing** (do this once) — load your documents, split them into chunks, turn the chunks into numbers (embeddings), and store those numbers in a vector database.\n\n**Querying** (every time a user asks) — take the question, find the most relevant chunks, paste them into a prompt with the question, and let the LLM answer using that context.\n\nSeven steps total. Each one is simple. The power is the combination.\n\n![The complete RAG pipeline: seven steps from loading documents to generating a grounded answer. Indexing happens once; retrieval and generation happen every query.](/blog/diagram-rag-pipeline.svg)`,
+      },
+      {
+        heading: 'step 1: load your documents',
+        body: `First, get your data. This could be PDFs, web pages, markdown files, database records, Notion pages — anything that contains the knowledge your AI should use.\n\n\`\`\`python
+from langchain.document_loaders import DirectoryLoader, TextLoader
+
+# load every .txt file from a folder
+loader = DirectoryLoader("./docs", glob="**/*.txt", loader_cls=TextLoader)
+documents = loader.load()
+
+print(f"loaded {len(documents)} documents")
+# loaded 47 documents
+\`\`\`\n\nThe golden retriever version: you are gathering all the books in the house and putting them in one pile. You cannot search them yet — they are just a pile. But you have them.\n\nLangChain has loaders for almost everything: PDFs, CSVs, web pages, Notion, Google Drive. If your data is somewhere, there is probably a loader for it.`,
+      },
+      {
+        heading: 'step 2: chunk the documents',
+        body: `An LLM has a limited context window — you cannot paste an entire 50-page document into a prompt. So you split each document into smaller pieces called chunks.\n\n\`\`\`python
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+
+splitter = RecursiveCharacterTextSplitter(
+    chunk_size=500,       # roughly 500 characters per chunk
+    chunk_overlap=50,     # 50 chars of overlap between chunks
+    separators=["\\n\\n", "\\n", ". ", " "]  # split at natural boundaries
+)
+
+chunks = splitter.split_documents(documents)
+print(f"split into {len(chunks)} chunks")
+# split into 312 chunks
+\`\`\`\n\n![Chunking: split a long document into bite-sized pieces — each one a complete thought, with overlap so nothing falls through the cracks.](/blog/diagram-chunking.svg)\n\nThe golden retriever version: you are cutting a very long rope of treats into bite-sized pieces. Each piece should be one complete thought — not half a thought cut in the middle.\n\nThree things matter:\n\n- **Size** — too small and each chunk lacks context. Too big and you waste space with irrelevant text. 200-1000 tokens is the sweet spot for most use cases.\n- **Overlap** — chunks share a little text at the edges so an idea that spans a boundary does not get cut in half.\n- **Strategy** — split at natural boundaries (paragraphs, sentences) not at arbitrary character counts.`,
+      },
+      {
+        heading: 'step 3: embed the chunks',
+        body: `Now the clever part. You turn each chunk of text into a list of numbers called an embedding (or vector). These numbers capture the meaning of the text — texts with similar meaning get similar numbers.\n\n\`\`\`python
+from langchain.embeddings import OpenAIEmbeddings
+
+embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+
+# embed a single chunk to see what comes out
+sample_vector = embeddings.embed_query("refunds are processed within 30 days")
+print(f"vector has {len(sample_vector)} dimensions")
+# vector has 1536 dimensions
+\`\`\`\n\n![Embeddings: text becomes numbers, and similar texts cluster together in vector space. "Refund policy" and "money back" land near each other.](/blog/diagram-embeddings.svg)\n\nThe golden retriever version: you are giving every treat a smell. Now instead of reading every treat's label to find the right one, you can just sniff for the one that smells right. Similar treats smell similar.\n\nYou never look at these numbers directly. The point is that "refund policy" and "money back" end up near each other in vector space, so searching for one finds the other.`,
+      },
+      {
+        heading: 'step 4: store in a vector database',
+        body: `The embeddings go into a vector database — a database that is optimized for finding the closest vectors to a query vector. This is what makes retrieval fast.\n\n\`\`\`python
+from langchain.vectorstores import Chroma
+
+# store all chunks + their embeddings in one call
+vectorstore = Chroma.from_documents(
+    documents=chunks,
+    embedding=embeddings,
+    persist_directory="./chroma_db"
+)
+
+print("indexed and stored")
+\`\`\`\n\nThe golden retriever version: you are organizing all the treats by smell into a big filing cabinet. Now when someone asks for a chicken-flavored treat, you sniff the cabinet and pull the right drawer instantly.\n\nPopular vector databases: Chroma (simple, good for prototyping), Pinecone (managed, scales well), Weaviate, Qdrant, pgvector (if you want to stay in Postgres). They all do the same core job: store vectors, find nearest neighbors fast.`,
+      },
+      {
+        heading: 'step 5: retrieve the relevant chunks',
+        body: `A user asks a question. You embed that question the same way you embedded the chunks, then search the vector database for the chunks whose embeddings are closest to the question's embedding.\n\n\`\`\`python
+# turn the vectorstore into a retriever
+retriever = vectorstore.as_retriever(
+    search_type="similarity",
+    search_kwargs={"k": 4}   # return the 4 most relevant chunks
+)
+
+# retrieve
+question = "what is the refund policy?"
+relevant_chunks = retriever.invoke(question)
+
+for chunk in relevant_chunks:
+    print(chunk.page_content[:100])
+# "Our refund policy allows returns within 30 days of purchase..."
+# "Refund requests should be submitted through the customer portal..."
+\`\`\`\n\nThe golden retriever version: someone says "find the chicken treat." You sniff the filing cabinet and pull out the four drawers that smell the most like chicken. Done.\n\nThe \`k=4\` means you retrieve 4 chunks. More chunks = more context but more cost and more noise. Start with 3-5 and adjust based on your eval scores (which you will learn about in the next post).`,
+      },
+      {
+        heading: 'step 6: stuff the prompt',
+        body: `Now you have the relevant chunks and the user's question. You paste them together into a prompt template that tells the LLM: "answer this question using only the provided context."\n\n\`\`\`python
+from langchain.prompts import ChatPromptTemplate
+
+template = ChatPromptTemplate.from_template("""
+Answer the question based only on the following context.
+If the context does not contain the answer, say "I don't know."
+
+Context:
+{context}
+
+Question: {question}
+""")\n\n# format the prompt
+context_text = "\\n\\n".join([chunk.page_content for chunk in relevant_chunks])
+prompt = template.format(context=context_text, question=question)
+\`\`\`\n\nThe golden retriever version: you found the right treats (the context). Now you put them on a plate next to a note that says "which one is chicken?" The parrot (the LLM) looks at the plate and the note and answers based on what is actually in front of it — not from memory.\n\nThe key line is "based only on the following context." This is what prevents hallucination — you are telling the model to answer from the evidence, not from its training data.`,
+      },
+      {
+        heading: 'step 7: generate the answer',
+        body: `Finally, send the stuffed prompt to the LLM and get a grounded answer.\n\n\`\`\`python
+from langchain.chat_models import ChatOpenAI
+
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+response = llm.invoke(prompt)
+
+print(response.content)
+# "Based on the provided documents, refunds are processed within
+#  30 days of the request being submitted through the customer portal."
+\`\`\`\n\nThe answer is grounded in your actual documents. If the documents say 30 days, the model says 30 days — not 14, not 7, not whatever its training data might have said.\n\n\`temperature=0\` means no creativity — we want factual, consistent answers. For RAG, low temperature is almost always right.`,
+      },
+      {
+        heading: 'the whole thing in one script',
+        body: `Here is every step together — a complete, runnable RAG pipeline in about 30 lines:\n\n\`\`\`python
+from langchain.document_loaders import DirectoryLoader, TextLoader
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.embeddings import OpenAIEmbeddings
+from langchain.vectorstores import Chroma
+from langchain.chat_models import ChatOpenAI
+from langchain.prompts import ChatPromptTemplate
+
+# === INDEXING (run once) ===
+docs = DirectoryLoader("./docs", glob="**/*.txt", loader_cls=TextLoader).load()
+
+chunks = RecursiveCharacterTextSplitter(
+    chunk_size=500, chunk_overlap=50
+).split_documents(docs)
+
+embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+vectorstore = Chroma.from_documents(chunks, embeddings, persist_directory="./db")
+
+# === QUERYING (run per question) ===
+retriever = vectorstore.as_retriever(search_kwargs={"k": 4})
+
+def ask(question):
+    relevant = retriever.invoke(question)
+    context = "\\n\\n".join([c.page_content for c in relevant])
+
+    prompt = ChatPromptTemplate.from_template(
+        "Answer based only on this context. "
+        "If unsure, say I don't know.\\n\\n"
+        "Context: {context}\\n\\nQuestion: {question}"
+    ).format(context=context, question=question)
+
+    return ChatOpenAI(model="gpt-4o-mini", temperature=0).invoke(prompt).content
+
+print(ask("what is the refund policy?"))
+\`\`\`\n\nThat is the entire thing. Seven steps, one pipeline, grounded answers instead of guesses.`,
+      },
+      {
+        heading: 'what to improve next',
+        body: `This basic pipeline works. Here is what makes it production-ready:\n\n- **Evaluation** — score your answers for faithfulness, relevancy, and context recall. You cannot improve what you do not measure. (The next post covers this in detail.)\n- **Hybrid retrieval** — combine vector search with keyword search (BM25) for better recall. Some queries need exact keyword matches that pure vector search misses.\n- **Reranking** — retrieve more chunks than you need (say 20), then use a reranker model to pick the best 4. More expensive, more accurate.\n- **Metadata filtering** — tag chunks with metadata (source, date, category) and filter before search. "Show me refund policies from 2024 only."\n- **Streaming** — stream the answer token by token so the user sees progress immediately instead of waiting for the full response.\n\nBut start with the basic pipeline. Get it working, get evals running, then optimize. The worst RAG mistake is optimizing a pipeline you are not measuring.`,
+      },
+    ],
+  },
+
+
+  {
     slug: 'policy-as-code-governance-rules-that-actually-run',
     cover: '/blog/cover-policy-as-code.png',
     title: 'Policy-as-code: governance rules that actually run',

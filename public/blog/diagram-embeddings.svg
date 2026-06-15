@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 380" role="img" aria-label="Embeddings: turning text into numbers that capture meaning, so similar things land near each other">
+  <rect width="1000" height="380" fill="#fff8ef"/>
+  <text x="40" y="46" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">Embeddings: text becomes numbers, meaning becomes distance</text>
+  <text x="40" y="70" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">An embedding model reads text and outputs a list of numbers (a vector). Texts with similar meaning get similar numbers — so you can search by meaning.</text>
+  <!-- text to vector -->
+  <g transform="translate(40,96)">
+    <rect width="260" height="110" rx="14" fill="#fff" stroke="#1d1815" stroke-width="2.5"/>
+    <text x="18" y="30" font-family="Inter, sans-serif" font-weight="800" font-size="12" fill="#1d1815">text in</text>
+    <text x="18" y="56" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.7)">"refunds are processed</text>
+    <text x="18" y="74" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.7)">within 30 days"</text>
+    <text x="18" y="98" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.45)">[0.23, -0.81, 0.44, ... 1536 dims]</text>
+  </g>
+  <path d="M 300 151 L 340 151" stroke="#1d1815" stroke-width="2" fill="none" marker-end="url(#demb)"/>
+  <!-- embedding model -->
+  <g transform="translate(350,116)">
+    <rect width="160" height="70" rx="14" fill="#1d1815"/>
+    <text x="80" y="30" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="#f6efe6" letter-spacing="1">EMBED MODEL</text>
+    <text x="80" y="52" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" fill="#a3e4a3">text → vector</text>
+  </g>
+  <path d="M 510 151 L 550 151" stroke="#1d1815" stroke-width="2" fill="none" marker-end="url(#demb)"/>
+  <!-- vector space visualization -->
+  <g transform="translate(560,86)">
+    <rect width="400" height="220" rx="16" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <text x="200" y="26" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="12" fill="#1d1815">vector space — similar = close</text>
+    <!-- cluster: refund related -->
+    <circle cx="100" cy="90" r="6" fill="#ff6b6b" stroke="#1d1815" stroke-width="1.5"/>
+    <text x="114" y="94" font-family="Inter, sans-serif" font-size="10" fill="rgba(29,24,21,0.7)">"refund policy"</text>
+    <circle cx="120" cy="120" r="6" fill="#ff6b6b" stroke="#1d1815" stroke-width="1.5"/>
+    <text x="134" y="124" font-family="Inter, sans-serif" font-size="10" fill="rgba(29,24,21,0.7)">"money back"</text>
+    <circle cx="80" cy="130" r="6" fill="#ff6b6b" stroke="#1d1815" stroke-width="1.5"/>
+    <text x="36" y="148" font-family="Inter, sans-serif" font-size="10" fill="rgba(29,24,21,0.7)">"returns"</text>
+    <!-- cluster: shipping -->
+    <circle cx="300" cy="150" r="6" fill="#a3e4a3" stroke="#1d1815" stroke-width="1.5"/>
+    <text x="314" y="154" font-family="Inter, sans-serif" font-size="10" fill="rgba(29,24,21,0.7)">"delivery time"</text>
+    <circle cx="320" cy="180" r="6" fill="#a3e4a3" stroke="#1d1815" stroke-width="1.5"/>
+    <text x="334" y="184" font-family="Inter, sans-serif" font-size="10" fill="rgba(29,24,21,0.7)">"shipping"</text>
+    <!-- dashed circle around cluster -->
+    <circle cx="100" cy="112" r="50" fill="none" stroke="#ff6b6b" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.5"/>
+    <circle cx="310" cy="166" r="40" fill="none" stroke="#a3e4a3" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.5"/>
+    <text x="200" y="210" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="rgba(29,24,21,0.45)">related concepts cluster together</text>
+  </g>
+  <text x="40" y="346" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">You never see these numbers. The point is that "refund policy" and "money back" land near each other, so searching for one finds the other.</text>
+  <defs>
+    <marker id="demb" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1d1815"/></marker>
+  </defs>
+</svg>
