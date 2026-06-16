@@ -142,6 +142,92 @@ prompts:
   },
 
   {
+    slug: 'the-ai-audit-trail-what-to-log-and-why',
+    cover: '/blog/cover-ai-audit-trail.png',
+    title: 'The AI audit trail: what to log and why it matters',
+    type: 'deep dive',
+    date: 'June 16, 2026',
+    readingTime: '9 min',
+    color: 'paper-yellow',
+    tags: ['audit', 'compliance', 'governance', 'logging', 'backend', 'ai', 'ai governance', 'observability for ai', 'deep dive'],
+    excerpt:
+      'When someone asks "what did the AI do, when, and why?" — the answer should be a query you can run, not an investigation you have to staff. Here is what to log and how to structure it.',
+    seoDescription:
+      'Building an AI audit trail: what to log for every AI action (input, output, model, decision, cost), how to structure immutable audit events, and how to answer the questions auditors actually ask.',
+    keywords: 'AI audit trail, audit log, AI compliance, governance logging, immutable log, structured logging, AI forensics, model versioning, audit event schema',
+    intro:
+      `Someone will ask what the AI did. A customer, a regulator, your own security team, or the incident reviewer at 2am. The question will be some version of: what was sent, what came back, which model, when, and who triggered it.\n\nIf the answer is "give us a few days to dig through logs," you have a problem. If the answer is a query that returns a structured record in seconds, you have an audit trail.\n\nThis is how to build one that works — what to log, how to structure it, and the questions it needs to answer.`,
+    sections: [
+      {
+        heading: 'why AI needs its own audit trail',
+        body: `Traditional services have request logs. AI systems need more because they have properties traditional services do not:\n\n- **Non-determinism** — the same input can produce different outputs. You cannot reconstruct what happened from the input alone; you must log the output too.\n- **Third-party calls** — you are sending data to external model providers. What you sent, what came back, and whether it contained sensitive data are questions with regulatory weight.\n- **Cost** — every call has a dollar cost. Without per-action cost logging, your bill is one big number nobody can explain.\n- **Decisions** — if a policy engine allowed or denied an action, that decision and its reason need to be on the record.\n\nA standard request log captures none of this. An AI audit trail captures all of it.`,
+      },
+      {
+        heading: 'anatomy of an audit event',
+        body: `Every AI action — every model call, every tool invocation, every policy decision — should produce one structured audit event. Here is the schema:\n\n\`\`\`python
+audit_event = {
+    "timestamp": "2026-06-16T14:22:08Z",
+    "request_id": "req_8f3a2b",         # trace it across services
+    "actor": {
+        "user_id": "user_441",           # who triggered it
+        "agent_id": "agent_threat_enrich" # which agent acted
+    },
+    "action": "tool.database_query",     # what happened
+    "model": "claude-opus-4",            # which brain
+    "model_version": "20250514",         # exact version
+    "input_hash": "sha256:a3f8c1...",    # what went in (hashed)
+    "output": "found 3 matching IOCs",   # what came out
+    "decision": "allow",                 # policy engine verdict
+    "decision_reason": "within_scope",   # why
+    "latency_ms": 342,                   # how long
+    "cost_usd": 0.0087,                  # how much
+    "metadata": {}                       # extensible context
+}
+\`\`\`\n\n![Anatomy of an audit event: identity fields, action fields, and measurement fields — every field earns its place.](/blog/diagram-audit-event.svg)`,
+      },
+      {
+        heading: 'what to hash, what to store',
+        body: `The input to a model call often contains user data. Logging the full prompt in plain text creates a second copy of sensitive data in your log store — which is itself a compliance risk.\n\nThe rule: **hash the input, store the output, and link to the source.**\n\n\`\`\`python
+import hashlib
+
+def create_audit_event(request_id, input_text, output_text, **kwargs):
+    return {
+        "request_id": request_id,
+        "input_hash": hashlib.sha256(input_text.encode()).hexdigest(),
+        "input_ref": f"prompts/{request_id}",  # pointer to secure storage
+        "output": output_text,                  # the answer is the point
+        **kwargs
+    }
+\`\`\`\n\nThe hash proves what the input was (you can verify it later). The reference points to the full prompt in a separate, access-controlled store. The output is stored directly because it is what the user saw — the thing you will need to reproduce.\n\nThis way your audit log is queryable without containing a second copy of every piece of user data that went through the system.`,
+      },
+      {
+        heading: 'immutability is non-negotiable',
+        body: `An audit log that can be edited is not an audit log — it is a draft.\n\nThe requirements:\n\n- **Append-only** — events are written, never updated or deleted. Use an append-only store (write-ahead log, immutable S3 objects, or a database table with no UPDATE/DELETE permissions).\n- **Tamper-evident** — if someone modifies an event, it should be detectable. Hash chaining (each event includes the hash of the previous event) makes tampering evident without complex infrastructure.\n- **Retained** — retention policy matches your compliance requirements. GDPR says you can delete personal data, but audit records of system actions are typically not personal data — consult your legal team on retention.\n\n\`\`\`python
+class AuditLog:
+    def __init__(self, store):
+        self.store = store
+        self.prev_hash = "genesis"
+
+    def append(self, event):
+        event["prev_hash"] = self.prev_hash
+        event["event_hash"] = hash_event(event)
+        self.store.append(event)  # append-only, no update
+        self.prev_hash = event["event_hash"]
+\`\`\`\n\nIf this feels like a blockchain, it is the useful part of a blockchain — hash chaining for tamper evidence — without the rest.`,
+      },
+      {
+        heading: 'the questions auditors actually ask',
+        body: `Build your audit trail to answer these queries, because they will be asked:\n\n- **"What did agent X do between time A and time B?"** — filter by agent_id and timestamp range. If this query is slow, add an index.\n- **"Did any action on customer Y's data get denied by policy?"** — filter by actor.user_id and decision=deny. Shows governance is working.\n- **"What model versions were in production last Tuesday?"** — distinct model_version where timestamp in range. Critical for debugging quality changes.\n- **"How much did tenant Z's AI usage cost last month?"** — sum cost_usd where actor matches tenant, grouped by day. Explains the bill.\n- **"Show me every action that required human approval."** — filter by decision_reason containing human_review. Proves the human-in-the-loop is real.\n\nIf any of these queries take more than a few seconds on your audit store, you have a schema problem, not a scale problem. Fix the indexes.`,
+      },
+      {
+        heading: 'the principle underneath',
+        body: `The audit trail is the answer to a simple question: can you prove what your AI did?\n\nNot "can you probably figure it out." Not "can you reconstruct it from scattered logs." Can you point to a structured, immutable, queryable record that says: this agent, acting on behalf of this user, called this model, with this input, got this output, at this time, at this cost, and the policy engine said allow?\n\nIf yes, you have an audit trail. If no, you have a forensic investigation waiting to happen. The trail is cheap to build now and expensive to retrofit later — same as every other compliance constraint that touches the data layer.`,
+      },
+    ],
+  },
+
+
+  {
     slug: 'rag-from-scratch-every-step-explained',
     cover: '/blog/cover-rag-from-scratch.png',
     title: 'RAG from scratch: every step, explained simply',
