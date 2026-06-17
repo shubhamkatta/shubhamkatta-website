@@ -7,8 +7,11 @@ import { CurrentlyBlock } from '../components/CurrentlyBlock';
 import { useSEO } from '../components/useSEO';
 import { homeSeo } from '../content/seo';
 
+const FEATURED_SLUG = 'why-i-built-plynth-rebuilding-the-same-saas-plumbing-four-times';
+
 export function HomePage() {
   useSEO(homeSeo);
+  const featured = posts.find(p => p.slug === FEATURED_SLUG) || posts[0];
   return (
     <main>
       <section className="hero container">
@@ -100,14 +103,14 @@ export function HomePage() {
           </div>
           <Paper className="featured-card" tone="paper-yellow">
             <div className="featured-grid">
-              <Link to={`/writing/${posts[0].slug}`} className="featured-cover" aria-label={posts[0].title}>
-                <img src={posts[0].cover} alt={posts[0].title} loading="lazy" />
+              <Link to={`/writing/${featured.slug}`} className="featured-cover" aria-label={featured.title}>
+                <img src={featured.cover} alt={featured.title} loading="lazy" />
               </Link>
               <div className="featured-content">
-                <span className="post-type">{posts[0].type}</span>
-                <h3 className="featured-title">{posts[0].title}</h3>
-                <p className="featured-excerpt">{posts[0].excerpt}</p>
-                <Link to={`/writing/${posts[0].slug}`} className="read-more-link">read this →</Link>
+                <span className="post-type">{featured.type}</span>
+                <h3 className="featured-title">{featured.title}</h3>
+                <p className="featured-excerpt">{featured.excerpt}</p>
+                <Link to={`/writing/${featured.slug}`} className="read-more-link">read this →</Link>
               </div>
             </div>
           </Paper>
