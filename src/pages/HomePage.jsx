@@ -126,7 +126,7 @@ export function HomePage() {
           <div className="badge-note">ongoing archive</div>
         </div>
         <div className="grid-three">
-          {posts.slice(1, 4).map((post) => <PostCard key={post.slug} post={post} />)}
+          {posts.slice(0, 3).map((post) => <PostCard key={post.slug} post={post} />)}
         </div>
       </section>
 
