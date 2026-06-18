@@ -142,6 +142,96 @@ prompts:
   },
 
   {
+    slug: 'evaluating-rag-the-report-card-your-pipeline-needs',
+    cover: '/blog/cover-rag-evals.png',
+    title: 'Evaluating RAG: the report card your pipeline needs',
+    type: 'guide',
+    date: 'June 18, 2026',
+    readingTime: '10 min',
+    color: 'paper-coral',
+    tags: ['rag', 'evals', 'ragas', 'faithfulness', 'observability', 'backend', 'ai', 'observability for ai'],
+    excerpt:
+      'A RAG pipeline can fail silently — the answers still look plausible while quietly drifting wrong. Three metrics, a scoring loop, and how to catch the drift before your users do.',
+    seoDescription:
+      'How to evaluate a RAG pipeline in production: faithfulness, answer relevancy, context recall — scored with RAGAS, watched on a dashboard, and alerting on regression before users notice.',
+    keywords: 'RAG evaluation, RAGAS, faithfulness, answer relevancy, context recall, LLM evaluation, RAG metrics, production AI, silent drift, eval pipeline',
+    intro:
+      `Your RAG pipeline is live. It retrieves documents, stuffs them into a prompt, and generates answers. The answers look good. Everyone is happy.\n\nSix weeks later a customer says your system is confidently wrong. You check and discover it has been wrong for two weeks — the answers still looked plausible, but the quality quietly dropped. Nobody noticed because nobody was grading.\n\nThis is the entire problem with AI in production: a model that was great at launch can silently drift, and without evals you find out from a customer instead of a dashboard. Here is how to build the dashboard.`,
+    sections: [
+      {
+        heading: 'why RAG can fail silently',
+        body: `A traditional API either works or throws an error. A RAG pipeline does something worse: it returns a confident, grammatically perfect, wrong answer.\n\nThe ways it goes wrong:\n\n- **Retrieval misses** — the right document exists but the search did not find it. The model fills in the gap from training data. Sounds great. Is wrong.\n- **Prompt drift** — someone tweaked the prompt template. Tests passed. Spot checks looked fine. But across thousands of queries, faithfulness quietly dropped 15%.\n- **Stale index** — your documents updated but the vector index did not. The model answers from old information with full confidence.\n\nAll three look the same from the outside: a fluent answer that happens to be wrong. The only way to catch them is to score the output continuously.`,
+      },
+      {
+        heading: 'the three metrics that matter',
+        body: `You need three grades. Each catches a different failure mode:\n\n**Faithfulness** — is the answer actually supported by the retrieved context? If the answer says "refunds take 14 days" but the retrieved document says "30 days," faithfulness is low. This catches hallucination — the model ignoring the context and making stuff up from training data.\n\n**Answer relevancy** — does the answer address the actual question? If someone asks "what is the refund policy" and the model responds with a paragraph about shipping, relevancy is low. This catches the model wandering off-topic even when the context was fine.\n\n**Context recall** — did retrieval find the documents that actually contain the answer? If the answer is correct but the retrieved chunks do not support it, the model got lucky from training data — next time it might not. This catches retrieval failures before they become answer failures.\n\nThink of it like grading a student: faithfulness = did they use their notes? Relevancy = did they answer the right question? Context recall = did they bring the right notes to the exam?`,
+      },
+      {
+        heading: 'scoring with RAGAS',
+        body: `RAGAS is a framework that computes these metrics automatically using an LLM as a judge. The idea: use a second model to grade the first model's output.\n\n\`\`\`python
+from ragas import evaluate
+from ragas.metrics import faithfulness, answer_relevancy, context_recall
+
+# one sample: what the user asked, what the pipeline answered,
+# what context was retrieved, and what the correct answer is
+sample = {
+    "question": "what is the refund policy?",
+    "answer": "refunds are processed within 30 days",
+    "contexts": ["our refund policy allows returns within 30 days..."],
+    "ground_truth": "refunds are processed within 30 days of request"
+}
+
+result = evaluate(
+    dataset=[sample],
+    metrics=[faithfulness, answer_relevancy, context_recall]
+)
+
+# result: { faithfulness: 0.95, answer_relevancy: 0.92, context_recall: 1.0 }
+\`\`\`\n\nEach metric returns a score between 0 and 1. High = good. The magic is that you do not need a human to score every answer — the LLM judge does it, and you only need humans to review the flagged regressions.`,
+      },
+      {
+        heading: 'building the scoring loop',
+        body: `You do not score every production answer — too expensive and too slow. Instead, you sample and score asynchronously:\n\n\`\`\`python
+import random
+
+def maybe_score(question, answer, contexts):
+    if random.random() > 0.02:  # skip 98%
+        return
+    # score async — do not block the user's response
+    score_queue.enqueue({
+        "question": question,
+        "answer": answer,
+        "contexts": contexts,
+        "timestamp": now()
+    })
+
+# the scoring worker picks up queued samples,
+# runs RAGAS, and writes scores to the dashboard
+\`\`\`\n\nThe ~2% sample rate is a tradeoff: enough to catch trends, cheap enough to run continuously. Adjust up for critical pipelines, down for high-volume low-stakes ones.\n\nScores go to a time-series dashboard (Grafana, Datadog, whatever you already use). You watch three lines: faithfulness, relevancy, and context recall over time.`,
+      },
+      {
+        heading: 'catching the silent drift',
+        body: `The dashboard is not useful if nobody watches it. Set an alert:\n\n\`\`\`python
+def check_regression(metric, window_hours=24, threshold=0.10):
+    recent = get_scores(metric, last_hours=window_hours)
+    baseline = get_scores(metric, last_hours=window_hours * 7)
+    if baseline.mean() - recent.mean() > threshold:
+        page_oncall(f"{metric} dropped {threshold:.0%} in {window_hours}h")
+\`\`\`\n\nIf faithfulness drops more than 10% over a 24-hour window compared to the trailing week, page someone. This caught a real incident once — a prompt change that passed review, passed spot checks, but silently dropped faithfulness across the board. The dashboard caught it in hours instead of weeks.\n\n![The eval loop: sample production output, score with RAGAS, watch the dashboard, alert on regression, fix, and the next output is better.](/blog/diagram-rag-eval-loop.svg)`,
+      },
+      {
+        heading: 'one caveat: LLM-as-judge has variance',
+        body: `Using an LLM to grade another LLM is not perfectly reliable. The judge model has its own biases and variance — ask it to score the same answer twice and you might get slightly different numbers.\n\nThis means:\n\n- **Trends matter more than individual scores.** A single faithfulness score of 0.85 means little. A week-over-week drop from 0.92 to 0.78 means a lot.\n- **Human review for flagged regressions.** When the dashboard fires an alert, a human looks at the actual samples before anyone panics. The number is the signal. The human is the decision.\n- **Calibrate your thresholds.** Run the scoring for a week in observation mode before setting alert thresholds. Let the baseline establish itself.\n\nEvals are not a test suite with pass/fail. They are a weather station — you watch the trends and investigate when the pressure drops.`,
+      },
+      {
+        heading: 'the simple version',
+        body: `If you remember nothing else:\n\n1. **Sample** ~2% of production answers.\n2. **Score** each sample for faithfulness, relevancy, and context recall.\n3. **Dashboard** the scores over time.\n4. **Alert** when a 24-hour window shows regression.\n5. **Human reviews** flagged regressions — the score is a signal, not a verdict.\n\nA RAG pipeline without evals is a student who never gets report cards. They might be doing great. They might be failing. You will not know until the final exam — which, in production, is an angry customer.\n\nGrade early, grade often, grade automatically.`,
+      },
+    ],
+  },
+
+
+  {
     slug: 'the-ai-audit-trail-what-to-log-and-why',
     cover: '/blog/cover-ai-audit-trail.png',
     title: 'The AI audit trail: what to log and why it matters',
