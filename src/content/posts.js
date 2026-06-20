@@ -142,6 +142,83 @@ prompts:
   },
 
   {
+    slug: 'observability-for-ai-the-dashboard-that-keeps-you-honest',
+    cover: '/blog/cover-ai-observability.png',
+    title: 'Observability for AI: the dashboard that keeps you honest',
+    type: 'guide',
+    date: 'June 20, 2026',
+    readingTime: '10 min',
+    color: 'paper-blue',
+    tags: ['observability', 'llm', 'monitoring', 'latency', 'cost', 'backend', 'ai', 'ai governance', 'observability for ai'],
+    excerpt:
+      'Quality evals tell you if the AI is smart. Observability tells you if it is fast, cheap, and alive. Four numbers, three layers, and the alerts that catch AI-specific failures before your users do.',
+    seoDescription:
+      'Operational observability for AI systems: latency percentiles, token usage, cost tracking, error rates — the four numbers to watch, the three layers to instrument, and the AI-specific alerts worth setting.',
+    keywords: 'AI observability, LLM monitoring, latency, tokens, cost tracking, error rate, distributed tracing, AI pipeline, alerts, Grafana, Datadog',
+    intro:
+      `Evals tell you whether the AI is answering correctly. Observability tells you whether it is fast, affordable, and not on fire.\n\nThey are different questions. A system can score perfectly on faithfulness while burning through your budget at 3x the expected rate. It can have great answer relevancy while a provider outage silently drops 20% of requests. Evals grade the brain. Observability monitors the body.\n\nHere is what to measure, where to measure it, and what to alert on — the operational side of running AI in production.`,
+    sections: [
+      {
+        heading: 'the four numbers you watch first',
+        body: `Before anything else, put these on a dashboard:\n\n- **Latency** — p50 and p99 response time. The p50 tells you normal; the p99 tells you worst-case. If p99 is 10x the p50, you have a tail latency problem — some requests are hitting a slow path (cold cache, long retrieval, provider throttling).\n- **Tokens per request** — average input + output tokens. A sudden spike means either prompt bloat (someone changed a template), context stuffing (retrieval returning too many chunks), or prompt injection (someone feeding your system a novel).\n- **Cost per day** — total spend across all model calls. Track per-tenant and per-pipeline. An unexplained cost jump is almost always a bug — a retry loop, a missing cache, or a prompt that got fat.\n- **Error rate** — 4xx and 5xx from providers. Separate your errors from theirs. A climbing error rate means either you are hitting rate limits or the provider is having a bad day.\n\nThese four numbers tell you the health of the system before you ever look at answer quality. If latency is good, cost is normal, tokens are stable, and errors are low, the body is healthy.`,
+      },
+      {
+        heading: 'three layers of instrumentation',
+        body: `AI systems have three distinct layers, and each needs its own metrics:\n\n**Request layer** — the outer boundary. Latency, throughput, status codes, request volume. This is standard API monitoring — the same stuff you would instrument for any service.\n\n**Model layer** — the LLM call itself. Tokens in, tokens out, model name and version, temperature, cost per call. This is AI-specific and invisible to standard monitoring. If you do not instrument this, you cannot explain your bill or debug a quality change.\n\n**Pipeline layer** — the orchestration. Retrieval latency, number of chunks retrieved, reranker scores, embedding time, end-to-end trace. This matters for RAG pipelines where the model call is only one step in a chain.\n\n![The three layers: request (latency, throughput, errors), model (tokens, version, cost), and pipeline (retrieval, chunks, traces) — a trace spans all three.](/blog/diagram-ai-observability-stack.svg)\n\nThe key insight: a single end-to-end trace should span all three layers. When p99 latency spikes, you need to see whether it is the retrieval step, the model call, or something else entirely. Without traces, you are guessing.`,
+      },
+      {
+        heading: 'logging model calls',
+        body: `Every LLM call should emit a structured log entry. Here is the minimum viable schema:\n\n\`\`\`python
+def log_model_call(request_id, model, input_tokens, output_tokens,
+                   latency_ms, status, cost_usd, metadata=None):
+    emit({
+        "type": "model_call",
+        "request_id": request_id,
+        "timestamp": now_iso(),
+        "model": model,
+        "input_tokens": input_tokens,
+        "output_tokens": output_tokens,
+        "total_tokens": input_tokens + output_tokens,
+        "latency_ms": latency_ms,
+        "status": status,
+        "cost_usd": cost_usd,
+        "metadata": metadata or {}
+    })
+\`\`\`\n\nIf you are using a gateway like LiteLLM, it emits most of this for you. If you are calling providers directly, wrap the call and log on both success and failure.\n\nDo not log the raw prompt or response in production — they may contain PII. Log hashes or references instead. The audit trail (a separate concern) handles the full content with proper access controls.`,
+      },
+      {
+        heading: 'tracing through multi-step pipelines',
+        body: `A RAG pipeline is not one call — it is a chain: embed the query, search the vector store, maybe rerank, format the prompt, call the model. If you only measure end-to-end latency, a slowdown could be anywhere.\n\nDistributed tracing (OpenTelemetry, Datadog APM, etc.) solves this. Wrap each step in a span:\n\n\`\`\`python
+from opentelemetry import trace
+tracer = trace.get_tracer("rag-pipeline")
+
+def answer(question):
+    with tracer.start_as_current_span("rag.answer") as root:
+        with tracer.start_as_current_span("rag.embed_query"):
+            query_vector = embed(question)
+
+        with tracer.start_as_current_span("rag.retrieve"):
+            chunks = vector_store.search(query_vector, k=4)
+
+        with tracer.start_as_current_span("rag.generate"):
+            response = llm.invoke(build_prompt(question, chunks))
+
+        return response
+\`\`\`\n\nNow when latency spikes, you look at the trace waterfall and see exactly which step is slow. Retrieval taking 2 seconds? Index problem. Model call slow? Provider issue. Embedding slow? Batch size or model selection.`,
+      },
+      {
+        heading: 'the alerts worth setting',
+        body: `Standard alerting (error rate, latency) applies, but AI systems have failure modes that generic monitors miss:\n\n![Four AI-specific alerts: cost spikes, latency degradation, token anomalies, and error rate climbs — each with a different root cause.](/blog/diagram-ai-alerts.svg)\n\n- **Cost spike** — daily cost jumps 3x baseline. Likely cause: a retry loop, a prompt that grew, or a missing cache. This is the alert that saves you from a surprise bill.\n- **Latency degradation** — p99 doubles over a 6-hour window. Likely cause: provider overload, retrieval bottleneck, or a prompt that is now too long for fast inference.\n- **Token anomaly** — average tokens per request spikes 2x. Likely cause: retrieval returning too many chunks, a template change that bloated the prompt, or a prompt injection attack stuffing content.\n- **Error rate climb** — 5xx rate exceeds 2% over 30 minutes. Likely cause: provider rate limiting or an outage. Distinguish your errors from theirs.\n\nSet these on the dashboard, page on the first two (cost and latency are P1), and Slack-alert on the latter two.`,
+      },
+      {
+        heading: 'the difference between observability and evals',
+        body: `They complement each other but answer different questions:\n\n- **Evals** answer: is the AI answering correctly? (faithfulness, relevancy, recall)\n- **Observability** answers: is the AI system healthy? (fast, cheap, available)\n\nYou can have perfect eval scores and terrible observability — the answers are great but cost 5x what they should and take 4 seconds each. You can have great observability and failing evals — the system is fast and cheap but quietly hallucinating.\n\nBoth dashboards should exist. Evals catch quality drift. Observability catches operational drift. Together, they catch everything that matters before a customer does.`,
+      },
+    ],
+  },
+
+
+  {
     slug: 'evaluating-rag-the-report-card-your-pipeline-needs',
     cover: '/blog/cover-rag-evals.png',
     title: 'Evaluating RAG: the report card your pipeline needs',

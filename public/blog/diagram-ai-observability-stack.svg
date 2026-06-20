@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 460" role="img" aria-label="The AI observability stack: what to measure at each layer">
+  <rect width="1000" height="460" fill="#fff8ef"/>
+  <text x="40" y="46" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">The AI observability stack — what to measure at each layer</text>
+  <text x="40" y="70" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">Three layers, each with its own metrics. A trace spans all three.</text>
+  <!-- Layer 1: Request layer -->
+  <g transform="translate(40,90)">
+    <rect width="820" height="90" rx="14" fill="#eaf7ff" stroke="#1d1815" stroke-width="2.5"/>
+    <text x="20" y="28" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="rgba(29,24,21,0.4)" letter-spacing="2">1. REQUEST LAYER</text>
+    <text x="20" y="50" font-family="Inter, sans-serif" font-weight="700" font-size="14" fill="#1d1815">what the caller sees</text>
+    <g transform="translate(20,60)">
+      <rect width="120" height="24" rx="8" fill="#fff" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="60" y="16" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">latency p50/p99</text>
+    </g>
+    <g transform="translate(152,60)">
+      <rect width="100" height="24" rx="8" fill="#fff" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="50" y="16" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">throughput</text>
+    </g>
+    <g transform="translate(264,60)">
+      <rect width="100" height="24" rx="8" fill="#fff" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="50" y="16" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">error rate</text>
+    </g>
+    <g transform="translate(376,60)">
+      <rect width="116" height="24" rx="8" fill="#fff" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="58" y="16" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">status codes</text>
+    </g>
+  </g>
+  <!-- Arrow down -->
+  <path d="M 450 180 L 450 200" stroke="#1d1815" stroke-width="2" marker-end="url(#aosArrow)"/>
+  <!-- Layer 2: Model layer -->
+  <g transform="translate(40,210)">
+    <rect width="820" height="90" rx="14" fill="#fff6db" stroke="#1d1815" stroke-width="2.5"/>
+    <text x="20" y="28" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="rgba(29,24,21,0.4)" letter-spacing="2">2. MODEL LAYER</text>
+    <text x="20" y="50" font-family="Inter, sans-serif" font-weight="700" font-size="14" fill="#1d1815">what the LLM consumes and produces</text>
+    <g transform="translate(20,60)">
+      <rect width="120" height="24" rx="8" fill="#fff" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="60" y="16" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">tokens in/out</text>
+    </g>
+    <g transform="translate(152,60)">
+      <rect width="120" height="24" rx="8" fill="#fff" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="60" y="16" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">model version</text>
+    </g>
+    <g transform="translate(284,60)">
+      <rect width="110" height="24" rx="8" fill="#fff" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="55" y="16" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">temperature</text>
+    </g>
+    <g transform="translate(406,60)">
+      <rect width="120" height="24" rx="8" fill="#fff" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="60" y="16" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">cost per call</text>
+    </g>
+  </g>
+  <!-- Arrow down -->
+  <path d="M 450 300 L 450 320" stroke="#1d1815" stroke-width="2" marker-end="url(#aosArrow)"/>
+  <!-- Layer 3: Pipeline layer -->
+  <g transform="translate(40,330)">
+    <rect width="820" height="90" rx="14" fill="#ffe9e4" stroke="#1d1815" stroke-width="2.5"/>
+    <text x="20" y="28" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="rgba(29,24,21,0.4)" letter-spacing="2">3. PIPELINE LAYER</text>
+    <text x="20" y="50" font-family="Inter, sans-serif" font-weight="700" font-size="14" fill="#1d1815">what happens around the model — retrieval, reranking, orchestration</text>
+    <g transform="translate(20,60)">
+      <rect width="140" height="24" rx="8" fill="#fff" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="70" y="16" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">retrieval latency</text>
+    </g>
+    <g transform="translate(172,60)">
+      <rect width="110" height="24" rx="8" fill="#fff" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="55" y="16" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">chunk count</text>
+    </g>
+    <g transform="translate(294,60)">
+      <rect width="130" height="24" rx="8" fill="#fff" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="65" y="16" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">reranker score</text>
+    </g>
+    <g transform="translate(436,60)">
+      <rect width="140" height="24" rx="8" fill="#fff" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="70" y="16" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">end-to-end trace</text>
+    </g>
+  </g>
+  <!-- Vertical trace arrow on the right -->
+  <g transform="translate(890,100)">
+    <rect width="70" height="310" rx="10" fill="none" stroke="#1d1815" stroke-width="2" stroke-dasharray="6,4"/>
+    <path d="M 35 10 L 35 300" stroke="#1d1815" stroke-width="2.5" marker-end="url(#aosArrow)"/>
+    <text x="35" y="160" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="11" fill="#1d1815" transform="rotate(-90 35 160)" letter-spacing="1">TRACE SPANS THE FULL STACK</text>
+  </g>
+  <!-- Caption -->
+  <text x="40" y="446" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">Most teams instrument only the request layer. The model and pipeline layers are where the interesting failures hide.</text>
+  <defs>
+    <marker id="aosArrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1d1815"/></marker>
+  </defs>
+</svg>
