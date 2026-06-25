@@ -26,7 +26,7 @@ export const findings = [
 export const roles = [
   {
     company: 'Cyble Inc.',
-    period: 'Sep 2020 — Present',
+    period: 'Sep 2020 — Jun 2026',
     title: 'Principal Software Engineer',
     note:
       'Joined early, built from zero, shipped under pressure, led people, and learned that architecture diagrams are usually much calmer than the week that produced them.',

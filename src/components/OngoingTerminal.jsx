@@ -10,10 +10,10 @@ export function OngoingTerminal() {
       <pre className="terminal-body"><code>
 <span className="t-user">shubham@desk</span> <span className="t-path">~/ongoing</span> <span className="t-arrow">$</span> <span className="t-cmd">tree --depth=2 --status</span>{'\n'}
 .{'\n'}
-<span className="t-tree">├── </span><span className="t-dir">ai-native-threat-intel/</span>{'    '}<span className="t-comment"># day job · year six at Cyble</span>{'\n'}
-<span className="t-tree">│   ├── </span><span className="t-key">status</span>{'     '}[<span className="t-tag t-tag-green">RUNNING</span>]{'\n'}
-<span className="t-tree">│   ├── </span><span className="t-key">focus</span>{'      '}turning indicators into action, faster{'\n'}
-<span className="t-tree">│   └── </span><span className="t-key">lately</span>{'     '}the agent loop that watches the wire{'\n'}
+<span className="t-tree">├── </span><span className="t-dir">ai-native-threat-intel/</span>{'    '}<span className="t-comment"># six years at Cyble · wrapped Jun 2026</span>{'\n'}
+<span className="t-tree">│   ├── </span><span className="t-key">status</span>{'     '}[<span className="t-tag t-tag-yellow">COMPLETED</span>]{'\n'}
+<span className="t-tree">│   ├── </span><span className="t-key">built</span>{'      '}correlation engine, threat-intel pipelines, integrations{'\n'}
+<span className="t-tree">│   └── </span><span className="t-key">takeaway</span>{'   '}architecture diagrams are calmer than the weeks that produce them{'\n'}
 <span className="t-tree">│</span>{'\n'}
 <span className="t-tree">├── </span><span className="t-dir">personal-health-agent/</span>{'     '}<span className="t-comment"># nights · evenings</span>{'\n'}
 <span className="t-tree">│   ├── </span><span className="t-key">status</span>{'     '}[<span className="t-tag t-tag-yellow">DRAFTING</span>]{'\n'}

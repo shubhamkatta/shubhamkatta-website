@@ -10,7 +10,7 @@ export const now = {
       tone: 'paper-white',
       items: [
         '{pin} Moradabad. Home desk most days; outdoor café before the city remembers it is a city.',
-        'Cyble — Principal Engineer, year six. Still happily entangled in threat-intel.',
+        'Wrapped up six years at Cyble as Principal Engineer. Threat-intel chapter closed, next one loading.',
         'Claude Code is the editor I open first and close last.',
         '{coffee} Aeropress, custom grind on most mornings; {tea} masala ginger tea on the slower ones — whichever the day asks for.',
       ],
