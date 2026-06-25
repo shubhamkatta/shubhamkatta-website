@@ -20,7 +20,7 @@ export function PostCard({ post }) {
   return (
     <article className={`paper ${post.color || 'paper-white'} tilt-card`}>
       {post.cover && <img className="post-cover" src={post.cover} alt={post.title} />}
-      <div className="post-type">{post.type}</div>
+      <div className="post-meta"><span className="post-type">{post.type}</span>{post.date && <span className="post-date">{post.date}</span>}</div>
       <h3>{post.title}</h3>
       <p>{post.excerpt || post.body}</p>
       <Link to={`/writing/${post.slug}`} className="read-more-link">

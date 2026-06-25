@@ -1,8 +1,15 @@
+import { useState, useMemo } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { posts } from '../content/posts';
 import { Paper, PostCard, SectionLabel } from '../components/Shared';
 import { useSEO } from '../components/useSEO';
 import { writingIndexSeo, postSeo } from '../content/seo';
+
+const FILTER_TAGS = [
+  'ai', 'rag', 'agents', 'mcp', 'ai governance', 'observability for ai',
+  'multi-tenancy', 'claude code', 'evals', 'architecture',
+  'humour', 'basics', 'deep dive', 'reflections', 'life', 'leadership',
+];
 
 const QUOTE_OPENERS = ['“', '"', '‘', "'"];
 const ATTRIBUTION_OPENERS = ['–', '—', '-', 'Source:'];
@@ -203,6 +210,22 @@ function RichText({ text, className }) {
 
 export function WritingIndexPage() {
   useSEO(writingIndexSeo);
+  const [activeTags, setActiveTags] = useState([]);
+
+  const tagCounts = useMemo(() => {
+    const counts = {};
+    FILTER_TAGS.forEach(t => { counts[t] = 0; });
+    posts.forEach(p => (p.tags || []).forEach(t => { if (t in counts) counts[t]++; }));
+    return counts;
+  }, []);
+
+  const filtered = activeTags.length
+    ? posts.filter(p => activeTags.every(t => p.tags?.includes(t)))
+    : posts;
+
+  const toggle = (tag) =>
+    setActiveTags(prev => prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]);
+
   return (
     <main className="container page-space">
       <div className="section-head with-badge">
@@ -222,8 +245,27 @@ export function WritingIndexPage() {
           <p>Also: journeys, findings, and notes that asked to be written down.</p>
         </Paper>
       </div>
+      <div className="filter-bar">
+        {FILTER_TAGS.map(tag => (
+          <button
+            key={tag}
+            className={`filter-chip${activeTags.includes(tag) ? ' active' : ''}`}
+            onClick={() => toggle(tag)}
+          >
+            {tag} <span className="filter-count">{tagCounts[tag]}</span>
+          </button>
+        ))}
+        {activeTags.length > 0 && (
+          <button className="filter-chip filter-clear" onClick={() => setActiveTags([])}>
+            clear all
+          </button>
+        )}
+      </div>
+      {activeTags.length > 0 && (
+        <p className="filter-result-count">{filtered.length} post{filtered.length !== 1 ? 's' : ''} found</p>
+      )}
       <div className="grid-three stretch-top writing-grid">
-        {posts.map((post) => <PostCard key={post.slug} post={post} />)}
+        {filtered.map((post) => <PostCard key={post.slug} post={post} />)}
       </div>
     </main>
   );

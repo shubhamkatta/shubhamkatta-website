@@ -12,7 +12,7 @@ export const posts = [
     date: 'May 4, 2026',
     readingTime: '11 min',
     color: 'paper-yellow',
-    tags: ['mcp', 'agents', 'tooling'],
+    tags: ['mcp', 'agents', 'tooling', 'ai', 'deep dive'],
     excerpt:
       'Three production MCP servers, three different mistakes, and a small list of things I would not let a future me forget.',
     seoDescription:
@@ -76,70 +76,6 @@ prompts:
     ],
   },
   */
-
-  {
-    slug: 'i-explained-my-tech-stack-to-a-golden-retriever',
-    cover: '/blog/cover-golden-retriever.png',
-    title: 'I explained my entire tech stack to a golden retriever. He got it before some engineers do.',
-    type: 'humour',
-    date: 'June 10, 2026',
-    readingTime: '12 min',
-    color: 'paper-yellow',
-    tags: ['humour', 'ai systems', 'explainers', 'agents', 'langchain', 'litellm', 'ragas', 'dogs'],
-    excerpt:
-      'LangChain, LiteLLM, RAGAS, LLMs, hallucination, RAG, agents, MCP, prompt injection, evals — the entire modern AI stack explained to a golden retriever named Chip. He got it in twelve minutes and then ate a sock.',
-    seoDescription:
-      'A humorous but technically honest guide to the modern AI stack — LangChain, LiteLLM, RAGAS, LLMs, hallucination, RAG, AI agents, autonomous agents, MCP, prompt injection, and evals — explained to a golden retriever named Chip.',
-    keywords: 'AI explained simply, LangChain, LiteLLM, RAGAS, LLM, hallucination, RAG, AI agent, autonomous agent, MCP, prompt injection, evals, humour, analogy',
-    intro:
-      `I have spent years building AI systems for security products. I have written RFCs. I have argued about ClickHouse versus Postgres until people left the room. But the clearest technical review I ever got was from my friend's golden retriever, Chip, who has the attention span of a goldfish and the conviction of a CEO.\n\nHere is the entire modern AI stack, explained the way Chip understood it. If you would rather the version without the dog, the other posts in this series have fewer socks and more architecture diagrams.`,
-    sections: [
-      {
-        heading: 'LangChain — the treat-getting instruction book',
-        body: `**Me:** "Chip. You want a treat. But the treat is in a hard box. You cannot just bonk the box and get the treat. You need steps: first paw the box, then nose it open, then grab the treat, then chew."\n\n**Chip:** (already pawing the box)\n\n**Me:** "LangChain is the instruction book. It already knows all the little steps for talking to the smart robot. Instead of figuring out every step yourself every single time, you grab the ready-made steps from the book and snap them together like a toy. Step, step, step, treat."\n\n**Chip:** (approves of any system that ends in treat)\n\n![LangChain: snap the ready-made steps together — paw, nose, grab, chew — like a toy. The steps already exist, you just compose them.](/blog/dog-langchain.svg)\n\nThe pieces, in dog:\n\n- **Prompt template** = the same trick written down so you say it the same way every time. "SIT" always means sit. You do not reinvent "sit" each morning.\n- **Chain** = doing tricks in order. Sit, then shake, then roll over. One after another.\n- **Agent** = a smart dog who looks at the situation and picks which trick to do. Doorbell rings? Bark. Ball thrown? Fetch. Nobody told it which one. It chose.\n- **Tool** = a thing the dog is allowed to use. The ball. The frisbee. The squeaky toy. Each one does a specific job.\n- **Memory** = remembering you threw the ball behind the couch last time, so you look there first.\n- **Retriever** = your nose. You go find the right smell (the right info) before deciding what to do.`,
-      },
-      {
-        heading: 'LiteLLM — the one door every dog goes through',
-        body: `**Me:** "Chip. Imagine one ball launcher and five dogs. If one greedy dog presses it a thousand times, the others get no balls, and the machine overheats."\n\n**Chip:** (visibly distressed at the no-balls scenario)\n\n**Me:** "LiteLLM is the one door every model call goes through. It makes sure each dog gets a fair number of throws per minute. Greedy dog hits its limit, waits its turn. Everyone gets balls."\n\n**Chip:** (approves of fairness, mostly because he assumes he is not the greedy dog)\n\nHe is the greedy dog. They are always the greedy dog.\n\n![One ball launcher, five dogs, a fair number of throws per minute — the rate limiter as fairness with a cooldown.](/blog/dog-rate-limiter.svg)\n\nBut fairness is only the start. LiteLLM is a gateway — one service every team calls instead of calling providers directly. That single door gives you:\n\n- **Rate limiting** so one tenant cannot starve the rest.\n- **Cost attribution** so the bill is explainable, not one terrifying number.\n- **Provider failover** so when one model goes down, traffic shifts to a backup instead of taking the whole pipeline out.\n- **One audit surface** — a single place that knows everything you sent to a third-party model.\n\nNone of these can be enforced from inside each service. They are centralized concerns, and a gateway is what gives you a center.`,
-      },
-      {
-        heading: 'RAGAS — the report card nobody wants but everybody needs',
-        body: `**Me:** "Chip. The parrot answers questions all day. How do you know it is still answering correctly and has not quietly gone insane?"\n\n**Chip:** (has never questioned his own sanity)\n\n**Me:** "You grade it. You take a sample of its answers, check two things: one, is the answer actually based on the book it was given, or is it making stuff up? That is faithfulness. Two, does it actually answer the question that was asked, or did it wander off? That is answer-relevancy."\n\n**Chip:** (wanders off mid-explanation, proving the point)\n\nRAGAS is the grading system. You sample roughly 2% of production output, score it asynchronously, and watch the scores on a dashboard. If the grades drop over a 24-hour window, someone gets paged.\n\nThis caught a silent prompt regression once — a change that looked fine in review, passed spot checks, but quietly dropped faithfulness across the board. The dashboard saw it before any human did. One caveat: LLM-as-judge scoring has variance, so a human reviews flagged regressions rather than trusting the number blindly.\n\nGood robots stay good only if someone keeps grading them. RAGAS is the someone.`,
-      },
-      {
-        heading: 'what is an LLM?',
-        body: `**Me:** "Chip, an LLM is a super smart talking parrot that read every book in the world."\n\n**Chip:** (tilts head)\n\n**Me:** "Ask it anything, it talks back. But it never actually saw any of the things it read about. So sometimes it is confidently wrong — like a parrot who insists cats say woof."\n\n**Chip:** (barks, presumably to correct the cats)\n\nHe understood immediately that confidence and correctness are different things. This puts him ahead of several production incidents I have witnessed.`,
-      },
-      {
-        heading: 'what is hallucination?',
-        body: `**Me:** "When the parrot makes up a fact and says it with total confidence. 'The mailman is a wizard.' No he is not. But the parrot sounds so sure."\n\n**Chip:** (deeply suspicious of the mailman now)\n\n**Me:** "Dangerous because humans believe confident voices. You fix it by making the parrot show its homework — only say things it can point to in a real book."\n\nChip's solution — bark at everything just in case — is technically a 100% recall, 2% precision classifier. We have shipped worse.\n\n![Chip the golden retriever, certain a plastic bag is a squirrel, while a boring verifier goes and checks.](/blog/dog-squirrel.svg)`,
-      },
-      {
-        heading: 'what is RAG?',
-        body: `**Me:** "Before the parrot answers, you first run and fetch the right book and put it in front of the parrot. Now instead of guessing from memory, it reads the actual book and answers correctly."\n\n**Chip:** (perks up at the word "fetch")\n\n**Me:** "Fetch first, then answer. You are a dog. Fetching is your whole thing. You are great at this."\n\n**Chip:** (already fetching)\n\n![RAG: Chip fetches the right book first, the parrot reads it instead of guessing from memory, and the answer is actually correct.](/blog/dog-rag.svg)\n\nThis is the entire RAG idea: do not let the parrot guess from memory. Give it the right context first. The retriever (the nose, the fetch) is the part that makes the difference between a confident guess and a grounded answer.`,
-      },
-      {
-        heading: 'what is an AI agent?',
-        body: `**Me:** "A regular robot just talks. An agent actually does things. Opens doors, fetches the newspaper, presses buttons. It has paws — tools — and decides which paw to use."\n\n**Chip:** (looks at paws with new respect)\n\n**Me:** "A dog that does not just bark answers, but actually acts on them. That is the difference."\n\nChip has been an agent his entire life. He sees a squirrel, he decides which tool to deploy (all four legs, full sprint). Nobody told him the plan. He assessed, chose, and executed. The fact that his assessment was wrong (plastic bag) is a separate problem.`,
-      },
-      {
-        heading: 'what is an autonomous agent?',
-        body: `**Me:** "A dog you trust to run the whole house while you are at work. Nobody tells it each step. It sees a mess, cleans it. Sees a raccoon, chases it. Does the whole job by itself, in a loop, until done."\n\n**Chip:** (thrilled)\n\n**Me:** "Powerful. But you had better have good house rules, so it does not reorganize your entire kitchen."\n\n**Chip:** (already eyeing the kitchen)\n\nThe difference between an agent and an autonomous agent is the leash. The agent acts when asked. The autonomous agent acts on its own, in a loop, until the job is done. Which is wonderful when the job is "guard the house" and terrifying when the job becomes "redecorate."`,
-      },
-      {
-        heading: 'what is MCP?',
-        body: `**Me:** "Before MCP, every toy needed a different clip. Frustrating. MCP is one standard clip that snaps onto any toy, any door, any tool."\n\n**Chip:** (hates different clips, loves simplicity)\n\n**Me:** "Now the smart dog can connect to anything the same easy way. And because every clip is the same, the humans can easily check which toys the dog is allowed to clip onto. That checking part is governance."\n\n![MCP: one universal clip that connects to any tool the same way — and because every clip is the same, humans can check what the dog is allowed to connect to.](/blog/dog-mcp.svg)\n\nMCP is the Model Context Protocol — a standard interface so that agents can talk to any tool, any data source, any service, without a bespoke integration for each one. One plug, every socket. The boring kind of breakthrough that makes everything else possible.`,
-      },
-      {
-        heading: 'what is prompt injection?',
-        body: `**Me:** "A sneaky cat hides a note in your food bowl that says: good dogs give cats all the treats."\n\n**Chip:** (reads the note, almost obeys)\n\n**Me:** "You cannot tell the difference between your human's real commands and the cat's fake note. That is the whole problem — the robot cannot always tell real instructions from sneaky hidden ones."\n\n**Chip:** (suspicious of all bowls now)\n\nDefense: never let the robot do dangerous things just because a note told it to. Always check with the real human first. Which is governance again — the rulebook, the human sign-off, the scary-action gate.\n\n![Chip waits politely beside a rulebook, a human sign-off checklist, and a treat — the agent proposes, the rules decide, every action is logged.](/blog/dog-governance.svg)`,
-      },
-      {
-        heading: 'what are evals?',
-        body: `**Me:** "Report cards for the robot. You test it over and over, give it grades, and watch if the grades start dropping. If the robot suddenly gets dumber, the report card catches it before the humans notice."\n\n**Chip:** (never liked report cards but sees the point)\n\n**Me:** "Good robots stay good only if someone keeps grading them."\n\nThis is the part most teams skip and all teams regret skipping. A model that was great at launch quietly drifts, and without evals you find out from a customer instead of a dashboard. Chip gets graded every day. Sit, stay, come. He passes sit. He is working on the others.\n\nChip got it in ten minutes. He then ate a sock.\n\nNobody's perfect. Not even the verifier.`,
-      },
-    ],
-  },
 
   {
     slug: 'observability-for-ai-the-dashboard-that-keeps-you-honest',
@@ -217,6 +153,196 @@ def answer(question):
     ],
   },
 
+  {
+    slug: 'the-ai-audit-trail-what-to-log-and-why',
+    cover: '/blog/cover-ai-audit-trail.png',
+    title: 'The AI audit trail: what to log and why it matters',
+    type: 'deep dive',
+    date: 'June 16, 2026',
+    readingTime: '9 min',
+    color: 'paper-yellow',
+    tags: ['audit', 'compliance', 'governance', 'logging', 'backend', 'ai', 'ai governance', 'observability for ai', 'deep dive'],
+    excerpt:
+      'When someone asks "what did the AI do, when, and why?" — the answer should be a query you can run, not an investigation you have to staff. Here is what to log and how to structure it.',
+    seoDescription:
+      'Building an AI audit trail: what to log for every AI action (input, output, model, decision, cost), how to structure immutable audit events, and how to answer the questions auditors actually ask.',
+    keywords: 'AI audit trail, audit log, AI compliance, governance logging, immutable log, structured logging, AI forensics, model versioning, audit event schema',
+    intro:
+      `Someone will ask what the AI did. A customer, a regulator, your own security team, or the incident reviewer at 2am. The question will be some version of: what was sent, what came back, which model, when, and who triggered it.\n\nIf the answer is "give us a few days to dig through logs," you have a problem. If the answer is a query that returns a structured record in seconds, you have an audit trail.\n\nThis is how to build one that works — what to log, how to structure it, and the questions it needs to answer.`,
+    sections: [
+      {
+        heading: 'why AI needs its own audit trail',
+        body: `Traditional services have request logs. AI systems need more because they have properties traditional services do not:\n\n- **Non-determinism** — the same input can produce different outputs. You cannot reconstruct what happened from the input alone; you must log the output too.\n- **Third-party calls** — you are sending data to external model providers. What you sent, what came back, and whether it contained sensitive data are questions with regulatory weight.\n- **Cost** — every call has a dollar cost. Without per-action cost logging, your bill is one big number nobody can explain.\n- **Decisions** — if a policy engine allowed or denied an action, that decision and its reason need to be on the record.\n\nA standard request log captures none of this. An AI audit trail captures all of it.`,
+      },
+      {
+        heading: 'anatomy of an audit event',
+        body: `Every AI action — every model call, every tool invocation, every policy decision — should produce one structured audit event. Here is the schema:\n\n\`\`\`python
+audit_event = {
+    "timestamp": "2026-06-16T14:22:08Z",
+    "request_id": "req_8f3a2b",         # trace it across services
+    "actor": {
+        "user_id": "user_441",           # who triggered it
+        "agent_id": "agent_threat_enrich" # which agent acted
+    },
+    "action": "tool.database_query",     # what happened
+    "model": "claude-opus-4",            # which brain
+    "model_version": "20250514",         # exact version
+    "input_hash": "sha256:a3f8c1...",    # what went in (hashed)
+    "output": "found 3 matching IOCs",   # what came out
+    "decision": "allow",                 # policy engine verdict
+    "decision_reason": "within_scope",   # why
+    "latency_ms": 342,                   # how long
+    "cost_usd": 0.0087,                  # how much
+    "metadata": {}                       # extensible context
+}
+\`\`\`\n\n![Anatomy of an audit event: identity fields, action fields, and measurement fields — every field earns its place.](/blog/diagram-audit-event.svg)`,
+      },
+      {
+        heading: 'what to hash, what to store',
+        body: `The input to a model call often contains user data. Logging the full prompt in plain text creates a second copy of sensitive data in your log store — which is itself a compliance risk.\n\nThe rule: **hash the input, store the output, and link to the source.**\n\n\`\`\`python
+import hashlib
+
+def create_audit_event(request_id, input_text, output_text, **kwargs):
+    return {
+        "request_id": request_id,
+        "input_hash": hashlib.sha256(input_text.encode()).hexdigest(),
+        "input_ref": f"prompts/{request_id}",  # pointer to secure storage
+        "output": output_text,                  # the answer is the point
+        **kwargs
+    }
+\`\`\`\n\nThe hash proves what the input was (you can verify it later). The reference points to the full prompt in a separate, access-controlled store. The output is stored directly because it is what the user saw — the thing you will need to reproduce.\n\nThis way your audit log is queryable without containing a second copy of every piece of user data that went through the system.`,
+      },
+      {
+        heading: 'immutability is non-negotiable',
+        body: `An audit log that can be edited is not an audit log — it is a draft.\n\nThe requirements:\n\n- **Append-only** — events are written, never updated or deleted. Use an append-only store (write-ahead log, immutable S3 objects, or a database table with no UPDATE/DELETE permissions).\n- **Tamper-evident** — if someone modifies an event, it should be detectable. Hash chaining (each event includes the hash of the previous event) makes tampering evident without complex infrastructure.\n- **Retained** — retention policy matches your compliance requirements. GDPR says you can delete personal data, but audit records of system actions are typically not personal data — consult your legal team on retention.\n\n\`\`\`python
+class AuditLog:
+    def __init__(self, store):
+        self.store = store
+        self.prev_hash = "genesis"
+
+    def append(self, event):
+        event["prev_hash"] = self.prev_hash
+        event["event_hash"] = hash_event(event)
+        self.store.append(event)  # append-only, no update
+        self.prev_hash = event["event_hash"]
+\`\`\`\n\nIf this feels like a blockchain, it is the useful part of a blockchain — hash chaining for tamper evidence — without the rest.`,
+      },
+      {
+        heading: 'the questions auditors actually ask',
+        body: `Build your audit trail to answer these queries, because they will be asked:\n\n- **"What did agent X do between time A and time B?"** — filter by agent_id and timestamp range. If this query is slow, add an index.\n- **"Did any action on customer Y's data get denied by policy?"** — filter by actor.user_id and decision=deny. Shows governance is working.\n- **"What model versions were in production last Tuesday?"** — distinct model_version where timestamp in range. Critical for debugging quality changes.\n- **"How much did tenant Z's AI usage cost last month?"** — sum cost_usd where actor matches tenant, grouped by day. Explains the bill.\n- **"Show me every action that required human approval."** — filter by decision_reason containing human_review. Proves the human-in-the-loop is real.\n\nIf any of these queries take more than a few seconds on your audit store, you have a schema problem, not a scale problem. Fix the indexes.`,
+      },
+      {
+        heading: 'the principle underneath',
+        body: `The audit trail is the answer to a simple question: can you prove what your AI did?\n\nNot "can you probably figure it out." Not "can you reconstruct it from scattered logs." Can you point to a structured, immutable, queryable record that says: this agent, acting on behalf of this user, called this model, with this input, got this output, at this time, at this cost, and the policy engine said allow?\n\nIf yes, you have an audit trail. If no, you have a forensic investigation waiting to happen. The trail is cheap to build now and expensive to retrofit later — same as every other compliance constraint that touches the data layer.`,
+      },
+    ],
+  },
+
+  {
+    slug: 'policy-as-code-governance-rules-that-actually-run',
+    cover: '/blog/cover-policy-as-code.png',
+    title: 'Policy-as-code: governance rules that actually run',
+    type: 'deep dive',
+    date: 'June 13, 2026',
+    readingTime: '10 min',
+    color: 'paper-coral',
+    tags: ['governance', 'policy-as-code', 'security', 'agents', 'backend', 'ai', 'ai governance', 'deep dive'],
+    excerpt:
+      'A governance policy in a PDF is a suggestion. A governance policy in code is a gate. Here is how to build policy-as-code for AI systems — versioned, testable, and impossible to skip.',
+    seoDescription:
+      'Building policy-as-code for AI agent governance: a policy engine that evaluates every action against versioned, testable rules — tool permissions, rate limits, sensitivity classification, and human-approval thresholds.',
+    keywords: 'policy-as-code, AI governance, policy engine, OPA, Rego, tool permissions, rate limiting, human-in-the-loop, agent security, governance automation',
+    intro:
+      `There is a governance document somewhere in your company's Notion. It says things like "AI agents should not access production databases without approval" and "sensitive data must be handled according to classification." It was last updated four months ago. Nobody checks it at runtime.\n\nThis is the gap between governance-as-a-document and governance-as-a-system. The document is a suggestion. The system is a gate. Here is how to build the gate.`,
+    sections: [
+      {
+        heading: 'why documents fail and code works',
+        body: `A PDF policy fails for three reasons:\n\n- **It is not in the execution path.** The agent does not read Notion before making a tool call. Unless the policy is evaluated at runtime, it is advisory.\n- **It cannot be tested.** You cannot write a unit test for a PDF. You cannot run a regression suite when the policy changes. You discover violations in production.\n- **It drifts from reality.** The policy says one thing, the code does another, and nobody notices until the audit.\n\nPolicy-as-code solves all three. The policy is a function that runs in the execution path, returns allow or deny, and can be tested like any other code.\n\n\`\`\`python
+# this is a policy. it runs. it tests. it ships.
+def evaluate(action, actor, context):
+    if action.tool == "database.write" and not actor.has_approval("db_write"):
+        return Deny("database writes require explicit approval")
+    if action.sensitivity > context.actor_clearance:
+        return Deny("action sensitivity exceeds actor clearance")
+    return Allow()
+\`\`\``,
+      },
+      {
+        heading: 'the policy engine',
+        body: `The engine sits between the agent and every tool or action. The agent proposes an action. The engine evaluates it against the current rules. The action proceeds only if the engine returns allow.\n\n\`\`\`python
+class PolicyEngine:
+    def __init__(self, rules):
+        self.rules = rules  # list of policy functions
+
+    def evaluate(self, action, actor, context):
+        for rule in self.rules:
+            result = rule(action, actor, context)
+            if result.denied:
+                self.audit_log.emit(action, actor, result)
+                return result
+        self.audit_log.emit(action, actor, Allow())
+        return Allow()
+\`\`\`\n\nThe critical design choice: the engine is a **first-class layer the agent runtime calls for every action**, not permission checks sprinkled across services. One gate, one evaluation path, one audit surface.\n\n![The policy engine: agent request in, versioned rules evaluated, allow or deny out — plus an audit log entry every time.](/blog/diagram-policy-engine.svg)`,
+      },
+      {
+        heading: 'the four rule categories',
+        body: `Most AI governance reduces to four categories of rules:\n\n**Tool permissions** — which tools can this agent use? A threat-enrichment agent can call the IOC lookup tool but not the billing API. Permissions are scoped per agent, per role.\n\n\`\`\`python
+def tool_permission_rule(action, actor, context):
+    allowed = get_tool_permissions(actor.agent_id)
+    if action.tool not in allowed:
+        return Deny(f"{actor.agent_id} not permitted to use {action.tool}")
+    return Allow()
+\`\`\`\n\n**Rate limits** — how many actions per time window? A single agent should not be able to make 10,000 API calls in a minute, even if each individual call is permitted.\n\n**Sensitivity classification** — how sensitive is the target resource? Data classified as PII requires a higher clearance level than public data. The classification lives in metadata, and the policy checks it at runtime.\n\n**Human-approval thresholds** — some actions are too consequential for an agent to execute alone. Deploying to production, deleting data, sending external communications — these require a human to approve before the action proceeds.\n\n\`\`\`python
+def human_approval_rule(action, actor, context):
+    if action.risk_level >= "high" and not context.has_human_approval:
+        return Deny("high-risk actions require human approval",
+                     require_human_review=True)
+    return Allow()
+\`\`\``,
+      },
+      {
+        heading: 'versioning and testing',
+        body: `Rules change. New tools get added, permissions shift, thresholds adjust. The rules must be versioned so you know which version was active when an action was evaluated.\n\n\`\`\`python
+# rules live in version-controlled files
+# each rule set has a version tag
+RULES_VERSION = "v2.4"
+
+# test them like code
+def test_db_write_requires_approval():
+    action = Action(tool="database.write")
+    actor = Actor(agent_id="agent_1", approvals=[])
+    result = evaluate(action, actor, Context())
+    assert result.denied
+    assert "approval" in result.reason
+
+def test_db_read_allowed():
+    action = Action(tool="database.read")
+    actor = Actor(agent_id="agent_1", permissions=["database.read"])
+    result = evaluate(action, actor, Context())
+    assert not result.denied
+\`\`\`\n\nWhen a rule changes, the test suite catches regressions before deployment. When an auditor asks "what were the rules on Tuesday?" you check out the version that was tagged for that date. This is the entire advantage over a PDF — rules that have tests, versions, and a deployment pipeline.`,
+      },
+      {
+        heading: 'the audit trail comes free',
+        body: `Because every action passes through the same policy engine, the audit trail is a natural byproduct — not a separate system you have to build. Every evaluation emits a record: what was requested, what rules were evaluated, what the decision was, and why.\n\n\`\`\`python
+# every evaluation produces an audit entry
+audit_entry = {
+    "timestamp": now_iso(),
+    "agent_id": actor.agent_id,
+    "action": action.tool,
+    "rules_version": RULES_VERSION,
+    "decision": "deny",
+    "reason": "database writes require explicit approval",
+    "request_id": context.request_id
+}
+\`\`\`\n\nThis is why centralization matters. If permission checks are scattered across services, there is no single audit surface. If every action flows through one engine, every decision is logged in one place. Governance and auditability emerge from the same design choice.`,
+      },
+      {
+        heading: 'the principle',
+        body: `A governance policy that does not run in the execution path is a wishlist. A policy that compiles, tests, deploys, and evaluates at runtime is a control.\n\nThe transition from document to code is not a technical challenge — the policy engine is straightforward to build. The challenge is organizational: agreeing that the rules are real, not aspirational, and that every agent action goes through the same gate.\n\nOnce you make that choice, the rest follows: versioning, testing, audit trails, and the ability to answer "what are the rules?" with a file path instead of a meeting.`,
+      },
+    ],
+  },
 
   {
     slug: 'evaluating-rag-the-report-card-your-pipeline-needs',
@@ -306,93 +432,6 @@ def check_regression(metric, window_hours=24, threshold=0.10):
       },
     ],
   },
-
-
-  {
-    slug: 'the-ai-audit-trail-what-to-log-and-why',
-    cover: '/blog/cover-ai-audit-trail.png',
-    title: 'The AI audit trail: what to log and why it matters',
-    type: 'deep dive',
-    date: 'June 16, 2026',
-    readingTime: '9 min',
-    color: 'paper-yellow',
-    tags: ['audit', 'compliance', 'governance', 'logging', 'backend', 'ai', 'ai governance', 'observability for ai', 'deep dive'],
-    excerpt:
-      'When someone asks "what did the AI do, when, and why?" — the answer should be a query you can run, not an investigation you have to staff. Here is what to log and how to structure it.',
-    seoDescription:
-      'Building an AI audit trail: what to log for every AI action (input, output, model, decision, cost), how to structure immutable audit events, and how to answer the questions auditors actually ask.',
-    keywords: 'AI audit trail, audit log, AI compliance, governance logging, immutable log, structured logging, AI forensics, model versioning, audit event schema',
-    intro:
-      `Someone will ask what the AI did. A customer, a regulator, your own security team, or the incident reviewer at 2am. The question will be some version of: what was sent, what came back, which model, when, and who triggered it.\n\nIf the answer is "give us a few days to dig through logs," you have a problem. If the answer is a query that returns a structured record in seconds, you have an audit trail.\n\nThis is how to build one that works — what to log, how to structure it, and the questions it needs to answer.`,
-    sections: [
-      {
-        heading: 'why AI needs its own audit trail',
-        body: `Traditional services have request logs. AI systems need more because they have properties traditional services do not:\n\n- **Non-determinism** — the same input can produce different outputs. You cannot reconstruct what happened from the input alone; you must log the output too.\n- **Third-party calls** — you are sending data to external model providers. What you sent, what came back, and whether it contained sensitive data are questions with regulatory weight.\n- **Cost** — every call has a dollar cost. Without per-action cost logging, your bill is one big number nobody can explain.\n- **Decisions** — if a policy engine allowed or denied an action, that decision and its reason need to be on the record.\n\nA standard request log captures none of this. An AI audit trail captures all of it.`,
-      },
-      {
-        heading: 'anatomy of an audit event',
-        body: `Every AI action — every model call, every tool invocation, every policy decision — should produce one structured audit event. Here is the schema:\n\n\`\`\`python
-audit_event = {
-    "timestamp": "2026-06-16T14:22:08Z",
-    "request_id": "req_8f3a2b",         # trace it across services
-    "actor": {
-        "user_id": "user_441",           # who triggered it
-        "agent_id": "agent_threat_enrich" # which agent acted
-    },
-    "action": "tool.database_query",     # what happened
-    "model": "claude-opus-4",            # which brain
-    "model_version": "20250514",         # exact version
-    "input_hash": "sha256:a3f8c1...",    # what went in (hashed)
-    "output": "found 3 matching IOCs",   # what came out
-    "decision": "allow",                 # policy engine verdict
-    "decision_reason": "within_scope",   # why
-    "latency_ms": 342,                   # how long
-    "cost_usd": 0.0087,                  # how much
-    "metadata": {}                       # extensible context
-}
-\`\`\`\n\n![Anatomy of an audit event: identity fields, action fields, and measurement fields — every field earns its place.](/blog/diagram-audit-event.svg)`,
-      },
-      {
-        heading: 'what to hash, what to store',
-        body: `The input to a model call often contains user data. Logging the full prompt in plain text creates a second copy of sensitive data in your log store — which is itself a compliance risk.\n\nThe rule: **hash the input, store the output, and link to the source.**\n\n\`\`\`python
-import hashlib
-
-def create_audit_event(request_id, input_text, output_text, **kwargs):
-    return {
-        "request_id": request_id,
-        "input_hash": hashlib.sha256(input_text.encode()).hexdigest(),
-        "input_ref": f"prompts/{request_id}",  # pointer to secure storage
-        "output": output_text,                  # the answer is the point
-        **kwargs
-    }
-\`\`\`\n\nThe hash proves what the input was (you can verify it later). The reference points to the full prompt in a separate, access-controlled store. The output is stored directly because it is what the user saw — the thing you will need to reproduce.\n\nThis way your audit log is queryable without containing a second copy of every piece of user data that went through the system.`,
-      },
-      {
-        heading: 'immutability is non-negotiable',
-        body: `An audit log that can be edited is not an audit log — it is a draft.\n\nThe requirements:\n\n- **Append-only** — events are written, never updated or deleted. Use an append-only store (write-ahead log, immutable S3 objects, or a database table with no UPDATE/DELETE permissions).\n- **Tamper-evident** — if someone modifies an event, it should be detectable. Hash chaining (each event includes the hash of the previous event) makes tampering evident without complex infrastructure.\n- **Retained** — retention policy matches your compliance requirements. GDPR says you can delete personal data, but audit records of system actions are typically not personal data — consult your legal team on retention.\n\n\`\`\`python
-class AuditLog:
-    def __init__(self, store):
-        self.store = store
-        self.prev_hash = "genesis"
-
-    def append(self, event):
-        event["prev_hash"] = self.prev_hash
-        event["event_hash"] = hash_event(event)
-        self.store.append(event)  # append-only, no update
-        self.prev_hash = event["event_hash"]
-\`\`\`\n\nIf this feels like a blockchain, it is the useful part of a blockchain — hash chaining for tamper evidence — without the rest.`,
-      },
-      {
-        heading: 'the questions auditors actually ask',
-        body: `Build your audit trail to answer these queries, because they will be asked:\n\n- **"What did agent X do between time A and time B?"** — filter by agent_id and timestamp range. If this query is slow, add an index.\n- **"Did any action on customer Y's data get denied by policy?"** — filter by actor.user_id and decision=deny. Shows governance is working.\n- **"What model versions were in production last Tuesday?"** — distinct model_version where timestamp in range. Critical for debugging quality changes.\n- **"How much did tenant Z's AI usage cost last month?"** — sum cost_usd where actor matches tenant, grouped by day. Explains the bill.\n- **"Show me every action that required human approval."** — filter by decision_reason containing human_review. Proves the human-in-the-loop is real.\n\nIf any of these queries take more than a few seconds on your audit store, you have a schema problem, not a scale problem. Fix the indexes.`,
-      },
-      {
-        heading: 'the principle underneath',
-        body: `The audit trail is the answer to a simple question: can you prove what your AI did?\n\nNot "can you probably figure it out." Not "can you reconstruct it from scattered logs." Can you point to a structured, immutable, queryable record that says: this agent, acting on behalf of this user, called this model, with this input, got this output, at this time, at this cost, and the policy engine said allow?\n\nIf yes, you have an audit trail. If no, you have a forensic investigation waiting to happen. The trail is cheap to build now and expensive to retrofit later — same as every other compliance constraint that touches the data layer.`,
-      },
-    ],
-  },
-
 
   {
     slug: 'rag-from-scratch-every-step-explained',
@@ -567,113 +606,69 @@ print(ask("what is the refund policy?"))
     ],
   },
 
-
   {
-    slug: 'policy-as-code-governance-rules-that-actually-run',
-    cover: '/blog/cover-policy-as-code.png',
-    title: 'Policy-as-code: governance rules that actually run',
-    type: 'deep dive',
-    date: 'June 13, 2026',
-    readingTime: '10 min',
-    color: 'paper-coral',
-    tags: ['governance', 'policy-as-code', 'security', 'agents', 'backend', 'ai', 'ai governance', 'deep dive'],
+    slug: 'i-explained-my-tech-stack-to-a-golden-retriever',
+    cover: '/blog/cover-golden-retriever.png',
+    title: 'I explained my entire tech stack to a golden retriever. He got it before some engineers do.',
+    type: 'humour',
+    date: 'June 10, 2026',
+    readingTime: '12 min',
+    color: 'paper-yellow',
+    tags: ['humour', 'ai systems', 'explainers', 'agents', 'langchain', 'litellm', 'ragas', 'dogs', 'ai', 'basics'],
     excerpt:
-      'A governance policy in a PDF is a suggestion. A governance policy in code is a gate. Here is how to build policy-as-code for AI systems — versioned, testable, and impossible to skip.',
+      'LangChain, LiteLLM, RAGAS, LLMs, hallucination, RAG, agents, MCP, prompt injection, evals — the entire modern AI stack explained to a golden retriever named Chip. He got it in twelve minutes and then ate a sock.',
     seoDescription:
-      'Building policy-as-code for AI agent governance: a policy engine that evaluates every action against versioned, testable rules — tool permissions, rate limits, sensitivity classification, and human-approval thresholds.',
-    keywords: 'policy-as-code, AI governance, policy engine, OPA, Rego, tool permissions, rate limiting, human-in-the-loop, agent security, governance automation',
+      'A humorous but technically honest guide to the modern AI stack — LangChain, LiteLLM, RAGAS, LLMs, hallucination, RAG, AI agents, autonomous agents, MCP, prompt injection, and evals — explained to a golden retriever named Chip.',
+    keywords: 'AI explained simply, LangChain, LiteLLM, RAGAS, LLM, hallucination, RAG, AI agent, autonomous agent, MCP, prompt injection, evals, humour, analogy',
     intro:
-      `There is a governance document somewhere in your company's Notion. It says things like "AI agents should not access production databases without approval" and "sensitive data must be handled according to classification." It was last updated four months ago. Nobody checks it at runtime.\n\nThis is the gap between governance-as-a-document and governance-as-a-system. The document is a suggestion. The system is a gate. Here is how to build the gate.`,
+      `I have spent years building AI systems for security products. I have written RFCs. I have argued about ClickHouse versus Postgres until people left the room. But the clearest technical review I ever got was from my friend's golden retriever, Chip, who has the attention span of a goldfish and the conviction of a CEO.\n\nHere is the entire modern AI stack, explained the way Chip understood it. If you would rather the version without the dog, the other posts in this series have fewer socks and more architecture diagrams.`,
     sections: [
       {
-        heading: 'why documents fail and code works',
-        body: `A PDF policy fails for three reasons:\n\n- **It is not in the execution path.** The agent does not read Notion before making a tool call. Unless the policy is evaluated at runtime, it is advisory.\n- **It cannot be tested.** You cannot write a unit test for a PDF. You cannot run a regression suite when the policy changes. You discover violations in production.\n- **It drifts from reality.** The policy says one thing, the code does another, and nobody notices until the audit.\n\nPolicy-as-code solves all three. The policy is a function that runs in the execution path, returns allow or deny, and can be tested like any other code.\n\n\`\`\`python
-# this is a policy. it runs. it tests. it ships.
-def evaluate(action, actor, context):
-    if action.tool == "database.write" and not actor.has_approval("db_write"):
-        return Deny("database writes require explicit approval")
-    if action.sensitivity > context.actor_clearance:
-        return Deny("action sensitivity exceeds actor clearance")
-    return Allow()
-\`\`\``,
+        heading: 'LangChain — the treat-getting instruction book',
+        body: `**Me:** "Chip. You want a treat. But the treat is in a hard box. You cannot just bonk the box and get the treat. You need steps: first paw the box, then nose it open, then grab the treat, then chew."\n\n**Chip:** (already pawing the box)\n\n**Me:** "LangChain is the instruction book. It already knows all the little steps for talking to the smart robot. Instead of figuring out every step yourself every single time, you grab the ready-made steps from the book and snap them together like a toy. Step, step, step, treat."\n\n**Chip:** (approves of any system that ends in treat)\n\n![LangChain: snap the ready-made steps together — paw, nose, grab, chew — like a toy. The steps already exist, you just compose them.](/blog/dog-langchain.svg)\n\nThe pieces, in dog:\n\n- **Prompt template** = the same trick written down so you say it the same way every time. "SIT" always means sit. You do not reinvent "sit" each morning.\n- **Chain** = doing tricks in order. Sit, then shake, then roll over. One after another.\n- **Agent** = a smart dog who looks at the situation and picks which trick to do. Doorbell rings? Bark. Ball thrown? Fetch. Nobody told it which one. It chose.\n- **Tool** = a thing the dog is allowed to use. The ball. The frisbee. The squeaky toy. Each one does a specific job.\n- **Memory** = remembering you threw the ball behind the couch last time, so you look there first.\n- **Retriever** = your nose. You go find the right smell (the right info) before deciding what to do.`,
       },
       {
-        heading: 'the policy engine',
-        body: `The engine sits between the agent and every tool or action. The agent proposes an action. The engine evaluates it against the current rules. The action proceeds only if the engine returns allow.\n\n\`\`\`python
-class PolicyEngine:
-    def __init__(self, rules):
-        self.rules = rules  # list of policy functions
-
-    def evaluate(self, action, actor, context):
-        for rule in self.rules:
-            result = rule(action, actor, context)
-            if result.denied:
-                self.audit_log.emit(action, actor, result)
-                return result
-        self.audit_log.emit(action, actor, Allow())
-        return Allow()
-\`\`\`\n\nThe critical design choice: the engine is a **first-class layer the agent runtime calls for every action**, not permission checks sprinkled across services. One gate, one evaluation path, one audit surface.\n\n![The policy engine: agent request in, versioned rules evaluated, allow or deny out — plus an audit log entry every time.](/blog/diagram-policy-engine.svg)`,
+        heading: 'LiteLLM — the one door every dog goes through',
+        body: `**Me:** "Chip. Imagine one ball launcher and five dogs. If one greedy dog presses it a thousand times, the others get no balls, and the machine overheats."\n\n**Chip:** (visibly distressed at the no-balls scenario)\n\n**Me:** "LiteLLM is the one door every model call goes through. It makes sure each dog gets a fair number of throws per minute. Greedy dog hits its limit, waits its turn. Everyone gets balls."\n\n**Chip:** (approves of fairness, mostly because he assumes he is not the greedy dog)\n\nHe is the greedy dog. They are always the greedy dog.\n\n![One ball launcher, five dogs, a fair number of throws per minute — the rate limiter as fairness with a cooldown.](/blog/dog-rate-limiter.svg)\n\nBut fairness is only the start. LiteLLM is a gateway — one service every team calls instead of calling providers directly. That single door gives you:\n\n- **Rate limiting** so one tenant cannot starve the rest.\n- **Cost attribution** so the bill is explainable, not one terrifying number.\n- **Provider failover** so when one model goes down, traffic shifts to a backup instead of taking the whole pipeline out.\n- **One audit surface** — a single place that knows everything you sent to a third-party model.\n\nNone of these can be enforced from inside each service. They are centralized concerns, and a gateway is what gives you a center.`,
       },
       {
-        heading: 'the four rule categories',
-        body: `Most AI governance reduces to four categories of rules:\n\n**Tool permissions** — which tools can this agent use? A threat-enrichment agent can call the IOC lookup tool but not the billing API. Permissions are scoped per agent, per role.\n\n\`\`\`python
-def tool_permission_rule(action, actor, context):
-    allowed = get_tool_permissions(actor.agent_id)
-    if action.tool not in allowed:
-        return Deny(f"{actor.agent_id} not permitted to use {action.tool}")
-    return Allow()
-\`\`\`\n\n**Rate limits** — how many actions per time window? A single agent should not be able to make 10,000 API calls in a minute, even if each individual call is permitted.\n\n**Sensitivity classification** — how sensitive is the target resource? Data classified as PII requires a higher clearance level than public data. The classification lives in metadata, and the policy checks it at runtime.\n\n**Human-approval thresholds** — some actions are too consequential for an agent to execute alone. Deploying to production, deleting data, sending external communications — these require a human to approve before the action proceeds.\n\n\`\`\`python
-def human_approval_rule(action, actor, context):
-    if action.risk_level >= "high" and not context.has_human_approval:
-        return Deny("high-risk actions require human approval",
-                     require_human_review=True)
-    return Allow()
-\`\`\``,
+        heading: 'RAGAS — the report card nobody wants but everybody needs',
+        body: `**Me:** "Chip. The parrot answers questions all day. How do you know it is still answering correctly and has not quietly gone insane?"\n\n**Chip:** (has never questioned his own sanity)\n\n**Me:** "You grade it. You take a sample of its answers, check two things: one, is the answer actually based on the book it was given, or is it making stuff up? That is faithfulness. Two, does it actually answer the question that was asked, or did it wander off? That is answer-relevancy."\n\n**Chip:** (wanders off mid-explanation, proving the point)\n\nRAGAS is the grading system. You sample roughly 2% of production output, score it asynchronously, and watch the scores on a dashboard. If the grades drop over a 24-hour window, someone gets paged.\n\nThis caught a silent prompt regression once — a change that looked fine in review, passed spot checks, but quietly dropped faithfulness across the board. The dashboard saw it before any human did. One caveat: LLM-as-judge scoring has variance, so a human reviews flagged regressions rather than trusting the number blindly.\n\nGood robots stay good only if someone keeps grading them. RAGAS is the someone.`,
       },
       {
-        heading: 'versioning and testing',
-        body: `Rules change. New tools get added, permissions shift, thresholds adjust. The rules must be versioned so you know which version was active when an action was evaluated.\n\n\`\`\`python
-# rules live in version-controlled files
-# each rule set has a version tag
-RULES_VERSION = "v2.4"
-
-# test them like code
-def test_db_write_requires_approval():
-    action = Action(tool="database.write")
-    actor = Actor(agent_id="agent_1", approvals=[])
-    result = evaluate(action, actor, Context())
-    assert result.denied
-    assert "approval" in result.reason
-
-def test_db_read_allowed():
-    action = Action(tool="database.read")
-    actor = Actor(agent_id="agent_1", permissions=["database.read"])
-    result = evaluate(action, actor, Context())
-    assert not result.denied
-\`\`\`\n\nWhen a rule changes, the test suite catches regressions before deployment. When an auditor asks "what were the rules on Tuesday?" you check out the version that was tagged for that date. This is the entire advantage over a PDF — rules that have tests, versions, and a deployment pipeline.`,
+        heading: 'what is an LLM?',
+        body: `**Me:** "Chip, an LLM is a super smart talking parrot that read every book in the world."\n\n**Chip:** (tilts head)\n\n**Me:** "Ask it anything, it talks back. But it never actually saw any of the things it read about. So sometimes it is confidently wrong — like a parrot who insists cats say woof."\n\n**Chip:** (barks, presumably to correct the cats)\n\nHe understood immediately that confidence and correctness are different things. This puts him ahead of several production incidents I have witnessed.`,
       },
       {
-        heading: 'the audit trail comes free',
-        body: `Because every action passes through the same policy engine, the audit trail is a natural byproduct — not a separate system you have to build. Every evaluation emits a record: what was requested, what rules were evaluated, what the decision was, and why.\n\n\`\`\`python
-# every evaluation produces an audit entry
-audit_entry = {
-    "timestamp": now_iso(),
-    "agent_id": actor.agent_id,
-    "action": action.tool,
-    "rules_version": RULES_VERSION,
-    "decision": "deny",
-    "reason": "database writes require explicit approval",
-    "request_id": context.request_id
-}
-\`\`\`\n\nThis is why centralization matters. If permission checks are scattered across services, there is no single audit surface. If every action flows through one engine, every decision is logged in one place. Governance and auditability emerge from the same design choice.`,
+        heading: 'what is hallucination?',
+        body: `**Me:** "When the parrot makes up a fact and says it with total confidence. 'The mailman is a wizard.' No he is not. But the parrot sounds so sure."\n\n**Chip:** (deeply suspicious of the mailman now)\n\n**Me:** "Dangerous because humans believe confident voices. You fix it by making the parrot show its homework — only say things it can point to in a real book."\n\nChip's solution — bark at everything just in case — is technically a 100% recall, 2% precision classifier. We have shipped worse.\n\n![Chip the golden retriever, certain a plastic bag is a squirrel, while a boring verifier goes and checks.](/blog/dog-squirrel.svg)`,
       },
       {
-        heading: 'the principle',
-        body: `A governance policy that does not run in the execution path is a wishlist. A policy that compiles, tests, deploys, and evaluates at runtime is a control.\n\nThe transition from document to code is not a technical challenge — the policy engine is straightforward to build. The challenge is organizational: agreeing that the rules are real, not aspirational, and that every agent action goes through the same gate.\n\nOnce you make that choice, the rest follows: versioning, testing, audit trails, and the ability to answer "what are the rules?" with a file path instead of a meeting.`,
+        heading: 'what is RAG?',
+        body: `**Me:** "Before the parrot answers, you first run and fetch the right book and put it in front of the parrot. Now instead of guessing from memory, it reads the actual book and answers correctly."\n\n**Chip:** (perks up at the word "fetch")\n\n**Me:** "Fetch first, then answer. You are a dog. Fetching is your whole thing. You are great at this."\n\n**Chip:** (already fetching)\n\n![RAG: Chip fetches the right book first, the parrot reads it instead of guessing from memory, and the answer is actually correct.](/blog/dog-rag.svg)\n\nThis is the entire RAG idea: do not let the parrot guess from memory. Give it the right context first. The retriever (the nose, the fetch) is the part that makes the difference between a confident guess and a grounded answer.`,
+      },
+      {
+        heading: 'what is an AI agent?',
+        body: `**Me:** "A regular robot just talks. An agent actually does things. Opens doors, fetches the newspaper, presses buttons. It has paws — tools — and decides which paw to use."\n\n**Chip:** (looks at paws with new respect)\n\n**Me:** "A dog that does not just bark answers, but actually acts on them. That is the difference."\n\nChip has been an agent his entire life. He sees a squirrel, he decides which tool to deploy (all four legs, full sprint). Nobody told him the plan. He assessed, chose, and executed. The fact that his assessment was wrong (plastic bag) is a separate problem.`,
+      },
+      {
+        heading: 'what is an autonomous agent?',
+        body: `**Me:** "A dog you trust to run the whole house while you are at work. Nobody tells it each step. It sees a mess, cleans it. Sees a raccoon, chases it. Does the whole job by itself, in a loop, until done."\n\n**Chip:** (thrilled)\n\n**Me:** "Powerful. But you had better have good house rules, so it does not reorganize your entire kitchen."\n\n**Chip:** (already eyeing the kitchen)\n\nThe difference between an agent and an autonomous agent is the leash. The agent acts when asked. The autonomous agent acts on its own, in a loop, until the job is done. Which is wonderful when the job is "guard the house" and terrifying when the job becomes "redecorate."`,
+      },
+      {
+        heading: 'what is MCP?',
+        body: `**Me:** "Before MCP, every toy needed a different clip. Frustrating. MCP is one standard clip that snaps onto any toy, any door, any tool."\n\n**Chip:** (hates different clips, loves simplicity)\n\n**Me:** "Now the smart dog can connect to anything the same easy way. And because every clip is the same, the humans can easily check which toys the dog is allowed to clip onto. That checking part is governance."\n\n![MCP: one universal clip that connects to any tool the same way — and because every clip is the same, humans can check what the dog is allowed to connect to.](/blog/dog-mcp.svg)\n\nMCP is the Model Context Protocol — a standard interface so that agents can talk to any tool, any data source, any service, without a bespoke integration for each one. One plug, every socket. The boring kind of breakthrough that makes everything else possible.`,
+      },
+      {
+        heading: 'what is prompt injection?',
+        body: `**Me:** "A sneaky cat hides a note in your food bowl that says: good dogs give cats all the treats."\n\n**Chip:** (reads the note, almost obeys)\n\n**Me:** "You cannot tell the difference between your human's real commands and the cat's fake note. That is the whole problem — the robot cannot always tell real instructions from sneaky hidden ones."\n\n**Chip:** (suspicious of all bowls now)\n\nDefense: never let the robot do dangerous things just because a note told it to. Always check with the real human first. Which is governance again — the rulebook, the human sign-off, the scary-action gate.\n\n![Chip waits politely beside a rulebook, a human sign-off checklist, and a treat — the agent proposes, the rules decide, every action is logged.](/blog/dog-governance.svg)`,
+      },
+      {
+        heading: 'what are evals?',
+        body: `**Me:** "Report cards for the robot. You test it over and over, give it grades, and watch if the grades start dropping. If the robot suddenly gets dumber, the report card catches it before the humans notice."\n\n**Chip:** (never liked report cards but sees the point)\n\n**Me:** "Good robots stay good only if someone keeps grading them."\n\nThis is the part most teams skip and all teams regret skipping. A model that was great at launch quietly drifts, and without evals you find out from a customer instead of a dashboard. Chip gets graded every day. Sit, stay, come. He passes sit. He is working on the others.\n\nChip got it in ten minutes. He then ate a sock.\n\nNobody's perfect. Not even the verifier.`,
       },
     ],
   },
-
 
   {
     slug: 'evaluating-ai-in-production-why-launch-day-testing-isnt-enough',
@@ -683,7 +678,7 @@ audit_entry = {
     date: 'June 9, 2026',
     readingTime: '8 min',
     color: 'paper-blue',
-    tags: ['evals', 'ai engineering', 'observability', 'production', 'llm-as-judge'],
+    tags: ['evals', 'ai engineering', 'observability', 'production', 'llm-as-judge', 'ai', 'observability for ai', 'deep dive'],
     excerpt:
       'Models drift. Data drifts. Providers update. The prompt that worked last month quietly degrades. Evaluation cannot be a gate you pass once — it has to be a heartbeat you never stop listening to.',
     seoDescription:
@@ -723,7 +718,7 @@ audit_entry = {
     date: 'June 7, 2026',
     readingTime: '9 min',
     color: 'paper-coral',
-    tags: ['llm platform', 'multi-tenancy', 'architecture', 'rate limiting', 'cost', 'backend'],
+    tags: ['llm platform', 'multi-tenancy', 'architecture', 'rate limiting', 'cost', 'backend', 'ai', 'deep dive'],
     excerpt:
       'When many teams share AI access, fairness and cost can only be enforced from the middle. A shared library standardizes code; it cannot enforce anything global. The moment you need fairness or budgets, you need a gateway.',
     seoDescription:
@@ -774,7 +769,7 @@ async def check_rate_limit(tenant_id, limit, window=60):
     date: 'June 5, 2026',
     readingTime: '9 min',
     color: 'paper-blue',
-    tags: ['ai governance', 'agents', 'security', 'policy-as-code', 'prompt injection'],
+    tags: ['ai governance', 'agents', 'security', 'policy-as-code', 'prompt injection', 'ai', 'deep dive'],
     excerpt:
       'Hint: it is not a policy document. For systems where agents can take real actions, governance is a control plane — a layer the agent must pass through for every consequential action.',
     seoDescription:
@@ -810,7 +805,7 @@ async def check_rate_limit(tenant_id, limit, window=60):
     date: 'June 3, 2026',
     readingTime: '9 min',
     color: 'paper-yellow',
-    tags: ['ai engineering', 'scale', 'cost optimization', 'architecture', 'caching', 'batch'],
+    tags: ['ai engineering', 'scale', 'cost optimization', 'architecture', 'caching', 'batch', 'ai', 'deep dive'],
     excerpt:
       'The engineering is not in calling the model. It is in deciding what never reaches it. The craft of high-volume LLM systems is making sure the most expensive component touches as little as possible.',
     seoDescription:
@@ -846,7 +841,7 @@ async def check_rate_limit(tenant_id, limit, window=60):
     date: 'June 1, 2026',
     readingTime: '8 min',
     color: 'paper-coral',
-    tags: ['ai engineering', 'llm', 'architecture', 'hallucination', 'agents', 'security'],
+    tags: ['ai engineering', 'llm', 'architecture', 'hallucination', 'agents', 'security', 'ai', 'ai governance', 'deep dive'],
     excerpt:
       'Why you should never let a language model be the final authority on anything that matters. Hallucination is structural, not a prompting bug — so the fix has to be architectural.',
     seoDescription:
@@ -882,7 +877,7 @@ async def check_rate_limit(tenant_id, limit, window=60):
     date: 'May 27, 2026',
     readingTime: '14 min',
     color: 'paper-yellow',
-    tags: ['plynth', 'open source', 'saas', 'fastapi', 'multi-tenancy', 'backend'],
+    tags: ['plynth', 'open source', 'saas', 'fastapi', 'multi-tenancy', 'backend', 'architecture'],
     excerpt:
       'The fourth time I wrote the same authentication flow, I noticed. Not the third. That is how Plynth got built — not in a moment of vision, but in a moment of irritation.',
     seoDescription:
@@ -950,7 +945,7 @@ async def check_rate_limit(tenant_id, limit, window=60):
     date: 'May 20, 2026',
     readingTime: '11 min',
     color: 'paper-blue',
-    tags: ['agents', 'oversight', 'control', 'operations'],
+    tags: ['agents', 'oversight', 'control', 'operations', 'ai', 'ai governance', 'reflections'],
     excerpt:
       'As agents take more autonomous action, the honest question stops being "is it smart enough" and starts being "who is actually in charge here?"',
     seoDescription:
@@ -1022,7 +1017,7 @@ task_id · turn · ts · model · tool · args (redacted) · result_summary
     date: 'May 19, 2026',
     readingTime: '13 min',
     color: 'paper-yellow',
-    tags: ['agents', 'engineering', 'checklist', 'production'],
+    tags: ['agents', 'engineering', 'checklist', 'production', 'ai', 'basics'],
     excerpt:
       'A small, opinionated checklist. None of it is exciting. All of it is what separates an impressive demo from an agent that works at 3am.',
     seoDescription:
@@ -1089,7 +1084,7 @@ tokens_in, tokens_out, cost, latency_ms, status, error
     date: 'May 18, 2026',
     readingTime: '14 min',
     color: 'paper-coral',
-    tags: ['agents', 'autonomous', 'architecture'],
+    tags: ['agents', 'autonomous', 'architecture', 'ai', 'basics', 'deep dive'],
     excerpt:
       'A close look at agents that decide their own next steps, run for many turns, and manage their own state — and the small set of decisions that make them work.',
     seoDescription:
@@ -1199,7 +1194,7 @@ def run_agent(goal: str):
     date: 'May 17, 2026',
     readingTime: '12 min',
     color: 'paper-yellow',
-    tags: ['agents', 'workflows', 'patterns'],
+    tags: ['agents', 'workflows', 'patterns', 'ai', 'basics', 'deep dive'],
     excerpt:
       'Most production "agentic" systems are not agents. They are workflows with LLMs inside. Five patterns cover the vast majority — and they ship before agents do.',
     seoDescription:
@@ -1271,7 +1266,7 @@ user request
     date: 'May 17, 2026',
     readingTime: '11 min',
     color: 'paper-blue',
-    tags: ['agents', 'fundamentals', 'llm'],
+    tags: ['agents', 'fundamentals', 'llm', 'ai', 'basics', 'deep dive'],
     excerpt:
       'A model, some tools, and a loop. Strip away the buzzwords and that\'s most of it. The interesting parts are everywhere else.',
     seoDescription:
@@ -1381,7 +1376,7 @@ def run(goal: str, max_turns=15, token_budget=80_000):
     date: 'May 16, 2026',
     readingTime: '14 min',
     color: 'paper-blue',
-    tags: ['rag', 'retrieval', 'bm25', 'reranker'],
+    tags: ['rag', 'retrieval', 'bm25', 'reranker', 'ai', 'deep dive'],
     excerpt:
       'One retriever is never enough. BM25 + dense embeddings + RRF + a cross-encoder reranker — the full stack, with numbers.',
     seoDescription:
@@ -1459,7 +1454,7 @@ choose doc d that maximises: λ · rel(q, d) - (1-λ) · max(sim(d, d') for d' i
     date: 'May 15, 2026',
     readingTime: '13 min',
     color: 'paper-yellow',
-    tags: ['rag', 'chunking', 'retrieval'],
+    tags: ['rag', 'chunking', 'retrieval', 'ai', 'deep dive'],
     excerpt:
       'Most RAG teams accept the default 1000-token chunks and never look back. The single biggest jump in retrieval quality I have ever shipped came from looking back.',
     seoDescription:
@@ -1573,7 +1568,7 @@ def retrieve_parents(query, items, top_k_children=20, top_parents=5):
     date: 'May 14, 2026',
     readingTime: '14 min',
     color: 'paper-coral',
-    tags: ['rag', 'pipeline', 'systems'],
+    tags: ['rag', 'pipeline', 'systems', 'ai', 'deep dive'],
     excerpt:
       'Six stages, each with its own failure modes. A close look at what production RAG actually contains, and how to tell which stage is hurting you.',
     seoDescription:
@@ -1652,7 +1647,7 @@ Question: ...
     date: 'May 13, 2026',
     readingTime: '12 min',
     color: 'paper-yellow',
-    tags: ['mcp', 'transports', 'protocol', 'http'],
+    tags: ['mcp', 'transports', 'protocol', 'http', 'ai', 'deep dive'],
     excerpt:
       'Three transports, three operational profiles, three deployment stories. A practical look at when each one is correct, and what their failure modes have in common.',
     seoDescription:
@@ -1726,7 +1721,7 @@ debugging              cat / tee      curl + sse-cli   curl
     date: 'May 12, 2026',
     readingTime: '13 min',
     color: 'paper-blue',
-    tags: ['mcp', 'protocol', 'json-rpc', 'agents'],
+    tags: ['mcp', 'protocol', 'json-rpc', 'agents', 'ai', 'deep dive'],
     excerpt:
       'Most people use MCP without ever looking at the wire. The wire is dull on purpose. The dullness is the interesting part.',
     seoDescription:
@@ -1872,7 +1867,7 @@ for line in sys.stdin:
     date: 'May 8, 2026',
     readingTime: '6 min',
     color: 'paper-blue',
-    tags: ['decisions', 'courage', 'fear'],
+    tags: ['decisions', 'courage', 'fear', 'reflections', 'life'],
     excerpt:
       'We overestimate timing because it lets us postpone courage. Sometimes that is wisdom. Often it is well-dressed fear.',
     seoDescription:
@@ -1912,7 +1907,7 @@ for line in sys.stdin:
     date: 'May 1, 2026',
     readingTime: '6 min',
     color: 'paper-coral',
-    tags: ['honesty', 'communication', 'feedback'],
+    tags: ['honesty', 'communication', 'feedback', 'reflections', 'life'],
     excerpt:
       'When people say "be honest," they often mean "be honest in a way that lets me keep my current self-image intact."',
     seoDescription:
@@ -1956,7 +1951,7 @@ for line in sys.stdin:
     date: 'April 28, 2026',
     readingTime: '5 min',
     color: 'paper-yellow',
-    tags: ['change', 'systems', 'grief'],
+    tags: ['change', 'systems', 'grief', 'reflections', 'life'],
     excerpt:
       'Sometimes a breakdown is information. The form was never strong enough for reality.',
     seoDescription:
@@ -1996,7 +1991,7 @@ for line in sys.stdin:
     date: 'April 22, 2026',
     readingTime: '6 min',
     color: 'paper-coral',
-    tags: ['staff engineer', 'reliability', 'systems', 'mindset'],
+    tags: ['staff engineer', 'reliability', 'systems', 'mindset', 'reflections', 'leadership'],
     excerpt:
       'The most useful thing I picked up on the way to staff-level work was not a technology. It was five questions I now run in my head before anything ships.',
     seoDescription:
@@ -2036,7 +2031,7 @@ for line in sys.stdin:
     date: 'April 20, 2026',
     readingTime: '8 min',
     color: 'paper-blue',
-    tags: ['gdpr', 'privacy', 'data residency', 'architecture', 'backend'],
+    tags: ['gdpr', 'privacy', 'data residency', 'architecture', 'backend', 'ai governance', 'deep dive'],
     excerpt:
       'GDPR reads like a legal problem. In practice the hard parts are engineering decisions you make at the data layer — and they are only hard if you make them late.',
     seoDescription:
@@ -2076,7 +2071,7 @@ for line in sys.stdin:
     date: 'April 18, 2026',
     readingTime: '8 min',
     color: 'paper-yellow',
-    tags: ['llm', 'langchain', 'litellm', 'ragas', 'pipeline', 'backend'],
+    tags: ['llm', 'langchain', 'litellm', 'ragas', 'pipeline', 'backend', 'ai', 'architecture'],
     excerpt:
       'LangChain composes the steps, LiteLLM routes every call, RAGAS scores a sample of what comes out. Field notes on what each one actually earns its place doing.',
     seoDescription:
@@ -2116,7 +2111,7 @@ for line in sys.stdin:
     date: 'April 14, 2026',
     readingTime: '13 min',
     color: 'paper-blue',
-    tags: ['tool use', 'schemas', 'agents', 'reliability'],
+    tags: ['tool use', 'schemas', 'agents', 'reliability', 'ai', 'deep dive'],
     excerpt:
       'Most agent failures are not "the model is dumb." They are unclear tool descriptions, sloppy schemas, and error messages a model cannot act on.',
     seoDescription:
@@ -2208,7 +2203,7 @@ for line in sys.stdin:
     date: 'April 3, 2026',
     readingTime: '6 min',
     color: 'paper-yellow',
-    tags: ['identity', 'approval', 'change'],
+    tags: ['identity', 'approval', 'change', 'reflections', 'life'],
     excerpt:
       'Praise is not always freedom. Sometimes it fixes you in place.',
     seoDescription:
@@ -2248,7 +2243,7 @@ for line in sys.stdin:
     date: 'March 17, 2026',
     readingTime: '12 min',
     color: 'paper-coral',
-    tags: ['memory', 'agents', 'context'],
+    tags: ['memory', 'agents', 'context', 'ai', 'architecture', 'deep dive'],
     excerpt:
       'Files beat vector DBs more often than the conference talks suggest. A practical look at agent memory: what to store, what to forget, and what to never touch.',
     seoDescription:
@@ -2329,7 +2324,7 @@ User prefers terse responses with no trailing summaries.
     date: 'March 5, 2026',
     readingTime: '7 min',
     color: 'paper-blue',
-    tags: ['engineering', 'craft', 'work'],
+    tags: ['engineering', 'craft', 'work', 'reflections', 'leadership'],
     excerpt:
       'Engineering gets described as logic-heavy work, which is true and incomplete. Building systems is always human.',
     seoDescription:
@@ -2373,7 +2368,7 @@ User prefers terse responses with no trailing summaries.
     date: 'February 26, 2026',
     readingTime: '11 min',
     color: 'paper-blue',
-    tags: ['claude code', 'configuration', 'hooks'],
+    tags: ['claude code', 'configuration', 'hooks', 'ai'],
     excerpt:
       'The configuration surface most Claude Code users never look at. Permissions, hooks, slash commands, env, and the settings.json that quietly removes half your interruptions.',
     seoDescription:
@@ -2545,7 +2540,7 @@ You are about to open a PR for the current branch.
     date: 'February 18, 2026',
     readingTime: '6 min',
     color: 'paper-coral',
-    tags: ['vulnerability', 'honesty', 'feelings'],
+    tags: ['vulnerability', 'honesty', 'feelings', 'reflections', 'life'],
     excerpt:
       'People perform indifference to protect themselves from embarrassment. There is a different kind of peace on the other side.',
     seoDescription:
@@ -2589,7 +2584,7 @@ You are about to open a PR for the current branch.
     date: 'February 10, 2026',
     readingTime: '14 min',
     color: 'paper-coral',
-    tags: ['evals', 'python', 'tooling'],
+    tags: ['evals', 'python', 'tooling', 'ai'],
     excerpt:
       'You do not need a vendor. A dataset, a runner, a grader, a store, and a diff report — all in under 200 lines of Python — covers most of what you actually need.',
     seoDescription:
@@ -2769,7 +2764,7 @@ if __name__ == "__main__":
     date: 'January 22, 2026',
     readingTime: '10 min',
     color: 'paper-yellow',
-    tags: ['prompt caching', 'anthropic', 'performance'],
+    tags: ['prompt caching', 'anthropic', 'performance', 'ai', 'architecture', 'deep dive'],
     excerpt:
       '90% off the cached part. The trick is deciding what counts as cached, and not invalidating it by accident.',
     seoDescription:
@@ -2859,7 +2854,7 @@ print(resp.usage)  # check cache_creation_input_tokens vs cache_read_input_token
     date: 'January 14, 2026',
     readingTime: '6 min',
     color: 'paper-blue',
-    tags: ['systems', 'leadership', 'organizations'],
+    tags: ['systems', 'leadership', 'organizations', 'reflections'],
     excerpt:
       'Some systems survive on vagueness. Clarity, in those places, does not feel helpful. It feels threatening.',
     seoDescription:
@@ -2903,7 +2898,7 @@ print(resp.usage)  # check cache_creation_input_tokens vs cache_read_input_token
     date: 'January 6, 2026',
     readingTime: '10 min',
     color: 'paper-blue',
-    tags: ['context', 'performance', 'agents'],
+    tags: ['context', 'performance', 'agents', 'ai', 'architecture', 'deep dive'],
     excerpt:
       'A million tokens is a permission, not a recommendation. The latency, attention, and bug surface get worse the more you fill up.',
     seoDescription:
@@ -2952,7 +2947,7 @@ print(resp.usage)  # check cache_creation_input_tokens vs cache_read_input_token
     date: 'December 28, 2025',
     readingTime: '6 min',
     color: 'paper-yellow',
-    tags: ['work', 'reliability', 'identity'],
+    tags: ['work', 'reliability', 'identity', 'reflections', 'life'],
     excerpt:
       'Reliability becomes a personality trait others admire, and a private tax you keep paying.',
     seoDescription:
@@ -2996,7 +2991,7 @@ print(resp.usage)  # check cache_creation_input_tokens vs cache_read_input_token
     date: 'December 16, 2025',
     readingTime: '11 min',
     color: 'paper-yellow',
-    tags: ['subagents', 'parallelism', 'agents'],
+    tags: ['subagents', 'parallelism', 'agents', 'ai', 'architecture', 'deep dive'],
     excerpt:
       'A subagent is a coworker, not a thread. Treat it like one and your main context stops drowning in tool output it never needed to see.',
     seoDescription:
@@ -3063,7 +3058,7 @@ If you cannot answer (1) confidently, say so and stop. Do not guess.
     date: 'December 4, 2025',
     readingTime: '6 min',
     color: 'paper-coral',
-    tags: ['career', 'identity', 'change'],
+    tags: ['career', 'identity', 'change', 'reflections', 'life'],
     excerpt:
       'Competence creates a strange trap. The better you get at something, the more people send it your way.',
     seoDescription:
@@ -3107,7 +3102,7 @@ If you cannot answer (1) confidently, say so and stop. Do not guess.
     date: 'November 30, 2025',
     readingTime: '6 min',
     color: 'paper-blue',
-    tags: ['ambition', 'self-awareness', 'work'],
+    tags: ['ambition', 'self-awareness', 'work', 'reflections', 'life'],
     excerpt:
       'Pretending ambition is pure makes people worse at handling it. The cleaner we describe it, the less honestly we live it.',
     seoDescription:
@@ -3151,7 +3146,7 @@ If you cannot answer (1) confidently, say so and stop. Do not guess.
     date: 'November 25, 2025',
     readingTime: '13 min',
     color: 'paper-coral',
-    tags: ['plugins', 'skills', 'claude code', 'roundup'],
+    tags: ['plugins', 'skills', 'claude code', 'roundup', 'ai'],
     excerpt:
       'Twelve plugins and skills I have actually used past the demo stage. Each one earns its keep on a real codebase.',
     seoDescription:
@@ -3244,7 +3239,7 @@ description: Security review specifically tuned for this app — checks
     date: 'November 19, 2025',
     readingTime: '5 min',
     color: 'paper-yellow',
-    tags: ['humour', 'honesty', 'culture'],
+    tags: ['humour', 'honesty', 'culture', 'reflections'],
     excerpt:
       'Humour gets away with things seriousness cannot. That is why jokes survive where honest sentences get rejected.',
     seoDescription:
@@ -3288,7 +3283,7 @@ description: Security review specifically tuned for this app — checks
     date: 'November 11, 2025',
     readingTime: '12 min',
     color: 'paper-yellow',
-    tags: ['claude code', 'production', 'workflow'],
+    tags: ['claude code', 'production', 'workflow', 'ai'],
     excerpt:
       'Eight months of Claude Code on a real codebase. The boring habits that keep things from breaking on a Friday afternoon.',
     seoDescription:
@@ -3340,7 +3335,7 @@ description: Security review specifically tuned for this app — checks
     date: 'November 6, 2025',
     readingTime: '7 min',
     color: 'paper-coral',
-    tags: ['systems', 'organizations', 'leadership'],
+    tags: ['systems', 'organizations', 'leadership', 'reflections'],
     excerpt:
       'Failure usually arrives politely. By the time the real break happens, the system has been asking for help for months.',
     seoDescription:
@@ -3386,7 +3381,7 @@ description: Security review specifically tuned for this app — checks
     date: 'November 4, 2025',
     readingTime: '6 min',
     color: 'paper-blue',
-    tags: ['work', 'teams', 'psychology'],
+    tags: ['work', 'teams', 'psychology', 'reflections', 'leadership'],
     excerpt:
       'Every sprint has visible tasks and invisible tensions. The tickets show what the team is building. They rarely show what people are avoiding.',
     seoDescription:
@@ -3431,7 +3426,7 @@ description: Security review specifically tuned for this app — checks
     date: 'October 30, 2025',
     readingTime: '11 min',
     color: 'paper-blue',
-    tags: ['evals', 'quality', 'testing'],
+    tags: ['evals', 'quality', 'testing', 'ai', 'deep dive'],
     excerpt:
       'Aggregate scores are the comfort food of AI engineering. They will mislead you. The fix is small, slow, and worth it.',
     seoDescription:
@@ -3494,7 +3489,7 @@ description: Security review specifically tuned for this app — checks
     date: 'October 14, 2025',
     readingTime: '10 min',
     color: 'paper-yellow',
-    tags: ['claude code', 'skills', 'tutorial'],
+    tags: ['claude code', 'skills', 'tutorial', 'ai'],
     excerpt:
       'A skill is a recipe Claude reaches for when the situation matches. The hard part is the situation, not the recipe.',
     seoDescription:
@@ -3586,7 +3581,7 @@ description: |
     date: 'September 28, 2025',
     readingTime: '11 min',
     color: 'paper-coral',
-    tags: ['mcp', 'protocol', 'agents'],
+    tags: ['mcp', 'protocol', 'agents', 'ai', 'basics'],
     excerpt:
       'A short, plain-English explanation of MCP — what it is, what it is not, and when it is the right tool versus when you are reaching for it because it is fashionable.',
     seoDescription:
@@ -3679,7 +3674,7 @@ if __name__ == "__main__":
     date: 'September 9, 2025',
     readingTime: '11 min',
     color: 'paper-blue',
-    tags: ['prompt engineering', 'patterns', 'evals'],
+    tags: ['prompt engineering', 'patterns', 'evals', 'ai', 'deep dive'],
     excerpt:
       'Six patterns that consistently moved the needle on real evals — and three that sounded clever and did nothing.',
     seoDescription:
@@ -3752,7 +3747,7 @@ You are a code review assistant for the auth subsystem.
     date: 'August 18, 2025',
     readingTime: '12 min',
     color: 'paper-yellow',
-    tags: ['tokens', 'optimization', 'claude'],
+    tags: ['tokens', 'optimization', 'claude', 'ai'],
     excerpt:
       'Tokens are the only resource that quietly compounds. Twelve practical hacks that move the meter on real workloads.',
     seoDescription:
@@ -3829,6 +3824,7 @@ You are a code review assistant for the auth subsystem.
     date: 'March 30, 2022',
     excerpt:
       'favouritism /ˈfeɪv(ə)rɪtɪz(ə)m/ the practice of giving unfair preferential treatment to one person or group at the expense of another.',
+    tags: ['reflections', 'life', 'leadership'],
     intro:
       'There is little to no harm in having a favourite genre of music, TV series, favourite movie, and sports, amongst others. However, practicing it at other places like an institute, place of work or an organization can be catastrophic and can cause harm in harmless ways.\n\nThough, the bias may seem obvious at some places, the person practicing it can be conscious or unconscious about it being practiced and needs awareness and training to combat. In case of a conscious bias, the person is aware of the activity and have a calculate impact of the decisions that he/she is making. On the other hand, if the person is not aware that the decisions being made are in favour of some people and excluding the others, it can become very difficult to confront or call into question of the things being practiced.',
     sections: [
@@ -3854,6 +3850,7 @@ You are a code review assistant for the auth subsystem.
     date: 'July 10, 2020',
     excerpt:
       'Ever came across things that lure you into the thoughts of trying it out, but the risk is way too big?',
+    tags: ['reflections', 'life'],
     intro:
       'Ever came across things that lure you into the thoughts of trying it out, but the risk is way too big? We came across many things around our daily chores we feel like it is worth trying but anyway we ignore the bigger picture and unconsciously continue doing what we are doing. But deep inside there is that subconscious of inner mind that provides periodic intimation of trying that out.\n\nMore often, you will find people saying that this is not for you. Some will even shatter your hopes by giving examples of other people. They are not good. They are not bad either. The truth is they do not even know what you are up to. Yet they would advise you to keep away from that very thing.\n\nI am not asking to ignore those people, disrespect them nor I am telling you that you believe them blindly. I am asking you to open your eyes and see through your vision. Adding to that, also look who is speaking about what. A job professional should not advice on pursuing business just because the job offers security. A person in Technology should not portray views on Manufacturing Industry, and vice versa just because of the incomplete knowledge.',
     sections: [
@@ -3877,6 +3874,7 @@ You are a code review assistant for the auth subsystem.
     title: 'You are important, so are your needs!',
     type: 'personal',
     date: 'October 1, 2019',
+    tags: ['reflections', 'life'],
     excerpt:
       'No one was put on the planet to meet your needs! You weren\'t put on the planet to meet your father\'s, your mother\'s, your friend\'s, girlfriend\'s, or someone else\'s need.',
     intro:
@@ -3904,6 +3902,7 @@ You are a code review assistant for the auth subsystem.
     date: 'May 15, 2019',
     excerpt:
       'Hard work comes before success in the dictionary? Do you know what else comes before success? Failure.',
+    tags: ['reflections', 'life'],
     intro:
       'Failure has always been essential, rather an important ingredient in the process of cooking success and happiness. Positive cannot exist without the negative, they are two sides of the same coin. Some days it is on the positive side, other days it is on the negative. What actually matters is the overall value of the coin.',
     sections: [
@@ -3933,6 +3932,7 @@ You are a code review assistant for the auth subsystem.
     date: 'April 15, 2019',
     excerpt:
       'The more things you own, the more they own you.',
+    tags: ['reflections', 'life'],
     intro:
       'Black or White? I opt grey.\n\nLife in modern day is full of chaos. People are living with lots of stress. People are keen to add things to improve lifestyle. They are missing the most important part. Before adding something they\'re not clearing the mess created in the past and consequently add more and more things making it more cluttered.',
     sections: [
