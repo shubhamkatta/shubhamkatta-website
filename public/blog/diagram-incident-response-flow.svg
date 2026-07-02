@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 480" role="img" aria-label="AI incident response flow — from alert to resolution">
+  <rect width="1000" height="480" fill="#fff8ef"/>
+  <text x="40" y="40" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">AI incident response flow — from alert to resolution</text>
+  <text x="40" y="64" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">The blast radius assessment is the AI-specific step traditional runbooks miss.</text>
+
+  <!-- Row 1: Alert fires -->
+  <g transform="translate(40,90)">
+    <rect width="160" height="60" rx="14" fill="#ff6b6b" stroke="#1d1815" stroke-width="2"/>
+    <text x="80" y="28" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="#fff" letter-spacing="1">ALERT FIRES</text>
+    <text x="80" y="46" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" fill="rgba(255,255,255,0.8)">cost / quality / error</text>
+  </g>
+  <path d="M 200 120 L 240 120" stroke="#1d1815" stroke-width="2" marker-end="url(#irfArrow)"/>
+
+  <!-- Row 1: Triage -->
+  <g transform="translate(250,90)">
+    <rect width="200" height="60" rx="14" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/>
+    <text x="100" y="24" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="#1d1815" letter-spacing="1">TRIAGE (5 MIN)</text>
+    <text x="100" y="42" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.6)">active? affected? stoppable?</text>
+  </g>
+  <path d="M 450 120 L 490 120" stroke="#1d1815" stroke-width="2" marker-end="url(#irfArrow)"/>
+
+  <!-- Row 1: Blast radius -->
+  <g transform="translate(500,90)">
+    <rect width="220" height="60" rx="14" fill="#fff6db" stroke="#1d1815" stroke-width="2.5"/>
+    <text x="110" y="24" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="#1d1815" letter-spacing="1">BLAST RADIUS</text>
+    <text x="110" y="42" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.6)">query audit trail for scope</text>
+  </g>
+  <path d="M 720 120 L 760 120" stroke="#1d1815" stroke-width="2" marker-end="url(#irfArrow)"/>
+
+  <!-- Row 1: Classify -->
+  <g transform="translate(770,90)">
+    <rect width="170" height="60" rx="14" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/>
+    <text x="85" y="24" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="#1d1815" letter-spacing="1">CLASSIFY</text>
+    <text x="85" y="42" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.6)">S1 / S2 / S3 / S4</text>
+  </g>
+
+  <!-- Arrow down from Classify -->
+  <path d="M 855 150 L 855 190" stroke="#1d1815" stroke-width="2" marker-end="url(#irfArrow)"/>
+
+  <!-- Row 2: Mitigation options (branching) -->
+  <text x="40" y="185" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="rgba(29,24,21,0.4)" letter-spacing="2">MITIGATE</text>
+
+  <!-- Mitigation: Model rollback -->
+  <g transform="translate(40,200)">
+    <rect width="280" height="80" rx="14" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/>
+    <text x="16" y="24" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="#1d1815">model rollback</text>
+    <text x="16" y="44" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.6)">config[agent].current = last_known_good</text>
+    <text x="16" y="64" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.6)">no code deploy, immediate effect</text>
+  </g>
+
+  <!-- Mitigation: Fallback to deterministic -->
+  <g transform="translate(350,200)">
+    <rect width="280" height="80" rx="14" fill="#fff6db" stroke="#1d1815" stroke-width="2"/>
+    <text x="16" y="24" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="#1d1815">fallback-to-deterministic</text>
+    <text x="16" y="44" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.6)">feature_flag("ai_enrichment") = off</text>
+    <text x="16" y="64" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.6)">rule-based path, no model calls</text>
+  </g>
+
+  <!-- Mitigation: Disable agent -->
+  <g transform="translate(660,200)">
+    <rect width="280" height="80" rx="14" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/>
+    <text x="16" y="24" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="#1d1815">disable agent</text>
+    <text x="16" y="44" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.6)">agent_registry.disable(agent_id)</text>
+    <text x="16" y="64" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.6)">circuit breaker, full stop</text>
+  </g>
+
+  <!-- Arrows converging down -->
+  <path d="M 180 280 L 180 310 L 450 310 L 450 330" stroke="#1d1815" stroke-width="2" fill="none" marker-end="url(#irfArrow)"/>
+  <path d="M 490 280 L 490 310 L 450 310" stroke="#1d1815" stroke-width="2" fill="none"/>
+  <path d="M 800 280 L 800 310 L 450 310" stroke="#1d1815" stroke-width="2" fill="none"/>
+
+  <!-- Row 3: Communicate -->
+  <g transform="translate(290,340)">
+    <rect width="320" height="50" rx="14" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/>
+    <text x="160" y="22" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="#1d1815" letter-spacing="1">COMMUNICATE</text>
+    <text x="160" y="40" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.6)">internal -> legal (S1) -> external</text>
+  </g>
+  <path d="M 450 390 L 450 410" stroke="#1d1815" stroke-width="2" marker-end="url(#irfArrow)"/>
+
+  <!-- Row 4: Post-mortem -->
+  <g transform="translate(290,420)">
+    <rect width="320" height="44" rx="14" fill="#1d1815"/>
+    <text x="160" y="18" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="#fff" letter-spacing="1">POST-MORTEM</text>
+    <text x="160" y="36" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" fill="rgba(255,255,255,0.6)">root cause, timeline, prevention, runbook update</text>
+  </g>
+
+  <!-- Time annotation on the left -->
+  <g transform="translate(12,100)">
+    <line x1="0" y1="0" x2="0" y2="360" stroke="#1d1815" stroke-width="1.5" stroke-dasharray="4,4"/>
+    <text x="6" y="10" font-family="Inter, sans-serif" font-weight="700" font-size="9" fill="rgba(29,24,21,0.4)" transform="rotate(90 6 10)">TIME</text>
+  </g>
+
+  <defs>
+    <marker id="irfArrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1d1815"/></marker>
+  </defs>
+</svg>

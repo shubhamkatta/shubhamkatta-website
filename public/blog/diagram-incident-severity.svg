@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 480" role="img" aria-label="AI incident severity matrix — four levels with response requirements">
+  <rect width="1000" height="480" fill="#fff8ef"/>
+  <text x="40" y="40" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">AI incident severity matrix</text>
+  <text x="40" y="64" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">Traditional severity levels, extended for AI-specific failure modes.</text>
+
+  <!-- Column headers -->
+  <g transform="translate(40,86)">
+    <text x="0" y="0" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(29,24,21,0.4)" letter-spacing="2">SEVERITY</text>
+    <text x="170" y="0" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(29,24,21,0.4)" letter-spacing="2">EXAMPLES</text>
+    <text x="590" y="0" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(29,24,21,0.4)" letter-spacing="2">RESPONSE</text>
+    <text x="830" y="0" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(29,24,21,0.4)" letter-spacing="2">COMMS</text>
+  </g>
+
+  <!-- S1 — Critical -->
+  <g transform="translate(40,100)">
+    <rect width="920" height="80" rx="14" fill="#ff6b6b" stroke="#1d1815" stroke-width="2"/>
+    <!-- Badge -->
+    <g transform="translate(14,14)">
+      <rect width="120" height="30" rx="8" fill="#1d1815"/>
+      <text x="60" y="20" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="14" fill="#fff">S1 CRITICAL</text>
+    </g>
+    <text x="14" y="64" font-family="Inter, sans-serif" font-weight="600" font-size="11" fill="rgba(255,255,255,0.85)">all hands, immediate</text>
+    <!-- Examples -->
+    <g transform="translate(170,14)" font-family="ui-monospace, monospace" font-size="10" fill="#1d1815">
+      <text x="0" y="12">PII / credentials sent to model provider</text>
+      <text x="0" y="30">bad outputs acted upon by users</text>
+      <text x="0" y="48">policy engine bypassed</text>
+    </g>
+    <!-- Response -->
+    <g transform="translate(590,14)" font-family="Inter, sans-serif" font-size="11" fill="#1d1815">
+      <text x="0" y="12" font-weight="700">immediate mitigation</text>
+      <text x="0" y="30">disable agent + rollback</text>
+      <text x="0" y="48">war room activated</text>
+    </g>
+    <!-- Comms -->
+    <g transform="translate(830,14)" font-family="Inter, sans-serif" font-size="11" fill="#1d1815">
+      <text x="0" y="12" font-weight="700">external: hours</text>
+      <text x="0" y="30">legal: immediate</text>
+      <text x="0" y="48">internal: 15 min</text>
+    </g>
+  </g>
+
+  <!-- S2 — High -->
+  <g transform="translate(40,194)">
+    <rect width="920" height="80" rx="14" fill="#fff6db" stroke="#1d1815" stroke-width="2"/>
+    <g transform="translate(14,14)">
+      <rect width="92" height="30" rx="8" fill="#1d1815"/>
+      <text x="46" y="20" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="14" fill="#fff">S2 HIGH</text>
+    </g>
+    <text x="14" y="64" font-family="Inter, sans-serif" font-weight="600" font-size="11" fill="rgba(29,24,21,0.6)">on-call, 30 min</text>
+    <g transform="translate(170,14)" font-family="ui-monospace, monospace" font-size="10" fill="#1d1815">
+      <text x="0" y="12">quality degradation affecting users</text>
+      <text x="0" y="30">cost spike > 3x baseline</text>
+      <text x="0" y="48">agent outside permitted scope (caught)</text>
+    </g>
+    <g transform="translate(590,14)" font-family="Inter, sans-serif" font-size="11" fill="#1d1815">
+      <text x="0" y="12" font-weight="700">mitigate within 30 min</text>
+      <text x="0" y="30">model rollback or fallback</text>
+      <text x="0" y="48">investigate root cause</text>
+    </g>
+    <g transform="translate(830,14)" font-family="Inter, sans-serif" font-size="11" fill="#1d1815">
+      <text x="0" y="12" font-weight="700">internal: same day</text>
+      <text x="0" y="30">external: if needed</text>
+    </g>
+  </g>
+
+  <!-- S3 — Medium -->
+  <g transform="translate(40,288)">
+    <rect width="920" height="80" rx="14" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/>
+    <g transform="translate(14,14)">
+      <rect width="110" height="30" rx="8" fill="#1d1815"/>
+      <text x="55" y="20" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="14" fill="#fff">S3 MEDIUM</text>
+    </g>
+    <text x="14" y="64" font-family="Inter, sans-serif" font-weight="600" font-size="11" fill="rgba(29,24,21,0.6)">next business day</text>
+    <g transform="translate(170,14)" font-family="ui-monospace, monospace" font-size="10" fill="#1d1815">
+      <text x="0" y="12">elevated error rates from provider</text>
+      <text x="0" y="30">latency degradation, UX impact</text>
+      <text x="0" y="48">auto-fallback triggered, working</text>
+    </g>
+    <g transform="translate(590,14)" font-family="Inter, sans-serif" font-size="11" fill="#1d1815">
+      <text x="0" y="12" font-weight="700">monitor for escalation</text>
+      <text x="0" y="30">investigate next business day</text>
+      <text x="0" y="48">verify fallback quality</text>
+    </g>
+    <g transform="translate(830,14)" font-family="Inter, sans-serif" font-size="11" fill="#1d1815">
+      <text x="0" y="12" font-weight="700">internal: async</text>
+      <text x="0" y="30">Slack update</text>
+    </g>
+  </g>
+
+  <!-- S4 — Low -->
+  <g transform="translate(40,382)">
+    <rect width="920" height="80" rx="14" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/>
+    <g transform="translate(14,14)">
+      <rect width="82" height="30" rx="8" fill="#1d1815"/>
+      <text x="41" y="20" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="14" fill="#fff">S4 LOW</text>
+    </g>
+    <text x="14" y="64" font-family="Inter, sans-serif" font-weight="600" font-size="11" fill="rgba(29,24,21,0.6)">next sprint</text>
+    <g transform="translate(170,14)" font-family="ui-monospace, monospace" font-size="10" fill="#1d1815">
+      <text x="0" y="12">minor quality drift (eval-detected)</text>
+      <text x="0" y="30">cosmetic issues in AI output</text>
+      <text x="0" y="48">slight cost increase, within budget</text>
+    </g>
+    <g transform="translate(590,14)" font-family="Inter, sans-serif" font-size="11" fill="#1d1815">
+      <text x="0" y="12" font-weight="700">ticket, fix in sprint</text>
+      <text x="0" y="30">adjust eval thresholds</text>
+      <text x="0" y="48">update baselines</text>
+    </g>
+    <g transform="translate(830,14)" font-family="Inter, sans-serif" font-size="11" fill="#1d1815">
+      <text x="0" y="12" font-weight="700">none required</text>
+      <text x="0" y="30">internal tracking</text>
+    </g>
+  </g>
+
+  <defs>
+    <marker id="isvArrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1d1815"/></marker>
+  </defs>
+</svg>

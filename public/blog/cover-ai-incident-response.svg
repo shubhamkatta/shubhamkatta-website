@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="AI incident response: the runbook nobody writes until it's too late">
+  <rect width="1200" height="600" fill="#ff6b6b"/>
+  <rect x="520" y="24" width="200" height="18" rx="4" fill="#fff6db" opacity="0.7" transform="rotate(-1.5 620 33)"/>
+  <!-- Left card: runbook visual -->
+  <g transform="translate(70,70) rotate(-1.8)">
+    <rect width="480" height="440" rx="22" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <text x="24" y="38" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="rgba(29,24,21,0.45)" letter-spacing="2">INCIDENT RUNBOOK</text>
+    <!-- Alert icon -->
+    <g transform="translate(340,14)">
+      <rect width="100" height="28" rx="8" fill="#ff6b6b"/>
+      <text x="50" y="19" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="#fff" letter-spacing="1">ALERT</text>
+    </g>
+    <!-- Step 1: Triage -->
+    <g transform="translate(30,60)">
+      <rect width="420" height="52" rx="12" fill="#ffe9e4" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="16" y="22" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#1d1815">1. triage</text>
+      <text x="16" y="40" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.6)">is it active? who is affected? can we stop it?</text>
+    </g>
+    <path d="M 240 112 L 240 126" stroke="#1d1815" stroke-width="2" marker-end="url(#cir_ar)"/>
+    <!-- Step 2: Blast Radius -->
+    <g transform="translate(30,126)">
+      <rect width="420" height="52" rx="12" fill="#fff6db" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="16" y="22" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#1d1815">2. blast radius</text>
+      <text x="16" y="40" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.6)">bad outputs, downstream actions, data exposure</text>
+    </g>
+    <path d="M 240 178 L 240 192" stroke="#1d1815" stroke-width="2" marker-end="url(#cir_ar)"/>
+    <!-- Step 3: Mitigate -->
+    <g transform="translate(30,192)">
+      <rect width="420" height="52" rx="12" fill="#eaf7ff" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="16" y="22" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#1d1815">3. mitigate</text>
+      <text x="16" y="40" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.6)">model rollback | fallback-to-deterministic</text>
+    </g>
+    <path d="M 240 244 L 240 258" stroke="#1d1815" stroke-width="2" marker-end="url(#cir_ar)"/>
+    <!-- Step 4: Communicate -->
+    <g transform="translate(30,258)">
+      <rect width="420" height="52" rx="12" fill="#a3e4a3" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="16" y="22" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#1d1815">4. communicate</text>
+      <text x="16" y="40" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.6)">internal, legal, external — in that order</text>
+    </g>
+    <path d="M 240 310 L 240 324" stroke="#1d1815" stroke-width="2" marker-end="url(#cir_ar)"/>
+    <!-- Step 5: Post-mortem -->
+    <g transform="translate(30,324)">
+      <rect width="420" height="52" rx="12" fill="#1d1815"/>
+      <text x="16" y="22" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="#fff">5. post-mortem</text>
+      <text x="16" y="40" font-family="ui-monospace, monospace" font-size="11" fill="rgba(255,255,255,0.6)">root cause, timeline, prevention</text>
+    </g>
+    <!-- Severity badges -->
+    <g transform="translate(30,394)">
+      <rect width="80" height="24" rx="8" fill="#ff6b6b" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="40" y="16" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="#fff">S1 CRITICAL</text>
+    </g>
+    <g transform="translate(120,394)">
+      <rect width="62" height="24" rx="8" fill="#fff6db" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="31" y="16" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="#1d1815">S2 HIGH</text>
+    </g>
+    <g transform="translate(192,394)">
+      <rect width="74" height="24" rx="8" fill="#eaf7ff" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="37" y="16" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="#1d1815">S3 MEDIUM</text>
+    </g>
+    <g transform="translate(276,394)">
+      <rect width="60" height="24" rx="8" fill="#a3e4a3" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="30" y="16" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="#1d1815">S4 LOW</text>
+    </g>
+  </g>
+  <!-- Right side: title text -->
+  <g transform="translate(610,140)">
+    <text x="0" y="0" font-family="Inter, sans-serif" font-weight="900" font-size="50" fill="#1d1815" letter-spacing="-2">Incident</text>
+    <text x="0" y="60" font-family="Inter, sans-serif" font-weight="900" font-size="50" fill="#1d1815" letter-spacing="-2">response.</text>
+    <text x="0" y="130" font-family="Inter, sans-serif" font-weight="700" font-size="20" fill="#fff">the runbook nobody</text>
+    <text x="0" y="158" font-family="Inter, sans-serif" font-weight="700" font-size="20" fill="#fff">writes until it's too late.</text>
+    <text x="0" y="218" font-family="Inter, sans-serif" font-weight="500" font-size="14" fill="rgba(29,24,21,0.7)">blast radius, model rollback,</text>
+    <text x="0" y="238" font-family="Inter, sans-serif" font-weight="500" font-size="14" fill="rgba(29,24,21,0.7)">fallback-to-deterministic,</text>
+    <text x="0" y="258" font-family="Inter, sans-serif" font-weight="500" font-size="14" fill="rgba(29,24,21,0.7)">communication playbook.</text>
+  </g>
+  <!-- Small decorative rotated card top right -->
+  <g transform="translate(920,30) rotate(3)">
+    <rect width="180" height="40" rx="10" fill="#fff" opacity="0.9" stroke="#1d1815" stroke-width="1.5"/>
+    <text x="90" y="26" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">02:17 AM — PAGED</text>
+  </g>
+  <defs>
+    <marker id="cir_ar" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1d1815"/></marker>
+  </defs>
+</svg>
