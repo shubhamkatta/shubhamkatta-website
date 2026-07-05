@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 480" role="img" aria-label="Red-team CI pipeline: automated adversarial testing on every deploy">
+  <rect width="1000" height="480" fill="#fff8ef"/>
+  <text x="40" y="42" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">Red-team CI pipeline — adversarial probes on every deploy</text>
+  <text x="40" y="66" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">Runs after unit tests pass, before prod deploy. Blocks the pipeline if bypass rate exceeds threshold.</text>
+  <!-- Step 1: Code Push -->
+  <g transform="translate(40,96)">
+    <rect width="140" height="60" rx="14" fill="#eaf7ff" stroke="#1d1815" stroke-width="2.5"/>
+    <text x="16" y="24" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="rgba(29,24,21,0.45)" letter-spacing="2">TRIGGER</text>
+    <text x="16" y="46" font-family="Inter, sans-serif" font-weight="700" font-size="14" fill="#1d1815">git push / PR</text>
+  </g>
+  <path d="M 180 126 L 210 126" stroke="#1d1815" stroke-width="2" marker-end="url(#rtpl_ar)"/>
+  <!-- Step 2: Unit Tests -->
+  <g transform="translate(218,96)">
+    <rect width="130" height="60" rx="14" fill="#eaf7ff" stroke="#1d1815" stroke-width="2.5"/>
+    <text x="14" y="24" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="rgba(29,24,21,0.45)" letter-spacing="2">STAGE 1</text>
+    <text x="14" y="46" font-family="Inter, sans-serif" font-weight="700" font-size="14" fill="#1d1815">unit tests</text>
+  </g>
+  <path d="M 348 126 L 378 126" stroke="#1d1815" stroke-width="2" marker-end="url(#rtpl_ar)"/>
+  <!-- Step 3: Red-Team Suite (the big one) -->
+  <g transform="translate(386,82)">
+    <rect width="280" height="88" rx="14" fill="#ffe9e4" stroke="#ff6b6b" stroke-width="2.5"/>
+    <text x="16" y="24" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="#ff6b6b" letter-spacing="2">STAGE 2 — RED-TEAM SUITE</text>
+    <text x="16" y="48" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">run_probes(target, suite.yaml)</text>
+    <g transform="translate(16,58)" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.6)">
+      <text x="0" y="10">injection</text>
+      <text x="0" y="22">tool-abuse</text>
+      <text x="100" y="10">exfiltration</text>
+      <text x="100" y="22">priv-escalation</text>
+    </g>
+  </g>
+  <path d="M 666 126 L 696 126" stroke="#1d1815" stroke-width="2" marker-end="url(#rtpl_ar)"/>
+  <!-- Step 4: Gate -->
+  <g transform="translate(704,96)">
+    <rect width="130" height="60" rx="14" fill="#1d1815"/>
+    <text x="14" y="24" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="rgba(255,255,255,0.5)" letter-spacing="2">GATE</text>
+    <text x="14" y="46" font-family="ui-monospace, monospace" font-size="12" fill="#f6efe6">pass / fail</text>
+  </g>
+  <!-- Branch: pass -> deploy -->
+  <path d="M 834 110 L 880 110" stroke="#1d1815" stroke-width="2" marker-end="url(#rtpl_ar)"/>
+  <g transform="translate(888,90)">
+    <rect width="90" height="40" rx="10" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/>
+    <text x="45" y="26" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="14" fill="#1d1815">deploy</text>
+  </g>
+  <!-- Branch: fail -> block -->
+  <path d="M 769 156 L 769 186" stroke="#1d1815" stroke-width="2" marker-end="url(#rtpl_ar)"/>
+  <g transform="translate(714,194)">
+    <rect width="110" height="40" rx="10" fill="#ff6b6b" stroke="#1d1815" stroke-width="2"/>
+    <text x="55" y="26" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="14" fill="#fff">blocked</text>
+  </g>
+  <!-- Horizontal divider -->
+  <line x1="40" y1="260" x2="960" y2="260" stroke="rgba(29,24,21,0.12)" stroke-width="1.5"/>
+  <!-- Suite config detail -->
+  <text x="40" y="290" font-family="Inter, sans-serif" font-weight="900" font-size="14" fill="#1d1815">Suite configuration (suite.yaml)</text>
+  <!-- Config boxes row -->
+  <g transform="translate(40,306)">
+    <rect width="210" height="130" rx="12" fill="#fff6db" stroke="#1d1815" stroke-width="2"/>
+    <text x="14" y="24" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="rgba(29,24,21,0.45)" letter-spacing="2">PROBE REGISTRY</text>
+    <g font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">
+      <text x="14" y="48">injection_direct: 40</text>
+      <text x="14" y="64">injection_indirect: 30</text>
+      <text x="14" y="80">tool_chain: 25</text>
+      <text x="14" y="96">exfil_system: 20</text>
+      <text x="14" y="112">priv_escalate: 15</text>
+    </g>
+  </g>
+  <g transform="translate(280,306)">
+    <rect width="210" height="130" rx="12" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/>
+    <text x="14" y="24" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="rgba(29,24,21,0.45)" letter-spacing="2">THRESHOLDS</text>
+    <g font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">
+      <text x="14" y="48">max_bypass_rate: 5%</text>
+      <text x="14" y="64">max_critical: 0</text>
+      <text x="14" y="80">max_high: 2</text>
+      <text x="14" y="96">timeout_per_probe: 30s</text>
+      <text x="14" y="112">total_timeout: 10m</text>
+    </g>
+  </g>
+  <g transform="translate(520,306)">
+    <rect width="210" height="130" rx="12" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/>
+    <text x="14" y="24" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="rgba(29,24,21,0.45)" letter-spacing="2">OUTPUT</text>
+    <g font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">
+      <text x="14" y="48">report.json</text>
+      <text x="14" y="64">bypass_log.jsonl</text>
+      <text x="14" y="80">severity_breakdown</text>
+      <text x="14" y="96">diff vs last run</text>
+      <text x="14" y="112">trend chart data</text>
+    </g>
+  </g>
+  <g transform="translate(760,306)">
+    <rect width="200" height="130" rx="12" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/>
+    <text x="14" y="24" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="rgba(29,24,21,0.45)" letter-spacing="2">NOTIFICATIONS</text>
+    <g font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">
+      <text x="14" y="48">slack: #ai-security</text>
+      <text x="14" y="64">pr_comment: summary</text>
+      <text x="14" y="80">dashboard: push</text>
+      <text x="14" y="96">on_critical: page</text>
+      <text x="14" y="112">weekly: digest email</text>
+    </g>
+  </g>
+  <!-- Caption -->
+  <text x="40" y="464" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">The suite runs 130 probes in under 10 minutes. Critical bypasses block the deploy. High-severity findings get a PR comment. Everything gets logged.</text>
+  <defs>
+    <marker id="rtpl_ar" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1d1815"/></marker>
+  </defs>
+</svg>

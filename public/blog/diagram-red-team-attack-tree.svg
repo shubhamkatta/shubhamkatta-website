@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 480" role="img" aria-label="Red-team attack taxonomy: four categories of adversarial probes against AI systems">
+  <rect width="1000" height="480" fill="#fff8ef"/>
+  <text x="40" y="42" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">Red-team attack taxonomy — the four categories that matter</text>
+  <text x="40" y="66" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">Each category targets a different failure surface. Test all four or you have blind spots.</text>
+  <!-- Root node -->
+  <g transform="translate(380,86)">
+    <rect width="240" height="44" rx="12" fill="#1d1815"/>
+    <text x="120" y="18" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(255,255,255,0.5)" letter-spacing="2">RED-TEAM SUITE</text>
+    <text x="120" y="36" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" fill="#f6efe6">run_all_probes(target)</text>
+  </g>
+  <!-- Arrows from root to four categories -->
+  <g stroke="#1d1815" stroke-width="2" marker-end="url(#rtat_ar)">
+    <path d="M 430 130 L 160 162"/>
+    <path d="M 475 130 L 370 162"/>
+    <path d="M 525 130 L 620 162"/>
+    <path d="M 570 130 L 840 162"/>
+  </g>
+  <!-- Category 1: Prompt Injection -->
+  <g transform="translate(40,166)">
+    <rect width="240" height="50" rx="14" fill="#ffe9e4" stroke="#1d1815" stroke-width="2.5"/>
+    <text x="16" y="22" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(29,24,21,0.45)" letter-spacing="2">1. PROMPT INJECTION</text>
+    <text x="16" y="40" font-family="Inter, sans-serif" font-weight="700" font-size="13" fill="#1d1815">override the system prompt</text>
+  </g>
+  <!-- Sub-items for category 1 -->
+  <g stroke="#1d1815" stroke-width="1.5" marker-end="url(#rtat_ar)">
+    <path d="M 100 216 L 100 234"/>
+  </g>
+  <g transform="translate(28,238)" font-family="ui-monospace, monospace" font-size="10" fill="#1d1815">
+    <g><rect width="190" height="24" rx="7" fill="#fff" stroke="#1d1815" stroke-width="1.5"/><text x="10" y="16">direct: "ignore above"</text></g>
+    <g transform="translate(0,30)"><rect width="190" height="24" rx="7" fill="#fff" stroke="#1d1815" stroke-width="1.5"/><text x="10" y="16">indirect: user-data payload</text></g>
+    <g transform="translate(0,60)"><rect width="190" height="24" rx="7" fill="#fff" stroke="#1d1815" stroke-width="1.5"/><text x="10" y="16">context: doc-embedded cmds</text></g>
+    <g transform="translate(0,90)"><rect width="190" height="24" rx="7" fill="#fff" stroke="#1d1815" stroke-width="1.5"/><text x="10" y="16">multilingual: lang-switch</text></g>
+  </g>
+  <!-- Category 2: Tool Abuse -->
+  <g transform="translate(280,166)">
+    <rect width="200" height="50" rx="14" fill="#eaf7ff" stroke="#1d1815" stroke-width="2.5"/>
+    <text x="16" y="22" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(29,24,21,0.45)" letter-spacing="2">2. TOOL ABUSE</text>
+    <text x="16" y="40" font-family="Inter, sans-serif" font-weight="700" font-size="13" fill="#1d1815">misuse allowed actions</text>
+  </g>
+  <g stroke="#1d1815" stroke-width="1.5" marker-end="url(#rtat_ar)">
+    <path d="M 370 216 L 370 234"/>
+  </g>
+  <g transform="translate(278,238)" font-family="ui-monospace, monospace" font-size="10" fill="#1d1815">
+    <g><rect width="190" height="24" rx="7" fill="#fff" stroke="#1d1815" stroke-width="1.5"/><text x="10" y="16">chained calls: A then B</text></g>
+    <g transform="translate(0,30)"><rect width="190" height="24" rx="7" fill="#fff" stroke="#1d1815" stroke-width="1.5"/><text x="10" y="16">param stuffing: SQL in arg</text></g>
+    <g transform="translate(0,60)"><rect width="190" height="24" rx="7" fill="#fff" stroke="#1d1815" stroke-width="1.5"/><text x="10" y="16">scope escape: cross-tenant</text></g>
+    <g transform="translate(0,90)"><rect width="190" height="24" rx="7" fill="#fff" stroke="#1d1815" stroke-width="1.5"/><text x="10" y="16">volume: 1000x retry loop</text></g>
+  </g>
+  <!-- Category 3: Data Exfiltration -->
+  <g transform="translate(530,166)">
+    <rect width="210" height="50" rx="14" fill="#fff6db" stroke="#1d1815" stroke-width="2.5"/>
+    <text x="16" y="22" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(29,24,21,0.45)" letter-spacing="2">3. DATA EXFILTRATION</text>
+    <text x="16" y="40" font-family="Inter, sans-serif" font-weight="700" font-size="13" fill="#1d1815">extract what should stay in</text>
+  </g>
+  <g stroke="#1d1815" stroke-width="1.5" marker-end="url(#rtat_ar)">
+    <path d="M 630 216 L 630 234"/>
+  </g>
+  <g transform="translate(538,238)" font-family="ui-monospace, monospace" font-size="10" fill="#1d1815">
+    <g><rect width="190" height="24" rx="7" fill="#fff" stroke="#1d1815" stroke-width="1.5"/><text x="10" y="16">system prompt extraction</text></g>
+    <g transform="translate(0,30)"><rect width="190" height="24" rx="7" fill="#fff" stroke="#1d1815" stroke-width="1.5"/><text x="10" y="16">PII leak via summarize</text></g>
+    <g transform="translate(0,60)"><rect width="190" height="24" rx="7" fill="#fff" stroke="#1d1815" stroke-width="1.5"/><text x="10" y="16">training data regurgitate</text></g>
+    <g transform="translate(0,90)"><rect width="190" height="24" rx="7" fill="#fff" stroke="#1d1815" stroke-width="1.5"/><text x="10" y="16">cross-context bleed</text></g>
+  </g>
+  <!-- Category 4: Privilege Escalation -->
+  <g transform="translate(760,166)">
+    <rect width="210" height="50" rx="14" fill="#a3e4a3" stroke="#1d1815" stroke-width="2.5"/>
+    <text x="16" y="22" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(29,24,21,0.45)" letter-spacing="2">4. PRIV ESCALATION</text>
+    <text x="16" y="40" font-family="Inter, sans-serif" font-weight="700" font-size="13" fill="#1d1815">do more than allowed</text>
+  </g>
+  <g stroke="#1d1815" stroke-width="1.5" marker-end="url(#rtat_ar)">
+    <path d="M 860 216 L 860 234"/>
+  </g>
+  <g transform="translate(768,238)" font-family="ui-monospace, monospace" font-size="10" fill="#1d1815">
+    <g><rect width="190" height="24" rx="7" fill="#fff" stroke="#1d1815" stroke-width="1.5"/><text x="10" y="16">role confusion: "I'm admin"</text></g>
+    <g transform="translate(0,30)"><rect width="190" height="24" rx="7" fill="#fff" stroke="#1d1815" stroke-width="1.5"/><text x="10" y="16">tool-chain to write access</text></g>
+    <g transform="translate(0,60)"><rect width="190" height="24" rx="7" fill="#fff" stroke="#1d1815" stroke-width="1.5"/><text x="10" y="16">approval bypass: fake ctx</text></g>
+    <g transform="translate(0,90)"><rect width="190" height="24" rx="7" fill="#fff" stroke="#1d1815" stroke-width="1.5"/><text x="10" y="16">system-prompt override</text></g>
+  </g>
+  <!-- Bottom caption -->
+  <text x="40" y="462" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">Start with prompt injection (most common), then tool abuse (most damaging). Data exfiltration and privilege escalation are where the serious failures hide.</text>
+  <defs>
+    <marker id="rtat_ar" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1d1815"/></marker>
+  </defs>
+</svg>
