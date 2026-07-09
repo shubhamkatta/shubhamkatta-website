@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 480" role="img" aria-label="EU AI Act risk tiers: unacceptable, high-risk, limited risk, and minimal risk">
+  <rect width="1000" height="480" fill="#fff8ef"/>
+  <text x="40" y="40" font-family="Inter, sans-serif" font-weight="900" font-size="18" fill="#1d1815">EU AI Act risk tiers — what triggers requirements</text>
+  <text x="40" y="62" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.55)">higher risk = heavier requirements. most production AI lands in high-risk or limited risk.</text>
+
+  <!-- Risk pyramid / stacked tiers -->
+  <g font-family="Inter, sans-serif">
+
+    <!-- Tier 1: Unacceptable (top, smallest) -->
+    <g transform="translate(60,90)">
+      <rect width="880" height="70" rx="16" fill="#ff6b6b" stroke="#1d1815" stroke-width="2"/>
+      <text x="24" y="28" font-weight="900" font-size="15" fill="#fff">UNACCEPTABLE RISK</text>
+      <text x="280" y="28" font-weight="700" font-size="13" fill="rgba(255,255,255,0.85)">BANNED</text>
+      <text x="24" y="50" font-size="12" fill="rgba(255,255,255,0.8)">social scoring, real-time biometric surveillance, manipulation of vulnerable groups</text>
+      <g transform="translate(760,16)">
+        <rect width="100" height="38" rx="8" fill="rgba(255,255,255,0.2)"/>
+        <text x="50" y="16" text-anchor="middle" font-weight="800" font-size="10" fill="#fff" letter-spacing="1">PENALTY</text>
+        <text x="50" y="32" text-anchor="middle" font-weight="700" font-size="12" fill="#fff">up to 7%</text>
+      </g>
+    </g>
+
+    <!-- Tier 2: High-risk -->
+    <g transform="translate(60,174)">
+      <rect width="880" height="140" rx="16" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+      <rect width="880" height="140" rx="16" fill="rgba(255,107,107,0.08)"/>
+      <text x="24" y="28" font-weight="900" font-size="15" fill="#1d1815">HIGH-RISK</text>
+      <text x="170" y="28" font-weight="700" font-size="13" fill="#ff6b6b">FULL REQUIREMENTS</text>
+      <text x="24" y="52" font-size="12" fill="rgba(29,24,21,0.7)">employment decisions, credit scoring, law enforcement, critical infrastructure, education access,</text>
+      <text x="24" y="70" font-size="12" fill="rgba(29,24,21,0.7)">safety components of regulated products (medical devices, transport, machinery)</text>
+
+      <!-- Requirements grid -->
+      <g transform="translate(24,86)" font-size="11">
+        <g>
+          <rect width="126" height="34" rx="8" fill="#fff6db" stroke="#1d1815" stroke-width="1.2"/>
+          <text x="10" y="14" font-weight="700" fill="#1d1815">Art. 9</text>
+          <text x="10" y="28" fill="rgba(29,24,21,0.6)">risk management</text>
+        </g>
+        <g transform="translate(138,0)">
+          <rect width="126" height="34" rx="8" fill="#fff6db" stroke="#1d1815" stroke-width="1.2"/>
+          <text x="10" y="14" font-weight="700" fill="#1d1815">Art. 10</text>
+          <text x="10" y="28" fill="rgba(29,24,21,0.6)">data governance</text>
+        </g>
+        <g transform="translate(276,0)">
+          <rect width="126" height="34" rx="8" fill="#fff6db" stroke="#1d1815" stroke-width="1.2"/>
+          <text x="10" y="14" font-weight="700" fill="#1d1815">Art. 12</text>
+          <text x="10" y="28" fill="rgba(29,24,21,0.6)">record-keeping</text>
+        </g>
+        <g transform="translate(414,0)">
+          <rect width="126" height="34" rx="8" fill="#fff6db" stroke="#1d1815" stroke-width="1.2"/>
+          <text x="10" y="14" font-weight="700" fill="#1d1815">Art. 13</text>
+          <text x="10" y="28" fill="rgba(29,24,21,0.6)">transparency</text>
+        </g>
+        <g transform="translate(552,0)">
+          <rect width="126" height="34" rx="8" fill="#fff6db" stroke="#1d1815" stroke-width="1.2"/>
+          <text x="10" y="14" font-weight="700" fill="#1d1815">Art. 14</text>
+          <text x="10" y="28" fill="rgba(29,24,21,0.6)">human oversight</text>
+        </g>
+        <g transform="translate(690,0)">
+          <rect width="126" height="34" rx="8" fill="#fff6db" stroke="#1d1815" stroke-width="1.2"/>
+          <text x="10" y="14" font-weight="700" fill="#1d1815">Art. 15</text>
+          <text x="10" y="28" fill="rgba(29,24,21,0.6)">accuracy</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- Tier 3: Limited risk -->
+    <g transform="translate(60,328)">
+      <rect width="880" height="60" rx="16" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/>
+      <text x="24" y="26" font-weight="900" font-size="15" fill="#1d1815">LIMITED RISK</text>
+      <text x="200" y="26" font-weight="700" font-size="13" fill="rgba(29,24,21,0.55)">TRANSPARENCY ONLY</text>
+      <text x="24" y="46" font-size="12" fill="rgba(29,24,21,0.7)">chatbots must disclose AI, deepfakes must be labeled, emotion recognition must notify users</text>
+    </g>
+
+    <!-- Tier 4: Minimal risk -->
+    <g transform="translate(60,402)">
+      <rect width="880" height="54" rx="16" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/>
+      <text x="24" y="24" font-weight="900" font-size="15" fill="#1d1815">MINIMAL RISK</text>
+      <text x="200" y="24" font-weight="700" font-size="13" fill="rgba(29,24,21,0.55)">NO REQUIREMENTS</text>
+      <text x="24" y="42" font-size="12" fill="rgba(29,24,21,0.7)">spam filters, AI in games, internal productivity tools — explicitly permitted without regulation</text>
+    </g>
+  </g>
+
+  <!-- Side annotation: arrow showing increasing regulation -->
+  <g transform="translate(960,90)">
+    <line x1="14" y1="10" x2="14" y2="360" stroke="#1d1815" stroke-width="1.5" marker-start="url(#tierUp)"/>
+    <text x="14" y="190" font-family="Inter, sans-serif" font-weight="800" font-size="10" fill="rgba(29,24,21,0.45)" letter-spacing="1" transform="rotate(-90 14 190)">INCREASING REGULATION</text>
+  </g>
+
+  <defs>
+    <marker id="tierUp" markerWidth="10" markerHeight="10" refX="5" refY="8" orient="auto"><path d="M0,8 L5,2 L10,8 Z" fill="#1d1815"/></marker>
+  </defs>
+</svg>

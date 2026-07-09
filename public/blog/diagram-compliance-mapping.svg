@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 480" role="img" aria-label="Mapping technical controls to EU AI Act articles, NIST AI RMF functions, and ISO 42001 clauses">
+  <rect width="1000" height="480" fill="#fff8ef"/>
+  <text x="40" y="40" font-family="Inter, sans-serif" font-weight="900" font-size="18" fill="#1d1815">Controls to frameworks — the compliance map</text>
+  <text x="40" y="62" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.55)">each technical control satisfies requirements across multiple frameworks simultaneously</text>
+
+  <defs>
+    <marker id="cmar1" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1d1815"/></marker>
+  </defs>
+
+  <!-- Left column: Controls -->
+  <g font-family="Inter, sans-serif">
+    <!-- Audit trail -->
+    <g transform="translate(40,90)">
+      <rect width="180" height="80" rx="14" fill="#fff6db" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="24" font-weight="800" font-size="13" fill="#1d1815">audit trail</text>
+      <text x="14" y="44" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.6)">events, hashing,</text>
+      <text x="14" y="58" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.6)">immutable store</text>
+    </g>
+
+    <!-- Policy engine -->
+    <g transform="translate(40,200)">
+      <rect width="180" height="80" rx="14" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="24" font-weight="800" font-size="13" fill="#1d1815">policy engine</text>
+      <text x="14" y="44" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.6)">versioned rules,</text>
+      <text x="14" y="58" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.6)">allow/deny, HITL</text>
+    </g>
+
+    <!-- Observability -->
+    <g transform="translate(40,310)">
+      <rect width="180" height="80" rx="14" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="24" font-weight="800" font-size="13" fill="#1d1815">observability</text>
+      <text x="14" y="44" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.6)">metrics, alerts,</text>
+      <text x="14" y="58" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.6)">dashboards</text>
+    </g>
+  </g>
+
+  <!-- Middle column: EU AI Act -->
+  <g font-family="Inter, sans-serif">
+    <text x="310" y="86" font-weight="900" font-size="11" fill="rgba(29,24,21,0.55)" letter-spacing="2">EU AI ACT</text>
+    <g transform="translate(310,96)">
+      <rect width="160" height="36" rx="8" fill="#eaf7ff" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="10" y="16" font-weight="700" font-size="11" fill="#1d1815">Art. 12</text>
+      <text x="80" y="16" font-size="10" fill="rgba(29,24,21,0.6)">Record-keeping</text>
+    </g>
+    <g transform="translate(310,140)">
+      <rect width="160" height="36" rx="8" fill="#eaf7ff" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="10" y="16" font-weight="700" font-size="11" fill="#1d1815">Art. 20</text>
+      <text x="80" y="16" font-size="10" fill="rgba(29,24,21,0.6)">Auto logs</text>
+    </g>
+    <g transform="translate(310,196)">
+      <rect width="160" height="36" rx="8" fill="#ffe9e4" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="10" y="16" font-weight="700" font-size="11" fill="#1d1815">Art. 9</text>
+      <text x="80" y="16" font-size="10" fill="rgba(29,24,21,0.6)">Risk mgmt</text>
+    </g>
+    <g transform="translate(310,240)">
+      <rect width="160" height="36" rx="8" fill="#ffe9e4" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="10" y="16" font-weight="700" font-size="11" fill="#1d1815">Art. 14</text>
+      <text x="80" y="16" font-size="10" fill="rgba(29,24,21,0.6)">Human oversight</text>
+    </g>
+    <g transform="translate(310,296)">
+      <rect width="160" height="36" rx="8" fill="#a3e4a3" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="10" y="16" font-weight="700" font-size="11" fill="#1d1815">Art. 9(2)(a)</text>
+      <text x="94" y="16" font-size="10" fill="rgba(29,24,21,0.6)">Risk ID</text>
+    </g>
+    <g transform="translate(310,340)">
+      <rect width="160" height="36" rx="8" fill="#a3e4a3" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="10" y="16" font-weight="700" font-size="11" fill="#1d1815">Art. 72</text>
+      <text x="80" y="16" font-size="10" fill="rgba(29,24,21,0.6)">Post-market</text>
+    </g>
+  </g>
+
+  <!-- Right-middle column: NIST AI RMF -->
+  <g font-family="Inter, sans-serif">
+    <text x="550" y="86" font-weight="900" font-size="11" fill="rgba(29,24,21,0.55)" letter-spacing="2">NIST AI RMF</text>
+    <g transform="translate(550,96)">
+      <rect width="170" height="36" rx="8" fill="#eaf7ff" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="10" y="16" font-weight="700" font-size="11" fill="#1d1815">Measure 2.6</text>
+      <text x="100" y="16" font-size="10" fill="rgba(29,24,21,0.6)">Perf docs</text>
+    </g>
+    <g transform="translate(550,196)">
+      <rect width="170" height="36" rx="8" fill="#ffe9e4" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="10" y="16" font-weight="700" font-size="11" fill="#1d1815">Govern 1.1</text>
+      <text x="100" y="16" font-size="10" fill="rgba(29,24,21,0.6)">Legal reqs</text>
+    </g>
+    <g transform="translate(550,296)">
+      <rect width="170" height="36" rx="8" fill="#a3e4a3" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="10" y="16" font-weight="700" font-size="11" fill="#1d1815">Measure 1.1</text>
+      <text x="104" y="16" font-size="10" fill="rgba(29,24,21,0.6)">Metrics</text>
+    </g>
+  </g>
+
+  <!-- Far right column: ISO 42001 -->
+  <g font-family="Inter, sans-serif">
+    <text x="800" y="86" font-weight="900" font-size="11" fill="rgba(29,24,21,0.55)" letter-spacing="2">ISO 42001</text>
+    <g transform="translate(800,96)">
+      <rect width="160" height="36" rx="8" fill="#eaf7ff" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="10" y="16" font-weight="700" font-size="11" fill="#1d1815">Clause 9.1</text>
+      <text x="90" y="16" font-size="10" fill="rgba(29,24,21,0.6)">Monitoring</text>
+    </g>
+    <g transform="translate(800,196)">
+      <rect width="160" height="36" rx="8" fill="#ffe9e4" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="10" y="16" font-weight="700" font-size="11" fill="#1d1815">Clause 6.1</text>
+      <text x="90" y="16" font-size="10" fill="rgba(29,24,21,0.6)">Risk actions</text>
+    </g>
+    <g transform="translate(800,296)">
+      <rect width="160" height="36" rx="8" fill="#a3e4a3" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="10" y="16" font-weight="700" font-size="11" fill="#1d1815">Clause 10.1</text>
+      <text x="100" y="16" font-size="10" fill="rgba(29,24,21,0.6)">Improve</text>
+    </g>
+  </g>
+
+  <!-- Arrows: Controls to EU AI Act -->
+  <g stroke="#1d1815" stroke-width="1.5" fill="none">
+    <!-- Audit trail arrows -->
+    <path d="M 220 120 L 308 114" marker-end="url(#cmar1)"/>
+    <path d="M 220 140 L 308 158" marker-end="url(#cmar1)"/>
+    <!-- Policy engine arrows -->
+    <path d="M 220 230 L 308 214" marker-end="url(#cmar1)"/>
+    <path d="M 220 250 L 308 258" marker-end="url(#cmar1)"/>
+    <!-- Observability arrows -->
+    <path d="M 220 340 L 308 314" marker-end="url(#cmar1)"/>
+    <path d="M 220 360 L 308 358" marker-end="url(#cmar1)"/>
+  </g>
+
+  <!-- Arrows: Controls to NIST -->
+  <g stroke="rgba(29,24,21,0.35)" stroke-width="1.2" fill="none" stroke-dasharray="4,3">
+    <path d="M 220 130 C 350 130 420 114 548 114" marker-end="url(#cmar1)"/>
+    <path d="M 220 240 C 350 240 420 214 548 214" marker-end="url(#cmar1)"/>
+    <path d="M 220 350 C 350 350 420 314 548 314" marker-end="url(#cmar1)"/>
+  </g>
+
+  <!-- Arrows: Controls to ISO -->
+  <g stroke="rgba(29,24,21,0.25)" stroke-width="1" fill="none" stroke-dasharray="3,4">
+    <path d="M 220 125 C 400 90 600 100 798 114" marker-end="url(#cmar1)"/>
+    <path d="M 220 245 C 400 210 600 210 798 214" marker-end="url(#cmar1)"/>
+    <path d="M 220 355 C 400 330 600 320 798 314" marker-end="url(#cmar1)"/>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(40,430)" font-family="Inter, sans-serif" font-size="11" fill="rgba(29,24,21,0.5)">
+    <line x1="0" y1="8" x2="24" y2="8" stroke="#1d1815" stroke-width="1.5"/>
+    <text x="30" y="12">direct mapping</text>
+    <line x1="140" y1="8" x2="164" y2="8" stroke="rgba(29,24,21,0.35)" stroke-width="1.2" stroke-dasharray="4,3"/>
+    <text x="170" y="12">cross-framework</text>
+    <rect x="310" y="0" width="14" height="14" rx="3" fill="#fff6db" stroke="#1d1815" stroke-width="1"/>
+    <text x="330" y="12">audit trail</text>
+    <rect x="410" y="0" width="14" height="14" rx="3" fill="#ffe9e4" stroke="#1d1815" stroke-width="1"/>
+    <text x="430" y="12">policy engine</text>
+    <rect x="530" y="0" width="14" height="14" rx="3" fill="#a3e4a3" stroke="#1d1815" stroke-width="1"/>
+    <text x="550" y="12">observability</text>
+  </g>
+</svg>
