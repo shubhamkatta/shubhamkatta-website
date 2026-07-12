@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 480" role="img" aria-label="HITL approval flow: agent request through risk assessment to sync, async, or auto-approve paths">
+  <rect width="1000" height="480" fill="#fff8ef"/>
+  <text x="40" y="40" font-family="Inter, sans-serif" font-weight="900" font-size="18" fill="#1d1815">The approval router: one request, three possible paths</text>
+  <text x="40" y="62" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.55)">every agent action enters on the left. risk assessment decides which path it takes. no action skips the gate.</text>
+
+  <g font-family="Inter, sans-serif">
+    <!-- Agent Request -->
+    <g transform="translate(40, 100)">
+      <rect width="130" height="100" rx="14" fill="#1d1815"/>
+      <text x="65" y="38" text-anchor="middle" font-weight="900" font-size="11" fill="rgba(255,255,255,0.5)" letter-spacing="1.5">AGENT</text>
+      <text x="65" y="58" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" fill="#f6efe6">proposed</text>
+      <text x="65" y="74" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" fill="#f6efe6">action</text>
+    </g>
+    <path d="M 170 150 L 218 150" stroke="#1d1815" stroke-width="2" marker-end="url(#dhaf_ar)"/>
+
+    <!-- Risk Assessment -->
+    <g transform="translate(228, 96)">
+      <rect width="160" height="108" rx="14" fill="#fff6db" stroke="#1d1815" stroke-width="2"/>
+      <text x="80" y="28" text-anchor="middle" font-weight="900" font-size="11" fill="rgba(29,24,21,0.5)" letter-spacing="1.5">RISK ASSESSMENT</text>
+      <text x="80" y="50" text-anchor="middle" font-size="11" fill="#1d1815" font-weight="600">tool type</text>
+      <text x="80" y="66" text-anchor="middle" font-size="11" fill="#1d1815" font-weight="600">data sensitivity</text>
+      <text x="80" y="82" text-anchor="middle" font-size="11" fill="#1d1815" font-weight="600">reversibility</text>
+      <text x="80" y="98" text-anchor="middle" font-size="11" fill="#1d1815" font-weight="600">blast radius</text>
+    </g>
+
+    <!-- Three paths branching from risk assessment -->
+    <!-- Path 1: High risk → Sync approval (top) -->
+    <path d="M 388 120 L 470 120 L 470 90" stroke="#ff6b6b" stroke-width="2" fill="none" marker-end="url(#dhaf_ar_red)"/>
+    <path d="M 470 90 L 470 80 L 500 80" stroke="#ff6b6b" stroke-width="2" fill="none" marker-end="url(#dhaf_ar_red)"/>
+
+    <g transform="translate(510, 44)">
+      <rect width="200" height="72" rx="12" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/>
+      <text x="100" y="22" text-anchor="middle" font-weight="900" font-size="11" fill="rgba(29,24,21,0.5)" letter-spacing="1.5">SYNC APPROVAL</text>
+      <text x="100" y="42" text-anchor="middle" font-size="11" fill="#1d1815" font-weight="600">agent blocks until human</text>
+      <text x="100" y="58" text-anchor="middle" font-size="11" fill="#1d1815" font-weight="600">approves or denies</text>
+    </g>
+    <text x="436" y="76" font-size="10" fill="#ff6b6b" font-weight="800">high risk</text>
+
+    <!-- Path 2: Medium risk → Async approval (middle) -->
+    <path d="M 388 150 L 500 150" stroke="#1d1815" stroke-width="2" marker-end="url(#dhaf_ar)"/>
+
+    <g transform="translate(510, 120)">
+      <rect width="200" height="72" rx="12" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/>
+      <text x="100" y="22" text-anchor="middle" font-weight="900" font-size="11" fill="rgba(29,24,21,0.5)" letter-spacing="1.5">ASYNC APPROVAL</text>
+      <text x="100" y="42" text-anchor="middle" font-size="11" fill="#1d1815" font-weight="600">agent continues other work</text>
+      <text x="100" y="58" text-anchor="middle" font-size="11" fill="#1d1815" font-weight="600">queues this for review</text>
+    </g>
+    <text x="420" y="142" font-size="10" fill="#1d1815" font-weight="800">medium risk</text>
+
+    <!-- Path 3: Low risk → Auto-approve (bottom) -->
+    <path d="M 388 180 L 470 180 L 470 230" stroke="#1d1815" stroke-width="2" fill="none"/>
+    <path d="M 470 230 L 470 240 L 500 240" stroke="#1d1815" stroke-width="2" fill="none" marker-end="url(#dhaf_ar)"/>
+
+    <g transform="translate(510, 206)">
+      <rect width="200" height="72" rx="12" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/>
+      <text x="100" y="22" text-anchor="middle" font-weight="900" font-size="11" fill="rgba(29,24,21,0.5)" letter-spacing="1.5">AUTO-APPROVE</text>
+      <text x="100" y="42" text-anchor="middle" font-size="11" fill="#1d1815" font-weight="600">execute immediately</text>
+      <text x="100" y="58" text-anchor="middle" font-size="11" fill="#1d1815" font-weight="600">log for post-hoc review</text>
+    </g>
+    <text x="424" y="236" font-size="10" fill="#1d1815" font-weight="800">low risk</text>
+
+    <!-- Outcomes column -->
+    <!-- Sync → human reviews -->
+    <path d="M 710 80 L 760 80" stroke="#1d1815" stroke-width="2" marker-end="url(#dhaf_ar)"/>
+    <g transform="translate(770, 50)">
+      <rect width="80" height="60" rx="10" fill="#fff" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="40" y="24" text-anchor="middle" font-weight="800" font-size="18" fill="#1d1815">&#128100;</text>
+      <text x="40" y="48" text-anchor="middle" font-weight="700" font-size="10" fill="#1d1815">reviews</text>
+    </g>
+    <path d="M 850 80 L 890 80" stroke="#1d1815" stroke-width="2" marker-end="url(#dhaf_ar)"/>
+
+    <!-- Async → human reviews (later) -->
+    <path d="M 710 156 L 760 156" stroke="#1d1815" stroke-width="2" marker-end="url(#dhaf_ar)"/>
+    <g transform="translate(770, 126)">
+      <rect width="80" height="60" rx="10" fill="#fff" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="40" y="24" text-anchor="middle" font-weight="800" font-size="18" fill="#1d1815">&#128100;</text>
+      <text x="40" y="48" text-anchor="middle" font-weight="700" font-size="10" fill="#1d1815">reviews</text>
+    </g>
+    <path d="M 850 156 L 890 156" stroke="#1d1815" stroke-width="2" marker-end="url(#dhaf_ar)"/>
+
+    <!-- Auto → execute directly -->
+    <path d="M 710 242 L 890 242" stroke="#1d1815" stroke-width="2" marker-end="url(#dhaf_ar)"/>
+
+    <!-- Final: execute or deny -->
+    <g transform="translate(900, 54)">
+      <rect width="70" height="44" rx="10" fill="#a3e4a3" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="35" y="18" text-anchor="middle" font-weight="900" font-size="11" fill="#1d1815">execute</text>
+      <text x="35" y="34" text-anchor="middle" font-weight="600" font-size="10" fill="rgba(29,24,21,0.6)">or deny</text>
+    </g>
+    <g transform="translate(900, 130)">
+      <rect width="70" height="44" rx="10" fill="#a3e4a3" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="35" y="18" text-anchor="middle" font-weight="900" font-size="11" fill="#1d1815">execute</text>
+      <text x="35" y="34" text-anchor="middle" font-weight="600" font-size="10" fill="rgba(29,24,21,0.6)">or deny</text>
+    </g>
+    <g transform="translate(900, 220)">
+      <rect width="70" height="44" rx="10" fill="#a3e4a3" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="35" y="18" text-anchor="middle" font-weight="900" font-size="11" fill="#1d1815">execute</text>
+      <text x="35" y="34" text-anchor="middle" font-weight="600" font-size="10" fill="rgba(29,24,21,0.6)">+ log</text>
+    </g>
+
+    <!-- Bottom section: timeout / escalation detail -->
+    <rect x="40" y="310" width="920" height="140" rx="16" fill="none" stroke="#1d1815" stroke-width="1.5" stroke-dasharray="6,4"/>
+    <text x="60" y="338" font-weight="900" font-size="12" fill="rgba(29,24,21,0.5)" letter-spacing="2">TIMEOUT &amp; ESCALATION</text>
+
+    <g transform="translate(60, 354)">
+      <rect width="200" height="40" rx="8" fill="#fff6db" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="14" y="16" font-weight="700" font-size="11" fill="#1d1815">no response in 15m</text>
+      <text x="14" y="32" font-size="10" fill="rgba(29,24,21,0.6)">escalate to team lead</text>
+    </g>
+    <path d="M 260 374 L 296 374" stroke="#1d1815" stroke-width="1.5" marker-end="url(#dhaf_ar)"/>
+
+    <g transform="translate(306, 354)">
+      <rect width="200" height="40" rx="8" fill="#ffe9e4" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="14" y="16" font-weight="700" font-size="11" fill="#1d1815">no response in 30m</text>
+      <text x="14" y="32" font-size="10" fill="rgba(29,24,21,0.6)">escalate to on-call + page</text>
+    </g>
+    <path d="M 506 374 L 542 374" stroke="#1d1815" stroke-width="1.5" marker-end="url(#dhaf_ar)"/>
+
+    <g transform="translate(552, 354)">
+      <rect width="200" height="40" rx="8" fill="#1d1815"/>
+      <text x="14" y="16" font-weight="700" font-size="11" fill="#f6efe6">no response in 60m</text>
+      <text x="14" y="32" font-size="10" fill="rgba(255,255,255,0.6)">auto-deny + incident record</text>
+    </g>
+    <path d="M 752 374 L 788 374" stroke="#1d1815" stroke-width="1.5" marker-end="url(#dhaf_ar)"/>
+
+    <g transform="translate(798, 354)">
+      <rect width="140" height="40" rx="8" fill="#ff6b6b"/>
+      <text x="70" y="16" text-anchor="middle" font-weight="900" font-size="11" fill="#fff">DENIED</text>
+      <text x="70" y="32" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.8)">safe default</text>
+    </g>
+
+    <text x="60" y="420" font-size="11" fill="rgba(29,24,21,0.45)" font-weight="600">the safe default is always deny. an unanswered approval request is a denied approval request.</text>
+  </g>
+
+  <defs>
+    <marker id="dhaf_ar" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1d1815"/></marker>
+    <marker id="dhaf_ar_red" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#ff6b6b"/></marker>
+  </defs>
+</svg>

@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 480" role="img" aria-label="Decision matrix: risk level vs reversibility determines approval mode">
+  <rect width="1000" height="480" fill="#fff8ef"/>
+  <text x="40" y="40" font-family="Inter, sans-serif" font-weight="900" font-size="18" fill="#1d1815">When to require approval: the two-axis decision</text>
+  <text x="40" y="62" font-family="Inter, sans-serif" font-size="12" fill="rgba(29,24,21,0.55)">risk level x reversibility. high risk + irreversible = block and wait. low risk + reversible = auto-approve.</text>
+
+  <g font-family="Inter, sans-serif">
+    <!-- Y-axis label -->
+    <text x="26" y="250" text-anchor="middle" font-weight="900" font-size="13" fill="rgba(29,24,21,0.5)" letter-spacing="1.5" transform="rotate(-90 26 250)">RISK LEVEL</text>
+    <!-- X-axis label -->
+    <text x="380" y="454" text-anchor="middle" font-weight="900" font-size="13" fill="rgba(29,24,21,0.5)" letter-spacing="1.5">REVERSIBILITY</text>
+
+    <!-- Axis arrows -->
+    <path d="M 60 410 L 60 100" stroke="#1d1815" stroke-width="2" marker-end="url(#dhdm_ar)"/>
+    <path d="M 60 410 L 700 410" stroke="#1d1815" stroke-width="2" marker-end="url(#dhdm_ar)"/>
+
+    <!-- Axis tick labels -->
+    <text x="55" y="126" text-anchor="end" font-size="11" fill="rgba(29,24,21,0.5)" font-weight="700">high</text>
+    <text x="55" y="270" text-anchor="end" font-size="11" fill="rgba(29,24,21,0.5)" font-weight="700">medium</text>
+    <text x="55" y="398" text-anchor="end" font-size="11" fill="rgba(29,24,21,0.5)" font-weight="700">low</text>
+    <text x="190" y="438" text-anchor="middle" font-size="11" fill="rgba(29,24,21,0.5)" font-weight="700">irreversible</text>
+    <text x="510" y="438" text-anchor="middle" font-size="11" fill="rgba(29,24,21,0.5)" font-weight="700">reversible</text>
+
+    <!-- Quadrant 1: High risk + Irreversible → SYNC BLOCK -->
+    <g transform="translate(80, 106)">
+      <rect width="280" height="140" rx="16" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/>
+      <text x="140" y="30" text-anchor="middle" font-weight="900" font-size="14" fill="#1d1815">SYNC BLOCK</text>
+      <text x="140" y="52" text-anchor="middle" font-size="11" fill="rgba(29,24,21,0.65)" font-weight="600">agent stops. human must approve.</text>
+      <text x="140" y="72" text-anchor="middle" font-size="11" fill="rgba(29,24,21,0.65)" font-weight="600">no timeout auto-approve.</text>
+      <line x1="20" y1="88" x2="260" y2="88" stroke="rgba(29,24,21,0.1)" stroke-width="1"/>
+      <text x="20" y="108" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.55)">delete production data</text>
+      <text x="20" y="124" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.55)">send external comms</text>
+    </g>
+
+    <!-- Quadrant 2: High risk + Reversible → ASYNC APPROVAL -->
+    <g transform="translate(380, 106)">
+      <rect width="280" height="140" rx="16" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/>
+      <text x="140" y="30" text-anchor="middle" font-weight="900" font-size="14" fill="#1d1815">ASYNC APPROVAL</text>
+      <text x="140" y="52" text-anchor="middle" font-size="11" fill="rgba(29,24,21,0.65)" font-weight="600">agent queues, continues other tasks.</text>
+      <text x="140" y="72" text-anchor="middle" font-size="11" fill="rgba(29,24,21,0.65)" font-weight="600">escalation after timeout.</text>
+      <line x1="20" y1="88" x2="260" y2="88" stroke="rgba(29,24,21,0.1)" stroke-width="1"/>
+      <text x="20" y="108" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.55)">deploy to staging</text>
+      <text x="20" y="124" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.55)">update billing config</text>
+    </g>
+
+    <!-- Quadrant 3: Low risk + Irreversible → ASYNC WITH SHORT TIMEOUT -->
+    <g transform="translate(80, 262)">
+      <rect width="280" height="130" rx="16" fill="#fff6db" stroke="#1d1815" stroke-width="2"/>
+      <text x="140" y="28" text-anchor="middle" font-weight="900" font-size="14" fill="#1d1815">ASYNC + SHORT TIMEOUT</text>
+      <text x="140" y="50" text-anchor="middle" font-size="11" fill="rgba(29,24,21,0.65)" font-weight="600">queue for review, but auto-approve</text>
+      <text x="140" y="66" text-anchor="middle" font-size="11" fill="rgba(29,24,21,0.65)" font-weight="600">if no response in N minutes.</text>
+      <line x1="20" y1="82" x2="260" y2="82" stroke="rgba(29,24,21,0.1)" stroke-width="1"/>
+      <text x="20" y="100" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.55)">archive old records</text>
+      <text x="20" y="116" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.55)">rotate API keys</text>
+    </g>
+
+    <!-- Quadrant 4: Low risk + Reversible → AUTO-APPROVE -->
+    <g transform="translate(380, 262)">
+      <rect width="280" height="130" rx="16" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/>
+      <text x="140" y="28" text-anchor="middle" font-weight="900" font-size="14" fill="#1d1815">AUTO-APPROVE</text>
+      <text x="140" y="50" text-anchor="middle" font-size="11" fill="rgba(29,24,21,0.65)" font-weight="600">execute immediately.</text>
+      <text x="140" y="66" text-anchor="middle" font-size="11" fill="rgba(29,24,21,0.65)" font-weight="600">log for post-hoc review.</text>
+      <line x1="20" y1="82" x2="260" y2="82" stroke="rgba(29,24,21,0.1)" stroke-width="1"/>
+      <text x="20" y="100" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.55)">read-only queries</text>
+      <text x="20" y="116" font-family="ui-monospace, monospace" font-size="10" fill="rgba(29,24,21,0.55)">send internal notifications</text>
+    </g>
+
+    <!-- Right side: key insight card -->
+    <g transform="translate(720, 106) rotate(1.2)">
+      <rect width="240" height="280" rx="18" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+      <text x="20" y="32" font-weight="900" font-size="12" fill="rgba(29,24,21,0.5)" letter-spacing="1.5">KEY SIGNALS</text>
+      <g font-size="11" fill="#1d1815" font-weight="600">
+        <text x="20" y="62">&#8226; what tool is being used?</text>
+        <text x="20" y="84">&#8226; what data does it touch?</text>
+        <text x="20" y="106">&#8226; can it be undone?</text>
+        <text x="20" y="128">&#8226; who does it affect?</text>
+        <text x="20" y="150">&#8226; has this agent done this before?</text>
+        <text x="20" y="172">&#8226; is this during business hours?</text>
+      </g>
+      <line x1="20" y1="192" x2="220" y2="192" stroke="rgba(29,24,21,0.12)" stroke-width="1"/>
+      <text x="20" y="218" font-size="11" fill="rgba(29,24,21,0.55)" font-weight="600">the goal: no unnecessary</text>
+      <text x="20" y="236" font-size="11" fill="rgba(29,24,21,0.55)" font-weight="600">friction on safe actions,</text>
+      <text x="20" y="254" font-size="11" fill="rgba(29,24,21,0.55)" font-weight="600">no gaps on dangerous ones.</text>
+    </g>
+  </g>
+
+  <defs>
+    <marker id="dhdm_ar" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1d1815"/></marker>
+  </defs>
+</svg>
