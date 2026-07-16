@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 480" role="img" aria-label="Staleness detection: knowing when your sources are out of date">
+  <rect width="1000" height="480" fill="#fff8ef"/>
+  <text x="40" y="44" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">Staleness detection: is the source still current?</text>
+  <text x="40" y="68" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">compare document modified_at against indexed_at. flag drift. re-index or warn. never serve silently stale answers.</text>
+
+  <!-- Left: Document Store -->
+  <text x="40" y="108" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(29,24,21,0.55)" letter-spacing="2">DOCUMENT STORE</text>
+
+  <g font-family="Inter, sans-serif" fill="#1d1815">
+    <g transform="translate(40,120)">
+      <rect width="260" height="56" rx="12" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="22" font-weight="800" font-size="13">refund_policy.md</text>
+      <text x="14" y="42" font-size="11" fill="rgba(29,24,21,0.6)">modified: July 14  |  version: v4</text>
+      <circle cx="242" cy="28" r="8" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/>
+    </g>
+    <g transform="translate(40,186)">
+      <rect width="260" height="56" rx="12" fill="#ff6b6b" stroke="#1d1815" stroke-width="2" opacity="0.25"/>
+      <rect width="260" height="56" rx="12" fill="none" stroke="#ff6b6b" stroke-width="2.5"/>
+      <text x="14" y="22" font-weight="800" font-size="13">api_reference.md</text>
+      <text x="14" y="42" font-size="11" fill="rgba(29,24,21,0.6)">modified: July 15  |  version: v7</text>
+      <circle cx="242" cy="28" r="8" fill="#ff6b6b" stroke="#1d1815" stroke-width="2"/>
+    </g>
+    <g transform="translate(40,252)">
+      <rect width="260" height="56" rx="12" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="22" font-weight="800" font-size="13">security_runbook.md</text>
+      <text x="14" y="42" font-size="11" fill="rgba(29,24,21,0.6)">modified: July 10  |  version: v2</text>
+      <circle cx="242" cy="28" r="8" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/>
+    </g>
+  </g>
+
+  <!-- Middle: Staleness Checker -->
+  <text x="380" y="108" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(29,24,21,0.55)" letter-spacing="2">STALENESS CHECKER</text>
+
+  <g transform="translate(380,120)">
+    <rect width="240" height="196" rx="16" fill="#fff" stroke="#1d1815" stroke-width="2.5"/>
+    <text x="20" y="32" font-family="Inter, sans-serif" font-weight="800" font-size="13" fill="#1d1815">compare timestamps</text>
+
+    <g transform="translate(20,48)">
+      <rect width="200" height="36" rx="8" fill="#eaf7ff" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="10" y="23" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">modified_at vs indexed_at</text>
+    </g>
+    <g transform="translate(20,94)">
+      <rect width="200" height="36" rx="8" fill="#eaf7ff" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="10" y="23" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">content_hash vs stored_hash</text>
+    </g>
+    <g transform="translate(20,140)">
+      <rect width="200" height="36" rx="8" fill="#eaf7ff" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="10" y="23" font-family="ui-monospace, monospace" font-size="11" fill="#1d1815">staleness_hours threshold</text>
+    </g>
+  </g>
+
+  <!-- Right: Vector Index -->
+  <text x="700" y="108" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(29,24,21,0.55)" letter-spacing="2">VECTOR INDEX</text>
+
+  <g font-family="Inter, sans-serif" fill="#1d1815">
+    <g transform="translate(700,120)">
+      <rect width="260" height="56" rx="12" fill="#fff6db" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="22" font-weight="800" font-size="13">refund_policy chunks</text>
+      <text x="14" y="42" font-size="11" fill="rgba(29,24,21,0.6)">indexed: July 14  |  v4  |  fresh</text>
+    </g>
+    <g transform="translate(700,186)">
+      <rect width="260" height="56" rx="12" fill="#fff6db" stroke="#ff6b6b" stroke-width="2.5"/>
+      <text x="14" y="22" font-weight="800" font-size="13" fill="#ff6b6b">api_reference chunks</text>
+      <text x="14" y="42" font-size="11" fill="rgba(29,24,21,0.6)">indexed: July 12  |  v5  |  STALE</text>
+    </g>
+    <g transform="translate(700,252)">
+      <rect width="260" height="56" rx="12" fill="#fff6db" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="22" font-weight="800" font-size="13">security_runbook chunks</text>
+      <text x="14" y="42" font-size="11" fill="rgba(29,24,21,0.6)">indexed: July 10  |  v2  |  fresh</text>
+    </g>
+  </g>
+
+  <!-- Arrows: doc store -> checker -->
+  <g stroke="#1d1815" stroke-width="2" fill="none">
+    <path d="M 300 148 L 380 168" marker-end="url(#sdArrow)"/>
+    <path d="M 300 214 L 380 218" marker-end="url(#sdArrow)"/>
+    <path d="M 300 280 L 380 268" marker-end="url(#sdArrow)"/>
+  </g>
+
+  <!-- Arrows: checker -> vector index -->
+  <g stroke="#1d1815" stroke-width="2" fill="none">
+    <path d="M 620 168 L 700 148" marker-end="url(#sdArrow)"/>
+    <path d="M 620 218 L 700 214" marker-end="url(#sdArrow)"/>
+    <path d="M 620 268 L 700 280" marker-end="url(#sdArrow)"/>
+  </g>
+
+  <!-- Stale alert callout -->
+  <g transform="translate(700,340)">
+    <rect width="260" height="42" rx="10" fill="#ff6b6b"/>
+    <text x="14" y="17" font-family="Inter, sans-serif" font-weight="800" font-size="12" fill="#fff">STALE: api_reference</text>
+    <text x="14" y="34" font-family="Inter, sans-serif" font-size="11" fill="rgba(255,255,255,0.85)">doc is v7, index has v5 (3 days behind)</text>
+  </g>
+
+  <!-- Action options -->
+  <text x="40" y="368" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(29,24,21,0.55)" letter-spacing="2">ON STALENESS</text>
+  <g font-family="Inter, sans-serif" font-weight="800" font-size="12" fill="#1d1815">
+    <g transform="translate(40,380)">
+      <rect width="180" height="34" rx="8" fill="#fff6db" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="22">re-index immediately</text>
+    </g>
+    <g transform="translate(235,380)">
+      <rect width="180" height="34" rx="8" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="22">warn in response</text>
+    </g>
+    <g transform="translate(430,380)">
+      <rect width="180" height="34" rx="8" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="22">exclude stale chunks</text>
+    </g>
+  </g>
+
+  <!-- Bottom caption -->
+  <g transform="translate(40,438)">
+    <rect width="920" height="30" rx="10" fill="#1d1815"/>
+    <text x="14" y="20" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#a3e4a3">a stale source confidently served is worse than no source at all. detect it before the user does.</text>
+  </g>
+
+  <defs>
+    <marker id="sdArrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1d1815"/></marker>
+  </defs>
+</svg>

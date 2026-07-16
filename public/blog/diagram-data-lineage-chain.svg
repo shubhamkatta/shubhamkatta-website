@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 480" role="img" aria-label="The data lineage chain: from source document to generated answer">
+  <rect width="1000" height="480" fill="#fff8ef"/>
+  <text x="40" y="44" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">The lineage chain: every answer traces back to a source</text>
+  <text x="40" y="68" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">each step captures metadata. the chain is queryable. when something is wrong, you walk it backwards.</text>
+
+  <!-- Row 1: Source Documents -->
+  <text x="40" y="108" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(29,24,21,0.55)" letter-spacing="2">SOURCE LAYER</text>
+
+  <g font-family="Inter, sans-serif" font-weight="800" font-size="13" fill="#1d1815">
+    <g transform="translate(40,120)">
+      <rect width="185" height="80" rx="14" fill="#fff6db" stroke="#1d1815" stroke-width="2.5"/>
+      <text x="16" y="28" font-size="26" fill="rgba(29,24,21,0.12)" font-weight="900">1</text>
+      <text x="48" y="30">source document</text>
+      <text x="16" y="50" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">doc_id, version, modified_at</text>
+      <text x="16" y="66" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">content_hash, source_uri</text>
+    </g>
+
+    <g transform="translate(255,120)">
+      <rect width="185" height="80" rx="14" fill="#eaf7ff" stroke="#1d1815" stroke-width="2.5"/>
+      <text x="16" y="28" font-size="26" fill="rgba(29,24,21,0.12)" font-weight="900">2</text>
+      <text x="48" y="30">chunk</text>
+      <text x="16" y="50" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">chunk_id, parent_doc_id</text>
+      <text x="16" y="66" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">offset, token_count, hash</text>
+    </g>
+
+    <g transform="translate(470,120)">
+      <rect width="185" height="80" rx="14" fill="#ffe9e4" stroke="#1d1815" stroke-width="2.5"/>
+      <text x="16" y="28" font-size="26" fill="rgba(29,24,21,0.12)" font-weight="900">3</text>
+      <text x="48" y="30">embedding</text>
+      <text x="16" y="50" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">vector_id, embed_model</text>
+      <text x="16" y="66" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">model_version, indexed_at</text>
+    </g>
+
+    <g transform="translate(685,120)">
+      <rect width="275" height="80" rx="14" fill="#a3e4a3" stroke="#1d1815" stroke-width="2.5"/>
+      <text x="16" y="28" font-size="26" fill="rgba(29,24,21,0.12)" font-weight="900">4</text>
+      <text x="48" y="30">vector store</text>
+      <text x="16" y="50" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">collection, index_version</text>
+      <text x="16" y="66" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">last_rebuilt, doc_count</text>
+    </g>
+  </g>
+
+  <!-- Arrows row 1 -->
+  <g stroke="#1d1815" stroke-width="2" fill="none">
+    <path d="M 225 160 L 255 160" marker-end="url(#dlc)"/>
+    <path d="M 440 160 L 470 160" marker-end="url(#dlc)"/>
+    <path d="M 655 160 L 685 160" marker-end="url(#dlc)"/>
+  </g>
+
+  <!-- Row 2: Query Time -->
+  <text x="40" y="250" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(29,24,21,0.55)" letter-spacing="2">QUERY LAYER</text>
+
+  <g font-family="Inter, sans-serif" font-weight="800" font-size="13" fill="#1d1815">
+    <g transform="translate(40,262)">
+      <rect width="140" height="80" rx="14" fill="#fff6db" stroke="#1d1815" stroke-width="2.5"/>
+      <text x="16" y="30">user query</text>
+      <text x="16" y="50" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">query_id</text>
+      <text x="16" y="66" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">session, timestamp</text>
+    </g>
+
+    <g transform="translate(210,262)">
+      <rect width="195" height="80" rx="14" fill="#eaf7ff" stroke="#1d1815" stroke-width="2.5"/>
+      <text x="16" y="28" font-size="26" fill="rgba(29,24,21,0.12)" font-weight="900">5</text>
+      <text x="48" y="30">retrieval result</text>
+      <text x="16" y="50" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">chunk_ids[], scores[]</text>
+      <text x="16" y="66" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">retrieval_latency_ms</text>
+    </g>
+
+    <g transform="translate(435,262)">
+      <rect width="195" height="80" rx="14" fill="#ffe9e4" stroke="#1d1815" stroke-width="2.5"/>
+      <text x="16" y="28" font-size="26" fill="rgba(29,24,21,0.12)" font-weight="900">6</text>
+      <text x="48" y="30">prompt assembly</text>
+      <text x="16" y="50" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">template_version</text>
+      <text x="16" y="66" font-weight="400" font-size="11" fill="rgba(29,24,21,0.6)">total_context_tokens</text>
+    </g>
+
+    <g transform="translate(660,262)">
+      <rect width="300" height="80" rx="14" fill="#1d1815"/>
+      <text x="16" y="28" font-size="26" fill="rgba(255,255,255,0.12)" font-weight="900">7</text>
+      <text x="48" y="30" fill="#f6efe6">generated answer</text>
+      <text x="16" y="50" font-weight="400" font-size="11" fill="rgba(255,255,255,0.55)">model, model_version, cost</text>
+      <text x="16" y="66" font-weight="400" font-size="11" fill="rgba(255,255,255,0.55)">source_doc_ids[] (the receipt)</text>
+    </g>
+  </g>
+
+  <!-- Arrows row 2 -->
+  <g stroke="#1d1815" stroke-width="2" fill="none">
+    <path d="M 180 302 L 210 302" marker-end="url(#dlc)"/>
+    <path d="M 405 302 L 435 302" marker-end="url(#dlc)"/>
+    <path d="M 630 302 L 660 302" marker-end="url(#dlc)"/>
+  </g>
+
+  <!-- Connection: vector store feeds retrieval -->
+  <path d="M 822 200 L 822 230 L 307 230 L 307 262" stroke="#1d1815" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#dlc)"/>
+  <text x="520" y="240" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="rgba(29,24,21,0.5)">vectors power the retrieval - lineage links them back to source</text>
+
+  <!-- Bottom lineage query bar -->
+  <g transform="translate(40,380)">
+    <rect width="920" height="32" rx="10" fill="#1d1815"/>
+    <text x="14" y="21" font-family="ui-monospace, monospace" font-size="12" font-weight="700" fill="#a3e4a3">SELECT source_doc, version, indexed_at FROM lineage WHERE answer_id = 'ans_8f3a'</text>
+  </g>
+
+  <g transform="translate(40,428)">
+    <text x="0" y="14" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">When the answer is wrong, walk the chain backwards: was the source stale? was the embedding old? did retrieval grab the wrong chunk?</text>
+    <text x="0" y="36" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">Lineage makes the question answerable in seconds instead of hours.</text>
+  </g>
+
+  <defs>
+    <marker id="dlc" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1d1815"/></marker>
+  </defs>
+</svg>

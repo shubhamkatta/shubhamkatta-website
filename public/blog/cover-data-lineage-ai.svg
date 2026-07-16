@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="Data lineage for AI — where did this answer come from?">
+  <rect width="1200" height="600" fill="#eaf7ff"/>
+  <rect x="80" y="30" width="180" height="20" rx="4" fill="#fff6db" opacity="0.9" transform="rotate(-1.5 170 40)"/>
+
+  <!-- Provenance chain visual -->
+  <g transform="translate(72,120) rotate(-1)">
+    <rect width="500" height="370" rx="22" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <text x="24" y="36" font-family="Inter, sans-serif" font-weight="900" font-size="13" fill="rgba(29,24,21,0.55)" letter-spacing="2">PROVENANCE CHAIN</text>
+
+    <!-- Source doc -->
+    <g transform="translate(30,56)">
+      <rect width="180" height="52" rx="11" fill="#fff6db" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="22" font-family="ui-monospace, monospace" font-weight="700" font-size="12" fill="#1d1815">policy_v3.md</text>
+      <text x="14" y="40" font-family="Inter, sans-serif" font-size="10" fill="rgba(29,24,21,0.55)">source doc  |  v3  |  2d ago</text>
+    </g>
+    <path d="M 120 108 L 120 126" stroke="#1d1815" stroke-width="2" marker-end="url(#clArrow)"/>
+
+    <!-- Chunk -->
+    <g transform="translate(30,126)">
+      <rect width="180" height="52" rx="11" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="22" font-family="ui-monospace, monospace" font-weight="700" font-size="12" fill="#1d1815">chunk_0047</text>
+      <text x="14" y="40" font-family="Inter, sans-serif" font-size="10" fill="rgba(29,24,21,0.55)">tokens: 312  |  overlap: 50</text>
+    </g>
+    <path d="M 120 178 L 120 196" stroke="#1d1815" stroke-width="2" marker-end="url(#clArrow)"/>
+
+    <!-- Embedding -->
+    <g transform="translate(30,196)">
+      <rect width="180" height="52" rx="11" fill="#ffe9e4" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="22" font-family="ui-monospace, monospace" font-weight="700" font-size="12" fill="#1d1815">embedding</text>
+      <text x="14" y="40" font-family="Inter, sans-serif" font-size="10" fill="rgba(29,24,21,0.55)">model: e5-v3  |  dim: 1024</text>
+    </g>
+    <path d="M 120 248 L 120 266" stroke="#1d1815" stroke-width="2" marker-end="url(#clArrow)"/>
+
+    <!-- Retrieval -->
+    <g transform="translate(30,266)">
+      <rect width="180" height="52" rx="11" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/>
+      <text x="14" y="22" font-family="ui-monospace, monospace" font-weight="700" font-size="12" fill="#1d1815">retrieval</text>
+      <text x="14" y="40" font-family="Inter, sans-serif" font-size="10" fill="rgba(29,24,21,0.55)">score: 0.91  |  rank: 1</text>
+    </g>
+
+    <!-- Version stamps on the right side -->
+    <g transform="translate(250,70)">
+      <rect width="210" height="38" rx="8" fill="#1d1815"/>
+      <text x="14" y="24" font-family="ui-monospace, monospace" font-weight="700" font-size="11" fill="#a3e4a3">doc_version: "v3"</text>
+    </g>
+    <g transform="translate(250,118)">
+      <rect width="210" height="38" rx="8" fill="#1d1815"/>
+      <text x="14" y="24" font-family="ui-monospace, monospace" font-weight="700" font-size="11" fill="#eaf7ff">chunk_hash: "a3f8c1..."</text>
+    </g>
+    <g transform="translate(250,166)">
+      <rect width="210" height="38" rx="8" fill="#1d1815"/>
+      <text x="14" y="24" font-family="ui-monospace, monospace" font-weight="700" font-size="11" fill="#ffe9e4">embed_model: "e5-v3"</text>
+    </g>
+    <g transform="translate(250,214)">
+      <rect width="210" height="38" rx="8" fill="#1d1815"/>
+      <text x="14" y="24" font-family="ui-monospace, monospace" font-weight="700" font-size="11" fill="#fff6db">indexed_at: "2026-07-14"</text>
+    </g>
+
+    <!-- Bottom bar -->
+    <g transform="translate(24,330)">
+      <rect width="452" height="28" rx="8" fill="#ff6b6b"/>
+      <text x="14" y="19" font-family="Inter, sans-serif" font-weight="800" font-size="11" fill="#fff">every answer carries a receipt. every source has a timestamp.</text>
+    </g>
+  </g>
+
+  <!-- Title text -->
+  <g transform="translate(620,175)">
+    <text x="0" y="48" font-family="Inter, sans-serif" font-weight="900" font-size="50" fill="#1d1815" letter-spacing="-2">Where did</text>
+    <text x="0" y="108" font-family="Inter, sans-serif" font-weight="900" font-size="50" fill="#1d1815" letter-spacing="-2">this answer</text>
+    <text x="0" y="168" font-family="Inter, sans-serif" font-weight="900" font-size="50" fill="#1d1815" letter-spacing="-2">come from?</text>
+    <text x="0" y="220" font-family="Inter, sans-serif" font-weight="700" font-size="20" fill="#ff6b6b">data lineage for AI.</text>
+    <text x="0" y="248" font-family="Inter, sans-serif" font-weight="700" font-size="20" fill="#ff6b6b">provenance, not just audit.</text>
+    <text x="0" y="310" font-family="Inter, sans-serif" font-size="15" fill="rgba(29,24,21,0.6)">track the chain from source document</text>
+    <text x="0" y="332" font-family="Inter, sans-serif" font-size="15" fill="rgba(29,24,21,0.6)">to generated answer. know when it's stale.</text>
+  </g>
+
+  <defs>
+    <marker id="clArrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1d1815"/></marker>
+  </defs>
+</svg>
