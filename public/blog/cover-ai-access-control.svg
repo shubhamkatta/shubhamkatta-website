@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="AI access control patterns — RBAC is not enough">
+  <rect width="1200" height="600" fill="#ffe9e4"/>
+
+  <!-- Decorative tape strip -->
+  <rect x="520" y="24" width="180" height="20" rx="3" fill="#fff6db" opacity="0.85" transform="rotate(-1.5 610 34)"/>
+
+  <!-- Left side: intersecting permission circles -->
+  <g transform="translate(100,120) rotate(-1)">
+    <rect width="460" height="400" rx="22" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <text x="24" y="36" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="rgba(29,24,21,0.5)" letter-spacing="2">ACCESS CONTROL</text>
+
+    <!-- Three overlapping circles representing permission domains -->
+    <circle cx="170" cy="190" r="90" fill="#eaf7ff" stroke="#1d1815" stroke-width="2" opacity="0.8"/>
+    <circle cx="260" cy="190" r="90" fill="#fff6db" stroke="#1d1815" stroke-width="2" opacity="0.7"/>
+    <circle cx="215" cy="270" r="90" fill="#ffe9e4" stroke="#1d1815" stroke-width="2" opacity="0.7"/>
+
+    <!-- Labels inside circles -->
+    <text x="135" y="170" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="12" fill="#1d1815">user</text>
+    <text x="135" y="186" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="12" fill="#1d1815">perms</text>
+    <text x="295" y="170" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="12" fill="#1d1815">agent</text>
+    <text x="295" y="186" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="12" fill="#1d1815">perms</text>
+    <text x="215" y="324" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="12" fill="#1d1815">session</text>
+    <text x="215" y="340" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="12" fill="#1d1815">context</text>
+
+    <!-- Center intersection with lock icon -->
+    <circle cx="215" cy="216" r="28" fill="#1d1815" opacity="0.9"/>
+    <!-- Lock icon -->
+    <rect x="205" y="214" width="20" height="16" rx="3" fill="#fff"/>
+    <path d="M209 214 L209 208 Q209 202 215 202 Q221 202 221 208 L221 214" stroke="#fff" stroke-width="2.5" fill="none"/>
+    <circle cx="215" cy="222" r="2" fill="#1d1815"/>
+
+    <!-- Effective label -->
+    <text x="215" y="260" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" fill="#ff6b6b" font-weight="700">effective</text>
+  </g>
+
+  <!-- Right side text -->
+  <g transform="translate(620,150)">
+    <text x="0" y="48" font-family="Inter, sans-serif" font-weight="900" font-size="46" fill="#1d1815" letter-spacing="-2">RBAC is</text>
+    <text x="0" y="102" font-family="Inter, sans-serif" font-weight="900" font-size="46" fill="#1d1815" letter-spacing="-2">not enough.</text>
+
+    <text x="0" y="162" font-family="Inter, sans-serif" font-weight="700" font-size="20" fill="#ff6b6b">access control patterns</text>
+    <text x="0" y="188" font-family="Inter, sans-serif" font-weight="700" font-size="20" fill="#ff6b6b">for AI agents</text>
+
+    <text x="0" y="240" font-family="Inter, sans-serif" font-weight="500" font-size="14" fill="rgba(29,24,21,0.55)">static roles break when agents</text>
+    <text x="0" y="260" font-family="Inter, sans-serif" font-weight="500" font-size="14" fill="rgba(29,24,21,0.55)">chain tools and contexts shift.</text>
+    <text x="0" y="280" font-family="Inter, sans-serif" font-weight="500" font-size="14" fill="rgba(29,24,21,0.55)">the fix is not more roles.</text>
+  </g>
+
+  <!-- Bottom code snippet decoration -->
+  <g transform="translate(620,420) rotate(1)">
+    <rect width="320" height="60" rx="11" fill="#1d1815"/>
+    <text x="16" y="24" font-family="ui-monospace, monospace" font-size="12" fill="#a3e4a3">effective = user_perms</text>
+    <text x="16" y="44" font-family="ui-monospace, monospace" font-size="12" fill="#a3e4a3">  &amp; agent_scope &amp; session_ctx</text>
+  </g>
+
+  <!-- Decorative small card -->
+  <g transform="translate(620,360) rotate(-2)">
+    <rect width="140" height="36" rx="8" fill="#fff6db" stroke="#1d1815" stroke-width="1.5"/>
+    <text x="70" y="23" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="12" fill="#1d1815">deep dive</text>
+  </g>
+</svg>
