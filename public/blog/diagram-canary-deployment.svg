@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 480" role="img" aria-label="Canary deployment flow for AI model changes">
+  <rect width="1000" height="480" fill="#fff8ef"/>
+  <defs>
+    <marker id="cdArrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1d1815"/></marker>
+    <marker id="cdArrowGreen" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#3a8a3a"/></marker>
+    <marker id="cdArrowRed" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#ff6b6b"/></marker>
+  </defs>
+  <text x="40" y="40" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">Canary deployment flow — eval-gated model promotion</text>
+  <text x="40" y="62" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">Traffic splits to canary, evals run continuously, promotion or rollback is automatic.</text>
+
+  <!-- Step 1: Incoming traffic -->
+  <g transform="translate(40,90)">
+    <rect width="120" height="70" rx="14" fill="#eaf7ff" stroke="#1d1815" stroke-width="2.5"/>
+    <text x="60" y="28" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="rgba(29,24,21,0.4)" letter-spacing="2">INCOMING</text>
+    <text x="60" y="50" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="15" fill="#1d1815">All Traffic</text>
+  </g>
+
+  <!-- Arrow to router -->
+  <path d="M 160 125 L 210 125" stroke="#1d1815" stroke-width="2" marker-end="url(#cdArrow)"/>
+
+  <!-- Step 2: Traffic Router -->
+  <g transform="translate(220,85)">
+    <rect width="140" height="80" rx="14" fill="#fff6db" stroke="#1d1815" stroke-width="2.5"/>
+    <text x="70" y="26" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="rgba(29,24,21,0.4)" letter-spacing="2">ROUTER</text>
+    <text x="70" y="48" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="14" fill="#1d1815">Traffic Splitter</text>
+    <text x="70" y="66" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.6)">weighted random</text>
+  </g>
+
+  <!-- Arrow to stable (80%) -->
+  <path d="M 360 110 L 420 110" stroke="#1d1815" stroke-width="2" marker-end="url(#cdArrow)"/>
+  <text x="390" y="100" text-anchor="middle" font-family="ui-monospace, monospace" font-weight="700" font-size="11" fill="#1d1815">80%</text>
+
+  <!-- Arrow to canary (20%) -->
+  <path d="M 360 145 L 420 200" stroke="#1d1815" stroke-width="2" marker-end="url(#cdArrow)"/>
+  <text x="378" y="180" font-family="ui-monospace, monospace" font-weight="700" font-size="11" fill="#1d1815">20%</text>
+
+  <!-- Step 3a: Stable model -->
+  <g transform="translate(430,78)">
+    <rect width="160" height="66" rx="14" fill="#a3e4a3" stroke="#1d1815" stroke-width="2.5"/>
+    <text x="80" y="24" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="rgba(29,24,21,0.4)" letter-spacing="2">STABLE</text>
+    <text x="80" y="48" text-anchor="middle" font-family="ui-monospace, monospace" font-weight="700" font-size="15" fill="#1d1815">model v2.3</text>
+  </g>
+
+  <!-- Step 3b: Canary model -->
+  <g transform="translate(430,178)">
+    <rect width="160" height="66" rx="14" fill="#fff6db" stroke="#1d1815" stroke-width="2.5"/>
+    <text x="80" y="24" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="rgba(29,24,21,0.4)" letter-spacing="2">CANARY</text>
+    <text x="80" y="48" text-anchor="middle" font-family="ui-monospace, monospace" font-weight="700" font-size="15" fill="#1d1815">model v2.4</text>
+  </g>
+
+  <!-- Both arrow to eval gate -->
+  <path d="M 590 111 L 660 200" stroke="#1d1815" stroke-width="2" marker-end="url(#cdArrow)"/>
+  <path d="M 590 211 L 660 211" stroke="#1d1815" stroke-width="2" marker-end="url(#cdArrow)"/>
+
+  <!-- Step 4: Eval Gate -->
+  <g transform="translate(670,170)">
+    <rect width="160" height="80" rx="14" fill="#ffe9e4" stroke="#1d1815" stroke-width="2.5"/>
+    <text x="80" y="24" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="rgba(29,24,21,0.4)" letter-spacing="2">EVAL GATE</text>
+    <text x="80" y="46" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="13" fill="#1d1815">compare metrics</text>
+    <text x="80" y="64" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.6)">canary vs. stable</text>
+  </g>
+
+  <!-- Decision outcomes section -->
+  <!-- Arrow to promote -->
+  <path d="M 830 195 L 900 155" stroke="#3a8a3a" stroke-width="2.5" marker-end="url(#cdArrowGreen)"/>
+  <text x="870" y="168" font-family="Inter, sans-serif" font-weight="700" font-size="11" fill="#3a8a3a">pass</text>
+
+  <!-- Arrow to rollback -->
+  <path d="M 830 225 L 900 265" stroke="#ff6b6b" stroke-width="2.5" marker-end="url(#cdArrowRed)"/>
+  <text x="870" y="252" font-family="Inter, sans-serif" font-weight="700" font-size="11" fill="#ff6b6b">fail</text>
+
+  <!-- Promote box -->
+  <g transform="translate(910,120)">
+    <rect width="70" height="50" rx="11" fill="#a3e4a3" stroke="#1d1815" stroke-width="2"/>
+    <text x="35" y="22" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="9" fill="rgba(29,24,21,0.5)" letter-spacing="1">PROMOTE</text>
+    <text x="35" y="40" text-anchor="middle" font-family="ui-monospace, monospace" font-weight="700" font-size="12" fill="#1d1815">v2.4</text>
+  </g>
+
+  <!-- Rollback box -->
+  <g transform="translate(910,250)">
+    <rect width="70" height="50" rx="11" fill="#ff6b6b" stroke="#1d1815" stroke-width="2"/>
+    <text x="35" y="22" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="9" fill="#fff" letter-spacing="1">ROLLBACK</text>
+    <text x="35" y="40" text-anchor="middle" font-family="ui-monospace, monospace" font-weight="700" font-size="12" fill="#fff">v2.3</text>
+  </g>
+
+  <!-- Bottom section: eval metrics detail -->
+  <g transform="translate(40,320)">
+    <rect width="920" height="130" rx="14" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <text x="20" y="28" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(29,24,21,0.4)" letter-spacing="2">EVAL GATE CHECKS — what the gate compares between stable and canary</text>
+
+    <!-- Metric 1 -->
+    <g transform="translate(20,44)">
+      <rect width="200" height="68" rx="11" fill="#eaf7ff" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="14" y="22" font-family="Inter, sans-serif" font-weight="700" font-size="11" fill="#1d1815">Faithfulness Score</text>
+      <text x="14" y="42" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.7)">stable: 0.91  canary: 0.89</text>
+      <text x="14" y="58" font-family="ui-monospace, monospace" font-size="10" fill="#3a8a3a">threshold: &gt; 0.85 PASS</text>
+    </g>
+
+    <!-- Metric 2 -->
+    <g transform="translate(240,44)">
+      <rect width="200" height="68" rx="11" fill="#fff6db" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="14" y="22" font-family="Inter, sans-serif" font-weight="700" font-size="11" fill="#1d1815">Latency p99</text>
+      <text x="14" y="42" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.7)">stable: 620ms  canary: 710ms</text>
+      <text x="14" y="58" font-family="ui-monospace, monospace" font-size="10" fill="#3a8a3a">threshold: &lt; 800ms PASS</text>
+    </g>
+
+    <!-- Metric 3 -->
+    <g transform="translate(460,44)">
+      <rect width="200" height="68" rx="11" fill="#ffe9e4" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="14" y="22" font-family="Inter, sans-serif" font-weight="700" font-size="11" fill="#1d1815">Cost Delta</text>
+      <text x="14" y="42" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.7)">stable: $0.008  canary: $0.012</text>
+      <text x="14" y="58" font-family="ui-monospace, monospace" font-size="10" fill="#ff6b6b">threshold: &lt; 15%  FAIL (+50%)</text>
+    </g>
+
+    <!-- Metric 4 -->
+    <g transform="translate(680,44)">
+      <rect width="240" height="68" rx="11" fill="#a3e4a3" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="14" y="22" font-family="Inter, sans-serif" font-weight="700" font-size="11" fill="#1d1815">Hallucination Rate</text>
+      <text x="14" y="42" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.7)">stable: 1.2%  canary: 1.8%</text>
+      <text x="14" y="58" font-family="ui-monospace, monospace" font-size="10" fill="#3a8a3a">threshold: &lt; 3%  PASS</text>
+    </g>
+  </g>
+
+  <!-- Caption -->
+  <text x="40" y="472" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">One failing gate blocks promotion. The canary never becomes stable unless every metric clears its threshold.</text>
+</svg>

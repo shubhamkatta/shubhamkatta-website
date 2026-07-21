@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 480" role="img" aria-label="Rollback decision tree — when and how to revert a model change">
+  <rect width="1000" height="480" fill="#fff8ef"/>
+  <defs>
+    <marker id="rsArrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#1d1815"/></marker>
+    <marker id="rsArrowRed" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#ff6b6b"/></marker>
+    <marker id="rsArrowGreen" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#3a8a3a"/></marker>
+  </defs>
+  <text x="40" y="40" font-family="Inter, sans-serif" font-weight="900" font-size="20" fill="#1d1815">Rollback decision tree — detect, decide, revert</text>
+  <text x="40" y="62" font-family="Inter, sans-serif" font-size="13" fill="rgba(29,24,21,0.6)">Three detection paths, each leading to a rollback decision. Automatic rollback for hard failures, human review for drift.</text>
+
+  <!-- Trigger: Anomaly Detected -->
+  <g transform="translate(380,80)">
+    <rect width="220" height="60" rx="14" fill="#fff6db" stroke="#1d1815" stroke-width="2.5"/>
+    <text x="110" y="24" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="rgba(29,24,21,0.4)" letter-spacing="2">SIGNAL DETECTED</text>
+    <text x="110" y="46" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="14" fill="#1d1815">quality anomaly</text>
+  </g>
+
+  <!-- Three branches -->
+  <!-- Branch arrows -->
+  <path d="M 430 140 L 160 190" stroke="#1d1815" stroke-width="2" marker-end="url(#rsArrow)"/>
+  <path d="M 490 140 L 490 190" stroke="#1d1815" stroke-width="2" marker-end="url(#rsArrow)"/>
+  <path d="M 550 140 L 820 190" stroke="#1d1815" stroke-width="2" marker-end="url(#rsArrow)"/>
+
+  <!-- Branch 1: Hard failure -->
+  <g transform="translate(40,195)">
+    <rect width="240" height="90" rx="14" fill="#ffe9e4" stroke="#1d1815" stroke-width="2.5"/>
+    <text x="120" y="24" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="rgba(29,24,21,0.4)" letter-spacing="2">HARD FAILURE</text>
+    <text x="120" y="46" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="13" fill="#1d1815">error rate &gt; 5%</text>
+    <text x="120" y="64" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="13" fill="#1d1815">or latency &gt; 3x baseline</text>
+    <text x="120" y="82" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.5)">provider outage, bad config</text>
+  </g>
+
+  <!-- Branch 2: Quality drift -->
+  <g transform="translate(370,195)">
+    <rect width="240" height="90" rx="14" fill="#fff6db" stroke="#1d1815" stroke-width="2.5"/>
+    <text x="120" y="24" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="rgba(29,24,21,0.4)" letter-spacing="2">QUALITY DRIFT</text>
+    <text x="120" y="46" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="13" fill="#1d1815">eval scores declining</text>
+    <text x="120" y="64" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="13" fill="#1d1815">over hours or days</text>
+    <text x="120" y="82" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.5)">subtle model regression</text>
+  </g>
+
+  <!-- Branch 3: Cost spike -->
+  <g transform="translate(700,195)">
+    <rect width="260" height="90" rx="14" fill="#eaf7ff" stroke="#1d1815" stroke-width="2.5"/>
+    <text x="130" y="24" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="rgba(29,24,21,0.4)" letter-spacing="2">COST / TOKEN SPIKE</text>
+    <text x="130" y="46" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="13" fill="#1d1815">cost jumps &gt; 2x baseline</text>
+    <text x="130" y="64" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="13" fill="#1d1815">or tokens/req anomaly</text>
+    <text x="130" y="82" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="rgba(29,24,21,0.5)">prompt bloat, retry loop</text>
+  </g>
+
+  <!-- Decision arrows -->
+  <path d="M 160 285 L 160 330" stroke="#ff6b6b" stroke-width="2.5" marker-end="url(#rsArrowRed)"/>
+  <text x="175" y="312" font-family="Inter, sans-serif" font-weight="700" font-size="11" fill="#ff6b6b">auto</text>
+
+  <path d="M 490 285 L 490 330" stroke="#1d1815" stroke-width="2.5" marker-end="url(#rsArrow)"/>
+  <text x="505" y="312" font-family="Inter, sans-serif" font-weight="700" font-size="11" fill="#1d1815">review</text>
+
+  <path d="M 830 285 L 830 330" stroke="#1d1815" stroke-width="2.5" marker-end="url(#rsArrow)"/>
+  <text x="845" y="312" font-family="Inter, sans-serif" font-weight="700" font-size="11" fill="#1d1815">review</text>
+
+  <!-- Action 1: Instant rollback -->
+  <g transform="translate(60,335)">
+    <rect width="200" height="60" rx="14" fill="#ff6b6b" stroke="#1d1815" stroke-width="2"/>
+    <text x="100" y="24" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="#fff" letter-spacing="2">INSTANT ROLLBACK</text>
+    <text x="100" y="44" text-anchor="middle" font-family="ui-monospace, monospace" font-weight="700" font-size="13" fill="#fff">route 100% to v(n-1)</text>
+  </g>
+
+  <!-- Action 2: Human review -->
+  <g transform="translate(370,335)">
+    <rect width="240" height="60" rx="14" fill="#fff" stroke="#1d1815" stroke-width="2.5"/>
+    <text x="120" y="24" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="rgba(29,24,21,0.4)" letter-spacing="2">HUMAN DECISION</text>
+    <text x="120" y="44" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="13" fill="#1d1815">compare samples, confirm rollback</text>
+  </g>
+
+  <!-- Action 3: Investigate -->
+  <g transform="translate(700,335)">
+    <rect width="260" height="60" rx="14" fill="#fff" stroke="#1d1815" stroke-width="2.5"/>
+    <text x="130" y="24" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="rgba(29,24,21,0.4)" letter-spacing="2">INVESTIGATE FIRST</text>
+    <text x="130" y="44" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="13" fill="#1d1815">check prompts, cache, retry config</text>
+  </g>
+
+  <!-- Final outcomes -->
+  <path d="M 160 395 L 160 420" stroke="#1d1815" stroke-width="2" marker-end="url(#rsArrow)"/>
+  <path d="M 490 395 L 380 420" stroke="#1d1815" stroke-width="2" marker-end="url(#rsArrow)"/>
+  <path d="M 490 395 L 560 420" stroke="#1d1815" stroke-width="2" marker-end="url(#rsArrow)"/>
+  <path d="M 830 395 L 780 420" stroke="#1d1815" stroke-width="2" marker-end="url(#rsArrow)"/>
+
+  <!-- Bottom row outcomes -->
+  <g transform="translate(90,425)">
+    <rect width="140" height="36" rx="11" fill="#a3e4a3" stroke="#1d1815" stroke-width="1.5"/>
+    <text x="70" y="23" text-anchor="middle" font-family="ui-monospace, monospace" font-weight="700" font-size="12" fill="#1d1815">traffic on v(n-1)</text>
+  </g>
+  <g transform="translate(310,425)">
+    <rect width="120" height="36" rx="11" fill="#ff6b6b" stroke="#1d1815" stroke-width="1.5"/>
+    <text x="60" y="23" text-anchor="middle" font-family="ui-monospace, monospace" font-weight="700" font-size="12" fill="#fff">rollback</text>
+  </g>
+  <g transform="translate(510,425)">
+    <rect width="120" height="36" rx="11" fill="#a3e4a3" stroke="#1d1815" stroke-width="1.5"/>
+    <text x="60" y="23" text-anchor="middle" font-family="ui-monospace, monospace" font-weight="700" font-size="12" fill="#1d1815">keep canary</text>
+  </g>
+  <g transform="translate(710,425)">
+    <rect width="140" height="36" rx="11" fill="#fff6db" stroke="#1d1815" stroke-width="1.5"/>
+    <text x="70" y="23" text-anchor="middle" font-family="ui-monospace, monospace" font-weight="700" font-size="12" fill="#1d1815">fix + re-deploy</text>
+  </g>
+</svg>

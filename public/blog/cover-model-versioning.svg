@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="Model versioning and safe rollback — canary deployments for AI">
+  <rect width="1200" height="600" fill="#eaf7ff"/>
+  <!-- decorative tape strip -->
+  <rect x="420" y="24" width="280" height="20" rx="4" fill="#fff6db" opacity="0.85" transform="rotate(-1.5 560 34)"/>
+  <!-- left card: deployment pipeline visual -->
+  <g transform="translate(60,80) rotate(-1.2)">
+    <rect width="500" height="420" rx="22" fill="#fff" stroke="#1d1815" stroke-width="2"/>
+    <!-- title bar -->
+    <text x="24" y="36" font-family="Inter, sans-serif" font-weight="900" font-size="11" fill="rgba(29,24,21,0.4)" letter-spacing="2">CANARY DEPLOYMENT</text>
+    <circle cx="450" cy="28" r="6" fill="#a3e4a3" stroke="#1d1815" stroke-width="1.5"/>
+    <circle cx="468" cy="28" r="6" fill="#fff6db" stroke="#1d1815" stroke-width="1.5"/>
+    <!-- version tags -->
+    <g transform="translate(24,56)">
+      <rect width="140" height="36" rx="11" fill="#eaf7ff" stroke="#1d1815" stroke-width="2"/>
+      <text x="70" y="24" text-anchor="middle" font-family="ui-monospace, monospace" font-weight="700" font-size="14" fill="#1d1815">v2.3 stable</text>
+    </g>
+    <g transform="translate(180,56)">
+      <rect width="140" height="36" rx="11" fill="#fff6db" stroke="#1d1815" stroke-width="2"/>
+      <text x="70" y="24" text-anchor="middle" font-family="ui-monospace, monospace" font-weight="700" font-size="14" fill="#1d1815">v2.4 canary</text>
+    </g>
+    <!-- traffic split bar -->
+    <g transform="translate(24,112)">
+      <text x="0" y="14" font-family="Inter, sans-serif" font-weight="700" font-size="11" fill="rgba(29,24,21,0.5)" letter-spacing="1">TRAFFIC SPLIT</text>
+      <rect y="24" width="440" height="28" rx="8" fill="#eaf7ff" stroke="#1d1815" stroke-width="1.5"/>
+      <rect y="24" width="352" height="28" rx="8" fill="#a3e4a3" stroke="none"/>
+      <rect x="352" y="24" width="88" height="28" rx="0 8 8 0" fill="#fff6db" stroke="none"/>
+      <text x="176" y="43" text-anchor="middle" font-family="ui-monospace, monospace" font-weight="800" font-size="12" fill="#1d1815">80%</text>
+      <text x="396" y="43" text-anchor="middle" font-family="ui-monospace, monospace" font-weight="800" font-size="12" fill="#1d1815">20%</text>
+    </g>
+    <!-- canary bird icon (simple geometric) -->
+    <g transform="translate(340,190)">
+      <ellipse cx="60" cy="50" rx="42" ry="36" fill="#fff6db" stroke="#1d1815" stroke-width="2"/>
+      <circle cx="48" cy="40" r="4" fill="#1d1815"/>
+      <polygon points="80,44 100,42 80,48" fill="#ff6b6b" stroke="#1d1815" stroke-width="1.5"/>
+      <!-- wing -->
+      <path d="M30,50 Q10,30 30,20 Q50,30 40,50" fill="#e8c44a" stroke="#1d1815" stroke-width="1.5"/>
+      <!-- tail -->
+      <path d="M20,55 L0,40 L5,60 Z" fill="#e8c44a" stroke="#1d1815" stroke-width="1.5"/>
+      <!-- legs -->
+      <line x1="50" y1="84" x2="50" y2="100" stroke="#1d1815" stroke-width="2"/>
+      <line x1="70" y1="84" x2="70" y2="100" stroke="#1d1815" stroke-width="2"/>
+    </g>
+    <!-- eval gates -->
+    <g transform="translate(24,190)">
+      <rect width="280" height="200" rx="14" fill="#ffe9e4" stroke="#1d1815" stroke-width="1.5"/>
+      <text x="16" y="26" font-family="Inter, sans-serif" font-weight="900" font-size="10" fill="rgba(29,24,21,0.5)" letter-spacing="2">EVAL GATES</text>
+      <!-- check items -->
+      <g transform="translate(16,40)">
+        <rect width="18" height="18" rx="4" fill="#a3e4a3" stroke="#1d1815" stroke-width="1.5"/>
+        <text x="8" y="14" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="#1d1815">&#10003;</text>
+        <text x="28" y="14" font-family="ui-monospace, monospace" font-size="12" fill="#1d1815">faithfulness &gt; 0.85</text>
+      </g>
+      <g transform="translate(16,68)">
+        <rect width="18" height="18" rx="4" fill="#a3e4a3" stroke="#1d1815" stroke-width="1.5"/>
+        <text x="8" y="14" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="#1d1815">&#10003;</text>
+        <text x="28" y="14" font-family="ui-monospace, monospace" font-size="12" fill="#1d1815">latency p99 &lt; 800ms</text>
+      </g>
+      <g transform="translate(16,96)">
+        <rect width="18" height="18" rx="4" fill="#a3e4a3" stroke="#1d1815" stroke-width="1.5"/>
+        <text x="8" y="14" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="#1d1815">&#10003;</text>
+        <text x="28" y="14" font-family="ui-monospace, monospace" font-size="12" fill="#1d1815">cost delta &lt; 15%</text>
+      </g>
+      <g transform="translate(16,124)">
+        <rect width="18" height="18" rx="4" fill="#ff6b6b" stroke="#1d1815" stroke-width="1.5"/>
+        <text x="8" y="14" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="12" fill="#fff">&#10007;</text>
+        <text x="28" y="14" font-family="ui-monospace, monospace" font-size="12" fill="#1d1815">hallucination &lt; 2%</text>
+      </g>
+      <!-- verdict -->
+      <g transform="translate(16,156)">
+        <rect width="120" height="28" rx="8" fill="#ff6b6b"/>
+        <text x="60" y="19" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="12" fill="#fff">ROLLBACK v2.4</text>
+      </g>
+    </g>
+  </g>
+  <!-- right side: title and subtitle -->
+  <g transform="translate(620,150)">
+    <text x="0" y="44" font-family="Inter, sans-serif" font-weight="900" font-size="42" fill="#1d1815" letter-spacing="-2">Model versioning</text>
+    <text x="0" y="94" font-family="Inter, sans-serif" font-weight="900" font-size="42" fill="#1d1815" letter-spacing="-2">&amp; safe rollback.</text>
+    <text x="0" y="146" font-family="Inter, sans-serif" font-weight="700" font-size="21" fill="#ff6b6b">canary deployments for AI.</text>
+    <text x="0" y="198" font-family="Inter, sans-serif" font-size="16" fill="rgba(29,24,21,0.7)">version your models. split your traffic.</text>
+    <text x="0" y="222" font-family="Inter, sans-serif" font-size="16" fill="rgba(29,24,21,0.7)">gate promotion on evals.</text>
+    <text x="0" y="246" font-family="Inter, sans-serif" font-size="16" fill="rgba(29,24,21,0.7)">roll back before users notice.</text>
+    <!-- decorative version pills -->
+    <g transform="translate(0,280)">
+      <rect width="80" height="30" rx="11" fill="#a3e4a3" stroke="#1d1815" stroke-width="1.5" transform="rotate(-3 40 15)"/>
+      <text x="40" y="20" text-anchor="middle" font-family="ui-monospace, monospace" font-weight="700" font-size="11" fill="#1d1815" transform="rotate(-3 40 15)">v2.1</text>
+      <rect x="92" width="80" height="30" rx="11" fill="#eaf7ff" stroke="#1d1815" stroke-width="1.5" transform="rotate(1 132 15)"/>
+      <text x="132" y="20" text-anchor="middle" font-family="ui-monospace, monospace" font-weight="700" font-size="11" fill="#1d1815" transform="rotate(1 132 15)">v2.2</text>
+      <rect x="184" width="80" height="30" rx="11" fill="#fff6db" stroke="#1d1815" stroke-width="1.5" transform="rotate(-2 224 15)"/>
+      <text x="224" y="20" text-anchor="middle" font-family="ui-monospace, monospace" font-weight="700" font-size="11" fill="#1d1815" transform="rotate(-2 224 15)">v2.3</text>
+      <rect x="276" width="80" height="30" rx="11" fill="#ffe9e4" stroke="#1d1815" stroke-width="1.5" transform="rotate(2 316 15)"/>
+      <text x="316" y="20" text-anchor="middle" font-family="ui-monospace, monospace" font-weight="700" font-size="11" fill="#1d1815" transform="rotate(2 316 15)">v2.4</text>
+    </g>
+  </g>
+</svg>
