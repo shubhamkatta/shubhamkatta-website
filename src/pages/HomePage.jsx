@@ -176,7 +176,10 @@ export function HomePage() {
                 <span className="now-bg-art" aria-hidden="true" />
                 <div className="role-head">
                   <h3>{role.company}</h3>
-                  <span className="date-pill">{role.period}</span>
+                  <span className={`date-pill${role.current ? ' date-pill-current' : ''}`}>
+                    {role.current && <span className="currently-dot" aria-hidden="true" />}
+                    {role.period}
+                  </span>
                 </div>
                 <div className="role-title">{role.title}</div>
                 <p>{role.note}</p>

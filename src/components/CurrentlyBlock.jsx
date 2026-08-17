@@ -24,14 +24,14 @@ export function CurrentlyBlock() {
       <div className="currently-row">
         <dt className="currently-label">in</dt>
         <dd className="currently-value">
-          Moradabad, IN · <time dateTime={new Date().toISOString()}>{time} IST</time>
+          Bengaluru, IN · <time dateTime={new Date().toISOString()}>{time} IST</time>
         </dd>
       </div>
       <div className="currently-row">
         <dt className="currently-label">doing</dt>
         <dd className="currently-value">
           <span className="currently-dot" aria-hidden="true" />
-          building an AI-native threat intelligence platform
+          applied AI and platform work at Securonix
         </dd>
       </div>
       <div className="currently-row">

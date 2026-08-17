@@ -240,6 +240,14 @@ h2.work-heading { font-size: clamp(1rem, 2.5vw, 1.7rem); }
 .work-grid { align-items: start; }
 .role-head { display: flex; flex-wrap: wrap; align-items: center; gap: .7rem; }
 .role-title { margin: .45rem 0 .9rem; color: var(--red); font-weight: 900; }
+/* Marks the role you are actually in right now — same live-dot language as the
+   "currently" sticky note on the home page, so the signal reads the same everywhere. */
+.date-pill.date-pill-current { background: var(--red); color: #fff8ef; }
+.date-pill.date-pill-current .currently-dot { background: #fff8ef; box-shadow: 0 0 0 2px rgba(255, 248, 239, 0.25); vertical-align: 1px; margin-right: .45rem; }
+.date-pill.date-pill-current .currently-dot::after { background: rgba(255, 248, 239, 0.5); }
+[data-theme="dark"] .date-pill.date-pill-current { color: #1d1815; }
+[data-theme="dark"] .date-pill.date-pill-current .currently-dot { background: #1d1815; box-shadow: 0 0 0 2px rgba(29, 24, 21, 0.25); }
+[data-theme="dark"] .date-pill.date-pill-current .currently-dot::after { background: rgba(29, 24, 21, 0.45); }
 .tag-pill { padding: .5rem .85rem; border-radius: 999px; border: 1px solid var(--border); background: var(--tag-bg); font-size: .76rem; font-weight: 900; color: var(--ink-muted-4); }
 .metric-row { display: grid; gap: .2rem; padding: .75rem 0; }
 .metric-row strong { font-size: 1.55rem; }

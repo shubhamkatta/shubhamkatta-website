@@ -10,6 +10,11 @@ export function OngoingTerminal() {
       <pre className="terminal-body"><code>
 <span className="t-user">shubham@desk</span> <span className="t-path">~/ongoing</span> <span className="t-arrow">$</span> <span className="t-cmd">tree --depth=2 --status</span>{'\n'}
 .{'\n'}
+<span className="t-tree">├── </span><span className="t-dir">securonix/</span>{'                 '}<span className="t-comment"># current · staff swe · since jun 2026</span>{'\n'}
+<span className="t-tree">│   ├── </span><span className="t-key">status</span>{'     '}[<span className="t-tag t-tag-green">ACTIVE</span>]{'\n'}
+<span className="t-tree">│   ├── </span><span className="t-key">building</span>{'   '}applied ai, and the data plumbing that decides if it works{'\n'}
+<span className="t-tree">│   └── </span><span className="t-key">note</span>{'       '}too early for takeaways · ask again in a few quarters{'\n'}
+<span className="t-tree">│</span>{'\n'}
 <span className="t-tree">├── </span><span className="t-dir">ai-native-threat-intel/</span>{'    '}<span className="t-comment"># six years at Cyble · wrapped Jun 2026</span>{'\n'}
 <span className="t-tree">│   ├── </span><span className="t-key">status</span>{'     '}[<span className="t-tag t-tag-yellow">COMPLETED</span>]{'\n'}
 <span className="t-tree">│   ├── </span><span className="t-key">built</span>{'      '}correlation engine, threat-intel pipelines, integrations{'\n'}

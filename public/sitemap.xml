@@ -46,14 +46,56 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://shubhamkatta.com/writing/model-versioning-and-safe-rollback</loc>
+    <lastmod>2026-07-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://shubhamkatta.com/writing/ai-access-control-patterns-rbac-is-not-enough</loc>
+    <lastmod>2026-07-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://shubhamkatta.com/writing/data-lineage-for-ai-where-did-this-answer-come-from</loc>
+    <lastmod>2026-07-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://shubhamkatta.com/writing/human-in-the-loop-done-right</loc>
+    <lastmod>2026-07-11</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://shubhamkatta.com/writing/compliance-mapping-from-controls-to-frameworks</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://shubhamkatta.com/writing/red-teaming-your-own-ai</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://shubhamkatta.com/writing/ai-incident-response-the-runbook-nobody-writes</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://shubhamkatta.com/writing/observability-for-ai-the-dashboard-that-keeps-you-honest</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-06-21</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://shubhamkatta.com/writing/the-ai-audit-trail-what-to-log-and-why</loc>
-    <lastmod>2026-06-15</lastmod>
+    <lastmod>2026-06-19</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>

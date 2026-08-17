@@ -1,6 +1,6 @@
 export const now = {
-  byline: 'from a desk in Moradabad, between two monitors and three half-finished cups',
-  lastUpdated: 'May 27, 2026',
+  byline: 'from a desk in Bengaluru, between two monitors and three half-finished cups',
+  lastUpdated: 'Aug 17, 2026',
   intro:
     'A small, periodic snapshot. What I am building, reading, ignoring, and quietly suspicious of. Replaces the part of an "about" page that ages into being wrong.',
   sections: [
@@ -9,8 +9,8 @@ export const now = {
       title: 'where',
       tone: 'paper-white',
       items: [
-        '{pin} Moradabad. Home desk most days; outdoor café before the city remembers it is a city.',
-        'Wrapped up six years at Cyble as Principal Engineer. Threat-intel chapter closed, next one loading.',
+        '{pin} Bengaluru. Home desk most days; outdoor café before the city remembers it is a city.',
+        'At Securonix as a Staff Software Engineer since June. Six years at Cyble closed the threat-intel chapter; this one is still being written.',
         'Claude Code is the editor I open first and close last.',
         '{coffee} Aeropress, custom grind on most mornings; {tea} masala ginger tea on the slower ones — whichever the day asks for.',
       ],

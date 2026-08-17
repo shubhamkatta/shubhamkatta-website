@@ -25,6 +25,16 @@ export const findings = [
 
 export const roles = [
   {
+    company: 'Securonix',
+    period: 'Jun 2026 — Present',
+    title: 'Staff Software Engineer',
+    note:
+      'The current chapter, still early enough that the interesting parts have not finished happening yet. Applied AI and the data plumbing underneath it — the unglamorous half that decides whether the clever half works.',
+    tags: ['applied + agentic AI', 'platform & data pipelines', 'security at scale'],
+    color: 'paper-coral',
+    current: true,
+  },
+  {
     company: 'Cyble Inc.',
     period: 'Sep 2020 — Jun 2026',
     title: 'Principal Software Engineer',

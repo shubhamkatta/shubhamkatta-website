@@ -30,8 +30,9 @@ export const homeSeo = {
         name: 'Shubham Katta',
         url: SITE_ORIGIN,
         image: `${SITE_ORIGIN}/bitmoji-relax.png`,
-        jobTitle: 'Principal Software Engineer',
-        worksFor: { '@type': 'Organization', name: 'Cyble Inc.' },
+        jobTitle: 'Staff Software Engineer',
+        worksFor: { '@type': 'Organization', name: 'Securonix' },
+        homeLocation: { '@type': 'Place', name: 'Bengaluru, India' },
         sameAs: ['https://www.linkedin.com/in/kattashubham/'],
         knowsAbout: [
           'Software Engineering',
@@ -59,7 +60,7 @@ export const workSeo = {
   description:
     'Nine years of building systems and products — threat intelligence pipelines, correlation engines, and search-heavy APIs at scale. The professional chapter, told honestly.',
   keywords:
-    'Shubham Katta, work experience, Principal Software Engineer, Cyble, threat intelligence, correlation engine, APIs at scale',
+    'Shubham Katta, work experience, Staff Software Engineer, Securonix, Principal Software Engineer, Cyble, threat intelligence, correlation engine, APIs at scale',
   url: `${SITE_ORIGIN}/work`,
 };
 
@@ -75,7 +76,7 @@ export const writingIndexSeo = {
 export const nowSeo = {
   title: 'Now — Shubham Katta',
   description:
-    'What Shubham Katta is currently building, reading, thinking about, and avoiding — a periodic snapshot from a desk in Moradabad, India.',
+    'What Shubham Katta is currently building, reading, thinking about, and avoiding — a periodic snapshot from a desk in Bengaluru, India.',
   keywords: 'Shubham Katta, now page, currently building, reading, AI engineering, threat intelligence',
   url: `${SITE_ORIGIN}/now`,
 };
